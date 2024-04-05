@@ -1,46 +1,83 @@
-<!-- <div class="flex h-screen">
-  <div class="flex-1">
-    <div class="flex flex-col h-full">
-      <nav class="flex flex-1 m-4 p-4 ml-16">
-        <div class="capitalize">
-          <nav aria-label="breadcrumb" class="w-max">
-            <ol class="flex flex-wrap items-center w-full bg-opacity-60 rounded-md bg-transparent p-0 transition-all">
-              <li class="flex items-center text-blue-gray-900 antialiased font-sans text-sm font-normal leading-normal cursor-pointer transition-colors duration-300 hover:text-light-blue-500">
-                <a href="#">
-                  <p class="block antialiased font-sans text-sm leading-normal text-blue-900 font-normal opacity-50 transition-all hover:text-blue-500 hover:opacity-100">dashboard</p>
-                </a>
-                <span class="text-gray-500 text-sm antialiased font-sans font-normal leading-normal mx-2 pointer-events-none select-none">/</span>
-              </li>
-              <li class="flex items-center text-blue-900 antialiased font-sans text-sm font-normal leading-normal cursor-pointer transition-colors duration-300 hover:text-blue-500">
-                <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">home</p>
-              </li>
-            </ol>
-          </nav>
-
-          <h6 class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-gray-900">home</h6>
-        </div>
-      </nav>
+<div class="flex flex-col items-center mt-8">
+  <!-- Bienvenida y detalles del usuario -->
+  <div class="flex items-center justify-between w-3/4 bg-gray-100 p-4 rounded-xl">
+    <div>
+      <h1 class="text-lg font-bold">Hola Admin</h1>
+      <p class="text-sm">Hora: 12:00 PM | Fecha: 5 de abril de 2024</p>
+    </div>
+    <div class="flex items-center">
+      <p class="mr-2">Admin</p>
+      <i class="bx bx-user-circle text-2xl"></i>
     </div>
   </div>
-</div> -->
 
-
-
-<!-- <div class="bg-gray-800 w-full">
-  <nav class="py-4 px-6 flex items-center justify-between mx-auto">
-
-    <div class="flex items-center">
-      <input type="text" placeholder="Buscar" class="px-3 py-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 bg-gray-700 text-white">
+  <!-- Datos del dashboard -->
+  <div class="flex mt-8">
+    <!-- Números de datos -->
+    <div class="flex flex-col items-center bg-white border border-green-400 rounded-xl p-4 mr-4">
+      <p class="text-4xl font-bold">3</p>
+      <div class="flex items-center justify-between w-full mt-2">
+        <i class="bx bxs-group text-green-400 text-lg"></i>
+        <p class="text-sm">Total de Trabajadores</p>
+      </div>
     </div>
-
-
-    <div class="flex items-center">
-
-      <span class="text-white ml-2">Admin</span>
-
-      <img src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="Avatar" class="w-8 h-8 rounded-full">
+    <div class="flex flex-col items-center bg-white border border-green-400 rounded-xl p-4 mr-4">
+      <p class="text-4xl font-bold">4</p>
+      <div class="flex items-center justify-between w-full mt-2">
+        <i class="bx bxs-user text-lg"></i>
+        <p class="text-sm">Trabajadores Presentados Hoy</p>
+      </div>
     </div>
-  </nav>
-</div> -->
+    <div class="flex flex-col items-center bg-white border border-green-400 rounded-xl p-4">
+      <p class="text-4xl font-bold">3</p>
+      <div class="flex items-center justify-between w-full mt-2">
+        <i class="bx bxs-user-x text-green-400 text-lg"></i>
+        <p class="text-sm">Trabajadores Inactivos</p>
+      </div>
+    </div>
+  </div>
 
+  <!-- Div de incidencias -->
+  <div class="mt-8 w-3/4 bg-white border border-green-400 rounded-xl p-4">
+    <h2 class="text-xl font-bold mb-4">Incidencias</h2>
+    <!-- Tabla con datos de ejemplo -->
+    <table class="w-full">
+      <thead>
+        <tr>
+          <th class="py-2">Nombre</th>
+          <th class="py-2">Cargo</th>
+          <th class="py-2">Departamento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="py-2">Usuario 1</td>
+          <td class="py-2">Cargo 1</td>
+          <td class="py-2">Departamento 1</td>
+        </tr>
+        <tr>
+          <td class="py-2">Usuario 2</td>
+          <td class="py-2">Cargo 2</td>
+          <td class="py-2">Departamento 2</td>
+        </tr>
+        <tr>
+          <td class="py-2">Usuario 3</td>
+          <td class="py-2">Cargo 3</td>
+          <td class="py-2">Departamento 3</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
+  <!-- Lista de campos -->
+  <div class="mt-8 w-3/4 bg-white border border-green-400 rounded-xl p-4">
+    <h2 class="text-xl font-bold mb-4">Lista de Campos</h2>
+    <ul>
+      <li class="py-2">Campo 1</li>
+      <li class="py-2">Campo 2</li>
+      <li class="py-2">Campo 3</li>
+      <li class="py-2">Campo 4</li>
+      <li class="py-2">Campo 5</li>
+    </ul>
+  </div>
+</div>
