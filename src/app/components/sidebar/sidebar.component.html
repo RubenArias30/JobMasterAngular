@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" />
 
 <div *ngIf="isAuthenticated" class="min-h-screen flex flex-row bg-gray-100">
-  <div class="flex flex-col w-56 bg-white rounded-r-3xl overflow-hidden">
+  <div class="flex flex-col w-56 bg-white overflow-hidden">
     <div class="flex items-center justify-start h-30"> <!-- Aumentamos la altura para el logo más grande -->
       <img class="w-16 h-15" src="assets/img/logo.webp" alt="Logo de Job Master"> <!-- Aumentamos el tamaño del logo -->
       <h1 class="text-xl mt-1">Job Master</h1> <!-- Aumentamos el tamaño del texto y ajustamos el margen superior -->
@@ -14,14 +14,14 @@
     <hr class="my-2 mx-auto w-3/4 border-gray-300"> <!-- Reducimos la separación de la hr -->
     <ul class="flex flex-col py-2"> <!-- Reducimos el padding de la lista -->
       <li>
-        <a href="#" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-custom-500">
+        <a href="/dashboard" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-custom-500">
           <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400 hover:text-green-500" style="color: inherit;"><i class='bx bxs-dashboard'></i></span>
       
           <span class="text-sm font-medium hover:custom-500">Dashboard</span>
         </a>
       </li>
       <li>
-        <a href="#" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-custom-500">
+        <a href="/employees" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-custom-500">
           <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400 hover:text-green-500" style="color: inherit;"><i class='bx bx-user'></i></span>
       
           <span class="text-sm font-medium hover:custom-500">Empleados</span>

@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { EmployeesComponent } from './components/employees/employees.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -12,13 +13,16 @@ const routes: Routes = [
     path: 'dashboard',
     component: LayoutComponent,
     children: [
-      { path: '', component: DashboardComponent },
-      // Agrega aquí más rutas para otros componentes del sidebar
+      { path: '', component: DashboardComponent }
     ]
   },
-
-
+  { path: 'employees', component: LayoutComponent,
+  children: [
+    { path: '', component: EmployeesComponent }
+  ]
+} 
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

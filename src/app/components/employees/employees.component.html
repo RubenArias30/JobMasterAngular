@@ -1,0 +1,67 @@
+<div class="container mx-auto mt-8 ">
+    <!-- Detalles del usuario y welcome-->
+    <div class="w-full bg-gray-100 p-4 rounded-xl mb-8">
+        <div class="flex justify-between items-center">
+          <div>
+            <h1 class="text-lg font-bold">Hola Admin</h1>
+            <p class="text-sm">Hora: 12:00 PM | Fecha: 5 de abril de 2024</p>
+          </div>
+          <div class="flex items-center">
+            <p class="mr-2">Admin</p>
+            <i class="bx bx-user-circle text-2xl"></i>
+          </div>
+        </div>
+      </div>
+
+    <!-- Encabezado -->
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center"> <!-- Nuevo contenedor flex -->
+        <h1 class="text-lg font-bold mr-2">Empleados</h1> <!-- Texto "Empleados" -->
+        <div class="border-l h-6 mr-2"></div> <!-- HR vertical más corto -->
+        <div class="text-sm text-gray-500">5 Trabajadores</div> <!-- Mensaje "5 Trabajadores" -->
+      </div>
+      <div class="flex">
+        <button class="flex items-center bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-lg mr-2">
+          <i class='bx bxs-user-plus text-xl'></i>
+          <span class="ml-1">Añadir</span>
+        </button>
+        <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-2 py-1 rounded-lg">
+          <i class='bx bx-filter text-xl'></i>
+          <span class="ml-1">Filtros</span>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Lista de empleados -->
+    <div class="bg-white rounded-xl shadow-lg p-4">
+      <!-- Cabecera de la tabla -->
+      <div class="bg-gray-200 rounded-t-xl px-4 py-2 mb-2">
+        <div class="grid grid-cols-6 gap-4">
+          <div>Empleado</div>
+          <div>Puesto</div>
+          <div>Email</div>
+          <div>Dirección</div>
+          <div>Ciudad</div>
+          <div>Género</div>
+          <div>Accion</div> 
+        </div>
+      </div>
+  
+      <!-- Datos de los empleados -->
+      <div class="grid grid-cols-6 gap-4">
+        <div>
+          <img src="placeholder.jpg" alt="Foto empleado" class="w-12 h-12 rounded-full">
+        </div>
+        <div>Puesto empleado</div>
+        <div>Email empleado</div>
+        <div>Dirección empleado</div>
+        <div>Ciudad empleado</div>
+        <div class="flex items-center justify-end">
+          <i class='bx bx-file text-xl text-gray-400 mr-2'></i>
+          <i class='bx bx-edit text-xl text-gray-400 mr-2'></i>
+          <i class='bx bx-trash text-xl text-gray-400'></i>
+        </div>
+      </div>
+  
+    </div>
+  </div>
