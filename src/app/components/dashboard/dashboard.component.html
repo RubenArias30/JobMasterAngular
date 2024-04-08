@@ -1,83 +1,116 @@
-<div class="flex flex-col items-center mt-8">
-  <!-- Bienvenida y detalles del usuario -->
-  <div class="flex items-center justify-between w-3/4 bg-gray-100 p-4 rounded-xl">
-    <div>
-      <h1 class="text-lg font-bold">Hola Admin</h1>
-      <p class="text-sm">Hora: 12:00 PM | Fecha: 5 de abril de 2024</p>
-    </div>
-    <div class="flex items-center">
-      <p class="mr-2">Admin</p>
-      <i class="bx bx-user-circle text-2xl"></i>
-    </div>
-  </div>
-
-  <!-- Datos del dashboard -->
-  <div class="flex mt-8">
-    <!-- Números de datos -->
-    <div class="flex flex-col items-center bg-white border border-green-400 rounded-xl p-4 mr-4">
-      <p class="text-4xl font-bold">3</p>
-      <div class="flex items-center justify-between w-full mt-2">
-        <i class="bx bxs-group text-green-400 text-lg"></i>
-        <p class="text-sm">Total de Trabajadores</p>
+<div class="container mx-auto">
+  <div class="flex flex-col items-center mt-8">
+    <!-- Bienvenida y detalles del usuario -->
+    <div class="w-full bg-gray-100 p-4 rounded-xl mb-8">
+      <div class="flex justify-between items-center">
+        <div>
+          <h1 class="text-lg font-bold">Hola Admin</h1>
+          <p class="text-sm">Hora: 12:00 PM | Fecha: 5 de abril de 2024</p>
+        </div>
+        <div class="flex items-center">
+          <p class="mr-2">Admin</p>
+          <i class="bx bx-user-circle text-2xl"></i>
+        </div>
       </div>
     </div>
-    <div class="flex flex-col items-center bg-white border border-green-400 rounded-xl p-4 mr-4">
-      <p class="text-4xl font-bold">4</p>
-      <div class="flex items-center justify-between w-full mt-2">
-        <i class="bx bxs-user text-lg"></i>
-        <p class="text-sm">Trabajadores Presentados Hoy</p>
+
+   <!-- Datos del dashboard -->
+   <div class="flex justify-center w-full mb-4">
+
+      <!--  datos -->
+      <div class="flex flex-col items-center bg-white border border-green-400 rounded-xl p-4 mr-4 w-1/3 h-48">
+        <div class="flex justify-between items-center w-full">
+          <div class="flex flex-col">
+            <p class="text-6xl font-bold">3</p> <!-- Número a la izquierda -->
+            <p class="text-lg font-medium">Total de Trabajadores</p> <!-- Texto debajo del número -->
+          </div>
+          <div>
+            <i class="bx bxs-group text-7xl text-green-400"></i> <!-- Icono más grande a la derecha -->
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col items-center bg-white border border-green-400 rounded-xl p-4 mr-4 w-1/3 h-48">
+        <div class="flex justify-between items-center w-full">
+          <div class="flex flex-col">
+            <p class="text-6xl font-bold">4</p> <!-- Número a la izquierda -->
+            <p class="text-lg font-medium">Trabajadores Presentados Hoy</p> <!-- Texto debajo del número -->
+          </div>
+          <div>
+            <i class="bx bxs-user text-7xl text-green-400"></i> <!-- Icono más grande a la derecha -->
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col items-center bg-white border border-green-400 rounded-xl p-4 mr-4 w-1/3 h-48">
+        <div class="flex justify-between items-start w-full">
+          <div class="flex flex-col">
+            <p class="text-6xl font-bold">3</p> <!-- Número a la izquierda -->
+            <br>
+            <p class="text-lg font-medium mt-auto">Trabajadores Inactivos</p> <!-- Texto debajo del número e icono -->
+          </div>
+          <div>
+            <i class="bx bxs-user-x text-7xl text-green-400"></i> <!-- Icono más grande a la derecha -->
+          </div>
+        </div>
       </div>
     </div>
-    <div class="flex flex-col items-center bg-white border border-green-400 rounded-xl p-4">
-      <p class="text-4xl font-bold">3</p>
-      <div class="flex items-center justify-between w-full mt-2">
-        <i class="bx bxs-user-x text-green-400 text-lg"></i>
-        <p class="text-sm">Trabajadores Inactivos</p>
-      </div>
+    
+
+    <!-- Div de incidencias -->
+    <div class="w-full bg-white border border-green-400 rounded-xl p-4 mb-8">
+      <h2 class="text-xl font-bold mb-4">Incidencias</h2>
+      <!-- Tabla con datos de ejemplo -->
+      <table class="w-full">
+        <thead>
+          <tr>
+            <th class="py-2">Usuario</th>
+            <th class="py-2">Razón</th>
+            <th class="py-2">Email</th>
+            <th class="py-2">Fecha</th>
+            <th class="py-2">Hora</th>
+            <th class="py-2">Estado</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="py-2">Usuario 1</td>
+            <td class="py-2">razon 1</td>
+            <td class="py-2">email 1</td>
+            <td class="py-2">fecha</td>
+            <td class="py-2">horari</td>
+            <td class="py-2">Completado</td>
+
+          </tr>
+          <tr>
+            <td class="py-2">Usuario 2</td>
+            <td class="py-2">razon </td>
+            <td class="py-2">email </td>
+            <td class="py-2">fecha</td>
+            <td class="py-2">horari</td>
+            <td class="py-2">Pendiente</td>
+          </tr>
+          <tr>
+            <td class="py-2">Usuario 3</td>
+            <td class="py-2">razon </td>
+            <td class="py-2">email </td>
+            <td class="py-2">fecha</td>
+            <td class="py-2">horari</td>
+            <td class="py-2">Pendiente</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>
 
-  <!-- Div de incidencias -->
-  <div class="mt-8 w-3/4 bg-white border border-green-400 rounded-xl p-4">
-    <h2 class="text-xl font-bold mb-4">Incidencias</h2>
-    <!-- Tabla con datos de ejemplo -->
-    <table class="w-full">
-      <thead>
-        <tr>
-          <th class="py-2">Nombre</th>
-          <th class="py-2">Cargo</th>
-          <th class="py-2">Departamento</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="py-2">Usuario 1</td>
-          <td class="py-2">Cargo 1</td>
-          <td class="py-2">Departamento 1</td>
-        </tr>
-        <tr>
-          <td class="py-2">Usuario 2</td>
-          <td class="py-2">Cargo 2</td>
-          <td class="py-2">Departamento 2</td>
-        </tr>
-        <tr>
-          <td class="py-2">Usuario 3</td>
-          <td class="py-2">Cargo 3</td>
-          <td class="py-2">Departamento 3</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Lista de campos -->
-  <div class="mt-8 w-3/4 bg-white border border-green-400 rounded-xl p-4">
-    <h2 class="text-xl font-bold mb-4">Lista de Campos</h2>
-    <ul>
-      <li class="py-2">Campo 1</li>
-      <li class="py-2">Campo 2</li>
-      <li class="py-2">Campo 3</li>
-      <li class="py-2">Campo 4</li>
-      <li class="py-2">Campo 5</li>
-    </ul>
+    <!-- Lista de campos -->
+    <div class="w-full bg-white border border-green-400 rounded-xl p-4">
+      <h2 class="text-xl font-bold mb-4">Lista de Campos</h2>
+      <ul>
+        <li class="py-2">Campo 1</li>
+        <li class="py-2">Campo 2</li>
+        <li class="py-2">Campo 3</li>
+        <li class="py-2">Campo 4</li>
+        <li class="py-2">Campo 5</li>
+      </ul>
+    </div>
   </div>
 </div>

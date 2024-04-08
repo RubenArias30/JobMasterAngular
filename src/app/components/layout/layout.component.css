@@ -1,0 +1,8 @@
+.container {
+    display: flex;
+  }
+  
+  .content {
+    flex-grow: 3; /* El contenido ocupará todo el espacio disponible */
+  }
+  
