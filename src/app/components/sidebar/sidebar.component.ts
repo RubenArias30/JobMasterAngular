@@ -16,4 +16,10 @@ export class SidebarComponent implements OnInit {
       this.isAuthenticated = isAuthenticated;
     });
   }
+  isSidebarOpen = false;
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+  
 }
