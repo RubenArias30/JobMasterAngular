@@ -5,6 +5,9 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { EmployeesComponent } from './components/employees/employees.component';
+import { AddEmployeeComponent } from './components/employees/add-employee/add-employee.component';
+import { EditEmployeeComponent } from './components/employees/edit-employee/edit-employee.component';
+
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -18,9 +21,13 @@ const routes: Routes = [
   },
   { path: 'employees', component: LayoutComponent,
   children: [
-    { path: '', component: EmployeesComponent }
+    { path: '', component: EmployeesComponent },
+    { path: 'add_employee', component: AddEmployeeComponent },
+    { path: 'edit_employee', component: EditEmployeeComponent }
+
   ]
 } 
+
 ];
 
 

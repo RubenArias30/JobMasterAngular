@@ -10,6 +10,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { EmployeesComponent } from './components/employees/employees.component';
+import { AddEmployeeComponent } from './components/employees/add-employee/add-employee.component';
+import { EditEmployeeComponent } from './components/employees/edit-employee/edit-employee.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { EmployeesComponent } from './components/employees/employees.component';
      DashboardComponent,
      SidebarComponent,
      LayoutComponent,
-     EmployeesComponent
+     EmployeesComponent,
+     AddEmployeeComponent,
+     EditEmployeeComponent,
   ],
   imports: [
     BrowserModule,

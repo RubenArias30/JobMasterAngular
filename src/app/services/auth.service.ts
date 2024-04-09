@@ -17,6 +17,10 @@ export class AuthService {
     this.isAuthenticatedSubject.next(localStorage.getItem(this.isAuthenticatedKey) === 'true');
   }
 
+  getEmployees() {
+    return this.http.get(`${this.url}/employees`);
+  }
+
   // Método para obtener el estado de autenticación
   isAuthenticated(): Observable<boolean> {
     return this.isAuthenticatedSubject.asObservable();

@@ -21,7 +21,7 @@
         <div class="text-sm text-gray-500">5 Trabajadores</div> <!-- Mensaje "5 Trabajadores" -->
       </div>
       <div class="flex">
-        <button class="flex items-center bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-lg mr-2">
+        <button routerLink="/employees/add_employee" class="flex items-center bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-lg mr-2">
           <i class='bx bxs-user-plus text-xl'></i>
           <span class="ml-1">Añadir</span>
         </button>
@@ -36,32 +36,42 @@
     <div class="bg-white rounded-xl shadow-lg p-4">
       <!-- Cabecera de la tabla -->
       <div class="bg-gray-200 rounded-t-xl px-4 py-2 mb-2">
-        <div class="grid grid-cols-6 gap-4">
-          <div>Empleado</div>
-          <div>Puesto</div>
-          <div>Email</div>
-          <div>Dirección</div>
-          <div>Ciudad</div>
-          <div>Género</div>
-          <div>Accion</div> 
-        </div>
+          <div class="grid grid-cols-7 gap-4"> <!-- Ajustamos a 7 columnas -->
+              <div>Empleado</div>
+              <div>Puesto</div>
+              <div>Email</div>
+              <div>Dirección</div>
+              <div>Ciudad</div>
+              <div>Género</div>
+              <div class="flex justify-center items-center">Acción</div> <!-- Cambiamos "Accion" a "Acción" y centramos -->
+          </div>
       </div>
   
       <!-- Datos de los empleados -->
-      <div class="grid grid-cols-6 gap-4">
-        <div>
-          <img src="placeholder.jpg" alt="Foto empleado" class="w-12 h-12 rounded-full">
-        </div>
-        <div>Puesto empleado</div>
-        <div>Email empleado</div>
-        <div>Dirección empleado</div>
-        <div>Ciudad empleado</div>
-        <div class="flex items-center justify-end">
-          <i class='bx bx-file text-xl text-gray-400 mr-2'></i>
-          <i class='bx bx-edit text-xl text-gray-400 mr-2'></i>
-          <i class='bx bx-trash text-xl text-gray-400'></i>
-        </div>
+      <div class="grid grid-cols-7 gap-4">
+        <!-- <div *ngFor="let employee of employees"> -->
+            <!-- <div>{{ employee.name }}</div>
+            <div>{{ employee.position }}</div>
+            <div>{{ employee.email }}</div>
+            <div>{{ employee.address }}</div>
+            <div>{{ employee.city }}</div>
+            <div>{{ employee.gender }}</div> -->
+            <div>Programacion</div>
+        <div>rubenaemail.com</div>
+        <div>Carrer Melville</div>
+        <div>Barcelona</div>
+        <div>Hombre</div>
+        <div class="flex justify-center items-center">
+          <a routerLink="/documents">
+              <i class='bx bx-file text-xl text-black  mr-2'></i>
+          </a>
+          <a routerLink="/employees/edit_employee">
+              <i class='bx bx-edit text-xl text-black mr-2'></i>
+          </a>
+          <!-- Corregir el routerLink para eliminar al componente "add-employee" -->
+          <a routerLink="/delete-employee">
+              <i class='bx bx-trash text-xl text-black '></i>
+          </a>
       </div>
-  
-    </div>
   </div>
+  <!-- </div -->
