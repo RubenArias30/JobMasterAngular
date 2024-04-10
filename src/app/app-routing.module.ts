@@ -7,7 +7,7 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { EmployeesComponent } from './components/employees/employees.component';
 import { AddEmployeeComponent } from './components/employees/add-employee/add-employee.component';
 import { EditEmployeeComponent } from './components/employees/edit-employee/edit-employee.component';
-
+import { MyGuardGuard } from './auth/my-guard.guard';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -16,7 +16,7 @@ const routes: Routes = [
     path: 'dashboard',
     component: LayoutComponent,
     children: [
-      { path: '', component: DashboardComponent }
+      { path: '', component: DashboardComponent, canActivate:[MyGuardGuard] }
     ]
   },
   { path: 'employees', component: LayoutComponent,
@@ -26,7 +26,7 @@ const routes: Routes = [
     { path: 'edit_employee', component: EditEmployeeComponent }
 
   ]
-} 
+}
 
 ];
 

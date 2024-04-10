@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+// login.component.ts
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ApiService } from 'src/app/services/api/api.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,28 +10,49 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-  nif: string = '';
-  password: string = '';
-  errorMessage: string = '';
+export class LoginComponent implements OnInit {
+  // nif: string = '';
+  // password: string = '';
 
-  constructor(private authService: AuthService,private router: Router) {}
+  login!: FormGroup;
+  mensaje: string | null = null;
+  token: string | null = null;
 
-  onSubmit(): void {
-    this.authService.login(this.nif, this.password)
-      .subscribe(
-        response => {
-          // La autenticación fue exitosa, puedes redirigir al usuario a otra página
-          // o realizar otras acciones necesarias
-          console.log('Inicio de sesión exitoso:', response);
-          this.errorMessage = '';
-           this.router.navigate(['/dashboard']);
-        },
-        error => {
-          // Ocurrió un error durante la autenticación, manejar el error aquí
-          console.error('Error durante el inicio de sesión:', error);
-          this.errorMessage = error;
-        }
-      );
+   constructor(private authService: AuthService, private peticiones:ApiService,private route: Router) {
+
+   this.login = new FormGroup({
+    nif: new FormControl('', [
+      Validators.required,
+    ]),
+    password: new FormControl('', [
+      Validators.required,
+    ]),
+  });
+   }
+   ngOnInit(){
+    if (localStorage.getItem('token')) {
+        this.route.navigate(['/dashboard']);
+    }
+
+    this.token = this.authService.getToken();
+   }
+
+
+   onSubmit(): void {
+    const nif = this.login.value.nif;
+    const password = this.login.value.password;
+
+    // Llamada al servicio para autenticar al usuario
+    this.peticiones.login(nif, password).subscribe(
+      (response: any) => {
+        // Si la autenticación es exitosa, redirige al usuario a la página de inicio
+        this.route.navigate(['/dashboard']);
+      },
+      (error: any) => {
+        // Maneja el error de manera adecuada, por ejemplo, mostrando un mensaje de error
+        this.mensaje = 'Credenciales incorrectas. Por favor, inténtalo de nuevo.';
+      }
+    );
   }
+
 }
