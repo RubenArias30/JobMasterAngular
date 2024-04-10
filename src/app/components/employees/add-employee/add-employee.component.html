@@ -14,29 +14,29 @@
             <div class="border border-black p-4 rounded-lg bg-white">
                 <h2 class="text-lg font-bold">Información personal</h2>
                 <hr class="my-2 border-gray-400">
-    
+
                 <!-- Formulario de información personal -->
-                <form>
+                <form (submit)="addEmployee()">
                     <div>
                         <label for="nombre" class="block">Nombre completo</label>
-                        <input type="text" id="name" [(ngModel)]="employeeDatos.name"  class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Nombre" name="name" required>
+                        <input type="text" name="name" id="name" [(ngModel)]="employeeDatos.name"  class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Nombre" name="name" required>
                     </div>
                     <div class="mt-2">
                         <label for="apellido" class="block">Apellido</label>
-                        <input type="text" id="surname" [(ngModel)]="employeeDatos.surname" name="surname"  class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Apellidos" required>
+                        <input type="text" name="surname" id="surname" [(ngModel)]="employeeDatos.surname" name="surname"  class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Apellidos" required>
                     </div>
                     <div class="mt-2">
                         <label for="fecha-nacimiento" class="block">Fecha de nacimiento</label>
-                        <input type="date" id="date_of_birth" [(ngModel)]="employeeDatos.date_of_birth" name="date_of_birth" class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Fecha de nacimiento" required>
+                        <input type="date" name="date_of_birth"  id="date_of_birth" [(ngModel)]="employeeDatos.date_of_birth" name="date_of_birth" class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Fecha de nacimiento" required>
                     </div>
                     <div class="mt-2">
                         <label for="nacionalidad" class="block">Nacionalidad</label>
-                        <input type="text" id="nacionalidad" [(ngModel)]="employeeDatos.country" class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Nacionalidad" required>
+                        <input type="text" name="country" id="nacionalidad" [(ngModel)]="employeeDatos.country" class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Nacionalidad" required>
 
                     </div>
                     <div class="mt-2">
                         <label for="genero" class="block">Género</label>
-                        <select id="genero" class="border border-gray-300 rounded-md p-2 w-full shadow-inner" [(ngModel)]="employeeDatos.gender" required>
+                        <select id="genero" name="gender" class="border border-gray-300 rounded-md p-2 w-full shadow-inner" [(ngModel)]="employeeDatos.gender" required>
                             <option value="" disabled selected>Seleccione su género</option>
                             <option value="masculino">Masculino</option>
                             <option value="femenino">Femenino</option>
@@ -45,11 +45,11 @@
                     </div>
                     <div class="mt-2">
                         <label for="email" class="block">Email</label>
-                        <input type="email" id="email" [(ngModel)]="employeeDatos.email" class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Email" required>
+                        <input type="email" name="email" id="email" [(ngModel)]="employeeDatos.email" class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Email" required>
                     </div>
                     <div class="mt-2">
                         <label for="telefono" class="block">Teléfono</label>
-                        <input type="tel" id="telefono" [(ngModel)]="employeeDatos.telephone" class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Teléfono" required>
+                        <input type="text" name="telephone" id="telephone" [(ngModel)]="employeeDatos.telephone" class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Teléfono" required>
                     </div>
                     <!-- <div class="mt-2">
                         <label for="direccion" class="block">Dirección</label>
@@ -62,19 +62,19 @@
                     </div> -->
                     <div class="mt-2">
                         <label for="foto" class="block">Foto</label>
-                        <input type="file" id="foto" [(ngModel)]="employeeDatos.photo"  accept="image/*" class="mt-1" required>
+                        <input type="file" name="photo"id="photo" [(ngModel)]="employeeDatos.photo"  accept="image/*" class="mt-1" required>
                     </div>
                 </form>
             </div>
         </div>
-        
-        <!-- Documents -->
+
+        <!-- Documents
         <div class="flex-1 ml-4">
             <div class="bg-white border border-black p-4 rounded-lg h-500">
                 <h2 class="text-lg font-bold">Documents</h2>
                 <hr class="my-2 border-gray-400">
-    
-                <!-- Formulario de documentos -->
+
+                 Formulario de documentos
                 <form>
                     <div>
                         <label for="contrato" class="block">Contrato</label>
@@ -106,8 +106,8 @@
             <div class="bg-white border border-black p-4 rounded-lg ">
                 <h2 class="text-lg font-bold">Credenciales</h2>
                 <hr class="my-2 border-gray-400">
-    
-                <!-- Formulario de credenciales -->
+
+                Formulario de credenciales
                 <form>
                     <div class="mt-4" >
                         <label for="nie" class="block">NIE</label>
@@ -120,10 +120,10 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Botón "Añadir Usuario" -->
     <div class="mt-8 mb-3 flex justify-center">
-        <button (click)="addEmployee()" class="bg-custom-500 text-white px-6 py-3 rounded-lg">Añadir Usuario</button>
+        <button type="submit" class="bg-custom-500 text-white px-6 py-3 rounded-lg">Añadir Usuario</button>
     </div>
 </div>

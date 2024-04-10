@@ -1,6 +1,6 @@
 <div class="container mx-auto mt-8">
   <!-- Detalles del usuario y welcome-->
-  <div class="w-full bg-gray-100 p-4 rounded-xl mb-8">
+  <!-- <div class="w-full bg-gray-100 p-4 rounded-xl mb-8">
       <div class="flex justify-between items-center">
           <div>
               <h1 class="text-lg font-bold">Hola Admin</h1>
@@ -11,14 +11,14 @@
               <i class="bx bx-user-circle text-2xl"></i>
           </div>
       </div>
-  </div>
+  </div> -->
 
   <!-- Encabezado -->
   <div class="flex items-center justify-between mb-4">
       <div class="flex items-center">
           <h1 class="text-lg font-bold mr-2">Empleados</h1>
           <div class="border-l h-6 mr-2"></div>
-          <div class="text-sm text-gray-500">5 Trabajadores</div>
+          <div class="text-sm text-gray-500">{{employees.length}} Trabajadores</div>
       </div>
       <div class="flex">
           <button routerLink="/employees/add_employee" class="flex items-center bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-lg mr-2">
@@ -49,8 +49,12 @@
           <!-- Datos de los empleados -->
           <tbody>
               <tr *ngFor="let employee of employees">
-                  <td>{{ employee.photo }}</td>
-                  <td>{{ employee.name }} {{ employee.surname }}</td>
+                <td>
+                  <div class="rounded-full overflow-hidden h-8 w-8">
+                      <img [src]="employee.photo" alt="Foto de {{ employee.name }}" width="25" height="25">
+                  </div>
+              </td>
+                <td>{{ employee.name }} {{ employee.surname }}</td>
                   <td>{{ employee.email }}</td>
                   <td>{{ employee.telephone }}</td>
                   <td>{{ employee.country }}</td>
