@@ -1,1 +1,128 @@
-<p>edit-employee works!</p>
+<div class="container mx-auto mt-8">
+    <!-- Icono "Editar empleado" y texto -->
+    <div class="flex items-center">
+        <i class='bx bxs-edit-alt text-4xl text-gray-600'></i>
+        <h1 class="text-2xl font-bold ml-4">Editar empleado</h1>
+    </div>
+
+    <!-- Línea divisora -->
+    <hr class="my-4 border-gray-400">
+
+    <div class="container mx-auto mt-8 flex">
+        <!-- Información personal -->
+        <div class="flex-1 mr-4">
+            <div class="border border-black p-4 rounded-lg bg-white">
+                <h2 class="text-lg font-bold">Información personal</h2>
+                <hr class="my-2 border-gray-400">
+    
+                <!-- Formulario de información personal -->
+                <form>
+                    <div>
+                        <label for="nombre" class="block">Nombre completo</label>
+                        <input type="text" id="nombre" class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Nombre" required>
+                    </div>
+                    <div class="mt-2">
+                        <label for="apellido" class="block">Apellido</label>
+                        <input type="text" id="apellido" class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Apellido" required>
+                    </div>
+                    <div class="mt-2">
+                        <label for="fecha-nacimiento" class="block">Fecha de nacimiento</label>
+                        <input type="date" id="fecha-nacimiento" class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Fecha de nacimiento" required>
+                    </div>
+                    <div class="mt-2">
+                        <label for="nacionalidad" class="block">Nacionalidad</label>
+                        <input type="text" id="nacionalidad" class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Nacionalidad" required>
+                    </div>
+                    <div class="mt-2">
+                        <label for="genero" class="block">Género</label>
+                        <select id="genero" class="border border-gray-300 rounded-md p-2 w-full shadow-inner" required>
+                            <option value="" disabled selected>Seleccione su género</option>
+                            <option value="masculino">Masculino</option>
+                            <option value="femenino">Femenino</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                    </div>
+                    <div class="mt-2">
+                        <label for="email" class="block">Email</label>
+                        <input type="email" id="email" class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Email" required>
+                    </div>
+                    <div class="mt-2">
+                        <label for="telefono" class="block">Teléfono</label>
+                        <input type="tel" id="telefono" class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Teléfono" required>
+                    </div>
+                    <div class="mt-2">
+                        <label for="direccion" class="block">Dirección</label>
+                        <div>
+                            <input type="text" id="direccion-linea1" class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2" placeholder="Dirección línea 1" required>
+                        </div>
+                        <div>
+                            <input type="text" id="direccion-linea2" class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Dirección línea 2">
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <label for="foto" class="block">Foto</label>
+                        <input type="file" id="foto" accept="image/*" class="mt-1" required>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Documents -->
+        <div class="flex-1 ml-4">
+            <div class="bg-white border border-black p-4 rounded-lg h-500">
+                <h2 class="text-lg font-bold">Documents</h2>
+                <hr class="my-2 border-gray-400">
+    
+                <!-- Formulario de documentos -->
+                <form>
+                    <div>
+                        <label for="contrato" class="block">Contrato</label>
+                        <input type="file" id="contrato" accept=".pdf" class="mt-1" required>
+                    </div>
+                    <div class="mt-4">
+                        <label for="dni-nie" class="block">DNI/NIE</label>
+                        <input type="file" id="dni-nie" accept=".pdf" class="mt-1" required>
+                    </div>
+                    <div class="mt-4">
+                        <label for="curriculum" class="block">Curriculum</label>
+                        <input type="file" id="curriculum" accept=".pdf" class="mt-1" required>
+                    </div>
+                    <div class="mt-4">
+                        <label for="vida-laboral" class="block">Vida laboral</label>
+                        <input type="file" id="vida-laboral" accept=".pdf" class="mt-1" required>
+                    </div>
+                    <div class="mt-4">
+                        <label for="nomina" class="block">Nómina</label>
+                        <input type="file" id="nomina" accept=".pdf" class="mt-1" required>
+                    </div>
+                    <div class="mt-4">
+                        <label for="justificante" class="block">Justificante</label>
+                        <input type="file" id="justificante" accept=".pdf" class="mt-1" required>
+                    </div>
+                </form>
+            </div>
+            <br>
+            <div class="bg-white border border-black p-4 rounded-lg ">
+                <h2 class="text-lg font-bold">Credenciales</h2>
+                <hr class="my-2 border-gray-400">
+    
+                <!-- Formulario de credenciales -->
+                <form>
+                    <div class="mt-4" >
+                        <label for="nie" class="block">NIE</label>
+                        <input type="text" id="nie" class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Ejemplo: 12345678Z" required>
+                    </div>
+                    <div class="mt-5 mb-7">
+                        <label for="password" class="block">Password</label>
+                        <input type="password" id="password" class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Contraseña" required>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón "Editar Usuario" -->
+    <div class="mt-8 mb-3 flex justify-center">
+        <button class="bg-custom-500 text-white px-6 py-3 rounded-lg">Aplicar cambios</button>
+    </div>
+</div>

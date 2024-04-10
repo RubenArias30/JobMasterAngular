@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { EmployeeService } from 'src/app/services/employees.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-employee',
@@ -8,8 +10,23 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AddEmployeeComponent implements OnInit {
   // employeeForm?: FormGroup;
+  employeeDatos: any = {};
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private employeeService: EmployeeService, private router: Router) { }
+
+  addEmployee(): void {
+    this.employeeService.addEmployee(this.employeeDatos).subscribe(
+      (response) => {
+        console.log('Empleado agregado exitosamente:', response);
+        //te devuelve a la vista de todos los empleados
+        this.router.navigate(['/employees']);
+      },
+      (error) => {
+        console.error('Error al agregar el empleado:', error);
+      }
+    );
+  }
+
 
   ngOnInit(): void {
     // this.employeeForm = this.formBuilder.group({
