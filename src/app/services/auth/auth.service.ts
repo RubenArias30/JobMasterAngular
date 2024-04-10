@@ -20,6 +20,8 @@ export class AuthService {
     return this.isAuthenticatedSubject.asObservable();
   }
 
+  
+
   // Método para iniciar sesión
   login(nif: string, password: string): Observable<any> {
     return this.apiService.login(nif, password).pipe(

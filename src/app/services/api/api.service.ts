@@ -18,5 +18,10 @@ export class ApiService {
     return this.http.post<any>(`${this.apiUrl}/logout`, {});
   }
 
+  getEmployees(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/employees`);
+  }
 
+
+  
 }
