@@ -16,14 +16,13 @@ import { EditEmployeeComponent } from './components/employees/edit-employee/edit
 @NgModule({
   declarations: [
     AppComponent,
-
     LoginComponent,
-     DashboardComponent,
-     SidebarComponent,
-     LayoutComponent,
-     EmployeesComponent,
-     AddEmployeeComponent,
-     EditEmployeeComponent,
+    DashboardComponent,
+    SidebarComponent,
+    LayoutComponent,
+    EmployeesComponent,
+    AddEmployeeComponent,
+    EditEmployeeComponent,
   ],
   imports: [
     BrowserModule,

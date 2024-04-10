@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-employees',
@@ -12,8 +12,6 @@ export class EmployeesComponent {
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.authService.getEmployees().subscribe((data: any) => {
-      this.employees = data;
-    });
+
   }
 }

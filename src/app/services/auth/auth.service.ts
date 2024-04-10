@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, throwError, BehaviorSubject } from 'rxjs';
+import { ApiService } from '../api/api.service';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -10,15 +10,9 @@ export class AuthService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   private isAuthenticatedKey = 'isAuthenticated'; // Clave para almacenar el estado de autenticación en el almacenamiento local
 
-  private url = 'http://localhost:8000/api';
-
-  constructor(private http: HttpClient) {
+  constructor(private apiService: ApiService) {
     // Recuperar el estado de autenticación almacenado al iniciar el servicio
     this.isAuthenticatedSubject.next(localStorage.getItem(this.isAuthenticatedKey) === 'true');
-  }
-
-  getEmployees() {
-    return this.http.get(`${this.url}/employees`);
   }
 
   // Método para obtener el estado de autenticación
@@ -28,20 +22,32 @@ export class AuthService {
 
   // Método para iniciar sesión
   login(nif: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.url}/login`, { nif, password }).pipe(
+    return this.apiService.login(nif, password).pipe(
       catchError(error => {
-        // Manejar el error aquí
-        console.error('Error during login:', error);
-        return throwError(error);
+        let errorMessage = 'Error durante el inicio de sesión';
+        if (error.status === 401) {
+          errorMessage = 'Credenciales inválidas';
+        } else if (error.status === 500) {
+          errorMessage = 'Error interno del servidor';
+        }
+        return throwError(errorMessage);
       })
     );
   }
 
   // Método para cerrar sesión
-  logout(): void {
-    // Realizar la lógica de cierre de sesión aquí
-    this.isAuthenticatedSubject.next(false); // Actualizar el estado de autenticación
-    localStorage.removeItem(this.isAuthenticatedKey); // Eliminar el estado de autenticación del almacenamiento local
+  logout(): Observable<any> {
+    return this.apiService.logout().pipe(
+      catchError(error => {
+        let errorMessage = 'Error durante el cierre de sesión';
+        if (error.status === 401) {
+          errorMessage = 'No autorizado';
+        } else if (error.status === 500) {
+          errorMessage = 'Error interno del servidor';
+        }
+        return throwError(errorMessage);
+      })
+    );
   }
 
   // Método para establecer el estado de autenticación
