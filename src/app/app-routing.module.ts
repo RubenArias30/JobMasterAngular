@@ -20,6 +20,7 @@ const routes: Routes = [
     ]
   },
   { path: 'employees', component: LayoutComponent,
+  canActivate:[MyGuardGuard],
   children: [
     { path: '', component: EmployeesComponent },
     { path: 'add_employee', component: AddEmployeeComponent },
