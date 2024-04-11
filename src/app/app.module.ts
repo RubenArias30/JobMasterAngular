@@ -18,13 +18,14 @@ import { JwtInterceptor } from '../app/interceptor/jwt.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
+
     LoginComponent,
-    DashboardComponent,
-    SidebarComponent,
-    LayoutComponent,
-    EmployeesComponent,
-    AddEmployeeComponent,
-    EditEmployeeComponent,
+     DashboardComponent,
+     SidebarComponent,
+     LayoutComponent,
+     EmployeesComponent,
+     AddEmployeeComponent,
+     EditEmployeeComponent,
   ],
   imports: [
     BrowserModule,

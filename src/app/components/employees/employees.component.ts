@@ -9,9 +9,11 @@ import { EmployeeService } from 'src/app/services/employees.service';
   styleUrls: ['./employees.component.css']
 })
 export class EmployeesComponent {
-  employees: any[] = [];
+  employees: any;
 
   constructor(private apiService: ApiService) { }
+
+
 
   ngOnInit(): void {
     this.getEmployees();
