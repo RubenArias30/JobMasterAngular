@@ -16,7 +16,7 @@ export class EmployeeService {
   }
 
   // Método para agregar un nuevo empleado
-  addEmployee(employeeData: any): Observable<any> {
+  addEmployees(employeeData: any): Observable<any> {
     return this.http.post<any>(this.baseUrl, employeeData);
   }
 

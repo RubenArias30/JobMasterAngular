@@ -1,6 +1,18 @@
 <div class="flex">
   <app-sidebar class="w-55"></app-sidebar>
   <div class="flex-grow bg-custom-700">
+    <div class="w-full bg-gray-100 p-4 rounded-xl mb-8">
+      <div class="flex justify-between items-center">
+        <div>
+          <h1 class="text-lg font-bold">Hola Admin</h1>
+          <p class="text-sm">{{ fechaHoraActual  }} </p>
+        </div>
+        <div class="flex items-center">
+          <p class="mr-2">Admin</p>
+          <i class="bx bx-user-circle text-2xl"></i>
+        </div>
+      </div>
+    </div>
     <router-outlet></router-outlet>
   </div>
 </div>

@@ -24,5 +24,8 @@ export class ApiService {
     );
   }
 
+  addEmployees(employeeDatos: any): Observable<any[]> {
+    return this.http.post<any[]>(`${this.apiUrl}/employees`, employeeDatos);
+  }
 
 }
