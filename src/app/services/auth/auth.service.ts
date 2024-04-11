@@ -35,6 +35,16 @@ export class AuthService {
     localStorage.setItem(this.roleKey, role);
   }
 
+  isAuthenticated(): boolean {
+    const token = this.getToken();
+    return !!token;
+  }
+
+  isAdmin(): boolean {
+    const role = this.getUserRole();
+    return !!role && role === 'admin';
+  }
+
 
   logout(){
     this.removeRole();

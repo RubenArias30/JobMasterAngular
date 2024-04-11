@@ -16,11 +16,11 @@ const routes: Routes = [
     path: 'dashboard',
     component: LayoutComponent,
     children: [
-      { path: '', component: DashboardComponent, canActivate:[MyGuardGuard] }
+      { path: '', component: DashboardComponent, canActivate:[MyGuardGuard] ,data: { roles: ['admin','empleado'] }}
     ]
   },
   { path: 'employees', component: LayoutComponent,
-  canActivate:[MyGuardGuard],
+  canActivate:[MyGuardGuard],data: { roles: ['admin'] },
   children: [
     { path: '', component: EmployeesComponent },
     { path: 'add_employee', component: AddEmployeeComponent },
