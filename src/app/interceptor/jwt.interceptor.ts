@@ -7,45 +7,36 @@ import {
   HttpInterceptor,
   HttpErrorResponse
 } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { AuthService } from '../services/auth/auth.service';
 
-
-//https://www.positronx.io/laravel-angular-role-based-authentication-with-jwt/
-
-
-@Injectable({
-  providedIn: 'root'
-})
-
+@Injectable()
 export class JwtInterceptor implements HttpInterceptor {
 
-  constructor(private router:Router, private authservice:AuthService ) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token: any = localStorage.getItem('token');
+    const token: string | null = this.authService.getToken();
     let request = req;
 
     if (token) {
       request = req.clone({
         setHeaders: {
-          authorization: `Bearer ${token }`
+          Authorization: `Bearer ${token}`
         }
       });
     }
 
     return next.handle(request).pipe(
       catchError((err: HttpErrorResponse) => {
-
         if (err.status === 401) {
-          this.authservice.logout();
+          // Eliminar el token y redirigir al usuario a la página de inicio de sesión
+          this.authService.logout();
           this.router.navigateByUrl('/login');
         }
-
-        return throwError( err );
-
+        return throwError(err);
       })
     );
   }
-
 }

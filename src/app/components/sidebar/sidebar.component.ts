@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,8 +7,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
+  userRole: string | null = null;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService) {
+    this.userRole = this.authService.getUserRole();
+  }
+
 
   logout(){
     this.authService.logout();

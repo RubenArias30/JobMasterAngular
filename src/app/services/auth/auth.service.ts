@@ -7,6 +7,8 @@ import { tap, } from 'rxjs/operators';
 })
 export class AuthService {
   private tokenKey = 'token';
+  private roleKey = 'role';
+
 
   constructor() {}
 
@@ -21,8 +23,21 @@ export class AuthService {
   removeToken(): void {
     localStorage.removeItem(this.tokenKey);
   }
+  removeRole(): void {
+    localStorage.removeItem(this.roleKey);
+  }
+
+  getUserRole(): string | null {
+    return localStorage.getItem(this.roleKey);
+  }
+
+  setUserRole(role: string): void {
+    localStorage.setItem(this.roleKey, role);
+  }
+
 
   logout(){
+    this.removeRole();
     this.removeToken();
   }
 }

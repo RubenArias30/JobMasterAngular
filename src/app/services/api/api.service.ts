@@ -17,6 +17,8 @@ export class ApiService {
       tap(response => {
         // Si la autenticación es exitosa, guarda el token JWT en el servicio de autenticación
         this.authService.setToken(response.access_token);
+        this.authService.setUserRole(response.roles);
+
       }),
       catchError(error => {
         return throwError(error); // Maneja el error en el componente que llama a este método
