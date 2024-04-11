@@ -49,11 +49,11 @@
           <!-- Datos de los empleados -->
           <tbody>
               <tr *ngFor="let employee of employees">
-                <td>
-                  <div class="rounded-full overflow-hidden h-8 w-8">
-                      <img [src]="employee.photo" alt="Foto de {{ employee.name }}" width="25" height="25">
-                  </div>
-              </td>
+                 <td>
+                    <div class="rounded-full overflow-hidden border border-gray-300 h-8 w-8">
+                        <img [src]="employee.photo" alt="Foto de {{ employee.name }}" class="h-full w-full object-cover" width="25" height="25">
+                    </div>
+                </td>
                 <td>{{ employee.name }} {{ employee.surname }}</td>
                   <td>{{ employee.email }}</td>
                   <td>{{ employee.telephone }}</td>
