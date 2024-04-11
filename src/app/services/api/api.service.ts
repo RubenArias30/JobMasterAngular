@@ -30,5 +30,8 @@ export class ApiService {
   addEmployees(employeeDatos: any): Observable<any[]> {
     return this.http.post<any[]>(`${this.apiUrl}/employees`, employeeDatos);
   }
-
+ deleteEmployee(employeeId: string): Observable<any> {
+  const url = `${this.apiUrl}/employees/${employeeId}`; // URL para eliminar el empleado
+  return this.http.delete(url);
+}
 }
