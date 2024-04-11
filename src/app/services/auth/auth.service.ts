@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../api/api.service';
-import { tap, } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

@@ -26,6 +26,10 @@ export class ApiService {
     );
   }
 
+  getLoggedInUserName(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/me`);
+  }
+
   getEmployees(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/employees`);
   }

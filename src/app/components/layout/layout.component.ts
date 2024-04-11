@@ -1,4 +1,5 @@
 import { Component,OnInit } from '@angular/core';
+import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'app-layout',
@@ -6,15 +7,25 @@ import { Component,OnInit } from '@angular/core';
   styleUrls: ['./layout.component.css']
 })
 export class LayoutComponent implements OnInit{
-  fechaHoraActual: string = ''; // Asignando un valor inicial vacío
+  fechaHoraActual: string = '';
+  nombreUsuario: string = '';
 
-  constructor() { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.actualizarFechaHora();
     setInterval(() => {
       this.actualizarFechaHora();
     }, 1000); // Actualizar cada segundo
+
+    // this.apiService.getLoggedInUserName().subscribe(
+    //   (response) => {
+    //     this.nombreUsuario = response.name;
+    //   },
+    //   (error) => {
+    //     console.error(error);
+    //   }
+    // );
   }
 
   private actualizarFechaHora(): void {

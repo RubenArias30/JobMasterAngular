@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ApiService } from 'src/app/services/api/api.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { EmployeeService } from 'src/app/services/employees.service';
 
 @Component({
   selector: 'app-employees',
