@@ -17,14 +17,36 @@ export class EmployeesComponent {
     this.getEmployees();
   }
   getEmployees(): void {
-    this.apiService .getEmployees().subscribe(
-      (response: any[]) => {
-        this.employees = response;
-      },
-      (error) => {
-        console.error('Error al obtener la lista de empleados:', error);
-      }
-    );
+  this.apiService.getEmployees().subscribe(
+    (response: any[]) => {
+      console.log('Respuesta del servicio:', response);
+      this.employees = response;
+    },
+    (error) => {
+      console.error('Error al obtener la lista de empleados:', error);
+    }
+  );
+}
+confirmDeleteEmployee(employeeId: string): void {
+  // Mostrar un cuadro de diálogo de confirmación
+  const confirmDelete = confirm('¿Estás seguro de que deseas eliminar este empleado?');
+
+  // Procesar la eliminación si el usuario confirma la acción
+  if (confirmDelete) {
+    this.deleteEmployee(employeeId);
   }
+}
+
+deleteEmployee(employeeId: string): void {
+  this.apiService.deleteEmployee(employeeId).subscribe(
+    () => {
+      // Eliminar el empleado de la lista localmente después de eliminarlo del servidor
+      this.employees = this.employees.filter(employee => employee.id !== employeeId);
+    },
+    (error) => {
+      console.error('Error al eliminar el empleado:', error);
+    }
+  );
+}
 
 }

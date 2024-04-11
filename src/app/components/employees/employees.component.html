@@ -65,9 +65,9 @@
                       <a routerLink="/employees/edit_employee">
                           <i class='bx bx-edit text-xl text-black mr-2'></i>
                       </a>
-                      <a routerLink="/delete-employee">
-                          <i class='bx bx-trash text-xl text-black'></i>
-                      </a>
+                      <button (click)="confirmDeleteEmployee(employee.id)">
+                        <i class='bx bx-trash text-xl text-black'></i>
+                    </button>
                   </td>
               </tr>
           </tbody>
