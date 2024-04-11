@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { ApiService } from 'src/app/services/api/api.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { EmployeeService } from 'src/app/services/employees.service';
 
 @Component({
   selector: 'app-employees',
@@ -9,9 +11,20 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class EmployeesComponent {
   employees: any[] = [];
 
-  constructor(private authService: AuthService) { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-
+    this.getEmployees();
   }
+  getEmployees(): void {
+    this.apiService .getEmployees().subscribe(
+      (response: any[]) => {
+        this.employees = response;
+      },
+      (error) => {
+        console.error('Error al obtener la lista de empleados:', error);
+      }
+    );
+  }
+
 }
