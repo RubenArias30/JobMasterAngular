@@ -18,7 +18,7 @@ export class AddEmployeeComponent {
     this.employeeForm = this.fb.group({
       name: ['', Validators.required],
       surname: ['', Validators.required],
-      date_of_birth: ['', Validators.required],
+      date_of_birth: ['', [Validators.required,this.ageValidator]],
       country: ['', Validators.required],
       gender: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -79,10 +79,29 @@ export class AddEmployeeComponent {
     return null;
   }
 
+   // Función de validación personalizada para verificar la edad mínima y la fecha futura
+   ageValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    // Obtiene la fecha de nacimiento del control
+    const dob = new Date(control.value);
+    const today = new Date();
+    // Calcula la edad del empleado
+    let age = today.getFullYear() - dob.getFullYear();
+    const monthDiff = today.getMonth() - dob.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+      age--;
+    }
+    // Verifica si la edad es menor de 18 años o si la fecha es en el futuro
+    if (age < 18 || dob >= today) {
+      return { 'invalidAgeOrDate': true };
+    }
+    return null;
+  }
+
+
   // Función de validación del número de teléfono
   phoneNumberValidator(): Validators {
     return (control: AbstractControl): { [key: string]: any } | null => {
-      const phoneNumberRegex = /^[679]{1}[0-9]{8}$/; // Expresión regular para validar números de teléfono españoles
+      const phoneNumberRegex = /^[679]{1}[0-9]{8}$/; // Expresión regular para validar números de teléfono
       if (control.value && !phoneNumberRegex.test(control.value)) {
         return { 'invalidPhoneNumber': true };
       }
