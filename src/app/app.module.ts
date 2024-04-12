@@ -13,6 +13,7 @@ import { EmployeesComponent } from './components/employees/employees.component';
 import { AddEmployeeComponent } from './components/employees/add-employee/add-employee.component';
 import { EditEmployeeComponent } from './components/employees/edit-employee/edit-employee.component';
 import { JwtInterceptor } from '../app/interceptor/jwt.interceptor';
+import { NifValidatorDirective } from './directive/nif-validator.directive';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { JwtInterceptor } from '../app/interceptor/jwt.interceptor';
      EmployeesComponent,
      AddEmployeeComponent,
      EditEmployeeComponent,
+     NifValidatorDirective,
   ],
   imports: [
     BrowserModule,

@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
     ]),
     password: new FormControl('', [
       Validators.required,
+      //Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/)
     ]),
   });
    }
@@ -42,15 +43,21 @@ export class LoginComponent implements OnInit {
     const nif = this.login.value.nif;
     const password = this.login.value.password;
 
+     // Verifica si los campos no están vacíos
+     if (nif.trim() === '' || password.trim() === '') {
+      this.mensaje = 'Por favor, completa todos los campos.';
+      return;
+    }
+
     // Llamada al servicio para autenticar al usuario
     this.peticiones.login(nif, password).subscribe(
       (response: any) => {
-        // Si la autenticación es exitosa, redirige al usuario a la página de inicio
+        // Si la autenticación es exitosa, redirige al usuario a la página de dashboard
         this.route.navigate(['/dashboard']);
       },
       (error: any) => {
-        // Maneja el error de manera adecuada, por ejemplo, mostrando un mensaje de error
-        this.mensaje = 'Credenciales incorrectas. Por favor, inténtalo de nuevo.';
+        // Manejo de error
+        this.mensaje = 'Credenciales incorrectas.';
       }
     );
   }

@@ -4,27 +4,45 @@
       <img class="mx-auto h-40 w-auto" src="assets/img/logo.webp" alt="Logo de Job Master">
       <h2 class="mt-10 text-center text-3xl font-semibold leading-9 tracking-tight text-gray-900">JOB MASTER</h2>
 
-      <form  class="space-y-6 mt-8" [formGroup]="login" (ngSubmit)="onSubmit()">
+      <form class="space-y-6 mt-8" [formGroup]="login" (ngSubmit)="onSubmit()">
         <div>
-          <label for="nif" class="block text-lg font-medium leading-6 text-gray-900"  >NIF</label>
+          <label for="nif" class="block text-lg font-medium leading-6 text-gray-900">NIF</label>
+
+          <div *ngIf="login?.get('nif')?.invalid && (login?.get('nif')?.dirty || login?.get('nif')?.touched)"
+            class="text-red-500 mt-2">Por favor, introduce un NIF válido.</div>
+
+
           <div class="mt-2">
-            <input id="nif" name="nif" type="text" placeholder="Introduce tu NIF" formControlName="nif"  required class="block w-full rounded-md border-0 py-2 pl-2 text-lg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-lg sm:leading-6">
+            <input id="nif" name="nif" type="text" placeholder="Introduce tu NIF" formControlName="nif" appNifValidator
+              required
+              class="block w-full rounded-md border-0 py-2 pl-2 text-lg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-lg sm:leading-6">
           </div>
         </div>
 
         <div>
           <div class="flex items-center justify-between">
-            <label for="password" class="block text-lg font-medium leading-6 text-gray-900"  >Contraseña</label>
+            <label for="password" class="block text-lg font-medium leading-6 text-gray-900">Contraseña</label>
           </div>
+
+          <div
+            *ngIf="login?.get('password')?.invalid && (login?.get('password')?.dirty || login?.get('password')?.touched)"
+            class="text-red-500 mt-2">Por favor, introduce una contraseña válida.</div>
+
           <div class="mt-2">
-            <input id="password" name="password" type="password" autocomplete="current-password" formControlName="password" placeholder="Introduce tu contraseña" required class="block w-full rounded-md border-0 py-2 pl-2 text-lg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-lg sm:leading-6">
+            <input id="password" name="password" type="password" autocomplete="current-password"
+              formControlName="password" placeholder="Introduce tu contraseña" required
+              class="block w-full rounded-md border-0 py-2 pl-2 text-lg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-lg sm:leading-6">
           </div>
         </div>
 
         <div>
-          <button type="submit" class="flex w-full justify-center rounded-md bg-green-400 px-4 py-2 text-lg font-semibold leading-6 text-black shadow-sm hover:bg-green-500 hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600" style="background-color: #92E3A9;">Iniciar Sesión</button>
-          <!-- Muestra el mensaje de error si existe -->
-          <!-- <div *ngIf="errorMessage" class="text-center text-red-500 mt-2">{{ errorMessage }}</div> -->
+
+           <!-- Mensaje de error -->
+      <div *ngIf="mensaje" class="text-red-500 mt-2">{{ mensaje }}</div>
+
+          <button type="submit"
+            class="flex w-full justify-center rounded-md bg-green-400 px-4 py-2 text-lg font-semibold leading-6 text-black shadow-sm hover:bg-green-500 hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+            style="background-color: #92E3A9;">Iniciar Sesión</button>
         </div>
       </form>
 
