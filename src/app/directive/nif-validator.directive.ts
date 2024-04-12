@@ -14,7 +14,13 @@ export class NifValidatorDirective implements Validator {
     const value = control.value ? control.value.toUpperCase() : '';
     let result: boolean = false;
 
+
     const expresion_regular_dni = /^[XYZ]?\d{5,8}[A-Z]$/;
+
+    if (value === 'ADMIN') {
+      return null; // No aplicar validación para el NIF de administrador
+    }
+
 
     if (expresion_regular_dni.test(value)) {
       let numero = value.substr(0, value.length - 1);

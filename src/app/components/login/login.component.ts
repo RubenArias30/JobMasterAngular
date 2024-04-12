@@ -49,6 +49,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
+
     // Llamada al servicio para autenticar al usuario
     this.peticiones.login(nif, password).subscribe(
       (response: any) => {
