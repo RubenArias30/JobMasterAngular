@@ -39,5 +39,23 @@ export class ApiService {
  deleteEmployee(employeeId: string): Observable<any> {
   const url = `${this.apiUrl}/employees/${employeeId}`; // URL para eliminar el empleado
   return this.http.delete(url);
-}
+
+  }
+
+  getInvoices(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/budget`);
+  }
+  //  // Método para obtener los conceptos relacionados con una factura específica
+  //  getConcepts(invoiceId: string): Observable<any[]> {
+  //   return this.http.get<any[]>(`${this.apiUrl}/budget/${invoiceId}/concepts`);
+  // }
+
+  // getInvoicesPRueba1(): Observable<any[]> {
+  //   return this.http.get<any[]>(`${this.apiUrl}/invoices?with=concepts`);
+  // }
+  // getInvoices(): Observable<any[]> {
+  //   return this.http.get<any[]>(`${this.apiUrl}/invoices`, { params: { with: 'concepts' } });
+  // }
+
+
 }

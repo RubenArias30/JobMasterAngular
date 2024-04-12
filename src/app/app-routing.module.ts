@@ -8,6 +8,7 @@ import { EmployeesComponent } from './components/employees/employees.component';
 import { AddEmployeeComponent } from './components/employees/add-employee/add-employee.component';
 import { EditEmployeeComponent } from './components/employees/edit-employee/edit-employee.component';
 import { MyGuardGuard } from './auth/my-guard.guard';
+import { BudgetComponent } from './components/budget/budget.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -25,6 +26,16 @@ const routes: Routes = [
     { path: '', component: EmployeesComponent },
     { path: 'add_employee', component: AddEmployeeComponent },
     { path: 'edit_employee', component: EditEmployeeComponent }
+
+  ]
+},
+{
+  path: 'budget',
+  component: LayoutComponent,
+  children: [
+    { path: '', component: BudgetComponent },
+    { path: 'generate_budget', component: BudgetComponent },
+    { path: 'edit_budget', component: BudgetComponent }
 
   ]
 }

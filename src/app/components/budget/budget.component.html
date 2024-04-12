@@ -1,0 +1,61 @@
+<div class="container mx-auto mt-8">
+  <div class="flex items-center justify-between mb-4">
+    <div class="flex items-center">
+      <h1 class="text-lg font-bold mr-2">Presupuesto</h1>
+      <div class="border-l h-6 mr-2"></div>
+      <div class="text-sm text-gray-500">{{ invoices.length }} Presupuestos</div>
+    </div>
+    <div class="flex">
+      <button routerLink="/budget/generate_budget" class="flex items-center bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-lg mr-2">
+        <i class='bx bxs-user-plus text-xl'></i>
+        <span class="ml-1">Añadir</span>
+      </button>
+      <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-2 py-1 rounded-lg">
+        <i class='bx bx-filter text-xl'></i>
+        <span class="ml-1">Filtros</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-xl shadow-lg p-4">
+    <table class="w-full">
+      <thead>
+        <tr class="bg-gray-200">
+          <th>Subtotal</th>
+          <th>Descuento</th>
+          <th>IVA Factura</th>
+          <th>IRPF Factura</th>
+          <th>Total</th>
+          <th>Concept</th>
+          <th class="text-center">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let invoice of invoices">
+          <td>{{ invoice.subtotal }}</td>
+          <td>{{ invoice.discount }}</td>
+          <td>{{ invoice.invoice_iva }}</td>
+          <td>{{ invoice.invoice_irpf }}</td>
+          <td>{{ invoice.total }}</td>
+          <td>
+            <ul class="list-none m-0 p-0">
+              <li *ngFor="let concept of invoice.concepts">{{ concept.concept }}</li>
+            </ul>
+          </td>
+          <!-- ES BOTON PARA PODER DESCARGAR LA FACTURA EL 1ERO -->
+          <td class="text-center">
+            <button (click)="confirmDeleteInvoice(invoice.id)">
+              <i class='bx bxs-download text-xl text-black mr-2'></i>
+            </button>
+            <a routerLink="/budget/edit_budget">
+              <i class='bx bx-edit text-xl text-black mr-2'></i>
+            </a>
+            <button (click)="confirmDeleteInvoice(invoice.id)">
+              <i class='bx bx-trash text-xl text-black'></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

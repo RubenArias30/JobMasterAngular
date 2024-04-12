@@ -14,6 +14,9 @@ import { AddEmployeeComponent } from './components/employees/add-employee/add-em
 import { EditEmployeeComponent } from './components/employees/edit-employee/edit-employee.component';
 import { JwtInterceptor } from '../app/interceptor/jwt.interceptor';
 import { NifValidatorDirective } from './directive/nif-validator.directive';
+import { BudgetComponent } from './components/budget/budget.component';
+import { GenerateBudgetComponent } from './components/budget/generate-budget/generate-budget.component';
+import { EditBudgetComponent } from './components/budget/edit-budget/edit-budget.component';
 
 
 @NgModule({
@@ -28,6 +31,9 @@ import { NifValidatorDirective } from './directive/nif-validator.directive';
      AddEmployeeComponent,
      EditEmployeeComponent,
      NifValidatorDirective,
+     BudgetComponent,
+     GenerateBudgetComponent,
+     EditBudgetComponent,
   ],
   imports: [
     BrowserModule,
