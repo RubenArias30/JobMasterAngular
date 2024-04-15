@@ -25,13 +25,14 @@ const routes: Routes = [
   children: [
     { path: '', component: EmployeesComponent },
     { path: 'add_employee', component: AddEmployeeComponent },
-    { path: 'edit_employee', component: EditEmployeeComponent }
+    { path: 'edit_employee/:id', component: EditEmployeeComponent }
 
   ]
 },
 {
   path: 'budget',
   component: LayoutComponent,
+  canActivate:[MyGuardGuard],data: { roles: ['admin'] },
   children: [
     { path: '', component: BudgetComponent },
     { path: 'generate_budget', component: BudgetComponent },

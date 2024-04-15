@@ -25,7 +25,6 @@ export class AddEmployeeComponent {
       telephone: ['', [Validators.required, this.phoneNumberValidator()]],
       photo: ['', [Validators.required, this.imageExtensionValidator]],
       street: ['', Validators.required],
-      number: ['', Validators.required],
       city: ['', Validators.required],
       postal_code: ['', Validators.required],
       nif: ['', Validators.required],

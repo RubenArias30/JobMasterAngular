@@ -38,6 +38,7 @@
           <!-- Cabecera de la tabla -->
           <thead>
               <tr class="bg-gray-200">
+                <th>Id</th>
                   <th>Foto</th>
                   <th>Nombre</th>
                   <th>Email</th>
@@ -48,7 +49,9 @@
           </thead>
           <!-- Datos de los empleados -->
           <tbody>
+
               <tr *ngFor="let employee of employees">
+                <td>{{ employee.id }}</td>
                  <td>
                     <div class="rounded-full overflow-hidden border border-gray-300 h-8 w-8">
                         <img [src]="employee.photo" alt="Foto de {{ employee.name }}" class="h-full w-full object-cover" width="25" height="25">
@@ -62,8 +65,8 @@
                       <a routerLink="/documents">
                           <i class='bx bx-file text-xl text-black mr-2'></i>
                       </a>
-                      <a routerLink="/employees/edit_employee">
-                          <i class='bx bx-edit text-xl text-black mr-2'></i>
+                      <a [routerLink]="['/employees/edit_employee', employee.id]">
+                        <i class='bx bx-edit text-xl text-black mr-2'></i>
                       </a>
                       <button (click)="confirmDeleteEmployee(employee.id)">
                         <i class='bx bx-trash text-xl text-black'></i>

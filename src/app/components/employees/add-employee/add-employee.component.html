@@ -112,19 +112,19 @@
         <div class="mt-2">
           <label for="direccion" class="block">Dirección</label>
           <input type="text" id="direccion" formControlName="street"
-            class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2" placeholder="Dirección">
+            class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2" placeholder="Nombre y número de la calle">
           <div
             *ngIf="employeeForm.get('street')?.errors?.['required'] && (employeeForm.get('street')?.dirty || employeeForm.get('street')?.touched)"
             class="text-red-500 mt-2">Dirección es obligatoria.</div>
         </div>
-        <div class="mt-2">
+        <!-- <div class="mt-2">
           <label for="numero" class="block">Número</label>
           <input type="text" id="numero" formControlName="number"
             class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2" placeholder="Número">
           <div
             *ngIf="employeeForm.get('number')?.errors?.['required'] && (employeeForm.get('number')?.dirty || employeeForm.get('number')?.touched)"
             class="text-red-500 mt-2">Número es obligatorio.</div>
-        </div>
+        </div> -->
         <div class="mt-2">
           <label for="ciudad" class="block">Ciudad</label>
           <input type="text" id="ciudad" formControlName="city"
