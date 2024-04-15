@@ -36,15 +36,30 @@ export class ApiService {
   addEmployees(employeeDatos: any): Observable<any[]> {
     return this.http.post<any[]>(`${this.apiUrl}/employees`, employeeDatos);
   }
- deleteEmployee(employeeId: string): Observable<any> {
-  const url = `${this.apiUrl}/employees/${employeeId}`; // URL para eliminar el empleado
-  return this.http.delete(url);
 
+  deleteEmployee(employeeId: string): Observable<any> {
+    const url = `${this.apiUrl}/employees/${employeeId}`; // URL para eliminar el empleado
+    return this.http.delete(url);
+
+    }
+
+
+    //UPDATE
+  getEmployeeById(employeeId: string): Observable<any> {
+    // Llama a la API para obtener los datos de un empleado por su ID
+    return this.http.get<any>(`${this.apiUrl}/employees/${employeeId}`);
   }
+  updateEmployee(employeeId: string, employeeData: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/employees/${employeeId}`, employeeData);
+  }
+
+
+
 
   getInvoices(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/budget`);
   }
+
   //  // Método para obtener los conceptos relacionados con una factura específica
   //  getConcepts(invoiceId: string): Observable<any[]> {
   //   return this.http.get<any[]>(`${this.apiUrl}/budget/${invoiceId}/concepts`);
