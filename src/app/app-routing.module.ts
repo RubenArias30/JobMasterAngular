@@ -9,6 +9,8 @@ import { AddEmployeeComponent } from './components/employees/add-employee/add-em
 import { EditEmployeeComponent } from './components/employees/edit-employee/edit-employee.component';
 import { MyGuardGuard } from './auth/my-guard.guard';
 import { BudgetComponent } from './components/budget/budget.component';
+import { GenerateBudgetComponent } from './components/budget/generate-budget/generate-budget.component';
+import { EditBudgetComponent } from './components/budget/edit-budget/edit-budget.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -35,8 +37,8 @@ const routes: Routes = [
   canActivate:[MyGuardGuard],data: { roles: ['admin'] },
   children: [
     { path: '', component: BudgetComponent },
-    { path: 'generate_budget', component: BudgetComponent },
-    { path: 'edit_budget', component: BudgetComponent }
+    { path: 'generate_budget', component: GenerateBudgetComponent },
+    { path: 'edit_budget', component: EditBudgetComponent }
 
   ]
 }

@@ -24,28 +24,25 @@ getInvoices(): void {
       console.error('Error al obtener la lista de inovoices:', error);
     }
   );
-}
-confirmDeleteInvoice(invoicesId: string): void {
-  // Mostrar un cuadro de diálogo de confirmación
-  const confirmDelete = confirm('¿Estás seguro de que deseas eliminar este empleado?');
 
-  // Procesar la eliminación si el usuario confirma la acción
-  if (confirmDelete) {
-    this.deleteInvoice(invoicesId);
-  }
-}
+// } confirmDeleteInvoice(invoiceId: string): void {
+//   const confirmDelete = confirm('¿Estás seguro de que deseas eliminar esta factura?');
+//   if (confirmDelete) {
+//     this.deleteInvoice(invoiceId);
+//   }
+// }
 
-deleteInvoice(invoicesId: string): void {
-  this.apiService.deleteEmployee(invoicesId).subscribe(
-    () => {
-      // Eliminar el empleado de la lista localmente después de eliminarlo del servidor
-      this.invoices = this.invoices.filter(invoices => invoices.id !== invoicesId);
-    },
-    (error) => {
-      console.error('Error al eliminar el empleado:', error);
-    }
-  );
+// deleteInvoice(invoiceId: string): void {
+//   this.apiService.deleteInvoice(invoiceId).subscribe(
+//     () => {
+//       // Eliminar la factura de la lista localmente después de eliminarla del servidor
+//       this.invoices = this.invoices.filter(invoice => invoice.id !== invoiceId);
+//     },
+//     (error) => {
+//       console.error('Error al eliminar la factura:', error);
+//       alert('Hubo un error al eliminar la factura. Por favor, inténtalo de nuevo más tarde.');
+//     });
+// }
+
 }
 }
-
-
