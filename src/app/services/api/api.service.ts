@@ -60,7 +60,10 @@ export class ApiService {
   getInvoices(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/budget`);
   }
-
+  deleteInvoice(invoiceId: string): Observable<any> {
+    const url = `${this.apiUrl}/budget/${invoiceId}`; // URL para eliminar la factura
+    return this.http.delete(url);
+  }
 
 
 }

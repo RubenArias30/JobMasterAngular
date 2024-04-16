@@ -25,24 +25,24 @@ getInvoices(): void {
     }
   );
 
-// } confirmDeleteInvoice(invoiceId: string): void {
-//   const confirmDelete = confirm('¿Estás seguro de que deseas eliminar esta factura?');
-//   if (confirmDelete) {
-//     this.deleteInvoice(invoiceId);
-//   }
-// }
+} confirmDeleteInvoice(invoiceId: string): void {
+  const confirmDelete = confirm('¿Estás seguro de que deseas eliminar esta factura?');
+  if (confirmDelete) {
+    this.deleteInvoice(invoiceId);
+  }
+}
 
-// deleteInvoice(invoiceId: string): void {
-//   this.apiService.deleteInvoice(invoiceId).subscribe(
-//     () => {
-//       // Eliminar la factura de la lista localmente después de eliminarla del servidor
-//       this.invoices = this.invoices.filter(invoice => invoice.id !== invoiceId);
-//     },
-//     (error) => {
-//       console.error('Error al eliminar la factura:', error);
-//       alert('Hubo un error al eliminar la factura. Por favor, inténtalo de nuevo más tarde.');
-//     });
-// }
+deleteInvoice(invoiceId: string): void {
+  this.apiService.deleteInvoice(invoiceId).subscribe(
+    () => {
+      // Eliminar la factura de la lista localmente después de eliminarla del servidor
+      this.invoices = this.invoices.filter(invoice => invoice.id !== invoiceId);
+    },
+    (error) => {
+      console.error('Error al eliminar la factura:', error);
+      alert('Hubo un error al eliminar la factura. Por favor, inténtalo de nuevo más tarde.');
+    });
+}
 
 }
-}
+

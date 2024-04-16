@@ -1,1 +1,137 @@
-<p>generate-budget works!</p>
+<!-- factura.component.html -->
+
+<div class="text-4xl font-bold mb-8">Facturas</div>
+
+<div class="bg-white rounded-lg p-4 mx-4">
+  <div class="flex justify-between mb-4">
+    <form class="w-1/2 mx-auto">
+      <div class="mb-2 bg-gray-200 rounded-lg p-2">Datos empresa:</div>
+      <div class="grid grid-cols-1 gap-4">
+        <div>
+          <label for="nombre_empresa" class="block mb-1">Nombre:</label>
+          <input id="nombre_empresa" type="text" placeholder="Nombre" class="border p-2 rounded-md">
+        </div>
+        <div>
+          <label for="nif_empresa" class="block mb-1">NIF:</label>
+          <input id="nif_empresa" type="text" placeholder="NIF" class="border p-2 rounded-md">
+        </div>
+        <div>
+          <label for="direccion_empresa" class="block mb-1">Dirección:</label>
+          <input id="direccion_empresa" type="text" placeholder="Dirección" class="border p-2 rounded-md">
+        </div>
+        <div>
+          <label for="codigo_postal_empresa" class="block mb-1">Código postal:</label>
+          <input id="codigo_postal_empresa" type="text" placeholder="Código postal" class="border p-2 rounded-md">
+        </div>
+        <div>
+          <label for="telefono_empresa" class="block mb-1">Teléfono:</label>
+          <input id="telefono_empresa" type="text" placeholder="Teléfono" class="border p-2 rounded-md">
+        </div>
+        <div>
+          <label for="email_empresa" class="block mb-1">Email:</label>
+          <input id="email_empresa" type="text" placeholder="Email" class="border p-2 rounded-md">
+        </div>
+        <div>
+          <label for="poblacion_empresa" class="block mb-1">Población:</label>
+          <input id="poblacion_empresa" type="text" placeholder="Población" class="border p-2 rounded-md">
+        </div>
+      </div>
+    </form>
+
+    <form class="w-1/2 mx-auto">
+      <div class="mb-2 bg-gray-200 rounded-lg p-2">Datos del cliente:</div>
+      <div class="grid grid-cols-1 gap-4">
+        <div>
+          <label for="nombre_cliente" class="block mb-1">Nombre:</label>
+          <input id="nombre_cliente" type="text" placeholder="Nombre" class="border p-2 rounded-md">
+        </div>
+        <div>
+          <label for="nif_cliente" class="block mb-1">NIF:</label>
+          <input id="nif_cliente" type="text" placeholder="NIF" class="border p-2 rounded-md">
+        </div>
+        <div>
+          <label for="direccion_cliente" class="block mb-1">Dirección:</label>
+          <input id="direccion_cliente" type="text" placeholder="Dirección" class="border p-2 rounded-md">
+        </div>
+        <div>
+          <label for="codigo_postal_cliente" class="block mb-1">Código postal:</label>
+          <input id="codigo_postal_cliente" type="text" placeholder="Código postal" class="border p-2 rounded-md">
+        </div>
+        <div>
+          <label for="telefono_cliente" class="block mb-1">Teléfono:</label>
+          <input id="telefono_cliente" type="text" placeholder="Teléfono" class="border p-2 rounded-md">
+        </div>
+        <div>
+          <label for="email_cliente" class="block mb-1">Email:</label>
+          <input id="email_cliente" type="text" placeholder="Email" class="border p-2 rounded-md">
+        </div>
+        <div>
+          <label for="poblacion_cliente" class="block mb-1">Población:</label>
+          <input id="poblacion_cliente" type="text" placeholder="Población" class="border p-2 rounded-md">
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <hr class="my-4 border-gray-400">
+
+  <div class="mb-2 bg-gray-200 rounded-lg p-2">Conceptos</div>
+  <div class="grid grid-cols-5 gap-4">
+    <div>
+      <label for="concepto">Concepto</label>
+      <input id="concepto" type="text" placeholder="Concepto" class="border p-2 rounded-md w-full">
+    </div>
+    <div>
+      <label for="precio">Precio por unidad</label>
+      <input id="precio" type="text" placeholder="Precio por unidad" class="border p-2 rounded-md w-full">
+    </div>
+    <div>
+      <label for="cantidad">Cantidad</label>
+      <input id="cantidad" type="text" placeholder="Cantidad" class="border p-2 rounded-md w-full">
+    </div>
+    <div>
+      <label for="descuento">Dto.%</label>
+      <input id="descuento" type="text" placeholder="Dto.%" class="border p-2 rounded-md w-full">
+    </div>
+    <div>
+      <label for="iva">IVA%</label>
+      <input id="iva" type="text" placeholder="IVA%" class="border p-2 rounded-md w-full">
+    </div>
+    <div>
+      <label for="irpf">IRPF%</label>
+      <input id="irpf" type="text" placeholder="IRPF%" class="border p-2 rounded-md w-full">
+    </div>
+  </div>
+
+  <div class="bg-gray-200 rounded-lg border border-black mt-4">
+    <div class="p-4">
+      <div class="flex flex-col">
+        <div class="flex justify-between">
+          <span>Base imponible:</span>
+          <span>3€</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Descuento:</span>
+          <span>3€</span>
+        </div>
+        <div class="flex justify-between">
+          <span>IVA:</span>
+          <span>3€</span>
+        </div>
+        <div class="flex justify-between">
+          <span>IRPF:</span>
+          <span>3€</span>
+        </div>
+      </div>
+      <hr class="my-4 border-black">
+      <div class="flex justify-between">
+        <span>Total:</span>
+        <span>3€</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-center mt-4">
+    <button class="bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-8 rounded-lg">Guardar cambios</button>
+  </div>
+</div>
