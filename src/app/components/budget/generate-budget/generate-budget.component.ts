@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from '../../../services/api/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-generate-budget',
@@ -7,49 +9,37 @@ import { ApiService } from '../../../services/api/api.service';
   styleUrls: ['./generate-budget.component.css']
 })
 export class GenerateBudgetComponent {
-  // Variables para almacenar los datos del formulario
-  name: string = '';
-  telephone: string = '';
-  nif: string = '';
-  email: string = '';
-  concept: string = '';
-  price: number = 0;
-  quantity: number = 0;
-  discount: number = 0;
-  concept_iva: number = 0;
-  concept_irpf: number = 0;
-  subtotal: number = 0;
-  invoice_iva: number = 0;
-  invoice_irpf: number = 0;
-  total: number = 0;
+  budgetForm!: FormGroup;
+  conceptControls: FormGroup[] = [];
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, private router: Router, private fb: FormBuilder) {
+    // Inicializa el formulario y define las reglas de validación
+    this.budgetForm = this.fb.group({
+      name: ['', Validators.required],
+      telephone: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      street: ['', Validators.required],
+      city: ['', Validators.required],
+      postal_code: ['', Validators.required],
+      nif: ['', Validators.required],
+      concept: ['', Validators.required],
+      price: ['', Validators.required],
+      quantity: ['', Validators.required],
+      discount: ['', Validators.required],
+      concept_iva: ['', Validators.required],
+      concept_irpf: ['', Validators.required],
+    });
 
-  // Método para enviar los datos del formulario y crear una factura
-  onSubmit() {
-    const invoiceData = {
-      name: this.name,
-      telephone: this.telephone,
-      nif: this.nif,
-      email: this.email,
-      concept: this.concept,
-      price: this.price,
-      quantity: this.quantity,
-      discount: this.discount,
-      concept_iva: this.concept_iva,
-      concept_irpf: this.concept_irpf,
-      subtotal: this.subtotal,
-      invoice_iva: this.invoice_iva,
-      invoice_irpf: this.invoice_irpf,
-      total: this.total
-    };
+    this.addNewConcept();
+  }
 
+  addBudget(): void {
     // Llamar al método del servicio para crear una factura
-    this.apiService.createInvoice(invoiceData).subscribe(
+    this.apiService.createInvoice(this.budgetForm.value).subscribe(
       (response) => {
         // Manejar la respuesta si la factura se crea correctamente
         console.log('Factura creada exitosamente:', response);
-        // Aquí podrías redirigir a otra página o mostrar un mensaje de éxito
+        this.router.navigate(['/budget']);
       },
       (error) => {
         // Manejar el error si la creación de la factura falla
@@ -58,4 +48,27 @@ export class GenerateBudgetComponent {
       }
     );
   }
+
+  addNewConcept(): void {
+    // Agregar un nuevo FormGroup para un concepto al arreglo
+    const newConceptFormGroup = this.fb.group({
+      concept: ['', Validators.required],
+      price: ['', Validators.required],
+      quantity: ['', Validators.required],
+      discount: ['', Validators.required],
+      concept_iva: ['', Validators.required],
+      concept_irpf: ['', Validators.required],
+    });
+    // if (this.conceptControls.length > 0) {
+    //   const nextConceptIndex = this.conceptControls.length - 1;
+    //   this.conceptControls[nextConceptIndex].reset();
+    // }
+    newConceptFormGroup.reset();
+    this.conceptControls.push(newConceptFormGroup);
+  }
+
+  removeConcept(index: number): void {
+    this.conceptControls.splice(index, 1);
+  }
+
 }
