@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ApiService } from '../../../services/api/api.service';
 import { Router } from '@angular/router';
 
@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./generate-budget.component.css']
 })
 export class GenerateBudgetComponent {
-  budgetForm!: FormGroup;
-  conceptControls: FormGroup[] = [];
+  budgetForm: FormGroup;
+  conceptControls: FormArray;
 
   constructor(private apiService: ApiService, private router: Router, private fb: FormBuilder) {
     // Inicializa el formulario y define las reglas de validación
@@ -22,53 +22,44 @@ export class GenerateBudgetComponent {
       city: ['', Validators.required],
       postal_code: ['', Validators.required],
       nif: ['', Validators.required],
-      concept: ['', Validators.required],
-      price: ['', Validators.required],
-      quantity: ['', Validators.required],
-      discount: ['', Validators.required],
-      concept_iva: ['', Validators.required],
-      concept_irpf: ['', Validators.required],
+      concepts: this.fb.array([]) // Inicializando un FormArray vacío para los conceptos
     });
 
+    // Obtén una referencia al FormArray de conceptos
+    this.conceptControls = this.budgetForm.get('concepts') as FormArray;
+
+    // Agrega un nuevo concepto al inicializar el componente
     this.addNewConcept();
   }
 
+  // Método para agregar un presupuesto
   addBudget(): void {
-    // Llamar al método del servicio para crear una factura
     this.apiService.createInvoice(this.budgetForm.value).subscribe(
       (response) => {
-        // Manejar la respuesta si la factura se crea correctamente
-        console.log('Factura creada exitosamente:', response);
+        console.log('Presupuesto creado exitosamente:', response);
         this.router.navigate(['/budget']);
       },
       (error) => {
-        // Manejar el error si la creación de la factura falla
-        console.error('Error al crear la factura:', error);
-        // Aquí podrías mostrar un mensaje de error al usuario
+        console.error('Error al crear el presupuesto:', error);
+        // Podrías manejar el error aquí
       }
     );
   }
 
+  // Método para agregar un nuevo concepto al FormArray
   addNewConcept(): void {
-    // Agregar un nuevo FormGroup para un concepto al arreglo
-    const newConceptFormGroup = this.fb.group({
+    this.conceptControls.push(this.fb.group({
       concept: ['', Validators.required],
       price: ['', Validators.required],
       quantity: ['', Validators.required],
       discount: ['', Validators.required],
       concept_iva: ['', Validators.required],
       concept_irpf: ['', Validators.required],
-    });
-    // if (this.conceptControls.length > 0) {
-    //   const nextConceptIndex = this.conceptControls.length - 1;
-    //   this.conceptControls[nextConceptIndex].reset();
-    // }
-    newConceptFormGroup.reset();
-    this.conceptControls.push(newConceptFormGroup);
+    }));
   }
 
+  // Método para eliminar un concepto del FormArray
   removeConcept(index: number): void {
-    this.conceptControls.splice(index, 1);
+    this.conceptControls.removeAt(index);
   }
-
 }
