@@ -16,19 +16,20 @@ export class AddEmployeeComponent {
   constructor(private apiService: ApiService, private router: Router, private fb: FormBuilder) {
     // Inicializa el formulario y define las reglas de validación
     this.employeeForm = this.fb.group({
-      name: ['', Validators.required],
-      surname: ['', Validators.required],
+      name: ['', [Validators.required, Validators.minLength(2),Validators.pattern('^[a-zA-Z]+$')]],
+      surname: ['', [Validators.required, Validators.minLength(2),Validators.pattern('^[a-zA-Z]+$')]],
       date_of_birth: ['', [Validators.required,this.ageValidator]],
-      country: ['', Validators.required],
+      country: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
       gender: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      telephone: ['', [Validators.required, this.phoneNumberValidator()]],
+      email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')]],
+      telephone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      street: ['', [Validators.required, Validators.minLength(2)]],
+      city: ['', [Validators.required, Validators.minLength(2), Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
+      postal_code: ['', [Validators.required, Validators.minLength(5),Validators.pattern('^[0-9]+$')]],
+      nif: ['', [Validators.required, Validators.pattern('^[0-9]{8}[A-Za-z]$')]],
       photo: ['', [Validators.required, this.imageExtensionValidator]],
-      street: ['', Validators.required],
-      city: ['', Validators.required],
-      postal_code: ['', Validators.required],
-      nif: ['', Validators.required],
       password: ['', [Validators.required, this.passwordValidator]]
+
     });
   }
 
@@ -57,6 +58,8 @@ export class AddEmployeeComponent {
     }
   }
 
+
+
   // Función de validación personalizada para la extensión de imagen
   imageExtensionValidator(control: any) {
     if (control.value) {
@@ -80,19 +83,27 @@ export class AddEmployeeComponent {
 
    // Función de validación personalizada para verificar la edad mínima y la fecha futura
    ageValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    // Obtiene la fecha de nacimiento del control
     const dob = new Date(control.value);
     const today = new Date();
+
     // Calcula la edad del empleado
     let age = today.getFullYear() - dob.getFullYear();
     const monthDiff = today.getMonth() - dob.getMonth();
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
       age--;
     }
+
     // Verifica si la edad es menor de 18 años o si la fecha es en el futuro
     if (age < 18 || dob >= today) {
       return { 'invalidAgeOrDate': true };
     }
+
+    // Verifica si la fecha de nacimiento es anterior a 70 años desde hoy
+    const maxAllowedDate = new Date(today.getFullYear() - 70, today.getMonth(), today.getDate());
+    if (dob < maxAllowedDate) {
+      return { 'invalidDateInThePast': true };
+    }
+
     return null;
   }
 

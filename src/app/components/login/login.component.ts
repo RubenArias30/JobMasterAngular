@@ -1,7 +1,7 @@
 // login.component.ts
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl,FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api/api.service';
 import { Router } from '@angular/router';
 
@@ -20,13 +20,12 @@ export class LoginComponent implements OnInit {
 
    constructor(private authService: AuthService, private peticiones:ApiService,private route: Router) {
 
-   this.login = new FormGroup({
-    nif: new FormControl('', [
-      Validators.required,
-    ]),
+    this.login = new FormGroup({
+      nif: new FormControl('', [
+        Validators.required, // Campo obligatorio
+      ]),
     password: new FormControl('', [
       Validators.required,
-      //Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/)
     ]),
   });
    }
@@ -62,5 +61,6 @@ export class LoginComponent implements OnInit {
       }
     );
   }
+
 
 }
