@@ -23,39 +23,51 @@
           <div class="mt-2">
             <label for="nombre" class="block">Nombre completo</label>
             <input type="text" id="name" formControlName="name"
-              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Nombre">
+              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Nombre" maxlength="20">
 
-              <div *ngIf="employeeForm.get('name')?.invalid && employeeForm.get('name')?.touched">
-                <span class="text-red-500">El nombre es inválido</span>
-              </div>
+              <div
+              *ngIf="employeeForm.get('name')?.errors?.['required'] && (employeeForm.get('name')?.dirty || employeeForm.get('name')?.touched)"
+              class="text-red-500 mt-2">Nombre es obligatorio.</div>
+              <div
+              *ngIf="employeeForm.get('name')?.errors?.['pattern'] && (employeeForm.get('name')?.dirty || employeeForm.get('name')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce solo letras para el nombre.</div>
 
           </div>
           <div class="mt-2">
             <label for="apellido" class="block">Apellido</label>
             <input type="text" id="surname" formControlName="surname"
-              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Apellidos">
-              <div *ngIf="employeeForm.get('surname')?.invalid && employeeForm.get('surname')?.touched">
-                <span class="text-red-500">El apellido es inválido</span>
-              </div>
+              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Apellidos" maxlength="20">
+              <div
+              *ngIf="employeeForm.get('surname')?.errors?.['required'] && (employeeForm.get('surname')?.dirty || employeeForm.get('surname')?.touched)"
+              class="text-red-500 mt-2">Apellido es obligatorio.</div>
+              <div
+              *ngIf="employeeForm.get('surname')?.errors?.['pattern'] && (employeeForm.get('surname')?.dirty || employeeForm.get('surname')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce solo letras para el apellido.</div>
 
           </div>
           <div class="mt-2">
             <label for="fecha-nacimiento" class="block">Fecha de nacimiento</label>
             <input type="date" id="date_of_birth" formControlName="date_of_birth"
               class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Fecha de nacimiento">
-
-              <div *ngIf="employeeForm.get('date_of_birth')?.invalid && employeeForm.get('date_of_birth')?.touched">
-                <span class="text-red-500">Debes tener al menos 18 años.</span>
-              </div>
+              <div
+              *ngIf="employeeForm.get('date_of_birth')?.errors?.['required'] && (employeeForm.get('date_of_birth')?.dirty || employeeForm.get('date_of_birth')?.touched)"
+              class="text-red-500 mt-2">Fecha de nacimiento es obligatoria.</div>
+              <div *ngIf="employeeForm.get('date_of_birth')?.errors?.['invalidAgeOrDate'] && (employeeForm.get('date_of_birth')?.dirty || employeeForm.get('date_of_birth')?.touched)"
+              class="text-red-500 mt-2">Debes tener al menos 18 años.</div>
+              <div *ngIf="employeeForm.get('date_of_birth')?.errors?.['invalidDateInThePast'] && (employeeForm.get('date_of_birth')?.dirty || employeeForm.get('date_of_birth')?.touched)"
+              class="text-red-500 mt-2">La fecha no puede ser tan antigua.</div>
 
           </div>
           <div class="mt-2">
-            <label for="nacionalidad" class="block">Nacionalidad</label>
+            <label for="nacionalidad" class="block">Pais</label>
             <input type="text" id="nacionalidad" formControlName="country"
-              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Nacionalidad">
-              <div *ngIf="employeeForm.get('country')?.invalid && employeeForm.get('country')?.touched">
-                <span class="text-red-500">La nacionalidad es inválida</span>
-              </div>
+              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Nacionalidad" maxlength="20">
+              <div
+              *ngIf="employeeForm.get('country')?.errors?.['required'] && (employeeForm.get('country')?.dirty || employeeForm.get('country')?.touched)"
+              class="text-red-500 mt-2">Pais es obligatorio.</div>
+              <div
+                *ngIf="employeeForm.get('country')?.errors?.['pattern'] && (employeeForm.get('country')?.dirty || employeeForm.get('country')?.touched)"
+                class="text-red-500 mt-2">Por favor, introduce su pais con la primera letra en mayúscula y solo letras.</div>
 
           </div>
           <div class="mt-2">
@@ -66,40 +78,53 @@
               <option value="male">Masculino</option>
               <option value="female">Femenino</option>
             </select>
-
+            <div
+            *ngIf="employeeForm.get('gender')?.errors?.['required'] && (employeeForm.get('gender')?.dirty || employeeForm.get('gender')?.touched)"
+            class="text-red-500 mt-2">Género es obligatorio.</div>
           </div>
           <div class="mt-2">
             <label for="email" class="block">Email</label>
             <input type="email" id="email" formControlName="email"
-              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Email">
-              <div *ngIf="employeeForm.get('email')?.invalid && employeeForm.get('email')?.touched">
-                <span class="text-red-500">El correo electrónico es inválido</span>
-              </div>
+              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Email" maxlength="35">
+              <div
+              *ngIf="employeeForm.get('email')?.errors?.['required'] && (employeeForm.get('email')?.dirty || employeeForm.get('email')?.touched)"
+              class="text-red-500 mt-2">Email es obligatorio.</div>
+              <div
+      *ngIf="employeeForm.get('email')?.errors?.['pattern'] && (employeeForm.get('email')?.dirty || employeeForm.get('email')?.touched)"
+      class="text-red-500 mt-2">Por favor, introduce un formato de correo electrónico válido.</div>
           </div>
           <div class="mt-2">
             <label for="telefono" class="block">Teléfono</label>
             <input type="text" id="telephone" formControlName="telephone"
-              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Teléfono">
+              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Teléfono" maxlength="9">
 
-              <div *ngIf="employeeForm.get('telephone')?.invalid && employeeForm.get('telephone')?.touched">
-                <span class="text-red-500">El formato del teléfono es inválido</span>
-              </div>
+              <div
+              *ngIf="employeeForm.get('telephone')?.errors?.['required'] && (employeeForm.get('telephone')?.dirty || employeeForm.get('telephone')?.touched)"
+              class="text-red-500 mt-2">Teléfono es obligatorio.</div>
+              <div
+              *ngIf="employeeForm.get('telephone')?.errors?.['pattern'] && (employeeForm.get('telephone')?.dirty || employeeForm.get('telephone')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce solo números para el telefono.</div>
 
           </div>
-
 
           <div class="mt-2">
             <label for="foto" class="block">Foto</label>
             <input type="file" id="photo" formControlName="photo" accept="image/*" class="mt-1">
             <div *ngIf="employeeData && employeeData.photo">
-              <img [src]="employeeData.photo" alt="Foto de {{ employeeData.name }}" class="mt-2" style="max-width: 200px;">
+                <img [src]="employeeData.photo" alt="Foto de {{ employeeData.name }}" class="mt-2" style="max-width: 200px;">
             </div>
-
-            <div *ngIf="employeeForm.get('photo')?.invalid && employeeForm.get('photo')?.touched">
-              <p class="text-red-500">La extensión de la imagen no es válida. Solo se permiten archivos JPG, JPEG, PNG y GIF.</p>
+            <div *ngIf="employeeForm.get('photo')?.errors?.['required'] && (employeeForm.get('photo')?.dirty || employeeForm.get('photo')?.touched)"
+                class="text-red-500 mt-2">Foto es obligatoria.</div>
+            <div *ngIf="employeeForm.get('photo')?.errors?.['invalidImageExtension'] && (employeeForm.get('photo')?.dirty || employeeForm.get('photo')?.touched)"
+                class="text-red-500 mt-2">La foto debe tener una extensión de archivo válida (jpg, jpeg, png, gif).</div>
+            <div *ngIf="employeeForm.get('photo')?.value && !employeeForm.get('photo')?.errors"
+                class="text-green-500 mt-2">
+                Foto válida.
             </div>
-
-          </div>
+        </div>
+        
+      
+      
         </div>
       </div>
 
@@ -111,8 +136,11 @@
           <div class="mt-2">
             <label for="direccion" class="block">Dirección</label>
             <input type="text" id="direccion" formControlName="street"
-              class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2" placeholder="Dirección">
-          </div>
+              class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2" placeholder="Dirección" maxlength="20">
+              <div
+              *ngIf="employeeForm.get('street')?.errors?.['required'] && (employeeForm.get('street')?.dirty || employeeForm.get('street')?.touched)"
+              class="text-red-500 mt-2">Dirección es obligatoria.</div>
+            </div>
           <!-- <div class="mt-2">
             <label for="numero" class="block">Número</label>
             <input type="text" id="numero" formControlName="number"
@@ -122,15 +150,25 @@
           <div class="mt-2">
             <label for="ciudad" class="block">Ciudad</label>
             <input type="text" id="ciudad" formControlName="city"
-              class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2" placeholder="Ciudad">
-
+              class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2" placeholder="Ciudad" maxlength="20">
+              <div
+              *ngIf="employeeForm.get('city')?.errors?.['required'] && (employeeForm.get('city')?.dirty || employeeForm.get('city')?.touched)"
+              class="text-red-500 mt-2">Ciudad es obligatoria.</div>
+              <div
+              *ngIf="employeeForm.get('city')?.errors?.['pattern'] && (employeeForm.get('city')?.dirty || employeeForm.get('city')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce la ciudad con la primera letra en mayúscula y solo letras.</div>
           </div>
 
           <div class="mt-2">
             <label for="ciudad" class="block">Código Postal</label>
             <input type="text" id="cp" formControlName="postal_code"
-              class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2" placeholder="Código Postal">
-
+              class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2" placeholder="Código Postal" maxlength="5">
+              <div
+              *ngIf="employeeForm.get('postal_code')?.errors?.['required'] && (employeeForm.get('postal_code')?.dirty || employeeForm.get('postal_code')?.touched)"
+              class="text-red-500 mt-2">Código Postal es obligatorio.</div>
+              <div
+              *ngIf="employeeForm.get('postal_code')?.errors?.['pattern'] && (employeeForm.get('postal_code')?.dirty || employeeForm.get('postal_code')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce solo números para el código postal.</div>
           </div>
         </div>
         <br>
@@ -141,7 +179,7 @@
           <div class="mt-4">
             <label for="nif" class="block">NIF</label>
             <input type="text" id="nif" formControlName="nif" appNifValidator
-              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="12345678Z">
+              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="12345678Z" maxlength="9">
               <div
               *ngIf="employeeForm?.get('nif')?.invalid && (employeeForm?.get('nif')?.dirty || employeeForm?.get('nif')?.touched)"
               class="text-red-500 mt-2">Por favor, introduce un NIF válido.</div>
@@ -151,14 +189,17 @@
           <div class="mt-5">
             <label for="password" class="block">Password</label>
             <input type="password" id="password" formControlName="password"
-              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Contraseña">
+              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Contraseña" maxlength="35">
 
-
-
-              <div *ngIf="employeeForm.get('password')?.invalid && employeeForm.get('password')?.touched">
-                <span class="text-red-500">La contraseña debe tener al menos 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula
-                  y un número.</span>
-              </div>
+              <div
+              *ngIf="employeeForm.get('password')?.errors?.['required'] && (employeeForm.get('password')?.dirty || employeeForm.get('password')?.touched)"
+              class="text-red-500 mt-2">Contraseña es obligatoria.</div>
+            <div
+              *ngIf="employeeForm.get('password')?.errors?.['invalidPassword'] && (employeeForm.get('password')?.dirty || employeeForm.get('password')?.touched)"
+              class="text-red-500 mt-2">
+              La contraseña debe tener al menos 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula
+              ,un número.
+            </div>
 
           </div>
 

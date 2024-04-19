@@ -23,22 +23,21 @@ export class EditEmployeeComponent implements OnInit {
     private apiService: ApiService
 
   ) {
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     this.employeeForm = this.formBuilder.group({
-      name: ['',this.validateField],
-      surname: ['',this.validateField],
-      date_of_birth: ['', [this.ageValidator.bind(this)]],
-      country: ['',this.validateField],
-      gender: [''],
-       email: ['', [Validators.pattern(emailPattern)]],
-       telephone: ['', [ this.phoneNumberValidator()]],
-       photo: ['', this.imageExtensionValidator],
-      street: [''],
-      city: [''],
-      postal_code: [''],
-      nif: [''],
-      password: ['', [this.passwordValidator.bind(this)]]
+      name: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
+      surname: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
+      date_of_birth: ['', [Validators.required,this.ageValidator]],
+      country: ['', [Validators.required, Validators.pattern('^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ ]+$')]],
+      gender: ['', Validators.required],
+      email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')]],
+      telephone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      street: ['', [Validators.required]],
+      city: ['', [Validators.required, Validators.pattern('^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ ]+$')]],
+      postal_code: ['', [Validators.required, Validators.minLength(5),Validators.pattern('^[0-9]+$')]],
+      nif: ['', [Validators.required, Validators.pattern('^(?=.*[XYZ0-9])[XYZ0-9][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$',)]],
+      photo: ['', [Validators.required, this.imageExtensionValidator]],
+      password: ['', [Validators.required, this.passwordValidator]]
     });
   }
 
@@ -132,15 +131,21 @@ export class EditEmployeeComponent implements OnInit {
   }
 
    // Función de validación personalizada para la extensión de imagen
-   imageExtensionValidator(control: any) {
+   imageExtensionValidator(control: AbstractControl): { [key: string]: boolean } | null {
     if (control.value) {
+      const file = control.value as File; // Obtener el archivo del valor del control
       const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-      if (!allowedExtensions.test(control.value)) {
+  
+      // Validar si el archivo tiene una extensión permitida
+      if (!allowedExtensions.test(file.name)) {
+        // Si la extensión del archivo no es válida, establecer el valor del control en nulo
+        control.setValue(null);
         return { invalidImageExtension: true };
       }
     }
     return null;
   }
+  
 
   // Función de validación personalizada para la contraseña
   passwordValidator(control: AbstractControl): { [key: string]: boolean } | null {
@@ -172,21 +177,30 @@ export class EditEmployeeComponent implements OnInit {
     };
   }
 
-   // Función de validación personalizada para verificar la edad mínima y la fecha futura
-   ageValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    // Obtiene la fecha de nacimiento del control
+  
+  // Función de validación personalizada para verificar la edad mínima y la fecha futura
+  ageValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const dob = new Date(control.value);
     const today = new Date();
+
     // Calcula la edad del empleado
     let age = today.getFullYear() - dob.getFullYear();
     const monthDiff = today.getMonth() - dob.getMonth();
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
       age--;
     }
+
     // Verifica si la edad es menor de 18 años o si la fecha es en el futuro
     if (age < 18 || dob >= today) {
       return { 'invalidAgeOrDate': true };
     }
+
+    // Verifica si la fecha de nacimiento es anterior a 70 años desde hoy
+    const maxAllowedDate = new Date(today.getFullYear() - 70, today.getMonth(), today.getDate());
+    if (dob < maxAllowedDate) {
+      return { 'invalidDateInThePast': true };
+    }
+
     return null;
   }
 }

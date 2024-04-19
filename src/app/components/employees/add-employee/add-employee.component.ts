@@ -16,17 +16,17 @@ export class AddEmployeeComponent {
   constructor(private apiService: ApiService, private router: Router, private fb: FormBuilder) {
     // Inicializa el formulario y define las reglas de validación
     this.employeeForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2),Validators.pattern('^[a-zA-Z]+$')]],
-      surname: ['', [Validators.required, Validators.minLength(2),Validators.pattern('^[a-zA-Z]+$')]],
+      name: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
+      surname: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
       date_of_birth: ['', [Validators.required,this.ageValidator]],
-      country: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
+      country: ['', [Validators.required, Validators.pattern('^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ ]+$')]],
       gender: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')]],
       telephone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
-      street: ['', [Validators.required, Validators.minLength(2)]],
-      city: ['', [Validators.required, Validators.minLength(2), Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
+      street: ['', [Validators.required]],
+      city: ['', [Validators.required, Validators.pattern('^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ ]+$')]],
       postal_code: ['', [Validators.required, Validators.minLength(5),Validators.pattern('^[0-9]+$')]],
-      nif: ['', [Validators.required, Validators.pattern('^[0-9]{8}[A-Za-z]$')]],
+      nif: ['', [Validators.required, Validators.pattern('^(?=.*[XYZ0-9])[XYZ0-9][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$',)]],
       photo: ['', [Validators.required, this.imageExtensionValidator]],
       password: ['', [Validators.required, this.passwordValidator]]
 
@@ -58,6 +58,12 @@ export class AddEmployeeComponent {
     }
   }
 
+  cancelEdit(): void {
+    if (confirm('¿Estás seguro de cancelar la edición?')) {
+      // Si el usuario confirma la cancelación, redirige a la página de administración de empleados
+      this.router.navigate(['/employees']);
+    }
+  }
 
 
   // Función de validación personalizada para la extensión de imagen
