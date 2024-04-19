@@ -9,8 +9,13 @@
           <label for="nif" class="block text-lg font-medium leading-6 text-gray-900">NIF</label>
 
           <div *ngIf="login?.get('nif')?.invalid && (login?.get('nif')?.dirty || login?.get('nif')?.touched)"
-            class="text-red-500 mt-2">Por favor, introduce un NIF válido.</div>
+          class="text-red-500 mt-2">Por favor, introduce un NIF válido.</div>
 
+          <!-- <div *ngIf="login.get('nif')?.errors?.['required'] && (login.get('nif')?.dirty || login.get('nif')?.touched)"
+          class="text-red-500 mt-2">El campo NIF es obligatorio.</div>
+
+        <div *ngIf="login.get('nif')?.errors?.['pattern'] && (login.get('nif')?.dirty || login.get('nif')?.touched)"
+          class="text-red-500 mt-2">Por favor, introduce un NIF válido.</div> -->
 
           <div class="mt-2">
             <input id="nif" name="nif" type="text" placeholder="Introduce tu NIF" formControlName="nif" appNifValidator
@@ -24,9 +29,14 @@
             <label for="password" class="block text-lg font-medium leading-6 text-gray-900">Contraseña</label>
           </div>
 
-          <div
-            *ngIf="login?.get('password')?.invalid && (login?.get('password')?.dirty || login?.get('password')?.touched)"
-            class="text-red-500 mt-2">Por favor, introduce una contraseña válida.</div>
+          <div *ngIf="login.get('password')?.errors?.['required'] && (login.get('password')?.dirty || login.get('password')?.touched)"
+          class="text-red-500 mt-2">La contraseña es requerida.</div>
+
+        <div
+          *ngIf="login.get('password')?.errors?.['pattern'] && (login.get('password')?.dirty || login.get('password')?.touched)"
+          class="text-red-500 mt-2">La contraseña debe tener al menos 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula
+          , un número y caracter especial(*).</div>
+
 
           <div class="mt-2">
             <input id="password" name="password" type="password" autocomplete="current-password"
@@ -38,7 +48,7 @@
         <div>
 
            <!-- Mensaje de error -->
-      <div *ngIf="mensaje" class="text-red-500 mt-2">{{ mensaje }}</div>
+           <div *ngIf="mensaje && (login.get('nif')?.invalid || login.get('password')?.invalid)" class="text-red-500 mt-2">{{ mensaje }}</div>
 
           <button type="submit"
             class="flex w-full justify-center rounded-md bg-green-400 px-4 py-2 text-lg font-semibold leading-6 text-black shadow-sm hover:bg-green-500 hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
