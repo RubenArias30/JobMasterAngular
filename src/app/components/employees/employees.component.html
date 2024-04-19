@@ -13,67 +13,72 @@
       </div>
   </div> -->
 
-  <!-- Encabezado -->
-  <div class="flex items-center justify-between mb-4">
-      <div class="flex items-center">
-          <h1 class="text-lg font-bold mr-2">Empleados</h1>
-          <div class="border-l h-6 mr-2"></div>
-          <div class="text-sm text-gray-500">{{employees.length}} Trabajadores</div>
-      </div>
-      <div class="flex">
-          <button routerLink="/employees/add_employee" class="flex items-center bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-lg mr-2">
-              <i class='bx bxs-user-plus text-xl'></i>
-              <span class="ml-1">Añadir</span>
-          </button>
-          <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-2 py-1 rounded-lg">
-              <i class='bx bx-filter text-xl'></i>
-              <span class="ml-1">Filtros</span>
-          </button>
-      </div>
-  </div>
+  <div class="container mx-auto mt-8">
+    <!-- Encabezado -->
+    <div class="flex items-center justify-between mb-4 ml-5"> <!-- Added ml-4 for left space -->
+        <div class="flex items-center">
+            <h1 class="text-lg font-bold mr-2">Empleados</h1>
+            <div class="border-l h-6 mr-2"></div>
+            <div class="text-sm text-gray-500">{{employees.length}} Trabajadores</div>
+        </div>
+        <div class="flex ml-auto mr-8"> <!-- Increased mr-8 for more right space -->
+            <button routerLink="/employees/add_employee" class="flex items-center bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-lg mr-2">
+                <i class='bx bxs-user-plus text-xl'></i>
+                <span class="ml-1">Añadir</span>
+            </button>
+            <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-2 py-1 rounded-lg">
+                <i class='bx bx-filter text-xl'></i>
+                <span class="ml-1">Filtros</span>
+            </button>
+        </div>
+    </div>
+</div>
 
-  <!-- Lista de empleados -->
-  <div class="bg-white rounded-xl shadow-lg p-4">
-      <table class="w-full">
-          <!-- Cabecera de la tabla -->
-          <thead>
-              <tr class="bg-gray-200">
-                <th>Id</th>
-                  <th>Foto</th>
-                  <th>Nombre</th>
-                  <th>Email</th>
-                  <th>Teléfono</th>
-                  <th>País</th>
-                  <th class="text-center">Acción</th>
-              </tr>
-          </thead>
-          <!-- Datos de los empleados -->
-          <tbody>
 
-              <tr *ngFor="let employee of employees">
-                <td>{{ employee.id }}</td>
-                 <td>
+<div class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto"> <!-- Added overflow-x-auto for horizontal scrolling -->
+    <table class="w-full">
+        <!-- Cabecera de la tabla -->
+        <thead>
+            <tr class="bg-gray-200">
+                <th class="text-center px-4">Id</th> <!-- Added text-center and px-4 class -->
+                <th class="text-center px-4">Foto</th> <!-- Added text-center and px-4 class -->
+                <th class="text-center px-4">Nombre</th> <!-- Added text-center and px-4 class -->
+                <th class="text-center px-4">Email</th> <!-- Added text-center and px-4 class -->
+                <th class="text-center px-4">Teléfono</th> <!-- Added text-center and px-4 class -->
+                <th class="text-center px-4">País</th> <!-- Added text-center and px-4 class -->
+                <th class="text-center px-4">Acción</th> <!-- Added text-center and px-4 class -->
+            </tr>
+        </thead>
+        <!-- Datos de los empleados -->
+        <tbody>
+            <tr *ngFor="let employee of employees">
+                <td class="text-center px-4">{{ employee.id }}</td> <!-- Changed to text-center -->
+                <td class="text-center px-4"> <!-- Changed to text-center -->
                     <div class="rounded-full overflow-hidden border border-gray-300 h-8 w-8">
                         <img [src]="employee.photo" alt="Foto de {{ employee.name }}" class="h-full w-full object-cover" width="25" height="25">
                     </div>
                 </td>
-                <td>{{ employee.name }} {{ employee.surname }}</td>
-                  <td>{{ employee.email }}</td>
-                  <td>{{ employee.telephone }}</td>
-                  <td>{{ employee.country }}</td>
-                  <td class="text-center">
-                      <a routerLink="/documents">
-                          <i class='bx bx-file text-xl text-black mr-2'></i>
-                      </a>
-                      <a [routerLink]="['/employees/edit_employee', employee.id]">
+                <td class="text-center px-4">{{ employee.name }} {{ employee.surname }}</td> <!-- Changed to text-center -->
+                <td class="text-center px-4">{{ employee.email }}</td> <!-- Changed to text-center -->
+                <td class="text-center px-4">{{ employee.telephone }}</td> <!-- Changed to text-center -->
+                <td class="text-center px-4">{{ employee.country }}</td> <!-- Changed to text-center -->
+                <td class="text-center px-4">
+                    <a routerLink="/documents">
+                        <i class='bx bx-file text-xl text-black mr-2'></i>
+                    </a>
+                    <a [routerLink]="['/employees/edit_employee', employee.id]">
                         <i class='bx bx-edit text-xl text-black mr-2'></i>
-                      </a>
-                      <button (click)="confirmDeleteEmployee(employee.id)">
+                    </a>
+                    <button (click)="confirmDeleteEmployee(employee.id)">
                         <i class='bx bx-trash text-xl text-black'></i>
                     </button>
-                  </td>
-              </tr>
-          </tbody>
-      </table>
-  </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
 </div>

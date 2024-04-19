@@ -1,11 +1,11 @@
 <div class="container mx-auto mt-8">
-  <div class="flex items-center justify-between mb-4">
+  <div class="flex items-center justify-between mb-4 ml-5"> <!-- Added ml-4 for left space -->
     <div class="flex items-center">
-      <h1 class="text-lg font-bold mr-2">Presupuesto</h1>
+        <h1 class="text-lg font-bold mr-2 sm:text-xl md:text-2xl lg:text-3xl">Presupuesto</h1>
       <div class="border-l h-6 mr-2"></div>
       <div class="text-sm text-gray-500">{{ invoices.length }} Presupuestos</div>
     </div>
-    <div class="flex">
+    <div class="flex ml-auto mr-8">
       <button routerLink="/budget/generate_budget" class="flex items-center bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-lg mr-2">
         <i class='bx bxs-user-plus text-xl'></i>
         <span class="ml-1">Añadir</span>
@@ -17,8 +17,8 @@
     </div>
   </div>
 
-  <div class="bg-white rounded-xl shadow-lg p-4">
-    <table class="w-full text-center">
+  <div class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto">
+    <table class="w-full text-center text-xs sm:text-sm md:text-base lg:text-lg">
       <thead>
         <tr class="bg-gray-200">
           <th>Subtotal</th>
@@ -26,7 +26,7 @@
           <th>IVA Factura</th>
           <th>IRPF Factura</th>
           <th>Total</th>
-          <th>Concepto</th>
+          <!-- <th>Concepto</th> -->
           <th>Acción</th>
         </tr>
       </thead>
@@ -37,9 +37,9 @@
           <td>{{ invoice.invoice_iva }}</td>
           <td>{{ invoice.invoice_irpf }}</td>
           <td>{{ invoice.total }}</td>
-          <td class="text-left">
+          <!-- <td class="text-left">
             <div *ngFor="let concept of invoice.concepts">{{ concept.concept }}</div>
-          </td>
+          </td> -->
           <td>
             <!-- <button (click)="confirmDeleteInvoice(invoice.id)">
               <i class='bx bxs-download text-xl text-black mr-2'></i>

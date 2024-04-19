@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../../../services/api/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-generate-budget',
@@ -23,7 +24,11 @@ export class GenerateBudgetComponent {
   invoice_irpf: number = 0;
   total: number = 0;
 
-  constructor(private apiService: ApiService) { }
+  constructor
+  (private apiService: ApiService,
+  private router: Router,
+
+  ) { }
 
   // Método para enviar los datos del formulario y crear una factura
   onSubmit() {
@@ -58,4 +63,11 @@ export class GenerateBudgetComponent {
       }
     );
   }
+  cancelEdit(): void {
+    if (confirm('¿Estás seguro de cancelar la edición?')) {
+      // Si el usuario confirma la cancelación, redirige a la página de administración de empleados
+      this.router.navigate(['/budget']);
+    }
+  }
+
 }

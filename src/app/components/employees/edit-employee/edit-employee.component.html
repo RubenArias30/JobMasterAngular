@@ -1,18 +1,21 @@
-<div class="container mx-auto mt-8">
+<div class="container mx-auto mt-8 px-4"> <!-- Added px-4 for spacing -->
   <!-- Icono "Editar empleado" y texto -->
-  <div class="flex items-center">
-    <i class='bx bxs-edit-alt text-4xl text-gray-600'></i>
-    <h1 class="text-2xl font-bold ml-4">Editar empleado</h1>
+  <div class="flex items-center mb-4"> <!-- Added mb-4 for spacing -->
+    <i class='bx bxs-edit-alt text-4xl text-gray-600 mr-4'></i> <!-- Added mr-4 for spacing -->
+    <h1 class="text-2xl font-bold">Editar empleado</h1>
   </div>
 
   <!-- Línea divisora -->
-  <hr class="my-4 border-gray-400">
+  <hr class="my-4 border border-gray-400 w-full"> <!-- Added w-full for spacing -->
+ 
+
+
 
   <form [formGroup]="employeeForm" (ngSubmit)="updateEmployee()">
 
-    <div class="container mx-auto mt-8 flex">
+    <div class="container mx-auto mt-8 px-8 lg:flex lg:flex-row flex-col"> <!-- Added lg:flex and flex-col classes -->
       <!-- Información personal -->
-      <div class="flex-1 mr-4">
+      <div class="flex-1 lg:mr-4 mb-4 lg:mb-0"> <!-- Adjusted margin for large screens -->
         <div class="border border-black p-4 rounded-lg bg-white">
           <h2 class="text-lg font-bold">Información personal</h2>
           <hr class="my-2 border-gray-400">
@@ -101,7 +104,7 @@
       </div>
 
       <!--  Direccion  y Credenciales -->
-      <div class="flex-1 ml-4">
+      <div class="flex-1 lg:ml-4"> <!-- Adjusted margin for large screens -->
         <div class="bg-white border border-black p-4 rounded-lg">
           <h2 class="text-lg font-bold">Direccion</h2>
           <hr class="my- border-gray-400">

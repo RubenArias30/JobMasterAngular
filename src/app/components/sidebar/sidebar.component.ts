@@ -7,6 +7,13 @@ import { AuthService } from '../../services/auth/auth.service';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
+
+  sidebarHidden: boolean = false;
+
+  // Function to toggle sidebar visibility
+  toggleSidebar() {
+    this.sidebarHidden = !this.sidebarHidden;
+  }
   userRole: string | null = null;
 
   constructor(private authService: AuthService) {

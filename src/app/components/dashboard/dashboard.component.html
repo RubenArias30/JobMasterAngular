@@ -14,87 +14,168 @@
       </div>
     </div> -->
 
-    <!-- Datos del dashboard -->
-    <div class="flex flex-col sm:flex-row justify-center w-full mb-4">
-      <!--  datos -->
-      <div class="flex flex-col items-center bg-white border border-green-400 rounded-xl p-4 mb-4 sm:mb-0 sm:mr-4 w-full sm:w-1/3">
-        <div class="flex justify-between items-center w-full">
-          <div class="flex flex-col">
-            <p class="text-4xl sm:text-6xl font-bold">3</p>
-            <p class="text-lg font-medium">Total de Trabajadores</p>
-          </div>
-          <div>
-            <i class="bx bxs-group text-xl sm:text-6xl text-green-400"></i>
-          </div>
-        </div>
+   <!-- Datos del dashboard -->
+<div class="flex flex-col sm:flex-row justify-center w-full mb-4 space-y-4 sm:space-y-0 sm:space-x-4">
+  <!--  datos -->
+  <div class="flex flex-col items-center bg-white border border-green-400 rounded-xl p-4 w-full sm:w-1/3">
+    <div class="flex justify-between items-start w-full">
+      <div class="flex flex-col">
+        <p class="text-4xl sm:text-6xl font-bold">3</p>
+        <br>
+        <p class="text-lg font-medium mt-auto">Total de Trabajadores</p>
       </div>
-      <div class="flex flex-col items-center bg-white border border-green-400 rounded-xl p-4 mb-4 sm:mb-0 sm:mr-4 w-full sm:w-1/3">
-        <div class="flex justify-between items-center w-full">
-          <div class="flex flex-col">
-            <p class="text-4xl sm:text-6xl font-bold">4</p>
-            <p class="text-lg font-medium">Trabajadores Presentados Hoy</p>
-          </div>
-          <div>
-            <i class="bx bxs-user text-4xl sm:text-6xl text-green-400"></i>
-          </div>
-        </div>
-      </div>
-      <div class="flex flex-col items-center bg-white border border-green-400 rounded-xl p-4 w-full sm:w-1/3">
-        <div class="flex justify-between items-start w-full">
-          <div class="flex flex-col">
-            <p class="text-4xl sm:text-6xl font-bold">3</p>
-            <br>
-            <p class="text-lg font-medium mt-auto">Trabajadores Inactivos</p>
-          </div>
-          <div>
-            <i class="bx bxs-user-x text-5xl sm:text-7xl text-green-400"></i>
-          </div>
-        </div>
+      <div>
+        <i class='bx bxs-group text-5xl sm:text-7xl  text-green-400'  ></i>
       </div>
     </div>
+  </div>
+  <div class="flex flex-col items-center bg-white border border-green-400 rounded-xl p-4 w-full sm:w-1/3">
+    <div class="flex justify-between items-start w-full">
+      <div class="flex flex-col">
+        <p class="text-4xl sm:text-6xl font-bold">4</p>
+        <br>
+        <p class="text-lg font-medium mt-auto">Trabajadores Inactivos</p>
+      </div>
+      <div>
+        <i class="bx bxs-user-x text-5xl sm:text-7xl  text-green-400"></i>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col items-center bg-white border border-green-400 rounded-xl p-4 w-full sm:w-1/3">
+    <div class="flex justify-between items-start w-full">
+      <div class="flex flex-col">
+        <p class="text-4xl sm:text-6xl font-bold">10</p>
+        <br>
+        <p class="text-lg font-medium mt-auto">Trabajadores Presentados</p>
+      </div>
+      <div>
+        <i class="bx bxs-user text-5xl sm:text-7xl text-green-400"></i>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <!-- Div de incidencias -->
+  <!-- tabla de Incidencias -->
     <div class="w-full bg-white border border-green-400 rounded-xl p-4 mb-8">
       <h2 class="text-xl font-bold mb-4">Incidencias</h2>
-      <table class="w-full">
-        <thead>
+
+
+<div class="relative overflow-x-auto">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-900 uppercase dark:text-gray-400">
           <tr>
-            <th class="py-2">Usuario</th>
-            <th class="py-2">Razón</th>
-            <th class="py-2">Email</th>
-            <th class="py-2">Fecha</th>
-            <th class="py-2">Hora</th>
-            <th class="py-2">Estado</th>
+              <th scope="col" class="px-6 py-3">
+                  Usuario
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Razón
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Email
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Fecha
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Hora
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Estado
+              </th>
+
           </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="py-2">Usuario 1</td>
-            <td class="py-2">razon 1</td>
-            <td class="py-2">email 1</td>
-            <td class="py-2">fecha</td>
-            <td class="py-2">horari</td>
-            <td class="py-2">Completado</td>
+      </thead>
+      <tbody>
+          <tr class="bg-white dark:bg-gray-800">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  Usuario1
+              </th>
+              <td class="px-6 py-4">
+                  razon1
+              </td>
+              <td class="px-6 py-4">
+                  email1
+              </td>
+              <td class="px-6 py-4">
+                  fecha
+              </td>
+              <td class="px-6 py-4">
+                  hora
+              </td>
+              <td class="px-6 py-4">
+                  Completado
+              </td>
           </tr>
-          <tr>
-            <td class="py-2">Usuario 2</td>
-            <td class="py-2">razon </td>
-            <td class="py-2">email </td>
-            <td class="py-2">fecha</td>
-            <td class="py-2">horari</td>
-            <td class="py-2">Pendiente</td>
+          <tr class="bg-white dark:bg-gray-800">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  Usuario1
+              </th>
+              <td class="px-6 py-4">
+                  razon1
+              </td>
+              <td class="px-6 py-4">
+                  email1
+              </td>
+              <td class="px-6 py-4">
+                  fecha
+              </td>
+              <td class="px-6 py-4">
+                  hora
+              </td>
+              <td class="px-6 py-4">
+                  Completado
+              </td>
           </tr>
-          <tr>
-            <td class="py-2">Usuario 3</td>
-            <td class="py-2">razon </td>
-            <td class="py-2">email </td>
-            <td class="py-2">fecha</td>
-            <td class="py-2">horari</td>
-            <td class="py-2">Pendiente</td>
+          <tr class="bg-white dark:bg-gray-800">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  Usuario1
+              </th>
+              <td class="px-6 py-4">
+                  razon1
+              </td>
+              <td class="px-6 py-4">
+                  email1
+              </td>
+              <td class="px-6 py-4">
+                  fecha
+              </td>
+              <td class="px-6 py-4">
+                  hora
+              </td>
+              <td class="px-6 py-4">
+                  Completado
+              </td>
           </tr>
-        </tbody>
-      </table>
-    </div>
+          <tr class="bg-white dark:bg-gray-800">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  Usuario1
+              </th>
+              <td class="px-6 py-4">
+                  razon1
+              </td>
+              <td class="px-6 py-4">
+                  email1
+              </td>
+              <td class="px-6 py-4">
+                  fecha
+              </td>
+              <td class="px-6 py-4">
+                  hora
+              </td>
+              <td class="px-6 py-4">
+                  Completado
+              </td>
+          </tr>
+
+      </tbody>
+  </table>
+</div>
+
+      </div>
+
+
+
+
 
     <!-- Lista -->
     <div class="w-full bg-white border border-green-400 rounded-xl p-4">

@@ -1,19 +1,20 @@
 <!-- Dentro de tu plantilla HTML (add-employee.component.html) -->
 
-<div class="container mx-auto mt-8">
+<div class="container mx-auto mt-8 px-4">
   <!-- Icono "Añadir empleado" y texto -->
-  <div class="flex items-center">
-    <i class='bx bxs-user-circle text-4xl text-gray-600'></i>
-    <h1 class="text-2xl font-bold ml-4">Añadir empleado</h1>
+  <div class="flex items-center mb-4">
+    <i class='bx bxs-user-circle text-4xl text-gray-600  mr-4'></i>
+    <h1 class="text-2xl font-bold ">Añadir empleado</h1>
   </div>
 
   <!-- Línea divisora -->
-  <hr class="my-4 border-gray-400">
+  <hr class="my-4 border border-gray-400 w-full">
+
   <form [formGroup]="employeeForm" (submit)="addEmployee()">
 
-    <div class="container mx-auto mt-8 flex">
+    <div class="container mx-auto mt-8 px-8 lg:flex lg:flex-row flex-col"> <!-- Added lg:flex and flex-col classes -->
       <!-- Información personal -->
-      <div class="flex-1 mr-4">
+      <div class="flex-1 lg:mr-4 mb-4 lg:mb-0"> <!-- Adjusted margin for large screens -->
         <div class="border border-black p-4 rounded-lg bg-white">
           <h2 class="text-lg font-bold">Información personal</h2>
           <hr class="my-2 border-gray-400">
@@ -105,7 +106,7 @@
     </div>
 
     <!--  Direccion  y Credenciales -->
-    <div class="flex-1 ml-4">
+    <div class="flex-1 lg:ml-4"> <!-- Adjusted margin for large screens -->
       <div class="bg-white border border-black p-4 rounded-lg">
         <h2 class="text-lg font-bold">Direccion</h2>
         <hr class="my- border-gray-400">
@@ -147,6 +148,7 @@
       <div class="bg-white border border-black p-4 rounded-lg">
         <h2 class="text-lg font-bold">Credenciales</h2>
         <hr class="my-2 border-gray-400">
+
 
         <div class="mt-4">
           <label for="nif" class="block">NIF</label>
