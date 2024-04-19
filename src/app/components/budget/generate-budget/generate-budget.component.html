@@ -11,181 +11,206 @@
 
 <form [formGroup]="budgetForm">
 
-<div class="container mx-auto mt-8 flex justify-between">
-  <!-- First form column -->
-  <div class="bg-white rounded-lg p-4 mx-4" style="width: calc(50% - 1rem);">
-    <div class="flex justify-between mb-4">
-      <div class="w-full">
-        <div class="mb-2 bg-gray-200 rounded-lg p-2">Datos empresa:</div>
-        <div class="grid grid-cols-1 gap-4">
+  <div class="container mx-auto mt-8 flex justify-between">
+    <!-- First form column -->
+    <div class="bg-white rounded-lg p-4 mx-4" style="width: calc(50% - 1rem);">
+      <div class="flex justify-between mb-4">
+        <div class="w-full">
+          <div class="mb-2 bg-gray-200 rounded-lg p-2">Datos empresa:</div>
+          <div class="grid grid-cols-1 gap-4">
             <div>
-                <label for="nombre_empresa" class="block mb-1">Nombre:</label>
-                <input formControlName="name" name="name" id="name" type="text" placeholder="Nombre" class="border p-2 rounded-md w-full">
-                <div
-                *ngIf="budgetForm.get('name')?.errors?.['required'] && (budgetForm.get('name')?.dirty || budgetForm.get('name')?.touched)"
+              <label for="company_name" class="block mb-1">Nombre:</label>
+              <input formControlName="company_name" name="company_name" id="company_name" type="text" placeholder="Nombre"
+                class="border p-2 rounded-md w-full">
+              <div
+                *ngIf="budgetForm.get('company_name')?.errors?.['required'] && (budgetForm.get('company_name')?.dirty || budgetForm.get('name')?.touched)"
                 class="text-red-500 mt-2">Nombre es obligatorio.</div>
 
             </div>
             <div>
-                <label for="telephone" class="block mb-1">Teléfono:</label>
-                <input formControlName="telephone" name="telephone" id="telephone" type="text" placeholder="+34 623457862" class="border p-2 rounded-md w-full">
+              <label for="company_telephone" class="block mb-1">Teléfono:</label>
+              <input formControlName="company_telephone" name="company_telephone" id="company_telephone" type="text" placeholder="+34 623457862"
+                class="border p-2 rounded-md w-full">
             </div>
             <div>
-                <label for="nif" class="block mb-1">NIF:</label>
-                <input formControlName="nif" name="nif" id="nif" type="text" placeholder="32245678G" class="border p-2 rounded-md w-full">
+              <label for="company_nif" class="block mb-1">NIF:</label>
+              <input formControlName="company_nif" name="company_nif" id="company_nif" type="text" placeholder="32245678G"
+                class="border p-2 rounded-md w-full">
             </div>
             <div>
-                <label for="email" class="block mb-1">Email:</label>
-                <input formControlName="email" name="email" id="email" type="text" placeholder="john@gmail.com" class="border p-2 rounded-md w-full">
+              <label for="company_email" class="block mb-1">Email:</label>
+              <input formControlName="company_email" name="company_email" id="company_email" type="text" placeholder="john@gmail.com"
+                class="border p-2 rounded-md w-full">
             </div>
             <div>
-                <label for="street" class="block mb-1">Dirección:</label>
-                <input formControlName="street" name="street" id="street" type="text" placeholder="calle maig 56" class="border p-2 rounded-md w-full">
+              <label for="street" class="block mb-1">Dirección:</label>
+              <input formControlName="street" name="street" id="street" type="text" placeholder="calle maig 56"
+                class="border p-2 rounded-md w-full">
             </div>
             <div>
-                <label for="city" class="block mb-1">Población:</label>
-                <input formControlName="city" name="city" id="city" type="text" placeholder="Barcelona" class="border p-2 rounded-md w-full">
+              <label for="city" class="block mb-1">Población:</label>
+              <input formControlName="city" name="city" id="city" type="text" placeholder="Barcelona"
+                class="border p-2 rounded-md w-full">
             </div>
             <div>
-                <label for="postal_code" class="block mb-1">Código Postal:</label>
-                <input formControlName="postal_code" name="postal_code" id="postal_code" type="text" placeholder="90876" class="border p-2 rounded-md w-full">
+              <label for="postal_code" class="block mb-1">Código Postal:</label>
+              <input formControlName="postal_code" name="postal_code" id="postal_code" type="text" placeholder="90876"
+                class="border p-2 rounded-md w-full">
             </div>
+          </div>
         </div>
+
+      </div>
     </div>
 
-    </div>
-  </div>
-
-  <!-- Second form column -->
-  <div class="bg-white rounded-lg p-4 mx-4" style="width: calc(50% - 1rem);">
-    <div class="flex justify-between mb-4">
-      <div class="w-full">
-        <div class="mb-2 bg-gray-200 rounded-lg p-2">Datos del cliente:</div>
-        <div class="grid grid-cols-1 gap-4">
-          <div>
-            <label for="name" class="block mb-1">Nombre:</label>
-            <input formControlName="name" id="name" name="name" type="text" placeholder="Nombre" class="border p-2 rounded-md w-full">
+    <!-- Second form column -->
+    <div class="bg-white rounded-lg p-4 mx-4" style="width: calc(50% - 1rem);">
+      <div class="flex justify-between mb-4">
+        <div class="w-full">
+          <div class="mb-2 bg-gray-200 rounded-lg p-2">Datos del cliente:</div>
+          <div class="grid grid-cols-1 gap-4">
+            <div>
+              <label for="client_name" class="block mb-1">Nombre:</label>
+              <input formControlName="client_name" id="client_name" name="client_name" type="text" placeholder="Nombre"
+                class="border p-2 rounded-md w-full">
+            </div>
+            <div>
+              <label for="client_telephone" class="block mb-1">Teléfono:</label>
+              <input formControlName="client_telephone" id="client_telephone" name="client_telephone" type="text" placeholder="+34 623457862"
+                class="border p-2 rounded-md w-full">
+            </div>
+            <div>
+              <label for="client_nif" class="block mb-1">NIF:</label>
+              <input formControlName="client_nif" id="client_nif" name="client_nif" type="text" placeholder="32245678G"
+                class="border p-2 rounded-md w-full">
+            </div>
+            <div>
+              <label for="client_email" class="block mb-1">Email:</label>
+              <input formControlName="client_email" id="client_email" name="client_email" type="text" placeholder="john@gmail.com"
+                class="border p-2 rounded-md w-full">
+            </div>
+            <div>
+              <label for="street" class="block mb-1">Dirección:</label>
+              <input formControlName="street" id="street" name="street" type="text" placeholder="calle maig 56"
+                class="border p-2 rounded-md w-full">
+            </div>
+            <div>
+              <label for="city" class="block mb-1">Población:</label>
+              <input formControlName="city" id="city" name="city" type="text" placeholder="Barcelona"
+                class="border p-2 rounded-md w-full">
+            </div>
+            <div>
+              <label for="postal_code" class="block mb-1">Codigo Postal:</label>
+              <input formControlName="postal_code" id="postal_code" name="postal_code" type="text" placeholder="90876"
+                class="border p-2 rounded-md w-full">
+            </div>
+            <!-- Other input fields -->
           </div>
-          <div>
-            <label for="telephone" class="block mb-1">Teléfono:</label>
-            <input formControlName="telephone" id="telephone" name="telephone" type="text" placeholder="+34 623457862" class="border p-2 rounded-md w-full">
-          </div>
-          <div>
-            <label for="nif" class="block mb-1">NIF:</label>
-            <input formControlName="nif" id="nif" name="nif" type="text" placeholder="32245678G" class="border p-2 rounded-md w-full">
-          </div>
-          <div>
-            <label for="email" class="block mb-1">Email:</label>
-            <input formControlName="email" id="email" name="email" type="text" placeholder="john@gmail.com" class="border p-2 rounded-md w-full">
-          </div>
-          <div>
-            <label for="street" class="block mb-1">Dirección:</label>
-            <input formControlName="street" id="street" name="street" type="text" placeholder="calle maig 56" class="border p-2 rounded-md w-full">
-          </div>
-          <div>
-            <label for="city" class="block mb-1">Población:</label>
-            <input formControlName="city" id="city" name="city" type="text" placeholder="Barcelona" class="border p-2 rounded-md w-full">
-          </div>
-          <div>
-            <label for="postal_code" class="block mb-1">Codigo Postal:</label>
-            <input formControlName="postal_code" id="postal_code" name="postal_code" type="text" placeholder="90876" class="border p-2 rounded-md w-full">
-          </div>
-          <!-- Other input fields -->
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="container mx-auto mt-8">
-  <!-- Icono "Editar empleado" y texto -->
-  <div class="flex items-center">
-    <i class='bx bxs-edit-alt text-4xl text-gray-600'></i>
-    <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold ml-4">Información</h1>
+  <div class="container mx-auto mt-8">
+    <!-- Icono "Editar empleado" y texto -->
+    <div class="flex items-center">
+      <i class='bx bxs-edit-alt text-4xl text-gray-600'></i>
+      <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold ml-4">Información</h1>
+    </div>
+
+    <!-- Línea divisora -->
+    <hr class="my-4 border-gray-400">
   </div>
-
-  <!-- Línea divisora -->
-  <hr class="my-4 border-gray-400">
-</div>
   <!-- Conceptos -->
   <div class="container mx-auto mt-8">
-    <div *ngFor="let conceptControl of conceptControls.controls; let i = index" class="bg-white rounded-lg p-4 mx-4">
-      <div class="flex flex-col sm:flex-row justify-between mb-4">
-        <div class="w-full">
-          <div class="grid grid-cols-1 sm:grid-cols-7 gap-3">
-            <div class="col-span-1">
-              <label for="concept{{i}}" class="block mb-1">Concepto</label>
-              <input [id]="'concept' + i" [formControlName]="'concept'" name="concept" type="text" placeholder="Concepto" class="border p-2 rounded-md w-full">
-            </div>
-            <div class="col-span-1">
-              <label for="price{{i}}" class="block mb-1">Precio</label>
-              <input [id]="'price'+i" [formControlName]="'price'" type="number" placeholder="Precio" class="border p-2 rounded-md w-full">
-            </div>
-            <div class="col-span-1">
-              <label for="quantity{{i}}" class="block mb-1">Cantidad</label>
-              <input [id]="'quantity' + i" [formControlName]="'quantity'" type="number" placeholder="Cantidad" class="border p-2 rounded-md w-full">
-            </div>
-            <div class="col-span-1">
-              <label for="discount{{i}}" class="block mb-1">Dto.%</label>
-              <input [id]="'discount' + i" [formControlName]="'discount'" type="number" placeholder="Dto.%" class="border p-2 rounded-md w-full">
-            </div>
-            <div class="col-span-1">
-              <label for="concept_iva{{i}}" class="block mb-1">IVA%</label>
-              <input [id]="'concept_iva' + i" [formControlName]="'concept_iva'" type="number" placeholder="IVA%" class="border p-2 rounded-md w-full">
-            </div>
-            <div class="col-span-1">
-              <label for="concept_irpf{{i}}" class="block mb-1">IRPF%</label>
-              <input [id]="'concept_irpf' + i" [formControlName]="'concept_irpf'" type="number" placeholder="IRPF%" class="border p-2 rounded-md w-full">
-            </div>
+    <div formArrayName="concepts">
+    <div *ngFor="let concept of conceptsControls; let i = index" [formGroupName]="i" class="bg-white rounded-lg p-4 mx-4 mb-4">
+        <div class="flex flex-col sm:flex-row justify-between mb-4">
+          <div class="w-full">
+            <div class="grid grid-cols-1 sm:grid-cols-7 gap-3">
+              <div class="col-span-1">
+                <label for="concept" class="block mb-1">Concepto</label>
+                <input id="concept" formControlName="concept" name="concept" type="text"
+                  placeholder="Concepto" class="border p-2 rounded-md w-full">
+              </div>
+              <div class="col-span-1">
+                <label for="price" class="block mb-1">Precio</label>
+                <input id="price" formControlName="price" type="number" placeholder="Precio"
+                  class="border p-2 rounded-md w-full">
+              </div>
+              <div class="col-span-1">
+                <label for="quantity" class="block mb-1">Cantidad</label>
+                <input id="quantity" formControlName="quantity" type="number" placeholder="Cantidad"
+                  class="border p-2 rounded-md w-full">
+              </div>
+              <div class="col-span-1">
+                <label for="concept_discount" class="block mb-1">Dto.%</label>
+                <input id="concept_discount" formControlName="concept_discount" type="number" placeholder="Dto.%"
+                  class="border p-2 rounded-md w-full">
+              </div>
+              <div class="col-span-1">
+                <label for="concept_iva" class="block mb-1">IVA%</label>
+                <input id="concept_iva" formControlName="concept_iva" type="number" placeholder="IVA%"
+                  class="border p-2 rounded-md w-full">
+              </div>
+              <div class="col-span-1">
+                <label for="concept_irpf" class="block mb-1">IRPF%</label>
+                <input id="concept_irpf" formControlName="concept_irpf" type="number" placeholder="IRPF%"
+                  class="border p-2 rounded-md w-full">
+              </div>
 
-            <div class="col-span-1 p-8">
-              <button href="#" (click)="removeConcept(i)">
-                <i class='bx bx-trash text-xl text-black mr-2'></i>
-              </button>
+
+              <div class="col-span-1 p-8">
+                <button href="#" (click)="removeConcept(i)">
+                  <i class='bx bx-trash text-xl text-black mr-2'></i>
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      </div>
-      </div>
+    </div>
+  </div>
 
 
-        <div class="col-span-full p-8">
-          <button (click)="addNewConcept()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
-            + Añadir nuevo concepto
-          </button>
-      </div>
-        <!-- Additional elements -->
-        <div class="bg-gray-200 rounded-lg border border-black mt-4">
-          <div class="p-4">
-            <div class="flex flex-col">
-              <div class="flex justify-between">
-                <span>Base imponible:</span>
-                <span>3€</span>
-              </div>
-              <div class="flex justify-between">
-                <span>Descuento:</span>
-                <span>3€</span>
-              </div>
-              <div class="flex justify-between">
-                <span>IVA:</span>
-                <span>3€</span>
-              </div>
-              <div class="flex justify-between">
-                <span>IRPF:</span>
-                <span>3€</span>
-              </div>
-            </div>
-            <hr class="my-4 border-black">
-            <div class="flex justify-between">
-              <span>Total:</span>
-              <span>3€</span>
-            </div>
-          </div>
+  <div class="col-span-full p-8">
+    <button (click)="addConcept()"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
+      + Añadir nuevo concepto
+    </button>
+  </div>
+  <!-- Additional elements -->
+  <div class="bg-gray-200 rounded-lg border border-black mt-4">
+    <div class="p-4">
+      <div class="flex flex-col">
+        <div class="flex justify-between">
+          <span>Base imponible:</span>
+          <span>3€</span>
         </div>
-
-        <div class="flex justify-center mt-4">
-          <button (click)="addBudget()" class="bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-8 rounded-lg">Crear Presupuesto</button>
+        <div class="flex justify-between">
+          <span>Descuento:</span>
+          <span>3€</span>
         </div>
+        <div class="flex justify-between">
+          <span>IVA:</span>
+          <span>3€</span>
+        </div>
+        <div class="flex justify-between">
+          <span>IRPF:</span>
+          <span>3€</span>
+        </div>
+      </div>
+      <hr class="my-4 border-black">
+      <div class="flex justify-between">
+        <span>Total:</span>
+        <span>3€</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-center mt-4">
+    <button (click)="addBudget()" class="bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-8 rounded-lg">Crear
+      Presupuesto</button>
+  </div>
 
 </form>

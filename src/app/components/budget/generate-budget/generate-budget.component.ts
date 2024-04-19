@@ -10,31 +10,64 @@ import { Router } from '@angular/router';
 })
 export class GenerateBudgetComponent {
   budgetForm: FormGroup;
-  conceptControls: FormArray;
 
   constructor(private apiService: ApiService, private router: Router, private fb: FormBuilder) {
     // Inicializa el formulario y define las reglas de validación
     this.budgetForm = this.fb.group({
-      name: ['', Validators.required],
-      telephone: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      client_name: ['', Validators.required],
+      client_telephone: ['', Validators.required],
+      client_email: ['', [Validators.required, Validators.email]],
+      client_nif: ['', Validators.required],
+
+      company_name: ['', Validators.required],
+      company_telephone: ['', Validators.required],
+      company_email: ['', [Validators.required, Validators.email]],
+      company_nif: ['', Validators.required],
+
       street: ['', Validators.required],
       city: ['', Validators.required],
       postal_code: ['', Validators.required],
-      nif: ['', Validators.required],
-      concepts: this.fb.array([]) // Inicializando un FormArray vacío para los conceptos
+
+      concepts: this.fb.array([]) // No se inicializa con ningún concepto
     });
 
-    // Obtén una referencia al FormArray de conceptos
-    this.conceptControls = this.budgetForm.get('concepts') as FormArray;
-
-    // Agrega un nuevo concepto al inicializar el componente
-    this.addNewConcept();
+    // Agregar un concepto por defecto al cargar el componente
+    this.addConcept();
   }
 
-  // Método para agregar un presupuesto
+  // Método para agregar un concepto al formulario
+  addConcept(): void {
+    const concepts = this.budgetForm.get('concepts') as FormArray;
+    concepts.push(this.fb.group({
+      concept: ['', Validators.required],
+      price: ['', Validators.required],
+      quantity: ['', Validators.required],
+      concept_discount: ['', Validators.required],
+      concept_iva: ['', Validators.required],
+      concept_irpf: ['', Validators.required],
+    }));
+  }
+
+
+  // Método para eliminar un concepto del formulario
+  removeConcept(index: number): void {
+    const concepts = this.budgetForm.get('concepts') as FormArray;
+    concepts.removeAt(index);
+  }
+
+  // Método para enviar el presupuesto al servidor
   addBudget(): void {
-    this.apiService.createInvoice(this.budgetForm.value).subscribe(
+    console.log(this.budgetForm.value)
+
+    // Obtén los datos del formulario principal (datos del presupuesto)
+    const budgetData = this.budgetForm.value;
+
+    // Obtén los datos de los conceptos del formulario y agrégalos a los datos del presupuesto
+    const concepts = this.budgetForm.get('concepts')!;
+    budgetData.concepts = concepts ? concepts.value : [];
+
+    // Llama al método del servicio API para crear el presupuesto con todos los datos
+    this.apiService.createInvoice(budgetData).subscribe(
       (response) => {
         console.log('Presupuesto creado exitosamente:', response);
         this.router.navigate(['/budget']);
@@ -46,20 +79,8 @@ export class GenerateBudgetComponent {
     );
   }
 
-  // Método para agregar un nuevo concepto al FormArray
-  addNewConcept(): void {
-    this.conceptControls.push(this.fb.group({
-      concept: ['', Validators.required],
-      price: ['', Validators.required],
-      quantity: ['', Validators.required],
-      discount: ['', Validators.required],
-      concept_iva: ['', Validators.required],
-      concept_irpf: ['', Validators.required],
-    }));
-  }
-
-  // Método para eliminar un concepto del FormArray
-  removeConcept(index: number): void {
-    this.conceptControls.removeAt(index);
+  // Método para obtener los controles de los conceptos
+  get conceptsControls() {
+    return (this.budgetForm.get('concepts') as FormArray)?.controls;
   }
 }
