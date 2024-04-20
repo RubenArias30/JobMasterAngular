@@ -230,7 +230,7 @@
 
 
               <div class="col-span-1 p-8">
-                <button href="#" (click)="removeConcept(i)">
+                <button *ngIf="canRemoveConcept" href="#" (click)="removeConcept(i)">
                   <i class='bx bx-trash text-xl text-black mr-2'></i>
                 </button>
               </div>

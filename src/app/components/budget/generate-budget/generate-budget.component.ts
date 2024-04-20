@@ -1,5 +1,5 @@
-import { Component,OnInit  } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray  } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ApiService } from '../../../services/api/api.service';
 import { Router } from '@angular/router';
 
@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class GenerateBudgetComponent implements OnInit {
   budgetForm: FormGroup;
+  canRemoveConcept = false;
 
   constructor(private apiService: ApiService, private router: Router, private fb: FormBuilder) {
     this.budgetForm = this.fb.group({
@@ -41,19 +42,29 @@ export class GenerateBudgetComponent implements OnInit {
   // Método para agregar un nuevo concepto al FormArray
   addConcept(): void {
     const newConcept = this.fb.group({
-      concept: ['', Validators.required], // Nombre del concepto
-      price: ['', Validators.required],       // Precio
-      quantity: ['', Validators.required],    // Cantidad
-      concept_discount: [''],                          // Descuento (opcional)
-      concept_iva: [''],                               // IVA (opcional)
-      concept_irpf: ['']                               // IRPF (opcional)
+      concept: ['', Validators.required],
+      price: ['', Validators.required],
+      quantity: ['', Validators.required],
+      concept_discount: [''],
+      concept_iva: [''],
+      concept_irpf: ['']
     });
     this.concepts.push(newConcept);
+
+     // Verifica si hay más de una línea de concepto para habilitar la eliminación de la primera línea
+  if (this.concepts.length > 1) {
+    this.canRemoveConcept = true;
+  }
   }
 
   // Método para eliminar un concepto del FormArray
   removeConcept(index: number): void {
     this.concepts.removeAt(index);
+
+    // Verifica si solo queda una línea de concepto para deshabilitar la eliminación de la primera línea
+    if (this.concepts.length === 1) {
+      this.canRemoveConcept = false;
+    }
   }
 
   // Método para enviar el presupuesto al servidor
