@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray,FormControl  } from '@angular/forms';
 import { ApiService } from '../../../services/api/api.service';
 import { Router } from '@angular/router';
 
@@ -11,6 +11,13 @@ import { Router } from '@angular/router';
 export class GenerateBudgetComponent implements OnInit {
   budgetForm: FormGroup;
   canRemoveConcept = false;
+
+   // Controles para calcular los valores en tiempo real
+   subtotalControl = new FormControl(0);
+   totalDiscountControl = new FormControl(0);
+   totalIVAControl = new FormControl(0);
+   totalIRPFControl = new FormControl(0);
+   totalControl = new FormControl(0);
 
   constructor(private apiService: ApiService, private router: Router, private fb: FormBuilder) {
     this.budgetForm = this.fb.group({
@@ -32,6 +39,20 @@ export class GenerateBudgetComponent implements OnInit {
   ngOnInit(): void {
     // Agrega un concepto por defecto al iniciar el componente
     this.addConcept();
+
+    this.budgetForm.valueChanges.subscribe(value => {
+      const subtotal = this.calculateSubtotal(value);
+      const totalDiscount = this.calculateTotalDiscount(value);
+      const totalIVA = this.calculateTotalIVA(value);
+      const totalIRPF = this.calculateTotalIRPF(value);
+      const total = this.calculateTotal(subtotal, totalDiscount, totalIVA, totalIRPF);
+
+      this.subtotalControl.setValue(subtotal);
+      this.totalDiscountControl.setValue(totalDiscount);
+      this.totalIVAControl.setValue(totalIVA);
+      this.totalIRPFControl.setValue(totalIRPF);
+      this.totalControl.setValue(total);
+    });
   }
 
   // Método para obtener el control de concepts como FormArray
@@ -83,9 +104,56 @@ export class GenerateBudgetComponent implements OnInit {
       }
     );
   }
+
+
   cancelEdit(): void {
     if (confirm('¿Estás seguro de cancelar la edición?')) {
       this.router.navigate(['/budget']);
     }
   }
+
+  calculateSubtotal(value: any): number {
+    let subtotal = 0;
+    const concepts = value.concepts;
+    concepts.forEach((concept: any) => {
+      subtotal += concept.price * concept.quantity;
+    });
+    return subtotal;
+  }
+
+  calculateTotalDiscount(value: any): number {
+    let totalDiscount = 0;
+    const concepts = value.concepts;
+    concepts.forEach((concept: any) => {
+      const discount = concept.concept_discount ? concept.concept_discount : 0;
+      totalDiscount += (concept.price * concept.quantity * discount) / 100;
+    });
+    return totalDiscount;
+  }
+
+  calculateTotalIVA(value: any): number {
+    let totalIVA = 0;
+    const concepts = value.concepts;
+    concepts.forEach((concept: any) => {
+      const iva = concept.concept_iva ? concept.concept_iva : 0;
+      totalIVA += ((concept.price * concept.quantity) - concept.concept_discount) * iva / 100;
+    });
+    return totalIVA;
+  }
+
+  calculateTotalIRPF(value: any): number {
+    let totalIRPF = 0;
+    const concepts = value.concepts;
+    concepts.forEach((concept: any) => {
+      const irpf = concept.concept_irpf ? concept.concept_irpf : 0;
+      totalIRPF += ((concept.price * concept.quantity) - concept.concept_discount) * irpf / 100;
+    });
+    return totalIRPF;
+  }
+
+  calculateTotal(subtotal: number, totalDiscount: number, totalIVA: number, totalIRPF: number): number {
+    return subtotal - totalDiscount + totalIVA - totalIRPF;
+  }
+
+
 }
