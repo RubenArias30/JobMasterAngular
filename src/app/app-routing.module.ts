@@ -15,6 +15,7 @@ import { EditBudgetComponent } from './components/budget/edit-budget/edit-budget
 import { IncidenciaComponent } from './components/incidencia/incidencia.component';
 import { ContractsComponent } from './components/documents/contracts/contracts.component';
 import { DocumentsComponent } from './components/documents/documents.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 
 const routes: Routes = [
@@ -54,7 +55,7 @@ const routes: Routes = [
   children: [
     { path: '', component: IncidenciaComponent }],
   },
-    {
+  {
   path: 'documents',
   component: LayoutComponent,
   canActivate: [MyGuardGuard],
@@ -72,7 +73,8 @@ const routes: Routes = [
     { path: '', component: ContractsComponent }
 
   ]
-}
+},
+{ path: '**', component: PageNotFoundComponent } ,// Wildcard route for Page Not Found
 ];
 
 
