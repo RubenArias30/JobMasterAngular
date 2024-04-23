@@ -29,6 +29,7 @@ import { CurriculumComponent } from './components/documents/curriculum/curriculu
 import { LaboralLifeComponent } from './components/documents/laboral-life/laboral-life.component';
 import { PayrollComponent } from './components/documents/payroll/payroll.component';
 import { ProofComponent } from './components/documents/proof/proof.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { ProofComponent } from './components/documents/proof/proof.component';
      LaboralLifeComponent,
      PayrollComponent,
      ProofComponent,
+     PageNotFoundComponent,
 
   ],
   imports: [
