@@ -1,0 +1,63 @@
+<div class="container mx-auto">
+
+  <!-- Título Documentos -->
+  <h1 class="text-3xl font-bold mt-8 mb-4">Documentos de {{ employeeName }}</h1>
+  <hr class="border border-black mb-4">
+
+  <!-- Título Carpetas Personales -->
+  <h2 class="text-xl font-bold mb-2">Carpetas personales</h2>
+
+
+  <!-- Grid para las carpetas -->
+  <div class="grid grid-cols-3 gap-8"> <!-- Cambio en el número de columnas -->
+    <!-- Carpetas -->
+    <button class="bg-white p-8 shadow-lg rounded-lg text-center flex items-center justify-center" *ngFor="let employee of employees" (click)="navigateToContracts(employee.id)"> <!-- Botón para la carpeta de Contrato -->
+      <div class="flex items-center justify-center"> <!-- Contenedor para alinear verticalmente -->
+        <i class='bx bx-folder text-3xl inline-block align-middle'></i> <!-- Ajuste en el tamaño del icono y alineación vertical -->
+        <p class="text-2xl uppercase inline-block align-middle ml-2">Contrato</p> <!-- Ajuste en el tamaño del texto y alineación vertical -->
+        <i class='bx bx-right-arrow-circle text-3xl inline-block align-middle ml-2'></i> <!-- Ajuste en el tamaño del icono y alineación vertical -->
+      </div>
+    </button>
+    <!-- Div 2 -->
+    <div class="bg-white p-8 shadow-lg rounded-lg text-center flex items-center justify-center">
+      <div class="flex items-center justify-center">
+        <i class='bx bx-folder text-3xl inline-block align-middle'></i>
+        <p class="text-2xl uppercase inline-block align-middle ml-2">DNI/NIE</p>
+        <i class='bx bx-right-arrow-circle text-3xl inline-block align-middle ml-2'></i>
+      </div>
+    </div>
+    <!-- Div 3 -->
+    <div class="bg-white p-8 shadow-lg rounded-lg text-center flex items-center justify-center">
+      <div class="flex items-center justify-center">
+        <i class='bx bx-folder text-3xl inline-block align-middle'></i>
+        <p class="text-2xl uppercase inline-block align-middle ml-2">Curriculum</p>
+        <i class='bx bx-right-arrow-circle text-3xl inline-block align-middle ml-2'></i>
+      </div>
+    </div>
+    <!-- Div 4 -->
+    <div class="bg-white p-8 shadow-lg rounded-lg text-center flex items-center justify-center">
+      <div class="flex items-center justify-center">
+        <i class='bx bx-folder text-3xl inline-block align-middle'></i>
+        <p class="text-2xl uppercase inline-block align-middle ml-2">Vida laboral</p>
+        <i class='bx bx-right-arrow-circle text-3xl inline-block align-middle ml-2'></i>
+      </div>
+    </div>
+    <!-- Div 5 -->
+    <div class="bg-white p-8 shadow-lg rounded-lg text-center flex items-center justify-center">
+      <div class="flex items-center justify-center">
+        <i class='bx bx-folder text-3xl inline-block align-middle'></i>
+        <p class="text-2xl uppercase inline-block align-middle ml-2">Nómina</p>
+        <i class='bx bx-right-arrow-circle text-3xl inline-block align-middle ml-2'></i>
+      </div>
+    </div>
+    <!-- Div 6 -->
+    <div class="bg-white p-8 shadow-lg rounded-lg text-center flex items-center justify-center">
+      <div class="flex items-center justify-center">
+        <i class='bx bx-folder text-3xl inline-block align-middle'></i>
+        <p class="text-2xl uppercase inline-block align-middle ml-2">Justificante</p>
+        <i class='bx bx-right-arrow-circle text-3xl inline-block align-middle ml-2'></i>
+      </div>
+    </div>
+  </div>
+
+</div>

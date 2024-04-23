@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api/api.service';
-import { AuthService } from 'src/app/services/auth/auth.service';
+
 
 @Component({
   selector: 'app-employees',
@@ -10,7 +11,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class EmployeesComponent {
   employees: any[] = [];
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, private router: Router) { }
 
   ngOnInit(): void {
     this.getEmployees();
@@ -47,5 +48,10 @@ deleteEmployee(employeeId: string): void {
     }
   );
 }
+navigateToDocuments(employee: any): void {
+  this.router.navigate(['/documents', { employeeName: `${employee.name} ${employee.surname}` }]);
+}
+
+
 
 }
