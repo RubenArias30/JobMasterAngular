@@ -17,6 +17,7 @@ import { NifValidatorDirective } from './directive/nif-validator.directive';
 import { BudgetComponent } from './components/budget/budget.component';
 import { GenerateBudgetComponent } from './components/budget/generate-budget/generate-budget.component';
 import { EditBudgetComponent } from './components/budget/edit-budget/edit-budget.component';
+import { IncidenciaComponent } from './components/incidencia/incidencia.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { EditBudgetComponent } from './components/budget/edit-budget/edit-budget
      BudgetComponent,
      GenerateBudgetComponent,
      EditBudgetComponent,
+     IncidenciaComponent,
   ],
   imports: [
     BrowserModule,

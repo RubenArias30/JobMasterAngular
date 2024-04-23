@@ -11,6 +11,7 @@ import { MyGuardGuard } from './auth/my-guard.guard';
 import { BudgetComponent } from './components/budget/budget.component';
 import { GenerateBudgetComponent } from './components/budget/generate-budget/generate-budget.component';
 import { EditBudgetComponent } from './components/budget/edit-budget/edit-budget.component';
+import { IncidenciaComponent } from './components/incidencia/incidencia.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -40,6 +41,14 @@ const routes: Routes = [
     { path: 'generate_budget', component: GenerateBudgetComponent },
     { path: 'edit_budget', component: EditBudgetComponent }
 
+  ]
+},
+{
+  path: 'incidencia',
+  component: LayoutComponent,
+  canActivate:[MyGuardGuard],data: { roles: ['admin'] },
+  children: [
+    { path: '', component: IncidenciaComponent },
   ]
 }
 
