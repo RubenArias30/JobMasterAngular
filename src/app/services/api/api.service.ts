@@ -72,9 +72,13 @@ export class ApiService {
   //Documents:
 
     // Método para obtener documentos por tipo
-    getDocumentsByType(documentType: string): Observable<any[]> {
-      return this.http.get<any[]>(`${this.apiUrl}/documents?type_documents=${documentType}`);
+    // getDocumentsByType(documentType: string): Observable<any[]> {
+    //   return this.http.get<any[]>(`${this.apiUrl}/documents?type_documents=${documentType}`);
+    // }
+    getDocumentsByEmployeeAndType(employeeId: string, documentType: string): Observable<any[]> {
+      return this.http.get<any[]>(`${this.apiUrl}/documents?employeeId=${employeeId}&type_documents=${documentType}`);
     }
+
 
     // Método para agregar documento
     addDocument(documentData: any): Observable<any> {
