@@ -1,5 +1,5 @@
 <div class="container mx-auto mt-8">
-  <div class="flex items-center justify-between mb-4 ml-5"> <!-- Added ml-4 for left space -->
+  <div class="flex items-center justify-between mb-4 ml-5">
     <div class="flex items-center">
         <h1 class="text-lg font-bold mr-2 sm:text-xl md:text-2xl lg:text-3xl">Presupuesto</h1>
       <div class="border-l h-6 mr-2"></div>
@@ -33,7 +33,7 @@
       <tbody>
         <tr *ngFor="let invoice of invoices" class="border-b border-gray-200">
           <td>{{ invoice.subtotal }}</td>
-          <td>{{ invoice.discount }}</td>
+          <td>{{ invoice.invoice_discount }}</td>
           <td>{{ invoice.invoice_iva }}</td>
           <td>{{ invoice.invoice_irpf }}</td>
           <td>{{ invoice.total }}</td>

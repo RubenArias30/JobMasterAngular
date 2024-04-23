@@ -22,7 +22,7 @@ export class AddEmployeeComponent {
       country: ['', [Validators.required, Validators.pattern('^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ ]+$')]],
       gender: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')]],
-      telephone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      telephone: ['', [Validators.required, this.phoneNumberValidator()]],
       street: ['', [Validators.required]],
       city: ['', [Validators.required, Validators.pattern('^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ ]+$')]],
       postal_code: ['', [Validators.required, Validators.minLength(5),Validators.pattern('^[0-9]+$')]],

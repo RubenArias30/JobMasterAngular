@@ -60,9 +60,16 @@ export class ApiService {
   getInvoices(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/budget`);
   }
+  // Método para obtener los datos de un empleado por su ID
+  getInvoiceById(invoiceId: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/budget/${invoiceId}`);
+  }
 
   createInvoice(invoiceData: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/budget`, invoiceData);
+  }
+  updateInvoice(invoiceId: number, invoiceData: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/budget/${invoiceId}`, invoiceData);
   }
   deleteInvoice(invoiceId: string): Observable<any> {
     const url = `${this.apiUrl}/budget/${invoiceId}`;
