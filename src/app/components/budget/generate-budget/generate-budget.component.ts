@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray,FormControl  } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { ApiService } from '../../../services/api/api.service';
 import { Router } from '@angular/router';
 
@@ -12,12 +12,12 @@ export class GenerateBudgetComponent implements OnInit {
   budgetForm: FormGroup;
   canRemoveConcept = false;
 
-   // Controles para calcular los valores en tiempo real
-   subtotalControl = new FormControl(0);
-   totalDiscountControl = new FormControl(0);
-   totalIVAControl = new FormControl(0);
-   totalIRPFControl = new FormControl(0);
-   totalControl = new FormControl(0);
+  // Controles para calcular los valores en tiempo real
+  subtotal = new FormControl(0);
+  invoice_discount = new FormControl(0);
+  invoice_iva = new FormControl(0);
+  invoice_irpf = new FormControl(0);
+  total = new FormControl(0);
 
   constructor(private apiService: ApiService, private router: Router, private fb: FormBuilder) {
     this.budgetForm = this.fb.group({
@@ -40,19 +40,13 @@ export class GenerateBudgetComponent implements OnInit {
     // Agrega un concepto por defecto al iniciar el componente
     this.addConcept();
 
-    this.budgetForm.valueChanges.subscribe(value => {
-      const subtotal = this.calculateSubtotal(value);
-      const totalDiscount = this.calculateTotalDiscount(value);
-      const totalIVA = this.calculateTotalIVA(value);
-      const totalIRPF = this.calculateTotalIRPF(value);
-      const total = this.calculateTotal(subtotal, totalDiscount, totalIVA, totalIRPF);
-
-      this.subtotalControl.setValue(subtotal);
-      this.totalDiscountControl.setValue(totalDiscount);
-      this.totalIVAControl.setValue(totalIVA);
-      this.totalIRPFControl.setValue(totalIRPF);
-      this.totalControl.setValue(total);
+    // Suscribirse a los cambios en el FormArray de conceptos
+    this.concepts.valueChanges.subscribe(() => {
+      this.calculateValues();
     });
+
+    // Calcular los valores iniciales
+    this.calculateValues();
   }
 
   // Método para obtener el control de concepts como FormArray
@@ -72,10 +66,10 @@ export class GenerateBudgetComponent implements OnInit {
     });
     this.concepts.push(newConcept);
 
-     // Verifica si hay más de una línea de concepto para habilitar la eliminación de la primera línea
-  if (this.concepts.length > 1) {
-    this.canRemoveConcept = true;
-  }
+    // Verifica si hay más de una línea de concepto para habilitar la eliminación de la primera línea
+    if (this.concepts.length > 1) {
+      this.canRemoveConcept = true;
+    }
   }
 
   // Método para eliminar un concepto del FormArray
@@ -88,12 +82,85 @@ export class GenerateBudgetComponent implements OnInit {
     }
   }
 
+  // Método para calcular todos los valores
+  calculateValues(): void {
+    const subtotal = this.calculateSubtotal();
+    const totalDiscount = this.calculateTotalDiscount();
+    const totalIVA = this.calculateTotalIVA();
+    const totalIRPF = this.calculateTotalIRPF();
+    const totalInvoice = this.calculateTotal(subtotal, totalDiscount, totalIVA, totalIRPF);
+
+    this.subtotal.setValue(subtotal);
+    this.invoice_discount.setValue(totalDiscount);
+    this.invoice_iva.setValue(totalIVA);
+    this.invoice_irpf.setValue(totalIRPF);
+    this.total.setValue(totalInvoice);
+  }
+
+  // Método para calcular el subtotal
+  calculateSubtotal(): number {
+    let subtotal = 0;
+    const concepts = this.concepts.value;
+    concepts.forEach((concept: any) => {
+      subtotal += concept.price * concept.quantity;
+    });
+    return subtotal;
+  }
+
+  // Método para calcular el descuento total
+  calculateTotalDiscount(): number {
+    let totalDiscount = 0;
+    const concepts = this.concepts.value;
+    concepts.forEach((concept: any) => {
+      const discount = concept.concept_discount ? concept.concept_discount : 0;
+      totalDiscount += (concept.price * concept.quantity * discount) / 100;
+    });
+    return totalDiscount;
+  }
+
+  // Método para calcular el IVA total
+  calculateTotalIVA(): number {
+    let totalIVA = 0;
+    const concepts = this.concepts.value;
+    concepts.forEach((concept: any) => {
+      const iva = concept.concept_iva ? concept.concept_iva : 0;
+      totalIVA += (concept.price * concept.quantity * iva) / 100;
+    });
+    return totalIVA;
+  }
+
+  // Método para calcular el IRPF total
+  calculateTotalIRPF(): number {
+    let totalIRPF = 0;
+    const concepts = this.concepts.value;
+    concepts.forEach((concept: any) => {
+      const irpf = concept.concept_irpf ? concept.concept_irpf : 0;
+      totalIRPF += ((concept.price * concept.quantity) - concept.concept_discount) * irpf / 100;
+    });
+    return totalIRPF;
+  }
+
+  // Método para calcular el total
+  calculateTotal(subtotal: number, totalDiscount: number, totalIVA: number, totalIRPF: number): number {
+    return subtotal - totalDiscount + totalIVA - totalIRPF;
+  }
+
   // Método para enviar el presupuesto al servidor
   addBudget(): void {
-    console.log(this.budgetForm.value);
+    const formData = {
+      ...this.budgetForm.value,
+      subtotal: this.subtotal.value,
+      invoice_discount: this.invoice_discount.value,
+      invoice_iva: this.invoice_iva.value,
+      invoice_irpf: this.invoice_irpf.value,
+      total: this.total.value
+    };
+   // const formData = { ...this.budgetForm.value, ...calculatedValues };
+
+    console.log(formData);
 
     // Llama al método del servicio API para crear el presupuesto con todos los datos
-    this.apiService.createInvoice(this.budgetForm.value).subscribe(
+    this.apiService.createInvoice(formData).subscribe(
       (response) => {
         console.log('Presupuesto creado exitosamente:', response);
         this.router.navigate(['/budget']);
@@ -105,55 +172,9 @@ export class GenerateBudgetComponent implements OnInit {
     );
   }
 
-
   cancelEdit(): void {
     if (confirm('¿Estás seguro de cancelar la edición?')) {
       this.router.navigate(['/budget']);
     }
   }
-
-  calculateSubtotal(value: any): number {
-    let subtotal = 0;
-    const concepts = value.concepts;
-    concepts.forEach((concept: any) => {
-      subtotal += concept.price * concept.quantity;
-    });
-    return subtotal;
-  }
-
-  calculateTotalDiscount(value: any): number {
-    let totalDiscount = 0;
-    const concepts = value.concepts;
-    concepts.forEach((concept: any) => {
-      const discount = concept.concept_discount ? concept.concept_discount : 0;
-      totalDiscount += (concept.price * concept.quantity * discount) / 100;
-    });
-    return totalDiscount;
-  }
-
-  calculateTotalIVA(value: any): number {
-    let totalIVA = 0;
-    const concepts = value.concepts;
-    concepts.forEach((concept: any) => {
-      const iva = concept.concept_iva ? concept.concept_iva : 0;
-      totalIVA += ((concept.price * concept.quantity) - concept.concept_discount) * iva / 100;
-    });
-    return totalIVA;
-  }
-
-  calculateTotalIRPF(value: any): number {
-    let totalIRPF = 0;
-    const concepts = value.concepts;
-    concepts.forEach((concept: any) => {
-      const irpf = concept.concept_irpf ? concept.concept_irpf : 0;
-      totalIRPF += ((concept.price * concept.quantity) - concept.concept_discount) * irpf / 100;
-    });
-    return totalIRPF;
-  }
-
-  calculateTotal(subtotal: number, totalDiscount: number, totalIVA: number, totalIRPF: number): number {
-    return subtotal - totalDiscount + totalIVA - totalIRPF;
-  }
-
-
 }
