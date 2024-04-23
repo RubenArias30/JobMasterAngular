@@ -69,5 +69,21 @@ export class ApiService {
     return this.http.delete(url);
   }
 
+  //Documents:
+
+    // Método para obtener documentos por tipo
+    getDocumentsByType(documentType: string): Observable<any[]> {
+      return this.http.get<any[]>(`${this.apiUrl}/documents?type_documents=${documentType}`);
+    }
+
+    // Método para agregar documento
+    addDocument(documentData: any): Observable<any> {
+      return this.http.post<any>(`${this.apiUrl}/documents`, documentData);
+    }
+
+    // Método para eliminar documento
+    deleteDocument(documentId: string): Observable<any> {
+      return this.http.delete<any>(`${this.apiUrl}/documents/${documentId}`);
+    }
 
 }

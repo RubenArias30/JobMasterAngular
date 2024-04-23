@@ -17,7 +17,7 @@
     <!-- Encabezado -->
     <div class="flex items-center justify-between mb-4 ml-5"> <!-- Added ml-4 for left space -->
         <div class="flex items-center">
-            <h1 class="text-lg font-bold mr-2">Empleados</h1>
+            <h1 class="text-lg font-bold mr-2 sm:text-xl md:text-2xl lg:text-3xl">Empleados</h1>
             <div class="border-l h-6 mr-2"></div>
             <div class="text-sm text-gray-500">{{employees.length}} Trabajadores</div>
         </div>
@@ -63,9 +63,10 @@
                 <td class="text-center px-4">{{ employee.telephone }}</td> <!-- Changed to text-center -->
                 <td class="text-center px-4">{{ employee.country }}</td> <!-- Changed to text-center -->
                 <td class="text-center px-4">
-                    <a routerLink="/documents">
-                        <i class='bx bx-file text-xl text-black mr-2'></i>
-                    </a>
+                  <button (click)="navigateToDocuments(employee)">
+                    <i class='bx bx-file text-xl text-black mr-2'></i>
+                </button>
+
                     <a [routerLink]="['/employees/edit_employee', employee.id]">
                         <i class='bx bx-edit text-xl text-black mr-2'></i>
                     </a>

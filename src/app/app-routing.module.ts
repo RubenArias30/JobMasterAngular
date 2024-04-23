@@ -11,7 +11,11 @@ import { MyGuardGuard } from './auth/my-guard.guard';
 import { BudgetComponent } from './components/budget/budget.component';
 import { GenerateBudgetComponent } from './components/budget/generate-budget/generate-budget.component';
 import { EditBudgetComponent } from './components/budget/edit-budget/edit-budget.component';
+
 import { IncidenciaComponent } from './components/incidencia/incidencia.component';
+import { ContractsComponent } from './components/documents/contracts/contracts.component';
+import { DocumentsComponent } from './components/documents/documents.component';
+
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -48,10 +52,27 @@ const routes: Routes = [
   component: LayoutComponent,
   canActivate:[MyGuardGuard],data: { roles: ['admin'] },
   children: [
-    { path: '', component: IncidenciaComponent },
+    { path: '', component: IncidenciaComponent }],
+  },
+    {
+  path: 'documents',
+  component: LayoutComponent,
+  canActivate: [MyGuardGuard],
+  data: { roles: ['admin'] },
+  children: [
+    { path: '', component: DocumentsComponent }
+  ]
+},
+{
+  path: 'documents/contracts/:employeeId',
+  component: LayoutComponent,
+  canActivate: [MyGuardGuard],
+  data: { roles: ['admin'] },
+  children: [
+    { path: '', component: ContractsComponent }
+
   ]
 }
-
 ];
 
 
