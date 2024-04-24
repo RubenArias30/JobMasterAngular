@@ -5,7 +5,7 @@ export class Employee {
   email: string;
   telephone: string;
   country: string;
-  photo: string; // Suponiendo que la foto es una URL
+  photo: string;
 
   constructor(id: number, name: string, surname: string, email: string, telephone: string, country: string, photo: string) {
     this.id = id;

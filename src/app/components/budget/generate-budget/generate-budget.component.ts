@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl, AbstractControl } from '@angular/forms';
 import { ApiService } from '../../../services/api/api.service';
 import { Router } from '@angular/router';
 
@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class GenerateBudgetComponent implements OnInit {
   budgetForm: FormGroup;
   canRemoveConcept = false;
+  showError: boolean = false;
 
   // Controles para calcular los valores en tiempo real
   subtotal = new FormControl(0);
@@ -22,14 +23,14 @@ export class GenerateBudgetComponent implements OnInit {
   constructor(private apiService: ApiService, private router: Router, private fb: FormBuilder) {
     this.budgetForm = this.fb.group({
       client_name: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
-      client_telephone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      client_telephone: ['', [Validators.required,  this.phoneNumberValidator()]],
       client_email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')]],
       client_nif: ['', [Validators.required, Validators.pattern('^(?=.*[XYZ0-9])[XYZ0-9][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$')]],
       street: ['', [Validators.required]],
       city: ['', [Validators.required, Validators.pattern('^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ ]+$')]],
       postal_code: ['', [Validators.required, Validators.minLength(5), Validators.pattern('^[0-9]+$')]],
       company_name: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
-      company_telephone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      company_telephone: ['', [Validators.required,  this.phoneNumberValidator()]],
       company_email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')]],
       company_nif: ['', [Validators.required, Validators.pattern('^(?=.*[XYZ0-9])[XYZ0-9][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$')]],
       concepts: this.fb.array([])
@@ -155,11 +156,16 @@ export class GenerateBudgetComponent implements OnInit {
       invoice_irpf: this.invoice_irpf.value,
       total: this.total.value
     };
-   // const formData = { ...this.budgetForm.value, ...calculatedValues };
 
     console.log(formData);
 
-    // Llama al método del servicio API para crear el presupuesto con todos los datos
+    if (this.budgetForm.invalid) {
+      this.showError = true; // Mostrar el mensaje de error
+      return; // Detener la ejecución del método si el formulario es inválido
+    }
+
+    if (this.budgetForm.valid) {
+       // Llama al método del servicio API para crear el presupuesto con todos los datos
     this.apiService.createInvoice(formData).subscribe(
       (response) => {
         console.log('Presupuesto creado exitosamente:', response);
@@ -170,11 +176,25 @@ export class GenerateBudgetComponent implements OnInit {
         // Podrías manejar el error aquí
       }
     );
+    }else{
+      console.log('El formulario no es válido. Por favor, completa todos los campos correctamente.');
+    }
+
   }
 
   cancelEdit(): void {
     if (confirm('¿Estás seguro de cancelar la edición?')) {
       this.router.navigate(['/budget']);
     }
+  }
+   // Función de validación del número de teléfono
+   phoneNumberValidator(): Validators {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const phoneNumberRegex = /^[679]{1}[0-9]{8}$/; // Expresión regular para validar números de teléfono
+      if (control.value && !phoneNumberRegex.test(control.value)) {
+        return { 'invalidPhoneNumber': true };
+      }
+      return null;
+    };
   }
 }

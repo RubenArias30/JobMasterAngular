@@ -40,9 +40,12 @@
                 *ngIf="budgetForm.get('company_telephone')?.errors?.['pattern'] && (budgetForm.get('company_telephone')?.dirty || budgetForm.get('company_telephone')?.touched)"
                 class="text-red-500 mt-2">Por favor, introduce solo números para el telefono.</div>
             </div>
+            <div
+            *ngIf="budgetForm.get('company_telephone')?.errors?.['invalidPhoneNumber'] && (budgetForm.get('company_telephone')?.dirty || budgetForm.get('company_telephone')?.touched)"
+            class="text-red-500 mt-2">Por favor, introduce un número de teléfono válido.</div>
             <div>
               <label for="company_nif" class="block mb-1">NIF:</label>
-              <input formControlName="company_nif" name="company_nif" id="company_nif" type="text"
+              <input formControlName="company_nif" name="company_nif" id="company_nif" type="text" appNifValidator
                 placeholder="32245678G" maxlength="9" class="border p-2 rounded-md w-full">
               <div
                 *ngIf="budgetForm?.get('company_nif')?.invalid && (budgetForm?.get('company_nif')?.dirty || budgetForm?.get('company_nif')?.touched)"
@@ -123,10 +126,13 @@
               <div
                 *ngIf="budgetForm.get('client_telephone')?.errors?.['pattern'] && (budgetForm.get('client_telephone')?.dirty || budgetForm.get('client_telephone')?.touched)"
                 class="text-red-500 mt-2">Por favor, introduce solo números para el telefono.</div>
+                <div
+                *ngIf="budgetForm.get('client_telephone')?.errors?.['invalidPhoneNumber'] && (budgetForm.get('client_telephone')?.dirty || budgetForm.get('client_telephone')?.touched)"
+                class="text-red-500 mt-2">Por favor, introduce un número de teléfono válido.</div>
             </div>
             <div>
               <label for="client_nif" class="block mb-1">NIF:</label>
-              <input formControlName="client_nif" id="client_nif" name="client_nif" type="text" placeholder="32245678G"
+              <input formControlName="client_nif" id="client_nif" name="client_nif" type="text" placeholder="32245678G" appNifValidator
                 class="border p-2 rounded-md w-full" maxlength="9">
               <div
                 *ngIf="budgetForm?.get('client_nif')?.invalid && (budgetForm?.get('client_nif')?.dirty || budgetForm?.get('client_nif')?.touched)"
@@ -186,8 +192,6 @@
       <i class='bx bxs-edit-alt text-4xl text-gray-600'></i>
       <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold ml-4">Información</h1>
     </div>
-
-    <!-- Línea divisora -->
     <hr class="my-4 border-gray-400">
   </div>
   <!-- Conceptos -->
@@ -244,7 +248,7 @@
 
 
   <div class="col-span-full p-8">
-    <button (click)="addConcept()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
+    <button (click)="addConcept()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded w-full">
       + Añadir nuevo concepto
     </button>
   </div>
@@ -277,9 +281,13 @@
     </div>
   </div>
 
+  <!-- Mensaje de error -->
+<div *ngIf="showError" class="text-red-500 mt-2 text-center">
+  Por favor, completa todos los campos obligatorios.
+</div>
   <div class="flex justify-center mt-4">
     <button (click)="addBudget()"
-      class="bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-8 rounded-lg mr-4">Crear
+      class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-8 rounded-lg mr-4">Crear
       Presupuesto</button>
 
     <button type="button" class="bg-gray-500 text-white px-6 py-3 rounded-lg " (click)="cancelEdit()">Cancelar</button>

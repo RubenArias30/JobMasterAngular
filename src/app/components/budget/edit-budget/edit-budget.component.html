@@ -1,180 +1,293 @@
-<div class="container mx-auto mt-8 px-4">
-  <!-- Icono "Añadir empleado" y texto -->
-  <div class="flex items-center mb-4">
-    <i class='bx bxs-edit-alt text-4xl text-gray-600 mr-4'></i>
-     <h1 class="text-2xl font-bold ">Añadir empleado</h1>
+<div class="container mx-auto mt-8">
+  <!-- Icono "Editar empleado" y texto -->
+  <div class="flex items-center">
+    <i class='bx bxs-edit-alt text-4xl text-gray-600'></i>
+    <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold ml-4">Editar Facturas</h1>
   </div>
-
   <!-- Línea divisora -->
-  <hr class="my-4 border border-gray-400 w-full">
+  <hr class="my-4 border-gray-400">
 </div>
 
-<div class="container mx-auto mt-8 flex justify-between">
-  <!-- First form column -->
-  <div class="bg-white rounded-lg p-4 mx-4" style="width: calc(50% - 1rem);">
-    <div class="flex justify-between mb-4">
-      <form class="w-full">
-        <div class="mb-2 bg-gray-200 rounded-lg p-2">Datos empresa:</div>
-        <div class="grid grid-cols-1 gap-4">
-          <div>
-            <label for="nombre_empresa" class="block mb-1">Nombre:</label>
-            <input id="nombre_empresa" type="text" placeholder="Nombre" class="border p-2 rounded-md w-full">
-          </div>
-          <div>
-            <label for="nombre_empresa" class="block mb-1">Teléfono:</label>
-            <input id="Teléfono" type="text" placeholder="+34 623457862" class="border p-2 rounded-md w-full">
-          </div>
-          <div>
-            <label for="nombre_empresa" class="block mb-1">NIF:</label>
-            <input id="NIF" type="text" placeholder="32245678G" class="border p-2 rounded-md w-full">
-          </div>
-          <div>
-            <label for="nombre_empresa" class="block mb-1">Email:</label>
-            <input id="Email" type="text" placeholder="john@gmail.com" class="border p-2 rounded-md w-full">
-          </div>
-          <div>
-            <label for="nombre_empresa" class="block mb-1">Dirección:</label>
-            <input id="Dirección" type="text" placeholder="calle maig 56" class="border p-2 rounded-md w-full">
-          </div>
-          <div>
-            <label for="nombre_empresa" class="block mb-1">Población:</label>
-            <input id="Población" type="text" placeholder="Barcelona" class="border p-2 rounded-md w-full">
-          </div>
-          <div>
-            <label for="nombre_empresa" class="block mb-1">Codigo Postal:</label>
-            <input id="Codigo Postal" type="text" placeholder="90876" class="border p-2 rounded-md w-full">
-          </div>
+<form [formGroup]="invoiceForm" (ngSubmit)="updateInvoice()">
 
+  <div class="container mx-auto mt-8 flex justify-between">
+    <!-- First form column -->
+    <div class="bg-white rounded-lg p-4 mx-4" style="width: calc(50% - 1rem);">
+      <div class="flex justify-between mb-4">
+        <div class="w-full">
+          <div class="mb-2 bg-gray-200 rounded-lg p-2">Datos empresa:</div>
+          <div class="grid grid-cols-1 gap-4">
+            <div>
+              <label for="company_name" class="block mb-1">Nombre:</label>
+              <input formControlName="company_name" id="company_name" type="text" placeholder="Nombre" maxlength="20"
+                class="border p-2 rounded-md w-full">
+              <div
+                *ngIf="invoiceForm.get('company_name')?.errors?.['required'] && (invoiceForm.get('company_name')?.dirty || invoiceForm.get('company_name')?.touched)"
+                class="text-red-500 mt-2">Nombre es obligatorio.</div>
+            </div>
+            <div>
+              <label for="company_telephone" class="block mb-1">Teléfono:</label>
+              <input formControlName="company_telephone" id="company_telephone" type="text" placeholder="+34 623457862"
+                maxlength="29" class="border p-2 rounded-md w-full" maxlength="9">
+              <!-- Mensajes de validación -->
+              <!-- <div
+                *ngIf="budgetForm.get('company_telephone')?.errors?.['required'] && (budgetForm.get('company_telephone')?.dirty || budgetForm.get('company_telephone')?.touched)"
+                class="text-red-500 mt-2">Teléfono es obligatorio.</div>
+              <div
+                *ngIf="budgetForm.get('company_telephone')?.errors?.['pattern'] && (budgetForm.get('company_telephone')?.dirty || budgetForm.get('company_telephone')?.touched)"
+                class="text-red-500 mt-2">Por favor, introduce solo números para el telefono.</div> -->
+            </div>
+            <!-- <div
+            *ngIf="budgetForm.get('company_telephone')?.errors?.['invalidPhoneNumber'] && (budgetForm.get('company_telephone')?.dirty || budgetForm.get('company_telephone')?.touched)"
+            class="text-red-500 mt-2">Por favor, introduce un número de teléfono válido.</div>
+            <div> -->
+            <label for="company_nif" class="block mb-1">NIF:</label>
+            <input formControlName="company_nif" name="company_nif" id="company_nif" type="text" appNifValidator
+              placeholder="32245678G" maxlength="9" class="border p-2 rounded-md w-full">
+            <!-- <div
+              *ngIf="budgetForm?.get('company_nif')?.invalid && (budgetForm?.get('company_nif')?.dirty || budgetForm?.get('company_nif')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce un NIF válido.</div> -->
+          </div>
+          <div>
+            <label for="company_email" class="block mb-1">Email:</label>
+            <input formControlName="company_email" name="company_email" id="company_email" type="text"
+              placeholder="john@gmail.com" maxlength="35" class="border p-2 rounded-md w-full">
+            <!-- <div
+              *ngIf="budgetForm.get('company_email')?.errors?.['required'] && (budgetForm.get('company_email')?.dirty || budgetForm.get('company_email')?.touched)"
+              class="text-red-500 mt-2">Email es obligatorio.</div>
+            <div
+              *ngIf="budgetForm.get('company_email')?.errors?.['pattern'] && (budgetForm.get('company_email')?.dirty || budgetForm.get('company_email')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce un formato de correo electrónico válido.</div> -->
+          </div>
+          <div>
+            <label for="street" class="block mb-1">Dirección:</label>
+            <input formControlName="street" name="street" id="street" type="text" placeholder="calle maig 56"
+              class="border p-2 rounded-md w-full" maxlength="20">
+            <!-- <div
+              *ngIf="budgetForm.get('street')?.errors?.['required'] && (budgetForm.get('street')?.dirty || budgetForm.get('street')?.touched)"
+              class="text-red-500 mt-2">Dirección es obligatoria.</div> -->
+          </div>
+          <div>
+            <label for="city" class="block mb-1">Ciudad:</label>
+            <input formControlName="city" name="city" id="city" type="text" placeholder="Barcelona"
+              class="border p-2 rounded-md w-full" maxlength="20">
+            <!-- <div
+              *ngIf="budgetForm.get('city')?.errors?.['required'] && (budgetForm.get('city')?.dirty || budgetForm.get('city')?.touched)"
+              class="text-red-500 mt-2">Ciudad es obligatoria.</div>
+            <div
+              *ngIf="budgetForm.get('city')?.errors?.['pattern'] && (budgetForm.get('city')?.dirty || budgetForm.get('city')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce la ciudad con la primera letra en mayúscula y solo
+              letras.</div> -->
+          </div>
+          <div>
+            <label for="postal_code" class="block mb-1">Código Postal:</label>
+            <input formControlName="postal_code" name="postal_code" id="postal_code" type="text" placeholder="90876"
+              class="border p-2 rounded-md w-full" maxlength="5">
+            <!-- <div
+              *ngIf="budgetForm.get('postal_code')?.errors?.['required'] && (budgetForm.get('postal_code')?.dirty || budgetForm.get('postal_code')?.touched)"
+              class="text-red-500 mt-2">Código Postal es obligatorio.</div>
+            <div
+              *ngIf="budgetForm.get('postal_code')?.errors?.['pattern'] && (budgetForm.get('postal_code')?.dirty || budgetForm.get('postal_code')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce solo números para el código postal.</div> -->
+          </div>
         </div>
-      </form>
+      </div>
+
     </div>
   </div>
 
   <!-- Second form column -->
   <div class="bg-white rounded-lg p-4 mx-4" style="width: calc(50% - 1rem);">
     <div class="flex justify-between mb-4">
-      <form class="w-full">
+      <div class="w-full">
         <div class="mb-2 bg-gray-200 rounded-lg p-2">Datos del cliente:</div>
         <div class="grid grid-cols-1 gap-4">
           <div>
-            <label for="Nombre" class="block mb-1">Nombre:</label>
-            <input id="Nombre" type="text" placeholder="Nombre" class="border p-2 rounded-md w-full">
+            <label for="client_name" class="block mb-1">Nombre:</label>
+            <input formControlName="client_name" id="client_name" name="client_name" type="text" placeholder="Nombre"
+              class="border p-2 rounded-md w-full" maxlength="20">
+            <!-- <div
+              *ngIf="budgetForm.get('client_name')?.errors?.['required'] && (budgetForm.get('client_name')?.dirty || budgetForm.get('client_name')?.touched)"
+              class="text-red-500 mt-2">Nombre es obligatorio.</div>
+            <div
+              *ngIf="budgetForm.get('client_name')?.errors?.['pattern'] && (budgetForm.get('client_name')?.dirty || budgetForm.get('client_name')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce solo letras para el nombre.</div> -->
           </div>
           <div>
-            <label for="nombre_empresa" class="block mb-1">Teléfono:</label>
-            <input id="Teléfono" type="text" placeholder="+34 623457862" class="border p-2 rounded-md w-full">
+            <label for="client_telephone" class="block mb-1">Teléfono:</label>
+            <input formControlName="client_telephone" id="client_telephone" name="client_telephone" type="text"
+              placeholder="+34 623457862" class="border p-2 rounded-md w-full" maxlength="9">
+            <!-- <div
+              *ngIf="budgetForm.get('client_telephone')?.errors?.['required'] && (budgetForm.get('client_telephone')?.dirty || budgetForm.get('client_telephone')?.touched)"
+              class="text-red-500 mt-2">Teléfono es obligatorio.</div>
+            <div
+              *ngIf="budgetForm.get('client_telephone')?.errors?.['pattern'] && (budgetForm.get('client_telephone')?.dirty || budgetForm.get('client_telephone')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce solo números para el telefono.</div>
+            <div
+              *ngIf="budgetForm.get('client_telephone')?.errors?.['invalidPhoneNumber'] && (budgetForm.get('client_telephone')?.dirty || budgetForm.get('client_telephone')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce un número de teléfono válido.</div> -->
           </div>
           <div>
-            <label for="nombre_empresa" class="block mb-1">NIF:</label>
-            <input id="NIF" type="text" placeholder="32245678G" class="border p-2 rounded-md w-full">
+            <label for="client_nif" class="block mb-1">NIF:</label>
+            <input formControlName="client_nif" id="client_nif" name="client_nif" type="text" placeholder="32245678G"
+              appNifValidator class="border p-2 rounded-md w-full" maxlength="9">
+            <!-- <div
+              *ngIf="budgetForm?.get('client_nif')?.invalid && (budgetForm?.get('client_nif')?.dirty || budgetForm?.get('client_nif')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce un NIF válido.</div> -->
           </div>
           <div>
-            <label for="Email" class="block mb-1">Email:</label>
-            <input id="Email" type="text" placeholder="john@gmail.com" class="border p-2 rounded-md w-full">
+            <label for="client_email" class="block mb-1">Email:</label>
+            <input formControlName="client_email" id="client_email" name="client_email" type="text"
+              placeholder="john@gmail.com" class="border p-2 rounded-md w-full" maxlength="35">
+            <!-- <div
+              *ngIf="budgetForm.get('client_email')?.errors?.['required'] && (budgetForm.get('client_email')?.dirty || budgetForm.get('client_email')?.touched)"
+              class="text-red-500 mt-2">Email es obligatorio.</div>
+            <div
+              *ngIf="budgetForm.get('client_email')?.errors?.['pattern'] && (budgetForm.get('client_email')?.dirty || budgetForm.get('client_email')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce un formato de correo electrónico válido.</div> -->
           </div>
           <div>
-            <label for="Dirección" class="block mb-1">Dirección:</label>
-            <input id="Dirección" type="text" placeholder="calle maig 56" class="border p-2 rounded-md w-full">
+            <label for="street" class="block mb-1">Dirección:</label>
+            <input formControlName="street" id="street" name="street" type="text" placeholder="calle maig 56"
+              class="border p-2 rounded-md w-full" maxlength="20">
+            <!-- <div
+              *ngIf="budgetForm.get('street')?.errors?.['required'] && (budgetForm.get('street')?.dirty || budgetForm.get('street')?.touched)"
+              class="text-red-500 mt-2">Dirección es obligatoria.</div> -->
           </div>
           <div>
-            <label for="Población" class="block mb-1">Población:</label>
-            <input id="Población" type="text" placeholder="Barcelona" class="border p-2 rounded-md w-full">
+            <label for="city" class="block mb-1">Ciudad:</label>
+            <input formControlName="city" id="city" name="city" type="text" placeholder="Barcelona"
+              class="border p-2 rounded-md w-full" maxlength="20">
+            <!-- <div
+              *ngIf="budgetForm.get('city')?.errors?.['required'] && (budgetForm.get('city')?.dirty || budgetForm.get('city')?.touched)"
+              class="text-red-500 mt-2">Ciudad es obligatoria.</div>
+            <div
+              *ngIf="budgetForm.get('city')?.errors?.['pattern'] && (budgetForm.get('city')?.dirty || budgetForm.get('city')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce la ciudad con la primera letra en mayúscula y solo
+              letras.</div> -->
           </div>
           <div>
-            <label for="Codigo_Postal" class="block mb-1">Codigo Postal:</label>
-            <input id="Codigo_Postal" type="text" placeholder="90876" class="border p-2 rounded-md w-full">
+            <label for="postal_code" class="block mb-1">Codigo Postal:</label>
+            <input formControlName="postal_code" id="postal_code" name="postal_code" type="text" placeholder="90876"
+              class="border p-2 rounded-md w-full" maxlength="5">
+            <!-- <div
+              *ngIf="budgetForm.get('postal_code')?.errors?.['required'] && (budgetForm.get('postal_code')?.dirty || budgetForm.get('postal_code')?.touched)"
+              class="text-red-500 mt-2">Código Postal es obligatorio.</div>
+            <div
+              *ngIf="budgetForm.get('postal_code')?.errors?.['pattern'] && (budgetForm.get('postal_code')?.dirty || budgetForm.get('postal_code')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce solo números para el código postal.</div> -->
           </div>
-          <!-- Other input fields -->
         </div>
-      </form>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="container mx-auto mt-8 px-4">
-  <!-- Icono "Editar empleado" y texto -->
-  <div class="flex items-center">
-    <i class='bx bxs-edit-alt text-4xl text-gray-600'></i>
-    <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold ml-4">Conceptos</h1>
+
+
+  <div class="container mx-auto mt-8">
+    <!-- Icono "Editar empleado" y texto -->
+    <div class="flex items-center">
+      <i class='bx bxs-edit-alt text-4xl text-gray-600'></i>
+      <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold ml-4">Información</h1>
+    </div>
+    <hr class="my-4 border-gray-400">
   </div>
-
-  <!-- Línea divisora -->
-  <hr class="my-4 border border-gray-400 w-full">
-</div>
-<div class="container mx-auto mt-8">
-  <!-- Single form -->
-  <div class="bg-white rounded-lg p-4 mx-4">
+  <!-- Conceptos -->
+  <div class="container mx-auto mt-8">
     <div class="flex flex-col sm:flex-row justify-between mb-4">
-      <form class="w-full">
-        <!-- Concepto label -->
-        <div class="mb-2 bg-gray-200 rounded-lg p-2">Concepto:</div>
-        <!-- Concepto input -->
-        <input id="concepto" type="text" placeholder="Concepto" class="border p-2 rounded-md mb-2 sm:mb-0 w-full">
-        <!-- Grid for other labels -->
-        <div class="grid grid-cols-1 sm:grid-cols-5 gap-4">
-          <!-- Labels and inputs for other fields -->
-          <div class="col-span-1">
-            <label for="precio" class="block mb-1">Precio por unidad</label>
-            <input id="precio" type="text" placeholder="Precio por unidad" class="border p-2 rounded-md w-full">
-          </div>
-          <div class="col-span-1">
-            <label for="cantidad" class="block mb-1">Cantidad</label>
-            <input id="cantidad" type="text" placeholder="Cantidad" class="border p-2 rounded-md w-full">
-          </div>
-          <div class="col-span-1">
-            <label for="descuento" class="block mb-1">Dto.%</label>
-            <input id="descuento" type="text" placeholder="Dto.%" class="border p-2 rounded-md w-full">
-          </div>
-          <div class="col-span-1">
-            <label for="iva" class="block mb-1">IVA%</label>
-            <input id="iva" type="text" placeholder="IVA%" class="border p-2 rounded-md w-full">
-          </div>
-          <div class="col-span-1">
-            <label for="irpf" class="block mb-1">IRPF%</label>
-            <input id="irpf" type="text" placeholder="IRPF%" class="border p-2 rounded-md w-full">
-          </div>
-        </div>
+      <div class="w-full">
+        <div formArrayName="concepts">
+          <!-- <div *ngFor="let concept of concepts.controls; let i=index" [formGroupName]="i"> -->
+            <div class="grid grid-cols-1 sm:grid-cols-7 gap-3">
+              <div class="col-span-1">
+                <label for="concept" class="block mb-1">Concepto</label>
+                <input id="concept" formControlName="concept" name="concept" type="text" placeholder="Concepto"
+                  class="border p-2 rounded-md w-full">
+              </div>
+              <div class="col-span-1">
+                <label for="price" class="block mb-1">Precio</label>
+                <input id="price" formControlName="price" type="number" placeholder="Precio"
+                  class="border p-2 rounded-md w-full">
+              </div>
+              <div class="col-span-1">
+                <label for="quantity" class="block mb-1">Cantidad</label>
+                <input id="quantity" formControlName="quantity" type="number" placeholder="Cantidad"
+                  class="border p-2 rounded-md w-full">
+              </div>
+              <div class="col-span-1">
+                <label for="concept_discount" class="block mb-1">Dto.%</label>
+                <input id="concept_discount" formControlName="concept_discount" type="number" placeholder="Dto.%"
+                  class="border p-2 rounded-md w-full">
+              </div>
+              <div class="col-span-1">
+                <label for="concept_iva" class="block mb-1">IVA%</label>
+                <input id="concept_iva" formControlName="concept_iva" type="number" placeholder="IVA%"
+                  class="border p-2 rounded-md w-full">
+              </div>
+              <div class="col-span-1">
+                <label for="concept_irpf" class="block mb-1">IRPF%</label>
+                <input id="concept_irpf" formControlName="concept_irpf" type="number" placeholder="IRPF%"
+                  class="border p-2 rounded-md w-full">
+              </div>
 
-        <!-- Additional elements -->
-        <div class="bg-gray-200 rounded-lg border border-black mt-4">
-          <div class="p-4">
-            <div class="flex flex-col">
-              <div class="flex justify-between">
-                <span>Base imponible:</span>
-                <span>3€</span>
+
+              <div class="col-span-1 p-8">
+                <!-- <button *ngIf="canRemoveConcept" href="#" (click)="removeConcept(i)">
+                  <i class='bx bx-trash text-xl text-black mr-2'></i>
+                </button> -->
               </div>
-              <div class="flex justify-between">
-                <span>Descuento:</span>
-                <span>3€</span>
-              </div>
-              <div class="flex justify-between">
-                <span>IVA:</span>
-                <span>3€</span>
-              </div>
-              <div class="flex justify-between">
-                <span>IRPF:</span>
-                <span>3€</span>
-              </div>
-            </div>
-            <hr class="my-4 border-black">
-            <div class="flex justify-between">
-              <span>Total:</span>
-              <span>3€</span>
             </div>
           </div>
         </div>
-
-        <div class="flex justify-center mt-4">
-          <button class="bg-blue-500 hover:bg-green-400 text-white font-bold py-2 px-8 rounded-lg mr-4">Guardar cambios</button>
-          <button class="bg-gray-500 hover:bg-red-400 text-white font-bold py-2 px-8 rounded-lg" (click)="cancelEdit()">Cancelar</button>
-        </div>
-      </form>
+      </div>
     </div>
+  <!-- </div> -->
+
+
+
+  <div class="col-span-full p-8">
+    <!-- <button (click)="addConcept()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded w-full">
+      + Añadir nuevo concepto
+    </button> -->
   </div>
-</div>
+  <!-- Additional elements -->
+  <!-- <div class="bg-gray-200 rounded-lg border border-black mt-4">
+    <div class="p-4">
+      <div class="flex flex-col">
+        <div class="flex justify-between">
+          <span>Base imponible:</span>
+          <span>{{ subtotal.value | currency:'EUR' }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Descuento:</span>
+          <span>{{ invoice_discount.value | currency:'EUR' }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span>IVA:</span>
+          <span>{{ invoice_iva.value | currency:'EUR' }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span>IRPF:</span>
+          <span>{{ invoice_irpf.value | currency:'EUR' }}</span>
+        </div>
+      </div>
+      <hr class="my-4 border-black">
+      <div class="flex justify-between">
+        <span>Total:</span>
+        <span>{{ total.value | currency:'EUR' }}</span>
+      </div>
+    </div>
+  </div> -->
 
+  <!-- Mensaje de error -->
+  <div *ngIf="showError" class="text-red-500 mt-2 text-center">
+    Por favor, completa todos los campos obligatorios.
+  </div>
+  <div class="flex justify-center mt-4">
+    <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-8 rounded-lg mr-4">Crear
+      Presupuesto</button>
 
+    <button type="button" class="bg-gray-500 text-white px-6 py-3 rounded-lg " (click)="cancelEdit()">Cancelar</button>
+  </div>
 
-
-
-
+</form>
