@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { CalendarOptions } from '@fullcalendar/core';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
+import { ApiService } from 'src/app/services/api/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-schedule',
@@ -10,28 +8,23 @@ import interactionPlugin from '@fullcalendar/interaction';
   styleUrls: ['./schedule.component.css']
 })
 export class ScheduleComponent {
+  employees: any[] = [];
 
-  calendarOptions: CalendarOptions = {
-    initialView: 'dayGridMonth',
-    plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay'
-    }
-  };
+  constructor(private apiService: ApiService, private router: Router) { }
 
-  title: string = '';
-  startDate: string = '';
-  endDate: string = '';
-  startTime: string = '';
-  endTime: string = '';
-
-  onSubmit() {
-    // Aquí puedes manejar la lógica para agregar el evento
-    console.log('Título:', this.title);
-    console.log('Fecha de inicio:', this.startDate, this.startTime);
-    console.log('Fecha de fin:', this.endDate, this.endTime);
-    // Puedes enviar estos datos al backend para procesarlos
+  ngOnInit(): void {
+    this.getEmployees();
   }
+  getEmployees(): void {
+  this.apiService.getEmployees().subscribe(
+    (response: any[]) => {
+      console.log('Respuesta del servicio:', response);
+      this.employees = response;
+    },
+    (error) => {
+      console.error('Error al obtener la lista de empleados:', error);
+    }
+  );
+}
+
 }

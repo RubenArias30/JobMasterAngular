@@ -1,29 +1,49 @@
-<div class="container mx-auto">
-  <div class="flex flex-wrap">
-    <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
-      <full-calendar [options]="calendarOptions"></full-calendar>
+<div class="container mx-auto mt-8">
+  <!-- Encabezado -->
+  <div class="flex items-center justify-between mb-4 ml-5">
+    <div class="flex items-center">
+      <h1 class="text-lg font-bold mr-2 sm:text-xl md:text-2xl lg:text-3xl">Horarios</h1>
+      <div class="border-l h-6 mr-2"></div>
+      <div class="text-sm text-gray-500">{{ employees.length }} Trabajadores</div>
     </div>
-    <div class="w-full md:w-1/2 px-3">
-      <div class="bg-white p-5 rounded-lg shadow">
-        <h2 class="text-lg font-bold mb-4">Agregar Evento</h2>
-        <form (ngSubmit)="onSubmit()">
-          <div class="mb-4">
-            <label for="title" class="block text-sm font-bold mb-1">Título:</label>
-            <input type="text" class="form-input w-full" id="title" name="title" [(ngModel)]="title" required>
-          </div>
-          <div class="mb-4">
-            <label for="startDate" class="block text-sm font-bold mb-1">Fecha de inicio:</label>
-            <input type="date" class="form-input w-full" id="startDate" name="startDate" [(ngModel)]="startDate" required>
-            <input type="time" class="form-input w-full mt-1" id="startTime" name="startTime" [(ngModel)]="startTime" required>
-          </div>
-          <div class="mb-4">
-            <label for="endDate" class="block text-sm font-bold mb-1">Fecha de fin:</label>
-            <input type="date" class="form-input w-full" id="endDate" name="endDate" [(ngModel)]="endDate" required>
-            <input type="time" class="form-input w-full mt-1" id="endTime" name="endTime" [(ngModel)]="endTime" required>
-          </div>
-          <button type="submit" class="bg-green-400 hover:bg-green-500 text-white py-2 px-4 rounded">Agregar</button>
-        </form>
-      </div>
-    </div>
+  </div>
+  <!-- Tabla de empleados -->
+  <div class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto">
+    <table class="w-full">
+      <!-- Cabecera de la tabla -->
+      <thead>
+        <tr class="bg-gray-200">
+          <th class="text-center px-4 py-2">Id</th>
+          <th class="text-center px-4 py-2">Foto</th>
+          <th class="text-center px-4 py-2">Nombre</th>
+          <th class="text-center px-4 py-2">Email</th>
+          <th class="text-center px-4 py-2">Teléfono</th>
+          <th class="text-center px-4 py-2">País</th>
+          <th class="text-center px-4 py-2">Acción</th>
+        </tr>
+      </thead>
+      <!-- Datos de los empleados -->
+      <tbody>
+        <tr *ngFor="let employee of employees" class="border-t">
+          <td class="text-center px-4 py-2">{{ employee.id }}</td>
+          <td class="text-center px-4 py-2">
+            <div class="flex justify-center items-center">
+              <div class="rounded-full overflow-hidden border border-gray-300 h-8 w-8">
+                <img [src]="employee.photo" alt="Foto de {{ employee.name }}" class="h-full w-full object-cover" width="25" height="25">
+              </div>
+            </div>
+          </td>
+          <td class="text-center px-4 py-2">{{ employee.name }} {{ employee.surname }}</td>
+          <td class="text-center px-4 py-2">{{ employee.email }}</td>
+          <td class="text-center px-4 py-2">{{ employee.telephone }}</td>
+          <td class="text-center px-4 py-2">{{ employee.country }}</td>
+          <td class="text-center px-4 py-2">
+            <a [routerLink]="['/schedule/add_schedule', employee.id]" class="text-blue-500 hover:text-blue-700">
+              <i class='bx bxs-calendar-plus text-xl'></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
