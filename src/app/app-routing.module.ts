@@ -15,11 +15,9 @@ import { EditBudgetComponent } from './components/budget/edit-budget/edit-budget
 import { IncidenciaComponent } from './components/incidencia/incidencia.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-<<<<<<< HEAD
-import { ScheduleComponent } from './components/schedule/schedule.component';
-=======
 import { DetailsComponent } from './components/documents/details/details.component';
->>>>>>> 4190acffbab0cca84d25a6c037de13bd9b92f10c
+import { ScheduleComponent } from './components/schedule/schedule.component';
+
 
 
 const routes: Routes = [
@@ -71,12 +69,7 @@ const routes: Routes = [
   }
   ,
 
-// { path: 'documents/:employeeId', component: DocumentsComponent }
 
-
-<<<<<<< HEAD
-  ]
-},
 
 {
   path: 'schedule',
@@ -92,9 +85,8 @@ const routes: Routes = [
 
 
 { path: '**', component: PageNotFoundComponent } ,
-=======
 { path: '**', component: PageNotFoundComponent } ,// Wildcard route for Page Not Found
->>>>>>> 4190acffbab0cca84d25a6c037de13bd9b92f10c
+
 ];
 
 

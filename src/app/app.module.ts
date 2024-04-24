@@ -26,19 +26,15 @@ import { LaboralLifeComponent } from './components/documents/laboral-life/labora
 import { PayrollComponent } from './components/documents/payroll/payroll.component';
 import { ProofComponent } from './components/documents/proof/proof.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-<<<<<<< HEAD
-import { FullCalendarModule } from '@fullcalendar/angular';
-import dayGridPlugin from '@fullcalendar/daygrid';
 import { ScheduleComponent } from './components/schedule/schedule.component';
-=======
 import { DetailsComponent } from './components/documents/details/details.component';
->>>>>>> 4190acffbab0cca84d25a6c037de13bd9b92f10c
+import { FullCalendarModule } from '@fullcalendar/angular';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-<<<<<<< HEAD
     DashboardComponent,
     SidebarComponent,
     LayoutComponent,
@@ -52,14 +48,12 @@ import { DetailsComponent } from './components/documents/details/details.compone
     IncidenciaComponent,
     DocumentsComponent,
     NifComponent,
-    ContractsComponent,
     CurriculumComponent,
     LaboralLifeComponent,
     PayrollComponent,
     ProofComponent,
     PageNotFoundComponent,
     ScheduleComponent,
-=======
      DashboardComponent,
      SidebarComponent,
      LayoutComponent,
@@ -79,7 +73,6 @@ import { DetailsComponent } from './components/documents/details/details.compone
      ProofComponent,
      PageNotFoundComponent,
      DetailsComponent,
->>>>>>> 4190acffbab0cca84d25a6c037de13bd9b92f10c
 
   ],
   imports: [
@@ -87,8 +80,10 @@ import { DetailsComponent } from './components/documents/details/details.compone
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    FullCalendarModule,
     AppRoutingModule,
-    FullCalendarModule
+
+
   ],
   providers: [
 
