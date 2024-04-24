@@ -21,31 +21,22 @@
     <table class="w-full text-center text-xs sm:text-sm md:text-base lg:text-lg">
       <thead>
         <tr class="bg-gray-200">
+          <th>Cliente</th>
+          <th>Compañia</th>
           <th>Subtotal</th>
-          <th>Descuento</th>
-          <th>IVA Factura</th>
-          <th>IRPF Factura</th>
           <th>Total</th>
-          <!-- <th>Concepto</th> -->
           <th>Acción</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let invoice of invoices" class="border-b border-gray-200">
-          <td>{{ invoice.subtotal }}</td>
-          <td>{{ invoice.invoice_discount }}</td>
-          <td>{{ invoice.invoice_iva }}</td>
-          <td>{{ invoice.invoice_irpf }}</td>
-          <td>{{ invoice.total }}</td>
-          <!-- <td class="text-left">
-            <div *ngFor="let concept of invoice.concepts">{{ concept.concept }}</div>
-          </td> -->
+          <td>{{ invoice.clients.client_name }}</td>
+          <td>{{ invoice.companies.company_name }}</td>
+          <td>{{ invoice.subtotal }}€</td>
+          <td>{{ invoice.total }}€</td>
           <td>
-            <!-- <button (click)="confirmDeleteInvoice(invoice.id)">
-              <i class='bx bxs-download text-xl text-black mr-2'></i>
-            </button> -->
-            <a routerLink="/budget/edit_budget">
-              <i class='bx bx-edit text-xl text-black mr-2'></i>
+            <a >
+              <i class='bx bxs-file-pdf mr-2'></i>
             </a>
             <button (click)="confirmDeleteInvoice(invoice.id)">
               <i class='bx bx-trash text-xl text-black'></i>
