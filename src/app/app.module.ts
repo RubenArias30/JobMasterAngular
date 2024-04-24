@@ -17,11 +17,8 @@ import { NifValidatorDirective } from './directive/nif-validator.directive';
 import { BudgetComponent } from './components/budget/budget.component';
 import { GenerateBudgetComponent } from './components/budget/generate-budget/generate-budget.component';
 import { EditBudgetComponent } from './components/budget/edit-budget/edit-budget.component';
-
 import { IncidenciaComponent } from './components/incidencia/incidencia.component';
-
 import { DocumentsComponent } from './components/documents/documents.component';
-
 import { RouterModule } from '@angular/router';
 import { NifComponent } from './components/documents/nif/nif.component';
 import { ContractsComponent } from './components/documents/contracts/contracts.component';
@@ -30,31 +27,34 @@ import { LaboralLifeComponent } from './components/documents/laboral-life/labora
 import { PayrollComponent } from './components/documents/payroll/payroll.component';
 import { ProofComponent } from './components/documents/proof/proof.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import { ScheduleComponent } from './components/schedule/schedule.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-
     LoginComponent,
-     DashboardComponent,
-     SidebarComponent,
-     LayoutComponent,
-     EmployeesComponent,
-     AddEmployeeComponent,
-     EditEmployeeComponent,
-     NifValidatorDirective,
-     BudgetComponent,
-     GenerateBudgetComponent,
-     EditBudgetComponent,
-     IncidenciaComponent,
-     DocumentsComponent,
-     NifComponent,
-     ContractsComponent,
-     CurriculumComponent,
-     LaboralLifeComponent,
-     PayrollComponent,
-     ProofComponent,
-     PageNotFoundComponent,
+    DashboardComponent,
+    SidebarComponent,
+    LayoutComponent,
+    EmployeesComponent,
+    AddEmployeeComponent,
+    EditEmployeeComponent,
+    NifValidatorDirective,
+    BudgetComponent,
+    GenerateBudgetComponent,
+    EditBudgetComponent,
+    IncidenciaComponent,
+    DocumentsComponent,
+    NifComponent,
+    ContractsComponent,
+    CurriculumComponent,
+    LaboralLifeComponent,
+    PayrollComponent,
+    ProofComponent,
+    PageNotFoundComponent,
+    ScheduleComponent,
 
   ],
   imports: [
@@ -62,7 +62,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FullCalendarModule
   ],
   providers: [
 

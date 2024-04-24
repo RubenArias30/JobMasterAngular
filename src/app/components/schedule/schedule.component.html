@@ -1,0 +1,29 @@
+<div class="container mx-auto">
+  <div class="flex flex-wrap">
+    <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
+      <full-calendar [options]="calendarOptions " ></full-calendar>
+    </div>
+    <div class="w-full md:w-1/2 px-3">
+      <div class="bg-white p-5 rounded-lg shadow">
+        <h2 class="text-lg font-bold mb-4">Agregar Evento</h2>
+        <form (ngSubmit)="onSubmit()">
+          <div class="mb-4">
+            <label for="title" class="block text-sm font-bold mb-1">Título:</label>
+            <input type="text" class="form-input w-full" id="title" name="title" [(ngModel)]="title" required>
+          </div>
+          <div class="mb-4">
+            <label for="startDate" class="block text-sm font-bold mb-1">Fecha de inicio:</label>
+            <input type="date" class="form-input w-full" id="startDate" name="startDate" [(ngModel)]="startDate" required>
+            <input type="time" class="form-input w-full mt-1" id="startTime" name="startTime" [(ngModel)]="startTime" required>
+          </div>
+          <div class="mb-4">
+            <label for="endDate" class="block text-sm font-bold mb-1">Fecha de fin:</label>
+            <input type="date" class="form-input w-full" id="endDate" name="endDate" [(ngModel)]="endDate" required>
+            <input type="time" class="form-input w-full mt-1" id="endTime" name="endTime" [(ngModel)]="endTime" required>
+          </div>
+          <button type="submit" class="bg-green-400 hover:bg-green-500 text-white py-2 px-4 rounded">Agregar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

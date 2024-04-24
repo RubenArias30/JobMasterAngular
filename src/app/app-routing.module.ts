@@ -16,6 +16,7 @@ import { IncidenciaComponent } from './components/incidencia/incidencia.componen
 import { ContractsComponent } from './components/documents/contracts/contracts.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { ScheduleComponent } from './components/schedule/schedule.component';
 
 
 const routes: Routes = [
@@ -74,7 +75,21 @@ const routes: Routes = [
 
   ]
 },
-{ path: '**', component: PageNotFoundComponent } ,// Wildcard route for Page Not Found
+
+{
+  path: 'schedule',
+  component: LayoutComponent,
+  canActivate: [MyGuardGuard],
+  data: { roles: ['admin'] },
+  children: [
+    { path: '', component: ScheduleComponent }
+
+  ]
+},
+
+
+
+{ path: '**', component: PageNotFoundComponent } ,
 ];
 
 
