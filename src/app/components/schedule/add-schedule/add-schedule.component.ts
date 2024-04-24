@@ -1,9 +1,10 @@
-import { Component,OnInit  } from '@angular/core';
-import { CalendarOptions } from '@fullcalendar/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'app-add-schedule',
@@ -11,14 +12,23 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./add-schedule.component.css']
 })
 export class AddScheduleComponent implements OnInit {
-  employeeId: string = '';
+  @ViewChild('fullcalendar') fullcalendar!: ElementRef;
 
-  constructor(private route: ActivatedRoute) { }
+  employeeId: number = 0;
+  title: string = '';
+  fechaInicio: string = '';
+  horaInicio: string = '';
+  fechaFin: string = '';
+  horaFin: string = '';
+  employeeName: string = '';
+  events: EventInput[] = [];
+
+  constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.employeeId = params['id'];
-      // Ahora puedes usar this.employeeId para hacer cualquier cosa que necesites con el ID del empleado
+      this.getEmployeeDetails(this.employeeId);
     });
   }
 
@@ -39,18 +49,46 @@ export class AddScheduleComponent implements OnInit {
     },
   };
 
-  title: string = '';
-  startDate: string = '';
-  endDate: string = '';
-  startTime: string = '';
-  endTime: string = '';
+  agregarHorario() {
+    const scheduleData = {
+      title: this.title,
+      start_datetime: `${this.fechaInicio} ${this.horaInicio}`,
+      end_datetime: `${this.fechaFin} ${this.horaFin}`
+    };
 
-  onSubmit() {
-    // Aquí puedes manejar la lógica para agregar el evento
-    console.log('Título:', this.title);
-    console.log('Fecha de inicio:', this.startDate, this.startTime);
-    console.log('Fecha de fin:', this.endDate, this.endTime);
-    // Puedes enviar estos datos al backend para procesarlos
+    this.onSubmit(scheduleData);
   }
 
+  onSubmit(scheduleData: any) {
+    this.apiService.addSchedule(this.employeeId, scheduleData).subscribe(
+      response => {
+        console.log('Horario agregado correctamente:', response);
+      },
+      error => {
+        console.error('Error al agregar el horario:', error);
+      }
+    );
+  }
+
+  getEmployeeDetails(employeeId: number): void {
+    this.apiService.getEmployeeDetails(employeeId).subscribe(
+      (response: any) => {
+        this.employeeName = response.name;
+      },
+      (error) => {
+        console.error('Error al obtener los detalles del empleado:', error);
+      }
+    );
+  }
+
+  updateEvents(events: any[]): void {
+    this.events = events.map(event => ({
+      title: event.title,
+      start: event.start_datetime,
+      end: event.end_datetime
+    }));
+  }
+  goBack(): void {
+    this.router.navigate(['/schedule']);
+  }
 }

@@ -104,5 +104,12 @@ export class ApiService {
       return this.http.get<any[]>(`${this.apiUrl}/documents?employeeId=${employeeId}`);
     }
 
+    addSchedule(employeeId: number, scheduleData: any) {
+      return this.http.post(`${this.apiUrl}/employees/${employeeId}/schedule`, scheduleData);
+    }
+    getEmployeeDetails(employeeId: number): Observable<any> {
+      return this.http.get<any>(`${this.apiUrl}/employees/${employeeId}`);
+    }
+
 
 }

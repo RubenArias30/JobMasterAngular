@@ -1,34 +1,36 @@
 <div class="container mx-auto">
   <div class="flex flex-wrap justify-center items-start">
     <div class="w-full md:w-3/4 px-4 mb-4 md:mb-0">
+      <h2 class="text-xl font-bold mb-4">Horario de {{ employeeName }}</h2>
       <full-calendar [options]="calendarOptions"></full-calendar>
     </div>
     <div class="w-full md:w-1/4 px-4 md:pl-8">
       <div class="bg-white p-5 rounded-lg shadow">
-        <h2 class="text-lg font-bold mb-3">Agregar Turno</h2>
-        <form (ngSubmit)="onSubmit()">
+        <h2 class="text-lg font-bold mb-4">Agregar Turno</h2>
+        <form (submit)="agregarHorario()">
           <div class="mb-4">
             <label for="title" class="block text-sm font-bold mb-1">Título:</label>
-            <input type="text" class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400" id="title" name="title" [(ngModel)]="title" required>
+            <input type="text" class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400" id="title" [(ngModel)]="title" name="title" required>
           </div>
           <div class="mb-4">
             <label for="startDate" class="block text-sm font-bold mb-1">Fecha de inicio:</label>
-            <input type="date" class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400" id="startDate" name="startDate" [(ngModel)]="startDate" required>
-            <input type="time" class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400" id="startTime" name="startTime" [(ngModel)]="startTime" required>
+            <input type="date" class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"  [(ngModel)]="fechaInicio" id="startDate" name="startDate" required>
+            <input type="time" class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400" [(ngModel)]="horaInicio" id="startTime" name="startTime"  required>
           </div>
           <div class="mb-4">
             <label for="endDate" class="block text-sm font-bold mb-1">Fecha de fin:</label>
-            <input type="date" class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400" id="endDate" name="endDate" [(ngModel)]="endDate" required>
-            <input type="time" class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400" id="endTime" name="endTime" [(ngModel)]="endTime" required>
+            <input type="date" class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400" [(ngModel)]="fechaFin" id="endDate" name="endDate" required>
+            <input type="time" class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400" [(ngModel)]="horaFin" id="endTime" name="endTime"  required>
           </div>
           <div class="flex justify-center">
-            <div class="mr-2">
-              <button type="submit" class="bg-green-400 hover:bg-green-500 text-white py-2 px-4 rounded">Agregar</button>
-            </div>
-            <button type="button" class="bg-red-400 hover:bg-red-500 text-white py-2 px-4 rounded">Cancelar</button>
+            <button type="submit" class="bg-green-400 hover:bg-green-500 text-white py-2 px-4 rounded">Agregar</button>
           </div>
         </form>
       </div>
     </div>
+  </div>
+  <!-- Botón de volver atrás -->
+  <div class="flex justify-center mt-4">
+    <button class="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded" (click)="goBack()">Volver atrás</button>
   </div>
 </div>
