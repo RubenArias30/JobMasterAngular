@@ -56,20 +56,20 @@ const routes: Routes = [
     { path: '', component: IncidenciaComponent }],
   },
   {
-  path: 'documents',
-  component: LayoutComponent,
-  canActivate: [MyGuardGuard],
-  data: { roles: ['admin'] },
-  children: [
-    { path: '', component: DocumentsComponent },
-    { path: 'details', component: DetailsComponent } // Agrega esta ruta para los detalles de documentos
+    path: 'documents',
+    component: LayoutComponent,
+    canActivate: [MyGuardGuard],
+    data: { roles: ['admin'] },
+    children: [
+      { path: '', component: DocumentsComponent },
+      { path: 'details/:employeeId', component: DetailsComponent } // Actualiza la ruta con el parámetro :employeeId
+    ]
+  }
+  ,
 
-  ]
-},
+// { path: 'documents/:employeeId', component: DocumentsComponent }
 
-{ path: 'documents/:employeeId', component: DocumentsComponent }
 
-,
 { path: '**', component: PageNotFoundComponent } ,// Wildcard route for Page Not Found
 ];
 

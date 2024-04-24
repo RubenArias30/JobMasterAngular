@@ -2,7 +2,7 @@
   <h1 class="text-3xl font-bold mt-8 mb-4">Documentos de {{ employeeName }}</h1>
   <hr class="border border-black mb-4">
 
-  <div *ngIf="filteredDocuments.length > 0; else noDocuments">
+  <div *ngIf="documents.length > 0; else noDocuments">
     <table class="table-auto">
       <thead>
         <tr>
@@ -13,7 +13,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let doc of filteredDocuments">
+        <tr *ngFor="let doc of documents">
           <td class="border px-4 py-2">{{ doc.id }}</td>
           <td class="border px-4 py-2">{{ doc.type_documents }}</td>
           <td class="border px-4 py-2">{{ doc.name }}</td>

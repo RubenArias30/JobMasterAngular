@@ -29,6 +29,7 @@ export class DocumentsComponent implements OnInit {
   }
 
   navigateToDetails(employeeId: string): void {
-    this.router.navigate(['/details', employeeId]); // Cambia el parámetro a employeeId
+    this.router.navigate(['/documents/details', employeeId]); // Actualiza la ruta a /documents/details/:employeeId
   }
+
 }

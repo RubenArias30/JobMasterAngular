@@ -100,8 +100,9 @@ export class ApiService {
       return this.http.delete<any>(`${this.apiUrl}/documents/${documentId}`);
     }
 
-    getDocumentsByEmployeeId(employeeId: string): Observable<any[]> {
+    getDocumentsByEmployee(employeeId: string): Observable<any[]> {
       return this.http.get<any[]>(`${this.apiUrl}/documents?employeeId=${employeeId}`);
     }
+
 
 }
