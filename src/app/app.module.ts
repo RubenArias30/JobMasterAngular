@@ -29,6 +29,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { DetailsComponent } from './components/documents/details/details.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { AddScheduleComponent } from './components/schedule/add-schedule/add-schedule.component';
 
 
 @NgModule({
@@ -54,25 +55,26 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     ProofComponent,
     PageNotFoundComponent,
     ScheduleComponent,
-     DashboardComponent,
-     SidebarComponent,
-     LayoutComponent,
-     EmployeesComponent,
-     AddEmployeeComponent,
-     EditEmployeeComponent,
-     NifValidatorDirective,
-     BudgetComponent,
-     GenerateBudgetComponent,
-     EditBudgetComponent,
-     IncidenciaComponent,
-     DocumentsComponent,
-     NifComponent,
-     CurriculumComponent,
-     LaboralLifeComponent,
-     PayrollComponent,
-     ProofComponent,
-     PageNotFoundComponent,
-     DetailsComponent,
+    DashboardComponent,
+    SidebarComponent,
+    LayoutComponent,
+    EmployeesComponent,
+    AddEmployeeComponent,
+    EditEmployeeComponent,
+    NifValidatorDirective,
+    BudgetComponent,
+    GenerateBudgetComponent,
+    EditBudgetComponent,
+    IncidenciaComponent,
+    DocumentsComponent,
+    NifComponent,
+    CurriculumComponent,
+    LaboralLifeComponent,
+    PayrollComponent,
+    ProofComponent,
+    PageNotFoundComponent,
+    DetailsComponent,
+    AddScheduleComponent,
 
   ],
   imports: [

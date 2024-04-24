@@ -17,6 +17,7 @@ import { DocumentsComponent } from './components/documents/documents.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { DetailsComponent } from './components/documents/details/details.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
+import { AddScheduleComponent } from './components/schedule/add-schedule/add-schedule.component';
 
 
 
@@ -64,7 +65,7 @@ const routes: Routes = [
     data: { roles: ['admin'] },
     children: [
       { path: '', component: DocumentsComponent },
-      { path: 'details/:employeeId', component: DetailsComponent } // Actualiza la ruta con el parámetro :employeeId
+      { path: 'details/:employeeId', component: DetailsComponent }
     ]
   }
   ,
@@ -77,7 +78,8 @@ const routes: Routes = [
   canActivate: [MyGuardGuard],
   data: { roles: ['admin'] },
   children: [
-    { path: '', component: ScheduleComponent }
+    { path: '', component: ScheduleComponent },
+    { path: 'add_schedule/:id', component: AddScheduleComponent },
 
   ]
 },
@@ -85,7 +87,6 @@ const routes: Routes = [
 
 
 { path: '**', component: PageNotFoundComponent } ,
-{ path: '**', component: PageNotFoundComponent } ,// Wildcard route for Page Not Found
 
 ];
 
