@@ -24,12 +24,12 @@ import { DocumentsComponent } from './components/documents/documents.component';
 
 import { RouterModule } from '@angular/router';
 import { NifComponent } from './components/documents/nif/nif.component';
-import { ContractsComponent } from './components/documents/contracts/contracts.component';
 import { CurriculumComponent } from './components/documents/curriculum/curriculum.component';
 import { LaboralLifeComponent } from './components/documents/laboral-life/laboral-life.component';
 import { PayrollComponent } from './components/documents/payroll/payroll.component';
 import { ProofComponent } from './components/documents/proof/proof.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { DetailsComponent } from './components/documents/details/details.component';
 
 @NgModule({
   declarations: [
@@ -49,12 +49,12 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
      IncidenciaComponent,
      DocumentsComponent,
      NifComponent,
-     ContractsComponent,
      CurriculumComponent,
      LaboralLifeComponent,
      PayrollComponent,
      ProofComponent,
      PageNotFoundComponent,
+     DetailsComponent,
 
   ],
   imports: [

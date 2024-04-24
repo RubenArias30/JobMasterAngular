@@ -1,0 +1,29 @@
+<div class="container mx-auto">
+  <h1 class="text-3xl font-bold mt-8 mb-4">Documentos de {{ employeeName }}</h1>
+  <hr class="border border-black mb-4">
+
+  <div *ngIf="filteredDocuments.length > 0; else noDocuments">
+    <table class="table-auto">
+      <thead>
+        <tr>
+          <th class="px-4 py-2">ID</th>
+          <th class="px-4 py-2">Tipo</th>
+          <th class="px-4 py-2">Nombre</th>
+          <!-- Agrega más columnas según tus necesidades -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let doc of filteredDocuments">
+          <td class="border px-4 py-2">{{ doc.id }}</td>
+          <td class="border px-4 py-2">{{ doc.type_documents }}</td>
+          <td class="border px-4 py-2">{{ doc.name }}</td>
+          <!-- Agrega más columnas según tus necesidades -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #noDocuments>
+    <p class="text-lg">No hay documentos disponibles para este empleado.</p>
+  </ng-template>
+</div>

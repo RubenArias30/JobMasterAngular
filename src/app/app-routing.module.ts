@@ -13,9 +13,9 @@ import { GenerateBudgetComponent } from './components/budget/generate-budget/gen
 import { EditBudgetComponent } from './components/budget/edit-budget/edit-budget.component';
 
 import { IncidenciaComponent } from './components/incidencia/incidencia.component';
-import { ContractsComponent } from './components/documents/contracts/contracts.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { DetailsComponent } from './components/documents/details/details.component';
 
 
 const routes: Routes = [
@@ -61,21 +61,18 @@ const routes: Routes = [
   canActivate: [MyGuardGuard],
   data: { roles: ['admin'] },
   children: [
-    { path: '', component: DocumentsComponent }
-  ]
-},
-{
-  path: 'documents/contracts/:employeeId',
-  component: LayoutComponent,
-  canActivate: [MyGuardGuard],
-  data: { roles: ['admin'] },
-  children: [
-    { path: '', component: ContractsComponent }
+    { path: '', component: DocumentsComponent },
+    { path: 'details', component: DetailsComponent } // Agrega esta ruta para los detalles de documentos
 
   ]
 },
+
+{ path: 'documents/:employeeId', component: DocumentsComponent }
+
+,
 { path: '**', component: PageNotFoundComponent } ,// Wildcard route for Page Not Found
 ];
+
 
 
 @NgModule({

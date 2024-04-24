@@ -8,7 +8,8 @@ module.exports = {
         custom: {
           500: '#00DEA3', // Agregando el color personalizado
           600: '#DE8500',
-          700: '#EFF3FD'
+          700: '#EFF3FD',
+          800: '92E3A9'
         },
       },
     },

@@ -75,11 +75,14 @@ export class ApiService {
     // getDocumentsByType(documentType: string): Observable<any[]> {
     //   return this.http.get<any[]>(`${this.apiUrl}/documents?type_documents=${documentType}`);
     // }
-    getDocumentsByEmployeeAndType(employeeId: string, documentType: string): Observable<any[]> {
-      return this.http.get<any[]>(`${this.apiUrl}/documents?employeeId=${employeeId}&type_documents=${documentType}`);
-    }
+    // getDocumentsByEmployeeAndType(employeeId: string, documentType: string): Observable<any[]> {
+    //   return this.http.get<any[]>(`${this.apiUrl}/documents?employeeId=${employeeId}&type_documents=${documentType}`);
+    // }
 
-
+  // Método para obtener todos los documentos
+  getDocuments(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/documents`);
+  }
     // Método para agregar documento
     addDocument(documentData: any): Observable<any> {
       return this.http.post<any>(`${this.apiUrl}/documents`, documentData);
@@ -88,6 +91,10 @@ export class ApiService {
     // Método para eliminar documento
     deleteDocument(documentId: string): Observable<any> {
       return this.http.delete<any>(`${this.apiUrl}/documents/${documentId}`);
+    }
+
+    getDocumentsByEmployeeId(employeeId: string): Observable<any[]> {
+      return this.http.get<any[]>(`${this.apiUrl}/documents?employeeId=${employeeId}`);
     }
 
 }
