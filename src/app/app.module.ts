@@ -21,20 +21,24 @@ import { IncidenciaComponent } from './components/incidencia/incidencia.componen
 import { DocumentsComponent } from './components/documents/documents.component';
 import { RouterModule } from '@angular/router';
 import { NifComponent } from './components/documents/nif/nif.component';
-import { ContractsComponent } from './components/documents/contracts/contracts.component';
 import { CurriculumComponent } from './components/documents/curriculum/curriculum.component';
 import { LaboralLifeComponent } from './components/documents/laboral-life/laboral-life.component';
 import { PayrollComponent } from './components/documents/payroll/payroll.component';
 import { ProofComponent } from './components/documents/proof/proof.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+<<<<<<< HEAD
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { ScheduleComponent } from './components/schedule/schedule.component';
+=======
+import { DetailsComponent } from './components/documents/details/details.component';
+>>>>>>> 4190acffbab0cca84d25a6c037de13bd9b92f10c
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+<<<<<<< HEAD
     DashboardComponent,
     SidebarComponent,
     LayoutComponent,
@@ -55,6 +59,27 @@ import { ScheduleComponent } from './components/schedule/schedule.component';
     ProofComponent,
     PageNotFoundComponent,
     ScheduleComponent,
+=======
+     DashboardComponent,
+     SidebarComponent,
+     LayoutComponent,
+     EmployeesComponent,
+     AddEmployeeComponent,
+     EditEmployeeComponent,
+     NifValidatorDirective,
+     BudgetComponent,
+     GenerateBudgetComponent,
+     EditBudgetComponent,
+     IncidenciaComponent,
+     DocumentsComponent,
+     NifComponent,
+     CurriculumComponent,
+     LaboralLifeComponent,
+     PayrollComponent,
+     ProofComponent,
+     PageNotFoundComponent,
+     DetailsComponent,
+>>>>>>> 4190acffbab0cca84d25a6c037de13bd9b92f10c
 
   ],
   imports: [

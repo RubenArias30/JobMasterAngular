@@ -13,10 +13,13 @@ import { GenerateBudgetComponent } from './components/budget/generate-budget/gen
 import { EditBudgetComponent } from './components/budget/edit-budget/edit-budget.component';
 
 import { IncidenciaComponent } from './components/incidencia/incidencia.component';
-import { ContractsComponent } from './components/documents/contracts/contracts.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+<<<<<<< HEAD
 import { ScheduleComponent } from './components/schedule/schedule.component';
+=======
+import { DetailsComponent } from './components/documents/details/details.component';
+>>>>>>> 4190acffbab0cca84d25a6c037de13bd9b92f10c
 
 
 const routes: Routes = [
@@ -57,22 +60,21 @@ const routes: Routes = [
     { path: '', component: IncidenciaComponent }],
   },
   {
-  path: 'documents',
-  component: LayoutComponent,
-  canActivate: [MyGuardGuard],
-  data: { roles: ['admin'] },
-  children: [
-    { path: '', component: DocumentsComponent }
-  ]
-},
-{
-  path: 'documents/contracts/:employeeId',
-  component: LayoutComponent,
-  canActivate: [MyGuardGuard],
-  data: { roles: ['admin'] },
-  children: [
-    { path: '', component: ContractsComponent }
+    path: 'documents',
+    component: LayoutComponent,
+    canActivate: [MyGuardGuard],
+    data: { roles: ['admin'] },
+    children: [
+      { path: '', component: DocumentsComponent },
+      { path: 'details/:employeeId', component: DetailsComponent } // Actualiza la ruta con el parámetro :employeeId
+    ]
+  }
+  ,
 
+// { path: 'documents/:employeeId', component: DocumentsComponent }
+
+
+<<<<<<< HEAD
   ]
 },
 
@@ -90,7 +92,11 @@ const routes: Routes = [
 
 
 { path: '**', component: PageNotFoundComponent } ,
+=======
+{ path: '**', component: PageNotFoundComponent } ,// Wildcard route for Page Not Found
+>>>>>>> 4190acffbab0cca84d25a6c037de13bd9b92f10c
 ];
+
 
 
 @NgModule({
