@@ -40,28 +40,28 @@
         <!-- Cabecera de la tabla -->
         <thead>
             <tr class="bg-gray-200">
-                <th class="text-center px-4">Id</th> <!-- Added text-center and px-4 class -->
-                <th class="text-center px-4">Foto</th> <!-- Added text-center and px-4 class -->
-                <th class="text-center px-4">Nombre</th> <!-- Added text-center and px-4 class -->
-                <th class="text-center px-4">Email</th> <!-- Added text-center and px-4 class -->
-                <th class="text-center px-4">Teléfono</th> <!-- Added text-center and px-4 class -->
-                <th class="text-center px-4">País</th> <!-- Added text-center and px-4 class -->
-                <th class="text-center px-4">Acción</th> <!-- Added text-center and px-4 class -->
+                <th class="text-center px-4">Id</th>
+                <th class="text-center px-4">Foto</th>
+                <th class="text-center px-4">Nombre</th>
+                <th class="text-center px-4">Email</th>
+                <th class="text-center px-4">Teléfono</th>
+                <th class="text-center px-4">País</th>
+                <th class="text-center px-4">Acción</th>
             </tr>
         </thead>
         <!-- Datos de los empleados -->
         <tbody>
             <tr *ngFor="let employee of employees">
-                <td class="text-center px-4">{{ employee.id }}</td> <!-- Changed to text-center -->
-                <td class="text-center px-4"> <!-- Changed to text-center -->
+                <td class="text-center px-4">{{ employee.id }}</td>
+                <td class="text-center px-4">
                     <div class="rounded-full overflow-hidden border border-gray-300 h-8 w-8">
                         <img [src]="employee.photo" alt="Foto de {{ employee.name }}" class="h-full w-full object-cover" width="25" height="25">
                     </div>
                 </td>
-                <td class="text-center px-4">{{ employee.name }} {{ employee.surname }}</td> <!-- Changed to text-center -->
-                <td class="text-center px-4">{{ employee.email }}</td> <!-- Changed to text-center -->
-                <td class="text-center px-4">{{ employee.telephone }}</td> <!-- Changed to text-center -->
-                <td class="text-center px-4">{{ employee.country }}</td> <!-- Changed to text-center -->
+                <td class="text-center px-4">{{ employee.name }} {{ employee.surname }}</td>
+                <td class="text-center px-4">{{ employee.email }}</td>
+                <td class="text-center px-4">{{ employee.telephone }}</td>
+                <td class="text-center px-4">{{ employee.country }}</td>
                 <td class="text-center px-4">
                   <!-- <button (click)="navigateToDocuments(employee)">
                 </button> -->

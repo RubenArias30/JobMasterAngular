@@ -47,6 +47,8 @@ export class AddScheduleComponent implements OnInit {
       week: 'Semana',
       day: 'Día'
     },
+    // Eventos
+    events: this.events
   };
 
   agregarHorario() {
@@ -56,7 +58,26 @@ export class AddScheduleComponent implements OnInit {
       end_datetime: `${this.fechaFin} ${this.horaFin}`
     };
 
+    // Llama a la función onSubmit para agregar el horario a la base de datos
     this.onSubmit(scheduleData);
+
+    // Agrega el nuevo evento al arreglo de eventos en el cliente
+    const newEvent = {
+      title: this.title,
+      start: `${this.fechaInicio}T${this.horaInicio}`,
+      end: `${this.fechaFin}T${this.horaFin}`
+    };
+    this.events.push(newEvent);
+
+    // Limpia los campos del formulario después de agregar el evento
+    this.title = '';
+    this.fechaInicio = '';
+    this.horaInicio = '';
+    this.fechaFin = '';
+    this.horaFin = '';
+
+    // Actualiza la vista del calendario
+    this.calendarOptions.events = this.events;
   }
 
   onSubmit(scheduleData: any) {
@@ -74,6 +95,10 @@ export class AddScheduleComponent implements OnInit {
     this.apiService.getEmployeeDetails(employeeId).subscribe(
       (response: any) => {
         this.employeeName = response.name;
+        // Actualiza los eventos si los datos del empleado contienen eventos
+        if (response.events) {
+          this.updateEvents(response.events);
+        }
       },
       (error) => {
         console.error('Error al obtener los detalles del empleado:', error);
@@ -81,13 +106,17 @@ export class AddScheduleComponent implements OnInit {
     );
   }
 
+  // Actualiza los eventos con los nuevos eventos obtenidos
   updateEvents(events: any[]): void {
     this.events = events.map(event => ({
       title: event.title,
       start: event.start_datetime,
       end: event.end_datetime
     }));
+    // Actualiza la vista del calendario
+    this.calendarOptions.events = this.events;
   }
+
   goBack(): void {
     this.router.navigate(['/schedule']);
   }

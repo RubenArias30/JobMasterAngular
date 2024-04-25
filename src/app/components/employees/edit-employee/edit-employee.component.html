@@ -134,8 +134,8 @@
           <h2 class="text-lg font-bold">Direccion</h2>
           <hr class="my- border-gray-400">
           <div class="mt-2">
-            <label for="direccion" class="block">Dirección</label>
-            <input type="text" id="direccion" formControlName="street"
+            <label for="street" class="block">Dirección</label>
+            <input type="text" id="street" formControlName="street"
               class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2" placeholder="Dirección" maxlength="20">
               <div
               *ngIf="employeeForm.get('street')?.errors?.['required'] && (employeeForm.get('street')?.dirty || employeeForm.get('street')?.touched)"
