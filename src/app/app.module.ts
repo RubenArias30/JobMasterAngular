@@ -25,6 +25,7 @@ import { ScheduleComponent } from './components/schedule/schedule.component';
 import { DetailsComponent } from './components/documents/details/details.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { AddScheduleComponent } from './components/schedule/add-schedule/add-schedule.component';
+import { AddDocumentsComponent } from './components/documents/add-documents/add-documents.component';
 
 
 @NgModule({
@@ -60,6 +61,7 @@ import { AddScheduleComponent } from './components/schedule/add-schedule/add-sch
     PageNotFoundComponent,
     DetailsComponent,
     AddScheduleComponent,
+    AddDocumentsComponent,
 
   ],
   imports: [

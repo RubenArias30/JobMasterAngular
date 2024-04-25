@@ -18,6 +18,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { DetailsComponent } from './components/documents/details/details.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { AddScheduleComponent } from './components/schedule/add-schedule/add-schedule.component';
+import { AddDocumentsComponent } from './components/documents/add-documents/add-documents.component';
 
 
 
@@ -66,10 +67,10 @@ const routes: Routes = [
     children: [
       { path: '', component: DocumentsComponent },
       { path: 'details/:employeeId', component: DetailsComponent },
-      { path: 'documents/details/:employeeId', component: DetailsComponent }
+      { path: 'add_document', component: AddDocumentsComponent } // Agregar esta línea
+
     ]
-  }
-  ,
+  },
 
 
 
