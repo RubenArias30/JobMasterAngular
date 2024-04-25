@@ -65,7 +65,8 @@ const routes: Routes = [
     data: { roles: ['admin'] },
     children: [
       { path: '', component: DocumentsComponent },
-      { path: 'details/:employeeId', component: DetailsComponent }
+      { path: 'details/:employeeId', component: DetailsComponent },
+      { path: 'documents/details/:employeeId', component: DetailsComponent }
     ]
   }
   ,

@@ -1,32 +1,40 @@
+<div class="container mx-auto mt-8">
+  <div class="flex items-center">
+    <h1 class="text-lg font-bold mr-2 sm:text-xl md:text-2xl lg:text-3xl">Documentos</h1>
+    <div class="border-l h-6 mr-2"></div>
+    <div class="text-sm text-gray-500">{{ employees.length }} Empleados</div>
+  </div>
+  <div class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto">
+    <table class="w-full">
+      <thead>
+        <tr class="bg-gray-200">
+          <th class="text-center px-4 py-2">ID</th>
+          <th class="text-center px-4 py-2">Nombre</th>
+          <th class="text-center px-4 py-2">Correo Electrónico</th>
+          <th class="text-center px-4 py-2">Teléfono</th>
+          <th class="text-center px-4 py-2">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let employee of employees; let i = index">
+          <tr>
+            <td class="text-center px-4 py-2">{{ employee.id }}</td>
+            <td class="text-center px-4 py-2">{{ employee.name }} {{ employee.surname }}</td>
+            <td class="text-center px-4 py-2">{{ employee.email }}</td>
+            <td class="text-center px-4 py-2">{{ employee.telephone }}</td>
+            <td class="text-center px-4 py-2">
+              <button (click)="navigateToDetails(employee.id)" class="text-black">
+                <i class='bx bxs-detail text-xl'></i>
+              </button>
+            </td>
+          </tr>
+          <!-- Línea separadora -->
+          <tr *ngIf="i !== employees.length - 1">
+            <td colspan="5" class="border-b border-gray-300"></td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-<div class="flex items-center">
-  <h1 class="text-lg font-bold mr-2 sm:text-xl md:text-2xl lg:text-3xl">Documentos</h1>
-  <div class="border-l h-6 mr-2"></div>
-  <div class="text-sm text-gray-500">{{employees.length}} Empleados</div>
-</div>
-<div class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto">
-  <table class="w-full">
-    <thead>
-      <tr class="bg-gray-200">
-        <th class="text-center px-4">ID</th>
-        <th class="text-center px-4">Nombre</th>
-        <th class="text-center px-4">Correo Electrónico</th>
-        <th class="text-center px-4">Teléfono</th>
-        <th class="text-center px-4">Acción</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let employee of employees">
-        <td class="text-center px-4">{{ employee.id }}</td>
-        <td class="text-center px-4">{{ employee.name }} {{ employee.surname }}</td>
-        <td class="text-center px-4">{{ employee.email }}</td>
-        <td class="text-center px-4">{{ employee.telephone }}</td>
-        <td class="text-center px-4">
-          <button (click)="navigateToDetails(employee.id)">
-            <i class='bx bxs-detail'></i>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>

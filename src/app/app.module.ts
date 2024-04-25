@@ -20,11 +20,6 @@ import { EditBudgetComponent } from './components/budget/edit-budget/edit-budget
 import { IncidenciaComponent } from './components/incidencia/incidencia.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { RouterModule } from '@angular/router';
-import { NifComponent } from './components/documents/nif/nif.component';
-import { CurriculumComponent } from './components/documents/curriculum/curriculum.component';
-import { LaboralLifeComponent } from './components/documents/laboral-life/laboral-life.component';
-import { PayrollComponent } from './components/documents/payroll/payroll.component';
-import { ProofComponent } from './components/documents/proof/proof.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { DetailsComponent } from './components/documents/details/details.component';
@@ -48,11 +43,6 @@ import { AddScheduleComponent } from './components/schedule/add-schedule/add-sch
     EditBudgetComponent,
     IncidenciaComponent,
     DocumentsComponent,
-    NifComponent,
-    CurriculumComponent,
-    LaboralLifeComponent,
-    PayrollComponent,
-    ProofComponent,
     PageNotFoundComponent,
     ScheduleComponent,
     DashboardComponent,
@@ -67,11 +57,6 @@ import { AddScheduleComponent } from './components/schedule/add-schedule/add-sch
     EditBudgetComponent,
     IncidenciaComponent,
     DocumentsComponent,
-    NifComponent,
-    CurriculumComponent,
-    LaboralLifeComponent,
-    PayrollComponent,
-    ProofComponent,
     PageNotFoundComponent,
     DetailsComponent,
     AddScheduleComponent,

@@ -96,19 +96,19 @@ export class ApiService {
     }
 
     // Método para eliminar documento
-    deleteDocument(documentId: string): Observable<any> {
+    deleteDocument(documentId: number): Observable<any> {
       return this.http.delete<any>(`${this.apiUrl}/documents/${documentId}`);
     }
 
-    getDocumentsByEmployee(employeeId: string): Observable<any[]> {
-      return this.http.get<any[]>(`${this.apiUrl}/documents?employeeId=${employeeId}`);
-    }
 
     addSchedule(employeeId: number, scheduleData: any) {
       return this.http.post(`${this.apiUrl}/employees/${employeeId}/schedule`, scheduleData);
     }
     getEmployeeDetails(employeeId: number): Observable<any> {
       return this.http.get<any>(`${this.apiUrl}/employees/${employeeId}`);
+    }
+    getDocumentsByEmployeeId(employeeId: number): Observable<any> {
+      return this.http.get(`${this.apiUrl}/documents/${employeeId}`);
     }
 
 
