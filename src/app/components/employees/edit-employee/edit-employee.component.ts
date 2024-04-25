@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder,AbstractControl,Validators} from '@angular/forms';
+import { FormGroup, FormBuilder, AbstractControl, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
@@ -36,7 +36,7 @@ export class EditEmployeeComponent implements OnInit {
       city: ['', [Validators.required, Validators.pattern('^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ ]+$')]],
       postal_code: ['', [Validators.required, Validators.minLength(5),Validators.pattern('^[0-9]+$')]],
       nif: ['', [Validators.required, Validators.pattern('^(?=.*[XYZ0-9])[XYZ0-9][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$',)]],
-      photo: ['', [Validators.required, this.imageExtensionValidator]],
+      photo: [null, [Validators.required, this.imageExtensionValidator]],
       password: ['', [Validators.required, this.passwordValidator]]
     });
   }
@@ -63,9 +63,12 @@ export class EditEmployeeComponent implements OnInit {
     this.apiService.getEmployeeById(this.employeeId).subscribe(
       (data) => {
         this.employeeData = data;
+        console.log('Datos del empleado:', this.employeeData);
+
         if (this.employeeData) {
           // Cargar datos de la tabla 'addresses'
           const addressData = this.employeeData.addresses;
+          console.log('Datos de dirección:', addressData);
           if (addressData) {
             this.employeeForm.patchValue({
               street: addressData.street || '',
@@ -76,6 +79,7 @@ export class EditEmployeeComponent implements OnInit {
 
           // Cargar datos de la tabla 'users'
           const userData = this.employeeData.users;
+          console.log('Datos de usuario:', userData);
           if (userData) {
             this.employeeForm.patchValue({
               nif: userData.nif || '',
@@ -92,8 +96,8 @@ export class EditEmployeeComponent implements OnInit {
             gender: this.employeeData.gender || '',
             email: this.employeeData.email || '',
             telephone: this.employeeData.telephone || '',
-            photo: this.employeeData.photo || ''
           });
+          console.log('Formulario de empleado:', this.employeeForm.value);
         } else {
           console.error('Datos del empleado no encontrados');
         }
@@ -103,6 +107,7 @@ export class EditEmployeeComponent implements OnInit {
       }
     );
   }
+
 
 
   updateEmployee(): void {
@@ -135,7 +140,7 @@ export class EditEmployeeComponent implements OnInit {
     if (control.value) {
       const file = control.value as File; // Obtener el archivo del valor del control
       const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-  
+
       // Validar si el archivo tiene una extensión permitida
       if (!allowedExtensions.test(file.name)) {
         // Si la extensión del archivo no es válida, establecer el valor del control en nulo
@@ -145,7 +150,7 @@ export class EditEmployeeComponent implements OnInit {
     }
     return null;
   }
-  
+
 
   // Función de validación personalizada para la contraseña
   passwordValidator(control: AbstractControl): { [key: string]: boolean } | null {
@@ -177,7 +182,7 @@ export class EditEmployeeComponent implements OnInit {
     };
   }
 
-  
+
   // Función de validación personalizada para verificar la edad mínima y la fecha futura
   ageValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const dob = new Date(control.value);
