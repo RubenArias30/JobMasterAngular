@@ -1,8 +1,8 @@
-<div class="container mx-auto">
+<div class="container mx-auto" >
   <div class="flex flex-wrap justify-center items-start">
     <div class="w-full md:w-3/4 px-4 mb-4 md:mb-0">
       <h2 class="text-xl font-bold mb-4">Horario de {{ employeeName }}</h2>
-      <full-calendar [options]="calendarOptions"></full-calendar>
+      <full-calendar  [options]="calendarOptions" ></full-calendar>
     </div>
     <div class="w-full md:w-1/4 px-4 md:pl-8">
       <div class="bg-white p-5 rounded-lg shadow">
@@ -14,13 +14,13 @@
           </div>
           <div class="mb-4">
             <label for="startDate" class="block text-sm font-bold mb-1">Fecha de inicio:</label>
-            <input type="date" class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"  [(ngModel)]="fechaInicio" id="startDate" name="startDate" required>
-            <input type="time" class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400" [(ngModel)]="horaInicio" id="startTime" name="startTime"  required>
+            <input type="date" class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"  [(ngModel)]="fechaInicio" id="start" name="start" required>
+            <input type="time" class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400" [(ngModel)]="horaInicio" id="start" name="start"  required>
           </div>
           <div class="mb-4">
             <label for="endDate" class="block text-sm font-bold mb-1">Fecha de fin:</label>
-            <input type="date" class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400" [(ngModel)]="fechaFin" id="endDate" name="endDate" required>
-            <input type="time" class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400" [(ngModel)]="horaFin" id="endTime" name="endTime"  required>
+            <input type="date" class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400" [(ngModel)]="fechaFin" id="endDate" name="end" required>
+            <input type="time" class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400" [(ngModel)]="horaFin" id="endTime" name="end"  required>
           </div>
           <div class="flex justify-center">
             <button type="submit" class="bg-green-400 hover:bg-green-500 text-white py-2 px-4 rounded">Agregar</button>
