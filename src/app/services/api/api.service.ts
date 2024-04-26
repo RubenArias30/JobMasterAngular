@@ -12,6 +12,7 @@ export class ApiService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
+  ///Login
   login(nif: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, { nif, password }).pipe(
       tap(response => {
@@ -25,46 +26,43 @@ export class ApiService {
       })
     );
   }
-
   getLoggedInUserName(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/me`);
   }
 
+  //Employees
   getEmployees(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/employees`);
   }
   addEmployees(employeeDatos: any): Observable<any[]> {
     return this.http.post<any[]>(`${this.apiUrl}/employees`, employeeDatos);
   }
-
   deleteEmployee(employeeId: string): Observable<any> {
-    const url = `${this.apiUrl}/employees/${employeeId}`; // URL para eliminar el empleado
+    const url = `${this.apiUrl}/employees/${employeeId}`;
     return this.http.delete(url);
-
   }
-
-  // Método para obtener los datos de un empleado por su ID
   getEmployeeById(employeeId: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/employees/${employeeId}`);
+    return this.http.get<any>(`${this.apiUrl}/employees/${employeeId}`);// Método para obtener los datos de un empleado por su ID
   }
-
   updateEmployee(id: string, employeeData: any): Observable<any> {
-    const url = `${this.apiUrl}/employees/${id}`; // URL para actualizar el empleado
+    const url = `${this.apiUrl}/employees/${id}`;
     return this.http.put(url, employeeData).pipe(
       catchError(error => {
         return throwError(error); // Maneja el error en el componente que llama a este método
       })
     );
   }
+  getEmployeeDetails(employeeId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/employees/${employeeId}`);
+  }
 
+  //Invoices
   getInvoices(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/budget`);
   }
-  // Método para obtener los datos de un empleado por su ID
-  getInvoiceById(invoiceId: string): Observable<any> {
+  getInvoiceById(invoiceId: string): Observable<any> {  // Método para obtener los datos de un empleado por su ID
     return this.http.get<any>(`${this.apiUrl}/budget/${invoiceId}`);
   }
-
   createInvoice(invoiceData: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/budget`, invoiceData);
   }
@@ -76,40 +74,22 @@ export class ApiService {
     return this.http.delete(url);
   }
 
-  //Documents:
-
-    // Método para obtener documentos por tipo
-    // getDocumentsByType(documentType: string): Observable<any[]> {
-    //   return this.http.get<any[]>(`${this.apiUrl}/documents?type_documents=${documentType}`);
-    // }
-    // getDocumentsByEmployeeAndType(employeeId: string, documentType: string): Observable<any[]> {
-    //   return this.http.get<any[]>(`${this.apiUrl}/documents?employeeId=${employeeId}&type_documents=${documentType}`);
-    // }
-
-  // Método para obtener todos los documentos
-  getDocuments(): Observable<any[]> {
+  //Documents
+  getDocuments(): Observable<any[]> { // Método para obtener todos los documentos
     return this.http.get<any[]>(`${this.apiUrl}/documents`);
   }
-    // Método para agregar documento
-    addDocument(documentData: any): Observable<any> {
-      return this.http.post<any>(`${this.apiUrl}/documents`, documentData);
-    }
+  addDocument(documentData: any): Observable<any> {  // Método para agregar documento
+    return this.http.post<any>(`${this.apiUrl}/documents`, documentData);
+  }
+  deleteDocument(documentId: number): Observable<any> {   // Método para eliminar documento
+    return this.http.delete<any>(`${this.apiUrl}/documents/${documentId}`);
+  }
+  getDocumentsByEmployeeId(employeeId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/documents/${employeeId}`);
+  }
 
-    // Método para eliminar documento
-    deleteDocument(documentId: number): Observable<any> {
-      return this.http.delete<any>(`${this.apiUrl}/documents/${documentId}`);
-    }
-
-
-    addSchedule(employeeId: number, scheduleData: any) {
-      return this.http.post(`${this.apiUrl}/employees/${employeeId}/schedule`, scheduleData);
-    }
-    getEmployeeDetails(employeeId: number): Observable<any> {
-      return this.http.get<any>(`${this.apiUrl}/employees/${employeeId}`);
-    }
-    getDocumentsByEmployeeId(employeeId: number): Observable<any> {
-      return this.http.get(`${this.apiUrl}/documents/${employeeId}`);
-    }
-
-
+  //Schedule
+  addSchedule(employeeId: number, scheduleData: any) {
+    return this.http.post(`${this.apiUrl}/employees/${employeeId}/schedule`, scheduleData);
+  }
 }
