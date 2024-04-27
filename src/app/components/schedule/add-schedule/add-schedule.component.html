@@ -2,7 +2,7 @@
   <div class="flex flex-wrap justify-center items-start">
     <div class="w-full md:w-3/4 px-4 mb-4 md:mb-0">
       <h2 class="text-xl font-bold mb-4">Horario de {{ employeeName }}</h2>
-      <full-calendar  [options]="calendarOptions" ></full-calendar>
+      <full-calendar #fullcalendar [options]="calendarOptions"></full-calendar>
     </div>
     <div class="w-full md:w-1/4 px-4 md:pl-8">
       <div class="bg-white p-5 rounded-lg shadow">

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -14,6 +14,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 export class AddScheduleComponent implements OnInit {
   @ViewChild('fullcalendar') fullcalendar: any;
 
+  // Propiedades para el formulario y la gestión de eventos
   employeeId: number = 0;
   title: string = '';
   fechaInicio: string = '';
@@ -22,6 +23,7 @@ export class AddScheduleComponent implements OnInit {
   horaFin: string = '';
   employeeName: string = '';
 
+  // Opciones del calendario
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
@@ -37,21 +39,45 @@ export class AddScheduleComponent implements OnInit {
       week: 'Semana',
       day: 'Día'
     },
-    events: [
-      { title: 'event 1', date: '2019-04-01' },
-      { title: 'event 2', date: '2019-04-02' }
-    ]
+    events: [], // Eventos mostrados en el calendario
+    eventColor: '#92E3A9', // Color de los eventos
   };
 
   constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router) { }
 
   ngOnInit(): void {
+    // Obtener el ID del empleado desde la ruta y cargar sus detalles y eventos
     this.route.params.subscribe(params => {
       this.employeeId = params['id'];
       this.getEmployeeDetails(this.employeeId);
+      this.loadEvents(this.employeeId); // Cargar eventos del servidor
     });
   }
 
+  // Cargar eventos desde el API
+  loadEvents(employeeId: number): void {
+    this.apiService.getEvents(employeeId).subscribe(
+      (events: any[]) => {
+        console.log('Eventos recibidos de la API:', events);
+        // Aquí conviertes los datos a EventInput[]
+        const eventInputs: EventInput[] = events.map(event => {
+          return {
+            title: event.title,
+            start: event.start_datetime,
+            end: event.end_datetime
+            // Agrega más propiedades según sea necesario
+          };
+        });
+        this.calendarOptions.events = eventInputs;
+        console.log('Eventos en formato EventInput:', eventInputs); // Agregar este console.log
+      },
+      (error) => {
+        console.error('Error al obtener los eventos del servidor:', error);
+      }
+    );
+  }
+
+  // Agregar un nuevo horario
   agregarHorario() {
     const scheduleData = {
       title: this.title,
@@ -59,41 +85,31 @@ export class AddScheduleComponent implements OnInit {
       end_datetime: `${this.fechaFin} ${this.horaFin}`
     };
 
-    // Llama a la función onSubmit para agregar el horario a la base de datos
+    // Enviar el horario al servidor
     this.onSubmit(scheduleData);
 
-    const evento: EventInput = {
-      title: this.title,
-      start: `${this.fechaInicio}T${this.horaInicio}`,
-      end: `${this.fechaFin}T${this.horaFin}`
-    };
+    // Crear un nuevo evento para cada día dentro del rango especificado y agregarlo al calendario
+    const start = new Date(this.fechaInicio);
+    const end = new Date(this.fechaFin);
+    const oneDay = 24 * 60 * 60 * 1000; // Duración de un día en milisegundos
 
-    // Asegurémonos de que this.calendarOptions.events sea siempre un arreglo
-    if (!Array.isArray(this.calendarOptions.events)) {
-      this.calendarOptions.events = [];
+    for (let currentDate = new Date(start); currentDate <= end; currentDate.setDate(currentDate.getDate() + 1)) {
+      const formattedDate = currentDate.toISOString().split('T')[0];
+      const nuevoEvento: EventInput = {
+        title: this.title,
+        start: `${formattedDate}T${this.horaInicio}:00`,
+        end: `${formattedDate}T${this.horaFin}:00`
+      };
+
+      const calendarApi = this.fullcalendar.getApi();
+      calendarApi.addEvent(nuevoEvento); // Agregar evento al calendario
     }
 
-    // Agrega el nuevo evento al arreglo de eventos del calendario
-    this.calendarOptions.events.push(evento);
-
-    // Verifica si fullcalendar está definido antes de acceder a getApi()
-    if (this.fullcalendar && this.fullcalendar.getApi) {
-      // Actualiza el calendario para renderizar los nuevos eventos
-      this.fullcalendar.getApi().addEvent(evento);
-    } else {
-      console.error('FullCalendar no está definido o no tiene el método getApi');
-    }
-
-    console.log('Evento agregado:', evento);
-
-    // Limpia los campos del formulario después de agregar el horario
-    this.title = '';
-    this.fechaInicio = '';
-    this.horaInicio = '';
-    this.fechaFin = '';
-    this.horaFin = '';
+    // Limpiar el formulario después de agregar el horario
+    this.clearForm();
   }
 
+  // Enviar el horario al servidor
   onSubmit(scheduleData: any) {
     this.apiService.addSchedule(this.employeeId, scheduleData).subscribe(
       response => {
@@ -105,6 +121,7 @@ export class AddScheduleComponent implements OnInit {
     );
   }
 
+  // Obtener los detalles del empleado desde el servidor
   getEmployeeDetails(employeeId: number): void {
     this.apiService.getEmployeeDetails(employeeId).subscribe(
       (response: any) => {
@@ -116,6 +133,16 @@ export class AddScheduleComponent implements OnInit {
     );
   }
 
+  // Limpiar el formulario
+  clearForm(): void {
+    this.title = '';
+    this.fechaInicio = '';
+    this.horaInicio = '';
+    this.fechaFin = '';
+    this.horaFin = '';
+  }
+
+  // Regresar a la página de horarios
   goBack(): void {
     this.router.navigate(['/schedule']);
   }
