@@ -54,28 +54,42 @@ export class AddScheduleComponent implements OnInit {
     });
   }
 
-  // Cargar eventos desde el API
   loadEvents(employeeId: number): void {
     this.apiService.getEvents(employeeId).subscribe(
       (events: any[]) => {
         console.log('Eventos recibidos de la API:', events);
-        // Aquí conviertes los datos a EventInput[]
-        const eventInputs: EventInput[] = events.map(event => {
-          return {
-            title: event.title,
-            start: event.start_datetime,
-            end: event.end_datetime
-            // Agrega más propiedades según sea necesario
-          };
+        const eventInputs: EventInput[] = [];
+
+        events.forEach(event => {
+          const startDate = new Date(event.start_datetime);
+          const endDate = new Date(event.end_datetime);
+
+          // Iterar sobre cada día dentro del rango y crear un evento para ese día
+          for (let currentDate = startDate; currentDate <= endDate; currentDate.setDate(currentDate.getDate() + 1)) {
+            const formattedDate = currentDate.toISOString().split('T')[0];
+            const newEvent: EventInput = {
+              title: event.title,
+              start: `${formattedDate}T${this.getFormattedTime(startDate)}:00`,
+              end: `${formattedDate}T${this.getFormattedTime(endDate)}:00`
+            };
+            eventInputs.push(newEvent);
+          }
         });
+
         this.calendarOptions.events = eventInputs;
-        console.log('Eventos en formato EventInput:', eventInputs); // Agregar este console.log
+        console.log('Eventos en formato EventInput:', eventInputs);
       },
       (error) => {
         console.error('Error al obtener los eventos del servidor:', error);
       }
     );
   }
+
+  getFormattedTime(date: Date): string {
+    // Formatear la hora en formato HH:MM
+    return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+  }
+
 
   // Agregar un nuevo horario
   agregarHorario() {
