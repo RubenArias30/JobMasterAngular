@@ -1,4 +1,4 @@
-<div class="container mx-auto" >
+<div class="container mx-auto">
   <div class="flex flex-wrap justify-center items-start">
     <div class="w-full md:w-3/4 px-4 mb-4 md:mb-0">
       <h2 class="text-xl font-bold mb-4">Horario de {{ employeeName }}</h2>
@@ -7,30 +7,59 @@
     <div class="w-full md:w-1/4 px-4 md:pl-8">
       <div class="bg-white p-5 rounded-lg shadow">
         <h2 class="text-lg font-bold mb-4">Agregar Turno</h2>
-        <form (submit)="agregarHorario()">
+        <form [formGroup]="form" (submit)="agregarHorario()">
           <div class="mb-4">
             <label for="title" class="block text-sm font-bold mb-1">Título:</label>
-            <input type="text" class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400" id="title" [(ngModel)]="title" name="title" required>
+            <input type="text"
+              class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
+              formControlName="title" required>
+            <div *ngIf="form.get('title')?.invalid && (form.get('title')?.dirty || form.get('title')?.touched)"
+              class="text-red-500 mt-1">Título es requerido.</div>
           </div>
           <div class="mb-4">
             <label for="startDate" class="block text-sm font-bold mb-1">Fecha de inicio:</label>
-            <input type="date" class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"  [(ngModel)]="fechaInicio" id="start" name="start" required>
-            <input type="time" class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400" [(ngModel)]="horaInicio" id="start" name="start"  required>
+            <input type="date"
+              class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
+              formControlName="fechaInicio" required>
+            <input type="time"
+              class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
+              formControlName="horaInicio" required>
+            <!-- Mensaje de error para la validación de fecha de inicio -->
+            <div
+              *ngIf="form.get('fechaInicio')?.invalid && (form.get('fechaInicio')?.dirty || form.get('fechaInicio')?.touched)"
+              class="text-red-500 mt-1">Fecha de inicio es requerida.</div>
           </div>
+
           <div class="mb-4">
             <label for="endDate" class="block text-sm font-bold mb-1">Fecha de fin:</label>
-            <input type="date" class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400" [(ngModel)]="fechaFin" id="endDate" name="end" required>
-            <input type="time" class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400" [(ngModel)]="horaFin" id="endTime" name="end"  required>
+            <input type="date"
+              class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
+              formControlName="fechaFin" required>
+            <input type="time"
+              class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
+              formControlName="horaFin" required>
+            <!-- Mensaje de error para la validación de fecha de fin -->
+            <div *ngIf="form.get('fechaFin')?.invalid && (form.get('fechaFin')?.dirty || form.get('fechaFin')?.touched)"
+              class="text-red-500 mt-1">Fecha de fin es requerida.</div>
+            <div
+              *ngIf="form.hasError('dateRange') && (form.get('fechaInicio')?.touched || form.get('fechaFin')?.touched)"
+              class="text-red-500 mb-2">La fecha de inicio debe ser anterior a la fecha de fin.</div>
           </div>
           <div class="flex justify-center">
             <button type="submit" class="bg-green-400 hover:bg-green-500 text-white py-2 px-4 rounded">Agregar</button>
           </div>
+          <div *ngIf="showError" class="text-red-500 mt-2 text-center">
+            Por favor, completa todos los campos obligatorios.
+          </div>
+          <!-- Aquí se mostrará el mensaje de error -->
+          <div *ngIf="showError" class="text-red-500 mt-2">Ya existe un horario en el rango de fechas especificado</div>
         </form>
       </div>
     </div>
   </div>
   <!-- Botón de volver atrás -->
   <div class="flex justify-center mt-4">
-    <button class="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded" (click)="goBack()">Volver atrás</button>
+    <button class="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded" (click)="goBack()">Volver
+      atrás</button>
   </div>
 </div>

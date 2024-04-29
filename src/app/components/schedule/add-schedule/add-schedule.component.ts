@@ -4,6 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
@@ -22,6 +23,24 @@ export class AddScheduleComponent implements OnInit {
   fechaFin: string = '';
   horaFin: string = '';
   employeeName: string = '';
+  form: FormGroup;
+  showError: boolean = false;
+
+  customEventContent = (arg: any) => {
+    const startTime = arg.event.start ? arg.event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+    const endTime = arg.event.end ? arg.event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+
+    const html = `
+      <div class="bg-green-100 border border-green-300 rounded p-4 flex items-center">
+        <i class='bx bxs-calendar text-green-500 mr-2'></i>
+        <p class="text-sm font-semibold text-green-800">${startTime}-${endTime}</p>
+      </div>
+    `;
+
+    return { html };
+  };
+
+
 
   // Opciones del calendario
   calendarOptions: CalendarOptions = {
@@ -39,11 +58,21 @@ export class AddScheduleComponent implements OnInit {
       week: 'Semana',
       day: 'Día'
     },
-    events: [], // Eventos mostrados en el calendario
-    eventColor: '#92E3A9', // Color de los eventos
+    events: [],
+    eventColor: '#92E3A9',
+    eventContent: this.customEventContent
   };
 
-  constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router, private formBuilder: FormBuilder) {
+    // Inicializar el formulario reactivo
+    this.form = this.formBuilder.group({
+      title: ['', Validators.required],
+      fechaInicio: ['', Validators.required],
+      horaInicio: ['', [Validators.required, Validators.pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)]],
+      fechaFin: ['', Validators.required],
+      horaFin: ['', [Validators.required, Validators.pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)]]
+    }, { validator: this.dateRangeValidator });
+  }
 
   ngOnInit(): void {
     // Obtener el ID del empleado desde la ruta y cargar sus detalles y eventos
@@ -93,14 +122,25 @@ export class AddScheduleComponent implements OnInit {
 
   // Agregar un nuevo horario
   agregarHorario() {
+
+    if (this.form.invalid) {
+      this.showError = true;
+      return;
+    }
+
     const scheduleData = {
-      title: this.title,
-      start_datetime: `${this.fechaInicio} ${this.horaInicio}`,
-      end_datetime: `${this.fechaFin} ${this.horaFin}`
+      title: this.form.get('title')?.value,
+      start_datetime: `${this.form.get('fechaInicio')?.value} ${this.form.get('horaInicio')?.value}`,
+      end_datetime: `${this.form.get('fechaFin')?.value} ${this.form.get('horaFin')?.value}`
     };
+
 
     // Enviar el horario al servidor
     this.onSubmit(scheduleData);
+
+    // Limpiar el formulario después de agregar el horario
+    this.clearForm();
+
 
     // Crear un nuevo evento para cada día dentro del rango especificado y agregarlo al calendario
     const start = new Date(this.fechaInicio);
@@ -110,17 +150,19 @@ export class AddScheduleComponent implements OnInit {
     for (let currentDate = new Date(start); currentDate <= end; currentDate.setDate(currentDate.getDate() + 1)) {
       const formattedDate = currentDate.toISOString().split('T')[0];
       const nuevoEvento: EventInput = {
-        title: this.title,
-        start: `${formattedDate}T${this.horaInicio}:00`,
-        end: `${formattedDate}T${this.horaFin}:00`
+        title: scheduleData.title,
+        start: `${formattedDate}T${scheduleData.start_datetime.split(' ')[1]}:00`,
+        end: `${formattedDate}T${scheduleData.end_datetime.split(' ')[1]}:00`
       };
 
       const calendarApi = this.fullcalendar.getApi();
       calendarApi.addEvent(nuevoEvento); // Agregar evento al calendario
     }
 
-    // Limpiar el formulario después de agregar el horario
-    this.clearForm();
+
+    // Recargar la página para reflejar los cambios
+    this.loadEvents(this.employeeId);
+
   }
 
   // Enviar el horario al servidor
@@ -149,15 +191,38 @@ export class AddScheduleComponent implements OnInit {
 
   // Limpiar el formulario
   clearForm(): void {
-    this.title = '';
-    this.fechaInicio = '';
-    this.horaInicio = '';
-    this.fechaFin = '';
-    this.horaFin = '';
+    this.form.reset();
   }
 
   // Regresar a la página de horarios
   goBack(): void {
     this.router.navigate(['/schedule']);
   }
+
+
+
+  // Validador personalizado para verificar que la fecha de inicio sea anterior a la fecha de fin
+  dateRangeValidator(formGroup: FormGroup) {
+    const fechaInicio = formGroup.get('fechaInicio')?.value;
+    const horaInicio = formGroup.get('horaInicio')?.value;
+    const fechaFin = formGroup.get('fechaFin')?.value;
+    const horaFin = formGroup.get('horaFin')?.value;
+
+    if (fechaInicio !== fechaFin) {
+      if (fechaInicio > fechaFin) {
+        return { dateRange: true }; // Devuelve un error si la fecha de inicio es posterior a la fecha de fin
+      } else {
+        return null; // Retorna nulo si la validación es exitosa
+      }
+    } else if (fechaInicio === fechaFin) {
+      return { dataRange: false }
+    } else {
+      if (horaInicio >= horaFin) {
+        return { dateRange: true }; // Devuelve un error si la hora de inicio es mayor o igual a la hora de fin en el mismo día
+      } else {
+        return null; // Retorna nulo si la validación es exitosa
+      }
+    }
+  }
+
 }
