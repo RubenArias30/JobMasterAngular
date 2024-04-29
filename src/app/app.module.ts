@@ -26,6 +26,7 @@ import { DetailsComponent } from './components/documents/details/details.compone
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { AddScheduleComponent } from './components/schedule/add-schedule/add-schedule.component';
 import { AddDocumentsComponent } from './components/documents/add-documents/add-documents.component';
+import { AusenciasComponent } from './components/ausencias/ausencias/ausencias.component';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import { AddDocumentsComponent } from './components/documents/add-documents/add-
     DetailsComponent,
     AddScheduleComponent,
     AddDocumentsComponent,
+    AusenciasComponent,
 
   ],
   imports: [
