@@ -79,9 +79,12 @@ export class ApiService {
   getDocuments(): Observable<any[]> { // Método para obtener todos los documentos
     return this.http.get<any[]>(`${this.apiUrl}/documents`);
   }
-  addDocument(documentData: any): Observable<any> {  // Método para agregar documento
-    return this.http.post<any>(`${this.apiUrl}/documents`, documentData);
+  addDocumentToEmployee(employeeId: number, documentData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/documents/details/${employeeId}`, documentData);
   }
+
+
+
   deleteDocument(documentId: number): Observable<any> {   // Método para eliminar documento
     return this.http.delete<any>(`${this.apiUrl}/documents/${documentId}`);
   }
