@@ -26,19 +26,37 @@ export class AddScheduleComponent implements OnInit {
   form: FormGroup;
   showError: boolean = false;
 
+  // Lista de eventos
+  events: EventInput[] = [];
+
   customEventContent = (arg: any) => {
-    const startTime = arg.event.start ? arg.event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
-    const endTime = arg.event.end ? arg.event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+    const startTime = arg.event.start ? this.formatTime(arg.event.start) : '';
+    const endTime = arg.event.end ? this.formatTime(arg.event.end) : '';
+
+    const timeRange = `${startTime} - ${endTime}`;
 
     const html = `
-      <div class="bg-green-100 border border-green-300 rounded p-4 flex items-center">
+      <div class="bg-green-100 border border-green-300 rounded p-3 flex items-center">
         <i class='bx bxs-calendar text-green-500 mr-2'></i>
-        <p class="text-sm font-semibold text-green-800">${startTime}-${endTime}</p>
+        <p class="text-sm font-semibold text-green-800">${timeRange}</p>
       </div>
     `;
 
     return { html };
-  };
+};
+
+formatTime(date: Date): string {
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+
+    // Formatear hora y minuto con ceros a la izquierda si es necesario
+    const formattedHour = hour < 10 ? `0${hour}` : `${hour}`;
+    const formattedMinute = minute < 10 ? `0${minute}` : `${minute}`;
+
+    return `${formattedHour}:${formattedMinute}`;
+}
+
+
 
 
 
@@ -58,7 +76,7 @@ export class AddScheduleComponent implements OnInit {
       week: 'Semana',
       day: 'Día'
     },
-    events: [],
+    events: this.events, // Usar la lista de eventos
     eventColor: '#92E3A9',
     eventContent: this.customEventContent
   };
@@ -87,26 +105,44 @@ export class AddScheduleComponent implements OnInit {
     this.apiService.getEvents(employeeId).subscribe(
       (events: any[]) => {
         console.log('Eventos recibidos de la API:', events);
-        const eventInputs: EventInput[] = [];
-
+        this.events = []; // Limpiar la lista de eventos
         events.forEach(event => {
           const startDate = new Date(event.start_datetime);
           const endDate = new Date(event.end_datetime);
 
-          // Iterar sobre cada día dentro del rango y crear un evento para ese día
-          for (let currentDate = startDate; currentDate <= endDate; currentDate.setDate(currentDate.getDate() + 1)) {
+          let currentDate = new Date(startDate); // Iniciar en la fecha de inicio
+
+          while (currentDate <= endDate) {
             const formattedDate = currentDate.toISOString().split('T')[0];
             const newEvent: EventInput = {
               title: event.title,
-              start: `${formattedDate}T${this.getFormattedTime(startDate)}:00`,
+              start: `${formattedDate}T${this.getFormattedTime(currentDate)}:00`,
               end: `${formattedDate}T${this.getFormattedTime(endDate)}:00`
             };
-            eventInputs.push(newEvent);
+            this.events.push(newEvent); // Agregar evento a la lista
+
+            // Avanzar al siguiente día
+            currentDate.setDate(currentDate.getDate() + 1);
+
+            // Verificar si hay un cambio de mes
+            if (currentDate.getMonth() !== startDate.getMonth() && currentDate <= endDate) {
+              // Generar eventos para el resto del mes
+              while (currentDate.getMonth() === endDate.getMonth() && currentDate <= endDate) {
+                const formattedDateNextMonth = currentDate.toISOString().split('T')[0];
+                const newEventNextMonth: EventInput = {
+                  title: event.title,
+                  start: `${formattedDateNextMonth}T${this.getFormattedTime(currentDate)}:00`,
+                  end: `${formattedDateNextMonth}T${this.getFormattedTime(endDate)}:00`
+                };
+                this.events.push(newEventNextMonth); // Agregar evento a la lista
+                currentDate.setDate(currentDate.getDate() + 1); // Avanzar al siguiente día
+              }
+            }
           }
         });
 
-        this.calendarOptions.events = eventInputs;
-        console.log('Eventos en formato EventInput:', eventInputs);
+        this.calendarOptions.events = this.events; // Actualizar los eventos en el calendario
+        console.log('Eventos en formato EventInput:', this.events);
       },
       (error) => {
         console.error('Error al obtener los eventos del servidor:', error);
@@ -114,15 +150,14 @@ export class AddScheduleComponent implements OnInit {
     );
   }
 
+
   getFormattedTime(date: Date): string {
     // Formatear la hora en formato HH:MM
     return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
   }
 
-
   // Agregar un nuevo horario
   agregarHorario() {
-
     if (this.form.invalid) {
       this.showError = true;
       return;
@@ -134,18 +169,20 @@ export class AddScheduleComponent implements OnInit {
       end_datetime: `${this.form.get('fechaFin')?.value} ${this.form.get('horaFin')?.value}`
     };
 
-
     // Enviar el horario al servidor
     this.onSubmit(scheduleData);
 
     // Limpiar el formulario después de agregar el horario
     this.clearForm();
 
-
-    // Crear un nuevo evento para cada día dentro del rango especificado y agregarlo al calendario
-    const start = new Date(this.fechaInicio);
-    const end = new Date(this.fechaFin);
-    const oneDay = 24 * 60 * 60 * 1000; // Duración de un día en milisegundos
+    // Crear un nuevo evento para cada día dentro del rango especificado y agregarlo a la lista de eventos
+    const start = new Date(scheduleData.start_datetime);
+    const end = new Date(scheduleData.end_datetime);
+    if (start > end) {
+      const temp = scheduleData.start_datetime;
+      scheduleData.start_datetime = scheduleData.end_datetime;
+      scheduleData.end_datetime = temp;
+    }
 
     for (let currentDate = new Date(start); currentDate <= end; currentDate.setDate(currentDate.getDate() + 1)) {
       const formattedDate = currentDate.toISOString().split('T')[0];
@@ -155,15 +192,21 @@ export class AddScheduleComponent implements OnInit {
         end: `${formattedDate}T${scheduleData.end_datetime.split(' ')[1]}:00`
       };
 
-      const calendarApi = this.fullcalendar.getApi();
-      calendarApi.addEvent(nuevoEvento); // Agregar evento al calendario
+      this.events.push(nuevoEvento); // Agregar evento a la lista
     }
 
+    // Actualizar los eventos en el calendario después de agregar todos los eventos
+    this.calendarOptions.events = this.events;
 
-    // Recargar la página para reflejar los cambios
-    this.loadEvents(this.employeeId);
+    // Limpiar el calendario y volver a cargar los eventos
+    const calendarApi = this.fullcalendar.getApi();
+    calendarApi.removeAllEvents();
+    calendarApi.addEventSource(this.events);
 
+    // Recargar la página para reflejar los cambios (puedes no necesitar esto, dependiendo de cómo manejes la actualización)
+    // this.loadEvents(this.employeeId);
   }
+
 
   // Enviar el horario al servidor
   onSubmit(scheduleData: any) {
@@ -199,8 +242,6 @@ export class AddScheduleComponent implements OnInit {
     this.router.navigate(['/schedule']);
   }
 
-
-
   // Validador personalizado para verificar que la fecha de inicio sea anterior a la fecha de fin
   dateRangeValidator(formGroup: FormGroup) {
     const fechaInicio = formGroup.get('fechaInicio')?.value;
@@ -224,5 +265,4 @@ export class AddScheduleComponent implements OnInit {
       }
     }
   }
-
 }

@@ -99,4 +99,9 @@ export class ApiService {
   getEvents(employeeId: number): Observable<Event[]> {
     return this.http.get<Event[]>(`${this.apiUrl}/employees/${employeeId}/events`);
   }
+
+  checkExistingSchedule(employeeId: number, startDateTime: string, endDateTime: string): Observable<any> {
+    const data = { start_datetime: startDateTime, end_datetime: endDateTime };
+    return this.http.post<any>(`${this.apiUrl}/employees/${employeeId}/check-existing-schedule`, data);
+  }
 }
