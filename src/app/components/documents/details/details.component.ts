@@ -10,15 +10,23 @@ import { ApiService } from 'src/app/services/api/api.service';
 export class DetailsComponent implements OnInit {
   documents: any[] = [];
   employeeName: string = '';
+  employeeId: number | undefined; // Inicializa como indefinido
 
   constructor(private router: Router, private apiService: ApiService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      const employeeId = params['employeeId'];
-      this.getEmployeeName(employeeId);
+    // this.route.params.subscribe(params => {
+    //   const employeeId = params['employeeId'];
+    //   this.getEmployeeName(employeeId);
 
-      this.getDocuments(employeeId);
+    //   this.getDocuments(employeeId);
+    // });
+
+    this.route.params.subscribe(params => {
+      this.employeeId = +params['employeeId']; // Convertir a número si es necesario
+      this.getEmployeeName(this.employeeId);
+
+      this.getDocuments(this.employeeId);
     });
   }
 

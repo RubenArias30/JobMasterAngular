@@ -82,6 +82,9 @@ export class ApiService {
   getDocuments(): Observable<any[]> { // Método para obtener todos los documentos
     return this.http.get<any[]>(`${this.apiUrl}/documents`);
   }
+  // addDocumentToEmployee(employeeId: number, documentData: any): Observable<any> {
+  //   return this.http.post<any>(`${this.apiUrl}/documents/details/${employeeId}`, documentData);
+  // }
   addDocumentToEmployee(employeeId: number, documentData: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/documents/details/${employeeId}`, documentData);
   }
