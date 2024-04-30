@@ -15,17 +15,20 @@ export class ApiService {
 
   ///Login
   login(nif: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`, { nif, password }).pipe(
-      tap(response => {
-        // Si la autenticación es exitosa, guarda el token JWT en el servicio de autenticación
-        this.authService.setToken(response.access_token);
-        this.authService.setUserRole(response.roles);
+    return this.http.post<any>(`${this.apiUrl}/login`, { nif, password })
 
-      }),
-      catchError(error => {
-        return throwError(error); // Maneja el error en el componente que llama a este método
-      })
-    );
+    // .pipe(
+    //   tap(response => {
+    //     console.log(response)
+    //     // Si la autenticación es exitosa, guarda el token JWT en el servicio de autenticación
+    //     this.authService.setToken(response.access_token);
+    //     this.authService.setUserRole(response.roles);
+
+    //   }),
+    //   catchError(error => {
+    //     return throwError(error); // Maneja el error en el componente que llama a este método
+    //   })
+    // );
   }
   getLoggedInUserName(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/me`);

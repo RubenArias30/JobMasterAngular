@@ -52,6 +52,9 @@ export class LoginComponent implements OnInit {
     // Llamada al servicio para autenticar al usuario
     this.peticiones.login(nif, password).subscribe(
       (response: any) => {
+        console.log(response)
+        localStorage.setItem('token', response.access_token);
+        this.authService.setUserRole(response.roles);
         // Si la autenticación es exitosa, redirige al usuario a la página de dashboard
         this.route.navigate(['/dashboard']);
       },
