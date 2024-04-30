@@ -11,8 +11,6 @@ import { MyGuardGuard } from './auth/my-guard.guard';
 import { BudgetComponent } from './components/budget/budget.component';
 import { GenerateBudgetComponent } from './components/budget/generate-budget/generate-budget.component';
 import { EditBudgetComponent } from './components/budget/edit-budget/edit-budget.component';
-
-import { IncidenciaComponent } from './components/incidencia/incidencia.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { DetailsComponent } from './components/documents/details/details.component';
@@ -20,6 +18,7 @@ import { ScheduleComponent } from './components/schedule/schedule.component';
 import { AddScheduleComponent } from './components/schedule/add-schedule/add-schedule.component';
 import { AddDocumentsComponent } from './components/documents/add-documents/add-documents.component';
 import { AusenciasComponent } from './components/ausencias/ausencias/ausencias.component';
+import { IncidentsComponent } from './components/incidents/incidents.component';
 
 
 
@@ -63,11 +62,11 @@ const routes: Routes = [
   ]
 },
 {
-  path: 'incidencia',
+  path: 'incidents',
   component: LayoutComponent,
   canActivate:[MyGuardGuard],data: { roles: ['admin'] },
   children: [
-    { path: '', component: IncidenciaComponent }],
+    { path: '', component: IncidentsComponent }],
   },
   {
     path: 'documents',

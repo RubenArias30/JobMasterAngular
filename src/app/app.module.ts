@@ -17,7 +17,6 @@ import { NifValidatorDirective } from './directive/nif-validator.directive';
 import { BudgetComponent } from './components/budget/budget.component';
 import { GenerateBudgetComponent } from './components/budget/generate-budget/generate-budget.component';
 import { EditBudgetComponent } from './components/budget/edit-budget/edit-budget.component';
-import { IncidenciaComponent } from './components/incidencia/incidencia.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
@@ -27,6 +26,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { AddScheduleComponent } from './components/schedule/add-schedule/add-schedule.component';
 import { AddDocumentsComponent } from './components/documents/add-documents/add-documents.component';
 import { AusenciasComponent } from './components/ausencias/ausencias/ausencias.component';
+import { IncidentsComponent } from './components/incidents/incidents.component';
 
 
 @NgModule({
@@ -43,7 +43,6 @@ import { AusenciasComponent } from './components/ausencias/ausencias/ausencias.c
     BudgetComponent,
     GenerateBudgetComponent,
     EditBudgetComponent,
-    IncidenciaComponent,
     DocumentsComponent,
     PageNotFoundComponent,
     ScheduleComponent,
@@ -57,13 +56,13 @@ import { AusenciasComponent } from './components/ausencias/ausencias/ausencias.c
     BudgetComponent,
     GenerateBudgetComponent,
     EditBudgetComponent,
-    IncidenciaComponent,
     DocumentsComponent,
     PageNotFoundComponent,
     DetailsComponent,
     AddScheduleComponent,
     AddDocumentsComponent,
     AusenciasComponent,
+    IncidentsComponent,
 
   ],
   imports: [
