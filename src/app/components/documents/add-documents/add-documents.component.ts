@@ -9,45 +9,41 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './add-documents.component.html',
   styleUrls: ['./add-documents.component.css']
 })
-export class AddDocumentsComponent {
+export class AddDocumentsComponent implements OnInit {
   documentForm: FormGroup;
   employeeId: number | null = null; // Inicializa la propiedad con un valor seguro
 
-  constructor(private apiService: ApiService, private fb: FormBuilder,private router: Router ,private route: ActivatedRoute) {
+  constructor(
+    private apiService: ApiService,
+    private fb: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.documentForm = this.fb.group({
       type_documents: ['', Validators.required],
       name: ['', Validators.required],
       description: ['', Validators.required],
-      date: ['', [Validators.required, this.dateValidator()]],
-      route: ['', [Validators.required,this.fileExtensionValidator]]
+      date: ['', Validators.required],
+      route: ['', Validators.required]
     });
+  }
 
-    // Obtén el ID del empleado de los parámetros de la ruta
+
+  ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.employeeId = params['employeeId'];
+      this.employeeId = params['employeeId'] ? +params['employeeId'] : null;
     });
   }
 
   submitForm(): void {
-    // Verifica si employeeId es null utilizando operador de coalescencia nula (??)
-    const id = this.employeeId ?? -1; // Valor predeterminado en caso de que employeeId sea null
-
-    this.addDocumentToEmployee(id, this.documentForm.value);
-    console.log(this.documentForm)
-  }
-  addDocumentToEmployee(employeeId: number, documentData: any): void {
     if (this.documentForm.invalid) {
-      console.log('El formulario no es válido. Por favor, completa todos los campos correctamente.');
       return;
     }
 
-    // Agrega el ID del empleado al documento antes de enviarlo al servidor
-    documentData = { ...this.documentForm.value, employee_id: employeeId };
-
-    this.apiService.addDocumentToEmployee(employeeId, documentData).subscribe(
+    this.apiService.addDocumentToEmployee(this.employeeId!, this.documentForm.value).subscribe(
       (response) => {
         console.log('Documento agregado exitosamente:', response);
-        // Navega a la vista de documentos o realiza otra acción si es necesario
+        this.router.navigate(['/documents/details', this.employeeId]);
       },
       (error) => {
         console.error('Error al agregar el documento:', error);

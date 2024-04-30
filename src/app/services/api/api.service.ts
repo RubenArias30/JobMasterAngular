@@ -86,7 +86,7 @@ export class ApiService {
   //   return this.http.post<any>(`${this.apiUrl}/documents/details/${employeeId}`, documentData);
   // }
   addDocumentToEmployee(employeeId: number, documentData: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/documents/details/${employeeId}`, documentData);
+    return this.http.post(`${this.apiUrl}/employees/${employeeId}/documents`, documentData);
   }
 
 

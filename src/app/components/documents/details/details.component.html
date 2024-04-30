@@ -19,17 +19,15 @@
     <table class="w-full">
       <thead>
         <tr class="bg-gray-200">
-          <th class="text-center px-4 py-2">ID</th>
           <th class="text-center px-4 py-2">Tipo</th>
-          <th class="text-center px-4 py-2">Nombre</th>
+          <th class="text-center px-4 py-2">Descripción</th>
           <th class="text-center px-4 py-2">Acción</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let doc of documents" class="border-t">
-          <td class="text-center px-4 py-2">{{ doc.id }}</td>
           <td class="text-center px-4 py-2">{{ doc.type_documents }}</td>
-          <td class="text-center px-4 py-2">{{ doc.name }}</td>
+          <td class="text-center px-4 py-2">{{ doc.description }}</td>
           <td class="text-center px-4 py-2">
             <!-- <button (click)="navigateToDocuments(employee)">
               </button> -->

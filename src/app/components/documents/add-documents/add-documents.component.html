@@ -7,7 +7,7 @@
 
   <!-- Línea divisora -->
   <hr class="my-4 border-gray-400">
-  <form [formGroup]="documentForm" class="flex flex-col items-center" enctype="multipart/form-data">
+  <form [formGroup]="documentForm" class="flex flex-col items-center" (ngSubmit)="submitForm()" enctype="multipart/form-data">
 
     <!-- Información del documento -->
     <div class="w-full max-w-4xl">
@@ -57,7 +57,7 @@
 
     <!-- Botón "Añadir Documento" y CANCELAR-->
     <div class="mt-8 mb-3">
-      <button type="button" class="bg-custom-500 text-white px-6 py-3 rounded-lg mr-4" (click)="submitForm()">Añadir Documento</button>
+      <button type="submit" class="bg-custom-500 text-white px-6 py-3 rounded-lg mr-4">Añadir Documento</button>
       <button type="button" class="bg-gray-500 text-white px-6 py-3 rounded-lg" (click)="cancelbutton()">Cancelar</button>
     </div>
   </form>
