@@ -15,11 +15,11 @@ export class AddDocumentsComponent {
 
   constructor(private apiService: ApiService, private fb: FormBuilder,private router: Router ,private route: ActivatedRoute) {
     this.documentForm = this.fb.group({
-      type: ['', Validators.required],
+      type_documents: ['', Validators.required],
       name: ['', Validators.required],
       description: ['', Validators.required],
       date: ['', [Validators.required, this.dateValidator()]],
-      file: ['', [Validators.required,this.fileExtensionValidator]]
+      route: ['', [Validators.required,this.fileExtensionValidator]]
     });
 
     // Obtén el ID del empleado de los parámetros de la ruta
@@ -33,6 +33,7 @@ export class AddDocumentsComponent {
     const id = this.employeeId ?? -1; // Valor predeterminado en caso de que employeeId sea null
 
     this.addDocumentToEmployee(id, this.documentForm.value);
+    console.log(this.documentForm)
   }
   addDocumentToEmployee(employeeId: number, documentData: any): void {
     if (this.documentForm.invalid) {
@@ -40,13 +41,10 @@ export class AddDocumentsComponent {
       return;
     }
 
-    // Verifica si employeeId es null utilizando operador de coalescencia nula (??)
-    const id = this.employeeId ?? -1; // Valor predeterminado en caso de que employeeId sea null
-
     // Agrega el ID del empleado al documento antes de enviarlo al servidor
-    documentData = { ...this.documentForm.value, employee_id: id };
+    documentData = { ...this.documentForm.value, employee_id: employeeId };
 
-    this.apiService.addDocumentToEmployee(id, documentData).subscribe(
+    this.apiService.addDocumentToEmployee(employeeId, documentData).subscribe(
       (response) => {
         console.log('Documento agregado exitosamente:', response);
         // Navega a la vista de documentos o realiza otra acción si es necesario
@@ -56,6 +54,7 @@ export class AddDocumentsComponent {
       }
     );
   }
+
 
 
 // Función para validar que la fecha no sea del pasado ni del futuro
@@ -94,7 +93,7 @@ dateValidator(): any {
   cancelbutton(): void {
     if (confirm('¿Estás seguro de cancelar la operacion?')) {
       // Si el usuario confirma la cancelación, redirige a la página de administración de empleados
-      this.router.navigate(['/documents']);
+      this.router.navigate(['/documents/details', this.employeeId]);
     }
   }
 }

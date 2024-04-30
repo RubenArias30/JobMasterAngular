@@ -77,7 +77,7 @@ const routes: Routes = [
     children: [
       { path: '', component: DocumentsComponent },
       { path: 'details/:employeeId', component: DetailsComponent },
-      { path: 'add_document', component: AddDocumentsComponent } // Agregar esta línea
+      { path: 'add_document/:employeeId', component: AddDocumentsComponent }
 
     ]
   },

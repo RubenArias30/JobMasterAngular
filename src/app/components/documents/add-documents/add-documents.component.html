@@ -7,7 +7,7 @@
 
   <!-- Línea divisora -->
   <hr class="my-4 border-gray-400">
-  <form [formGroup]="documentForm" class="flex flex-col items-center">
+  <form [formGroup]="documentForm" class="flex flex-col items-center" enctype="multipart/form-data">
 
     <!-- Información del documento -->
     <div class="w-full max-w-4xl">
@@ -16,8 +16,8 @@
         <hr class="my-2 border-gray-400">
 
         <div class="mt-2">
-          <label for="type" class="block">Tipo de documento</label>
-          <select id="type" formControlName="type" class="border border-gray-300 rounded-md p-2 w-full shadow-inner">
+          <label for="type_documents" class="block">Tipo de documento</label>
+          <select id="type_documents" formControlName="type_documents" class="border border-gray-300 rounded-md p-2 w-full shadow-inner">
             <option value="" disabled selected>Seleccione el tipo de documento</option>
             <option value="contract">Contrato</option>
             <option value="nif">NIF</option>
@@ -26,7 +26,7 @@
             <option value="payroll">Nómina</option>
             <option value="proof">Justificante</option>
           </select>
-          <div *ngIf="documentForm.get('type')?.errors?.['required'] && (documentForm.get('type')?.dirty || documentForm.get('type')?.touched)" class="text-red-500 mt-2">Tipo de documento es obligatorio.</div>
+          <div *ngIf="documentForm.get('type_documents')?.errors?.['required'] && (documentForm.get('type_documents')?.dirty || documentForm.get('type_documents')?.touched)" class="text-red-500 mt-2">Tipo de documento es obligatorio.</div>
         </div>
         <div class="mt-2">
           <label for="name" class="block">Nombre</label>
@@ -46,11 +46,11 @@
           <div *ngIf="documentForm.get('date')?.errors?.['invalidFutureDate'] && (documentForm.get('date')?.dirty || documentForm.get('date')?.touched)" class="text-red-500 mt-2">La fecha no puede ser del futuro.</div>
         </div>
         <div class="mt-2">
-          <label for="file" class="block">Archivo</label>
-          <input type="file" id="file" formControlName="file" accept=".pdf, .doc, .docx" class="border border-gray-300 rounded-md p-2 w-full shadow-inner">
-          <div *ngIf="documentForm.get('file')?.errors?.['required'] && (documentForm.get('file')?.dirty || documentForm.get('file')?.touched)" class="text-red-500 mt-2">Archivo es obligatorio.</div>
-          <div *ngIf="documentForm.get('file')?.errors?.['invalidFileExtension'] && (documentForm.get('file')?.dirty || documentForm.get('file')?.touched)" class="text-red-500 mt-2">El fichero debe tener una extensión de archivo válida (pdf, doc, docx).</div>
-          <div *ngIf="documentForm.get('file')?.value && !documentForm.get('file')?.errors" class="text-green-500 mt-2">Archivo válido.</div>
+          <label for="route" class="block">Archivo</label>
+          <input type="file" id="route" formControlName="route" accept=".pdf, .doc, .docx" class="border border-gray-300 rounded-md p-2 w-full shadow-inner">
+          <div *ngIf="documentForm.get('route')?.errors?.['required'] && (documentForm.get('route')?.dirty || documentForm.get('route')?.touched)" class="text-red-500 mt-2">Archivo es obligatorio.</div>
+          <div *ngIf="documentForm.get('route')?.errors?.['invalidFileExtension'] && (documentForm.get('route')?.dirty || documentForm.get('route')?.touched)" class="text-red-500 mt-2">El fichero debe tener una extensión de archivo válida (pdf, doc, docx).</div>
+          <div *ngIf="documentForm.get('route')?.value && !documentForm.get('route')?.errors" class="text-green-500 mt-2">Archivo válido.</div>
         </div>
       </div>
     </div>
