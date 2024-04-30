@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ApiService } from 'src/app/services/api/api.service';
+
 
 @Component({
   selector: 'app-ausencias',
@@ -6,6 +8,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./ausencias.component.css']
 })
 export class AusenciasComponent {
+  employees: any[] = []; // Add this line
+  substitutes: any[] = [];
+  constructor(private apiService: ApiService) {}
+
+  ngOnInit(): void {
+    this.apiService.getEmployees().subscribe((employees) => {
+      this.employees = employees;
+    });
+  }
   showModal: boolean = false;
 
   openModal() {
