@@ -28,6 +28,7 @@
             <div
               *ngIf="form.get('fechaInicio')?.invalid && (form.get('fechaInicio')?.dirty || form.get('fechaInicio')?.touched)"
               class="text-red-500 mt-1">Fecha de inicio es requerida.</div>
+
           </div>
 
           <div class="mb-4">
@@ -43,12 +44,12 @@
               class="text-red-500 mt-1">Fecha de fin es requerida.</div>
             <div
               *ngIf="form.hasError('dateRange') && (form.get('fechaInicio')?.touched || form.get('fechaFin')?.touched)"
-              class="text-red-500 mb-2">La fecha de inicio debe ser anterior a la fecha de fin.</div>
+              class="text-red-500 mb-2">La fecha/hora de inicio debe ser anterior a la fecha/hora de fin.</div>
           </div>
           <div class="flex justify-center">
             <button type="submit" class="bg-green-400 hover:bg-green-500 text-white py-2 px-4 rounded">Agregar</button>
           </div>
-          <div *ngIf="showError" class="text-red-500 mt-2 text-center">
+          <div *ngIf="showErrorField" class="text-red-500 mt-2 text-center">
             Por favor, completa todos los campos obligatorios.
           </div>
           <!-- Aquí se mostrará el mensaje de error -->

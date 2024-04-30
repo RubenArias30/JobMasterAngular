@@ -25,6 +25,7 @@ export class AddScheduleComponent implements OnInit {
   employeeName: string = '';
   form: FormGroup;
   showError: boolean = false;
+  showErrorField: boolean = false;
 
   // Lista de eventos
   events: EventInput[] = [];
@@ -158,8 +159,12 @@ formatTime(date: Date): string {
 
   // Agregar un nuevo horario
   agregarHorario() {
+    // Resetear los mensajes de error
+    this.showErrorField = false;
+    this.showError = false;
+
     if (this.form.invalid) {
-      this.showError = true;
+      this.showErrorField = true;
       return;
     }
 
@@ -178,7 +183,7 @@ formatTime(date: Date): string {
     // Crear un nuevo evento para cada día dentro del rango especificado y agregarlo a la lista de eventos
     const start = new Date(scheduleData.start_datetime);
     const end = new Date(scheduleData.end_datetime);
-    if (start > end) {
+    if (start >= end) {
       const temp = scheduleData.start_datetime;
       scheduleData.start_datetime = scheduleData.end_datetime;
       scheduleData.end_datetime = temp;
@@ -255,8 +260,6 @@ formatTime(date: Date): string {
       } else {
         return null; // Retorna nulo si la validación es exitosa
       }
-    } else if (fechaInicio === fechaFin) {
-      return { dataRange: false }
     } else {
       if (horaInicio >= horaFin) {
         return { dateRange: true }; // Devuelve un error si la hora de inicio es mayor o igual a la hora de fin en el mismo día
@@ -264,5 +267,6 @@ formatTime(date: Date): string {
         return null; // Retorna nulo si la validación es exitosa
       }
     }
-  }
+}
+
 }
