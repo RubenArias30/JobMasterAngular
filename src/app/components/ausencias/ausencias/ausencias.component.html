@@ -18,7 +18,7 @@
   <div id="crud-modal" *ngIf="showModal" tabindex="-1" aria-hidden="true"
     class="fixed inset-0 flex items-center justify-center z-50">
     <div class="absolute inset-0 bg-black opacity-50"></div>
-    <div class="relative p-4 w-full max-w-md">
+    <div class="relative p-4 w-full max-w-2xl">
       <!-- Modal content -->
       <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
         <!-- Modal header -->
@@ -43,7 +43,7 @@
         <form class="p-4 md:p-5">
           <div class="grid gap-4 mb-4 grid-cols-2">
             <!-- Form inputs here -->
-            <div class="col-span-2">
+            <div class="col-span-1">
               <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre de
                 empleado/a</label>
               <select id="name" name="name"
@@ -51,29 +51,12 @@
                 required="">
                 <option value="">Seleccione el empleado</option>
                 <!-- Populate options dynamically from database -->
-                <option value="1">Employee 1</option>
-                <option value="2">Employee 2</option>
-                <option value="3">Employee 3</option>
-                <!-- Add more options as needed -->
-              </select>
-            </div>
-            <div class="col-span-2">
-              <label for="substitute"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Substitute</label>
-              <select id="substitute" name="substitute"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                required="">
-                <option value="">Seleccione el sustituto</option>
-                <!-- Populate options dynamically from database -->
-                <option value="1">Employee 1</option>
-                <option value="2">Employee 2</option>
-                <option value="3">Employee 3</option>
-                <!-- Add more options as needed -->
+                <option *ngFor="let employee of employees" [value]="employee.id">{{ employee.name }} {{ employee.surname
+                  }}</option>
               </select>
             </div>
 
-
-            <div class="col-span-2">
+            <div class="col-span-1">
               <label for="absenceType" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo de
                 ausencias</label>
               <select id="absenceType" name="absenceType"
@@ -81,12 +64,33 @@
                 required="">
                 <option value="">Seleccione el tipo</option>
                 <!-- Populate options dynamically from database -->
-                <option value="1">Tipo 1</option>
-                <option value="2">Tipo 2</option>
-                <option value="3">Tipo 3</option>
+                <option value="1">Vacaciones</option>
+                <option value="2">Enfermedad</option>
+                <option value="3">maternidad/paternidad</option>
+                <option value="4">Compensatorias</option>
+                <option value="5">Baja</option>
+                <option value="6">Otros</option>
                 <!-- Add more options as needed -->
               </select>
             </div>
+            <!-- date -->
+             <div class="col-span-2 mt-4 grid grid-cols-2 gap-4">
+               <div>
+                 <label for="startDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start
+                   Date</label>
+                 <input type="date" id="startDate" name="startDate" placeholder="Select start date"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                   required="">
+               </div>
+               <div>
+                 <label for="endDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">End
+                   Date</label>
+                 <input type="date" id="endDate" name="endDate" placeholder="Select end date"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                   required="">
+               </div>
+             </div>
+           </div>
 
             <div class="col-span-2">
               <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -95,93 +99,22 @@
                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Escriba aquí la descripción de la ausencia"></textarea>
             </div>
-            <div class="col-span-2">
-              <label for="toggleSwitch" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Toggle
-                Switch</label>
-              <div class="mx-8 shadow rounded border h-10 mt-4 flex p-1 relative items-center bg-gray-200">
-                <div class="w-full flex justify-center">
-                  <button (click)="toggleSwitch('Medio día')">Medio día</button>
-                </div>
-                <div class="w-full flex justify-center">
-                  <button (click)="toggleSwitch('Días')">Días</button>
-                </div>
-                <span id="toggleSwitch" [ngClass]="{ 'left-1': isSwitchLeft, 'left-[155px]': !isSwitchLeft }"
-                  class="elSwitch bg-green-300 shadow text-gray-800 flex items-center justify-center w-1/2 rounded h-8 transition-all top-[4px] absolute">
-                  {{ selectedOption }}
-                </span>
-              </div>
-            </div>
 
-            <!-- Form for 'Medio día' option -->
-            <!-- Form for 'Medio día' option -->
-            <div *ngIf="selectedOption === 'Medio día'" class="col-span-2">
-              <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de la
-                ausencia</label>
-              <input type="date" id="date" name="date"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                required="">
-            </div>
-
-
-            <!-- Form for 'Días' option -->
-            <div *ngIf="selectedOption === 'Días'" class="col-span-2 mt-4 grid grid-cols-2 gap-4">
-              <div>
-                <label for="startDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start
-                  Date</label>
-                <input type="date" id="startDate" name="startDate" placeholder="Select start date"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  required="">
-              </div>
-              <div>
-                <label for="endDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">End
-                  Date</label>
-                <input type="date" id="endDate" name="endDate" placeholder="Select end date"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  required="">
-              </div>
-            </div>
-          </div>
 
           <div class="col-span-2 flex justify-center space-x-4 mt-4">
-            <button
-              class="flex items-center bg-blue-400 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-lg">
-              <i class='bx bx-check'></i>
-              <span class="ml-2">Añadir ausencias</span>
+            <button class="flex items-center bg-blue-400 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-lg">
+              <i class='bx bx-check-square'></i>
+              <span class="ml-2">GUARDAR</span>
             </button>
-            <button
-              class="flex items-center bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-lg">
+            <button class="flex items-center bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-lg">
               <i class='bx bx-error-circle'></i>
-              <span class="ml-2">cancelar</span>
+              <span class="ml-2">CANCELAR</span>
             </button>
           </div>
-
-
-
-
-
-
-
         </form>
       </div>
     </div>
   </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   <!-- TABLE -->
