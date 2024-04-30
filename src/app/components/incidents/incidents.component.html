@@ -1,226 +1,125 @@
 <div class="container mx-auto mt-8">
   <!-- Encabezado -->
-  <div class="flex items-center justify-between mb-4 ml-5"> <!-- Added ml-4 for left space -->
-      <div class="flex items-center">
-          <h1 class="text-lg font-bold mr-2">Incidencias</h1>
-          <div class="border-l h-6 mr-2"></div>
-      </div>
-      <div class="flex ml-auto mr-8"> <!-- Increased mr-8 for more right space -->
-          <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-2 py-1 rounded-lg">
-              <i class='bx bx-filter text-xl'></i>
-              <span class="ml-1">Filtros</span>
-          </button>
-      </div>
+  <div class="flex items-center justify-between mb-4 ml-5">
+    <div class="flex items-center">
+      <h1 class="text-lg font-bold mr-2">Incidencias</h1>
+      <div class="border-l h-6 mr-2"></div>
+    </div>
+    <div class="flex ml-auto mr-8">
+      <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-2 py-1 rounded-lg">
+        <i class='bx bx-filter text-xl'></i>
+        <span class="ml-1">Filtros</span>
+      </button>
+    </div>
   </div>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-  <div class="bg-gradient-to-br from-indigo-500 to-sky-400 rounded-md border border-gray-100 p-6 shadow-md shadow-black/5 ml-6"> <!-- Added bg-gradient-to-br and specified colors -->
-      <div class="flex justify-between mb-6 flex-col">
-          <!-- Text -->
-          <div class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2">TOTAL TICKETS</div>
-
-          <div class="flex items-center">
-              <!-- Icon -->
-
-              <i class='bx bxs-coupon mr-2 text-3xl md:text-5xl' style='color:#fffbfb'></i>
-
-
-              <!-- Text -->
-              <div class="text-lg md:text-3xl font-medium text-white">15</div>
-
-          </div>
+  <div class="bg-gradient-to-br from-indigo-500 to-sky-400 rounded-md border border-gray-100 p-6 shadow-md shadow-black/5 ml-6">
+    <div class="flex justify-between mb-6 flex-col">
+      <!-- Text -->
+      <div class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2">TOTAL TICKETS</div>
+      <div class="flex items-center">
+        <!-- Icon -->
+        <i class='bx bxs-coupon mr-2 text-3xl md:text-5xl' style='color:#fffbfb'></i>
+        <!-- Text -->
+        <div class="text-lg md:text-3xl font-medium text-white">{{incidences.length}}</div>
       </div>
+    </div>
   </div>
 
-
-
-  <div class="bg-gradient-to-br from-emerald-600 to-emerald-400 rounded-md border border-gray-100 p-6 shadow-md shadow-black/5 ml-4"> <!-- Added bg-gradient-to-br and specified colors -->
+  <div class="bg-gradient-to-br from-emerald-600 to-emerald-400 rounded-md border border-gray-100 p-6 shadow-md shadow-black/5 ml-4">
     <div class="flex justify-between mb-4">
-        <div class="flex justify-between mb-6 flex-col">
-            <!-- Text -->
-            <div class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2">SOLUCIONADAS</div>
-            <div class="flex items-center">
-                <!-- Icon -->
-
-                <i class='bx bx-list-check mr-2 text-3xl md:text-5xl' style='color:#fffbfb'></i>
-                <!-- Text -->
-                <div class="text-lg md:text-3xl font-medium text-white">15</div>
-            </div>
+      <div class="flex justify-between mb-6 flex-col">
+        <!-- Text -->
+        <div class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2">SOLUCIONADAS</div>
+        <div class="flex items-center">
+          <!-- Icon -->
+          <i class='bx bx-list-check mr-2 text-3xl md:text-5xl' style='color:#fffbfb'></i>
+          <!-- Text -->
+          <div class="text-lg md:text-3xl font-medium text-white">15</div>
         </div>
-    </div>
-</div>
-
-
-    <div class="bg-gradient-to-br from-rose-500 to-rose-400 p-6 shadow-md  rounded-md shadow-black/5 mr-6"> <!-- Added mr-4 for right margin -->
-        <div class="flex justify-between mb-6">
-            <div class="flex justify-between mb-6 flex-col">
-                <!-- Text -->
-                <div class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2">PENDIENTES</div>
-                <div class="flex items-center">
-                    <!-- Icon -->
-
-                    <i class='bx bxs-file mr-2 text-3xl md:text-5xl' style='color:#fffbfb'></i>
-                    <!-- Text -->
-                    <div class="text-lg md:text-3xl font-medium text-white">15</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- TABLE -->
-
-
-<div class="px-4 py-2"> <!-- Added padding to the container -->
-  <div class="w-full bg-white border border-green-400 rounded-xl p-4 mb-8"> <!-- Removed ml-4 and mr-4 -->
-      <h2 class="text-xl font-bold mb-4">Incidencias</h2>
-
-      <div class="overflow-x-auto"> <!-- Removed ml-4 and mr-4 -->
-          <table class="w-full divide-y divide-gray-200">
-              <!-- Table content -->
-              <thead class="bg-gray-50">
-                <tr>
-                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    USUARIO
-                  </th>
-                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    RAZON
-                  </th>
-                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    EMAIL
-                  </th>
-                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    FECHA
-                  </th>
-                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    HORA
-                  </th>
-                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    ESTADO
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="bg-white divide-y divide-gray-200">
-                <tr class="transition-all hover:bg-gray-100 hover:shadow-lg">
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div class="flex-shrink-0 w-10 h-10">
-                        <img class="w-10 h-10 rounded-full" src="https://avatars0.githubusercontent.com/u/57622665?s=460&amp;u=8f581f4c4acd4c18c33a87b3e6476112325e8b38&amp;v=4" alt="">
-                      </div>
-                      <div class="ml-4">
-                        <div class="text-sm font-medium text-gray-900">John Doe</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Error, nihil.</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">Lorem@gmail.com</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">23/04/2024</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">23:56h</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                      Completado
-                    </span>
-                  </td>
-                </tr>
-                <tr class="transition-all hover:bg-gray-100 hover:shadow-lg">
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div class="flex-shrink-0 w-10 h-10">
-                        <img class="w-10 h-10 rounded-full" src="https://avatars0.githubusercontent.com/u/57622665?s=460&amp;u=8f581f4c4acd4c18c33a87b3e6476112325e8b38&amp;v=4" alt="">
-                      </div>
-                      <div class="ml-4">
-                        <div class="text-sm font-medium text-gray-900">John Doe</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Error, nihil.</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">Lorem@gmail.com</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">23/04/2024</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">23:56h</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                      Completado
-                    </span>
-                  </td>
-                </tr>
-                <tr class="transition-all hover:bg-gray-100 hover:shadow-lg">
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div class="flex-shrink-0 w-10 h-10">
-                        <img class="w-10 h-10 rounded-full" src="https://avatars0.githubusercontent.com/u/57622665?s=460&amp;u=8f581f4c4acd4c18c33a87b3e6476112325e8b38&amp;v=4" alt="">
-                      </div>
-                      <div class="ml-4">
-                        <div class="text-sm font-medium text-gray-900">John Doe</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Error, nihil.</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">Lorem@gmail.com</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">23/04/2024</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">23:56h</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                      Completado
-                    </span>
-                  </td>
-                </tr>
-                <tr class="transition-all hover:bg-gray-100 hover:shadow-lg">
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div class="flex-shrink-0 w-10 h-10">
-                        <img class="w-10 h-10 rounded-full" src="https://avatars0.githubusercontent.com/u/57622665?s=460&amp;u=8f581f4c4acd4c18c33a87b3e6476112325e8b38&amp;v=4" alt="">
-                      </div>
-                      <div class="ml-4">
-                        <div class="text-sm font-medium text-gray-900">John Doe</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Error, nihil.</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">Lorem@gmail.com</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">23/04/2024</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">23:56h</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
-                      Pendiente
-                    </span>
-                  </td>
-                </tr>
-              </tbody>
-          </table>
       </div>
+    </div>
+  </div>
+
+  <div class="bg-gradient-to-br from-rose-500 to-rose-400 p-6 shadow-md rounded-md shadow-black/5 mr-6">
+    <div class="flex justify-between mb-6">
+      <div class="flex justify-between mb-6 flex-col">
+        <!-- Text -->
+        <div class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2">PENDIENTES</div>
+        <div class="flex items-center">
+          <!-- Icon -->
+          <i class='bx bxs-file mr-2 text-3xl md:text-5xl' style='color:#fffbfb'></i>
+          <!-- Text -->
+          <div class="text-lg md:text-3xl font-medium text-white">15</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="px-4 py-2">
+  <div class="w-full bg-white border border-green-400 rounded-xl p-4 mb-8">
+    <h2 class="text-xl font-bold mb-4">Incidencias</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+              USUARIO
+            </th>
+            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+              NOMBRE
+            </th>
+            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+              TIPO
+            </th>
+            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+              EMAIL
+            </th>
+            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+              DESCRIPCIÓN
+            </th>
+            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+              FECHA
+            </th>
+            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+              ACCIÓN
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+
+          <tr class="transition-all hover:bg-gray-100 hover:shadow-lg" *ngFor="let incident of incidences">
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="flex-shrink-0 w-10 h-10">
+                <img class="w-10 h-10 rounded-full" [src]="incident.employee.photo" alt="">
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900 font-bold">{{ incident.employee.name}} {{incident.employee.surname}}</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900">{{ incident.incident_type}}</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900">{{incident.employee.email}}</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900">{{incident.description}}</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900">{{incident.date}}</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                Completado
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

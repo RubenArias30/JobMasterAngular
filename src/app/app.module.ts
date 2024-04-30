@@ -27,6 +27,7 @@ import { AddScheduleComponent } from './components/schedule/add-schedule/add-sch
 import { AddDocumentsComponent } from './components/documents/add-documents/add-documents.component';
 import { AusenciasComponent } from './components/ausencias/ausencias/ausencias.component';
 import { IncidentsComponent } from './components/incidents/incidents.component';
+import { AddIncidentsComponent } from './components/incidents/add-incidents/add-incidents.component';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { IncidentsComponent } from './components/incidents/incidents.component';
     AddDocumentsComponent,
     AusenciasComponent,
     IncidentsComponent,
+    AddIncidentsComponent,
 
   ],
   imports: [

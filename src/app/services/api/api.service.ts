@@ -52,7 +52,7 @@ export class ApiService {
     const url = `${this.apiUrl}/employees/${id}`;
     return this.http.put(url, employeeData).pipe(
       catchError(error => {
-        return throwError(error); // Maneja el error en el componente que llama a este método
+        return throwError(error);
       })
     );
   }
@@ -82,14 +82,9 @@ export class ApiService {
   getDocuments(): Observable<any[]> { // Método para obtener todos los documentos
     return this.http.get<any[]>(`${this.apiUrl}/documents`);
   }
-  // addDocumentToEmployee(employeeId: number, documentData: any): Observable<any> {
-  //   return this.http.post<any>(`${this.apiUrl}/documents/details/${employeeId}`, documentData);
-  // }
   addDocumentToEmployee(employeeId: number, documentData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/employees/${employeeId}/documents`, documentData);
   }
-
-
 
   deleteDocument(documentId: number): Observable<any> {   // Método para eliminar documento
     return this.http.delete<any>(`${this.apiUrl}/documents/${documentId}`);
@@ -105,6 +100,21 @@ export class ApiService {
   getEvents(employeeId: number): Observable<Event[]> {
     return this.http.get<Event[]>(`${this.apiUrl}/employees/${employeeId}/events`);
   }
+
+  //Incidents
+  getIncidents(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/incidents`);
+  }
+
+   addIncident(incidentData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/incidents`, incidentData);
+  }
+
+  deleteIncident(incidentId: string): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/incidents/${incidentId}`);
+  }
+
+
 
   //Ausencias
 getAusencias(): Observable<any[]> {

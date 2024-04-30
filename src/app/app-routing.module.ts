@@ -19,6 +19,7 @@ import { AddScheduleComponent } from './components/schedule/add-schedule/add-sch
 import { AddDocumentsComponent } from './components/documents/add-documents/add-documents.component';
 import { AusenciasComponent } from './components/ausencias/ausencias/ausencias.component';
 import { IncidentsComponent } from './components/incidents/incidents.component';
+import { AddIncidentsComponent } from './components/incidents/add-incidents/add-incidents.component';
 
 
 
@@ -66,8 +67,23 @@ const routes: Routes = [
   component: LayoutComponent,
   canActivate:[MyGuardGuard],data: { roles: ['admin'] },
   children: [
-    { path: '', component: IncidentsComponent }],
+    { path: '', component: IncidentsComponent },
+    // {  path: 'add_incidents',
+    // component: AddIncidentsComponent,
+    // canActivate: [MyGuardGuard],
+    // data: { roles: ['empleado'] } }
+
+  ],
+
   },
+  {
+    path: 'add_incidents',
+    component: LayoutComponent,
+    canActivate:[MyGuardGuard],
+    data: { roles: ['employee'] },
+  },
+
+
   {
     path: 'documents',
     component: LayoutComponent,
