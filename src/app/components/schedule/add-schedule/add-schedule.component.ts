@@ -14,6 +14,8 @@ import { ApiService } from 'src/app/services/api/api.service';
 })
 export class AddScheduleComponent implements OnInit {
   @ViewChild('fullcalendar') fullcalendar: any;
+  showModal: boolean = false; // Variable para controlar la visibilidad del modal
+  selectedEvent: any; // Variable para almacenar el evento seleccionado
 
   // Propiedades para el formulario y la gestión de eventos
   employeeId: number = 0;
@@ -79,7 +81,9 @@ formatTime(date: Date): string {
     },
     events: this.events, // Usar la lista de eventos
     eventColor: '#92E3A9',
-    eventContent: this.customEventContent
+    eventContent: this.customEventContent,
+    eventClick: this.openModal.bind(this)
+
   };
 
   constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router, private formBuilder: FormBuilder) {
@@ -101,7 +105,42 @@ formatTime(date: Date): string {
       this.loadEvents(this.employeeId); // Cargar eventos del servidor
     });
   }
+  handleEventClick(info: any) {
+    // Almacena la información del evento seleccionado en una variable
+    this.selectedEvent = {
+      id: info.event.extendedProps.id,
+      title: info.event.title,
+      start_datetime: info.event.start,
+      end_datetime: info.event.end,
+      employees_id: info.event.extendedProps.employees_id
+    };
 
+    // Abre el modal
+    this.showModal = true;
+  }
+
+
+ // Función para mostrar el modal y pasar el evento seleccionado
+ openModal(event: any) {
+  this.selectedEvent = event;
+  this.showModal = true;
+}
+
+// Función para cerrar el modal
+closeModal() {
+  this.showModal = false;
+}
+ // Función para eliminar el evento
+ deleteEvent() {
+  console.log('Evento eliminado:', this.selectedEvent);
+  this.closeModal();
+}
+
+// Función para editar el evento (puedes implementarla según tus necesidades)
+editEvent() {
+  console.log('Editar evento:', this.selectedEvent);
+  this.closeModal();
+}
   loadEvents(employeeId: number): void {
     this.apiService.getEvents(employeeId).subscribe(
       (events: any[]) => {
