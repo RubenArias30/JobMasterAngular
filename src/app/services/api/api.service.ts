@@ -100,10 +100,7 @@ export class ApiService {
     return this.http.get<Event[]>(`${this.apiUrl}/employees/${employeeId}/events`);
   }
 
-  //ausencias
-  // ...
-
-//Ausencias
+  //Ausencias
 getAusencias(): Observable<any[]> {
   return this.http.get<any[]>(`${this.apiUrl}/ausencias`);
 }
@@ -124,7 +121,6 @@ deleteAusencia(ausenciaId: string): Observable<any> {
   return this.http.delete<any>(`${this.apiUrl}/ausencias/${ausenciaId}`);
 }
 
-// ...
-
 
 }
+
