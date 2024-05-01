@@ -5,12 +5,7 @@
       <h1 class="text-lg font-bold mr-2">Incidencias</h1>
       <div class="border-l h-6 mr-2"></div>
     </div>
-    <div class="flex ml-auto mr-8">
-      <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-2 py-1 rounded-lg">
-        <i class='bx bx-filter text-xl'></i>
-        <span class="ml-1">Filtros</span>
-      </button>
-    </div>
+
   </div>
 </div>
 
@@ -90,34 +85,40 @@
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-
-          <tr class="transition-all hover:bg-gray-100 hover:shadow-lg" *ngFor="let incident of incidences">
-            <td class="px-6 py-4 whitespace-nowrap">
-              <div class="flex-shrink-0 w-10 h-10">
-                <img class="w-10 h-10 rounded-full" [src]="incident.employee.photo" alt="">
-              </div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm text-gray-900 font-bold">{{ incident.employee.name}} {{incident.employee.surname}}</div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm text-gray-900">{{ incident.incident_type}}</div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm text-gray-900">{{incident.employee.email}}</div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm text-gray-900">{{incident.description}}</div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm text-gray-900">{{incident.date}}</div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                Completado
-              </span>
-            </td>
-          </tr>
+          <ng-container *ngIf="incidences.length > 0; else noIncidences">
+            <tr *ngFor="let incident of incidences" class="transition-all hover:bg-gray-100 hover:shadow-lg">
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex-shrink-0 w-10 h-10" *ngIf="incident.employee">
+                  <img class="w-10 h-10 rounded-full" [src]="incident.employee.photo" alt="" *ngIf="incident.employee.photo">
+                </div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900 font-bold">{{ incident.employee?.name }} {{ incident.employee?.surname }}</div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900">{{ incident.incident_type }}</div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900">{{ incident.employee?.email }}</div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900">{{ incident.description }}</div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900">{{ incident.date }}</div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                  Completado
+                </span>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-template #noIncidences>
+            <tr>
+              <td colspan="7" class="py-4 text-center">No hay incidencias disponibles.</td>
+            </tr>
+          </ng-template>
         </tbody>
       </table>
     </div>
