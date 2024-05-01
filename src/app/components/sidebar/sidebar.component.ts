@@ -20,13 +20,13 @@ export class SidebarComponent {
     this.userRole = this.authService.getUserRole();
   }
 
-  isAdmin(): boolean {
-    return this.authService.getUserRole() === 'admin';
-  }
+  // isAdmin(): boolean {
+  //   return this.authService.getUserRole() === 'admin';
+  // }
 
-  isEmployee(): boolean {
-    return this.authService.getUserRole() === 'employee';
-  }
+  // isEmployee(): boolean {
+  //   return this.authService.getUserRole() === 'empleado';
+  // }
 
 
   logout(){

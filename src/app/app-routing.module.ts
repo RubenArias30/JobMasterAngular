@@ -80,7 +80,10 @@ const routes: Routes = [
     path: 'add_incidents',
     component: LayoutComponent,
     canActivate:[MyGuardGuard],
-    data: { roles: ['employee'] },
+    data: { roles: ['empleado'] },
+    children: [
+      { path: '', component: AddIncidentsComponent },
+    ],
   },
 
 

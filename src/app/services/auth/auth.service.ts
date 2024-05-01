@@ -42,9 +42,9 @@ export class AuthService {
     const role = this.getUserRole();
     return !!role && role === 'admin';
   }
-  isEmployees(): boolean {
+  isEmployee(): boolean {
     const role = this.getUserRole();
-    return !!role && role === 'employee';
+    return !!role && role === 'empleado';
   }
 
 
