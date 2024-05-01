@@ -105,6 +105,9 @@ export class ApiService {
   getIncidents(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/incidents`);
   }
+  getIncidentsByEmployeeId(employeeId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/incidents/${employeeId}`);
+  }
 
    addIncident(incidentData: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/incidents`, incidentData);
