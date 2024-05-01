@@ -28,6 +28,7 @@ import { AddDocumentsComponent } from './components/documents/add-documents/add-
 import { AusenciasComponent } from './components/ausencias/ausencias/ausencias.component';
 import { IncidentsComponent } from './components/incidents/incidents.component';
 import { AddIncidentsComponent } from './components/incidents/add-incidents/add-incidents.component';
+import { HistoryIncidentsComponent } from './components/incidents/history-incidents/history-incidents.component';
 
 
 @NgModule({
@@ -65,6 +66,7 @@ import { AddIncidentsComponent } from './components/incidents/add-incidents/add-
     AusenciasComponent,
     IncidentsComponent,
     AddIncidentsComponent,
+    HistoryIncidentsComponent,
 
   ],
   imports: [

@@ -20,6 +20,7 @@ import { AddDocumentsComponent } from './components/documents/add-documents/add-
 import { AusenciasComponent } from './components/ausencias/ausencias/ausencias.component';
 import { IncidentsComponent } from './components/incidents/incidents.component';
 import { AddIncidentsComponent } from './components/incidents/add-incidents/add-incidents.component';
+import { HistoryIncidentsComponent } from './components/incidents/history-incidents/history-incidents.component';
 
 
 
@@ -77,12 +78,13 @@ const routes: Routes = [
 
   },
   {
-    path: 'add_incidents',
+    path: 'history_incidents',
     component: LayoutComponent,
     canActivate:[MyGuardGuard],
     data: { roles: ['empleado'] },
     children: [
-      { path: '', component: AddIncidentsComponent },
+      { path: '', component: HistoryIncidentsComponent },
+      { path: 'add_incidents', component: AddIncidentsComponent },
     ],
   },
 
