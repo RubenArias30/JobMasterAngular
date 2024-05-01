@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input} from '@angular/core';
 import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -14,8 +14,12 @@ import { ApiService } from 'src/app/services/api/api.service';
 })
 export class AddScheduleComponent implements OnInit {
   @ViewChild('fullcalendar') fullcalendar: any;
+  @Input() eventDetails: any;
+
   showModal: boolean = false; // Variable para controlar la visibilidad del modal
   selectedEvent: any; // Variable para almacenar el evento seleccionado
+  // Lista de eventos
+  events: EventInput[] = [];
 
   // Propiedades para el formulario y la gestión de eventos
   employeeId: number = 0;
@@ -29,8 +33,7 @@ export class AddScheduleComponent implements OnInit {
   showError: boolean = false;
   showErrorField: boolean = false;
 
-  // Lista de eventos
-  events: EventInput[] = [];
+
 
   customEventContent = (arg: any) => {
     const startTime = arg.event.start ? this.formatTime(arg.event.start) : '';
@@ -105,14 +108,15 @@ formatTime(date: Date): string {
       this.loadEvents(this.employeeId); // Cargar eventos del servidor
     });
   }
+  
   handleEventClick(info: any) {
+
     // Almacena la información del evento seleccionado en una variable
     this.selectedEvent = {
-      id: info.event.extendedProps.id,
       title: info.event.title,
-      start_datetime: info.event.start,
-      end_datetime: info.event.end,
-      employees_id: info.event.extendedProps.employees_id
+      start_datetime: info.event.start_datetime,
+      end_datetime : info.event.end_datetime, 
+      employees_id : info.event.employees_id
     };
 
     // Abre el modal
@@ -130,11 +134,31 @@ formatTime(date: Date): string {
 closeModal() {
   this.showModal = false;
 }
- // Función para eliminar el evento
- deleteEvent() {
-  console.log('Evento eliminado:', this.selectedEvent);
-  this.closeModal();
+confirmDeleteEvent(): void {
+  // Verifica si se ha seleccionado un evento y tiene un ID válido
+  if (!this.selectedEvent || !this.selectedEvent.id) {
+    console.error('No se pudo obtener el ID del evento seleccionado');
+    return;
+  }
+
+  const scheduleId = this.selectedEvent.id; // Obtiene el ID del evento seleccionado
+
+  // Llama al método deleteEvent del servicio para eliminar el evento del servidor
+  this.apiService.deleteEvent(this.employeeId, scheduleId).subscribe(
+    () => {
+      console.log('Evento eliminado correctamente');
+      // Realiza cualquier otra acción después de eliminar el evento, como actualizar la lista de eventos
+      // También puedes cerrar el modal después de eliminar el evento si es necesario
+      this.closeModal();
+    },
+    (error) => {
+      console.error('Error al eliminar el evento:', error);
+      // Maneja el error si es necesario
+    }
+  );
 }
+
+
 
 // Función para editar el evento (puedes implementarla según tus necesidades)
 editEvent() {
@@ -307,5 +331,17 @@ editEvent() {
       }
     }
 }
+deleteEventFromCalendar(eventToDelete: any) {
+  // Filtrar la lista de eventos para eliminar el evento específico
+  this.events = this.events.filter(event => event !== eventToDelete);
+
+  // Actualizar los eventos en el calendario después de eliminar el evento
+  const calendarApi = this.fullcalendar.getApi();
+  calendarApi.removeAllEvents();
+  calendarApi.addEventSource(this.events);
+}
+
+
+
 
 }
