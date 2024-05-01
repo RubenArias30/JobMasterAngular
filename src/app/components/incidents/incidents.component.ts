@@ -17,7 +17,7 @@ export class IncidentsComponent implements OnInit {
   }
 
   getIncidents(): void {
-    this.apiService.getIncidents()
+    this.apiService.getAllIncidents()
       .subscribe((data: any[]) => {
         this.incidences = data;
       });

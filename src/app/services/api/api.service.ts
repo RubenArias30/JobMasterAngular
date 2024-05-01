@@ -102,6 +102,11 @@ export class ApiService {
   }
 
   //Incidents
+
+  getAllIncidents() {
+    return this.http.get<any[]>(`${this.apiUrl}/all_incidents`);
+  }
+
   getIncidents(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/incidents`);
   }
