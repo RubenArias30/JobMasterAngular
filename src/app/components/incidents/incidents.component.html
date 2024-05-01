@@ -1,0 +1,126 @@
+<div class="container mx-auto mt-8">
+  <!-- Encabezado -->
+  <div class="flex items-center justify-between mb-4 ml-5">
+    <div class="flex items-center">
+      <h1 class="text-lg font-bold mr-2">Incidencias</h1>
+      <div class="border-l h-6 mr-2"></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+  <div class="bg-gradient-to-br from-indigo-500 to-sky-400 rounded-md border border-gray-100 p-6 shadow-md shadow-black/5 ml-6">
+    <div class="flex justify-between mb-6 flex-col">
+      <!-- Text -->
+      <div class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2">TOTAL TICKETS</div>
+      <div class="flex items-center">
+        <!-- Icon -->
+        <i class='bx bxs-coupon mr-2 text-3xl md:text-5xl' style='color:#fffbfb'></i>
+        <!-- Text -->
+        <div class="text-lg md:text-3xl font-medium text-white">{{incidences.length}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-gradient-to-br from-emerald-600 to-emerald-400 rounded-md border border-gray-100 p-6 shadow-md shadow-black/5 ml-4">
+    <div class="flex justify-between mb-4">
+      <div class="flex justify-between mb-6 flex-col">
+        <!-- Text -->
+        <div class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2">SOLUCIONADAS</div>
+        <div class="flex items-center">
+          <!-- Icon -->
+          <i class='bx bx-list-check mr-2 text-3xl md:text-5xl' style='color:#fffbfb'></i>
+          <!-- Text -->
+          <div class="text-lg md:text-3xl font-medium text-white">15</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-gradient-to-br from-rose-500 to-rose-400 p-6 shadow-md rounded-md shadow-black/5 mr-6">
+    <div class="flex justify-between mb-6">
+      <div class="flex justify-between mb-6 flex-col">
+        <!-- Text -->
+        <div class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2">PENDIENTES</div>
+        <div class="flex items-center">
+          <!-- Icon -->
+          <i class='bx bxs-file mr-2 text-3xl md:text-5xl' style='color:#fffbfb'></i>
+          <!-- Text -->
+          <div class="text-lg md:text-3xl font-medium text-white">15</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="px-4 py-2">
+  <div class="w-full bg-white border border-green-400 rounded-xl p-4 mb-8">
+    <h2 class="text-xl font-bold mb-4">Incidencias</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+              USUARIO
+            </th>
+            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+              NOMBRE
+            </th>
+            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+              TIPO
+            </th>
+            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+              EMAIL
+            </th>
+            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+              DESCRIPCIÓN
+            </th>
+            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+              FECHA
+            </th>
+            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+              ACCIÓN
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <ng-container *ngIf="incidences.length > 0; else noIncidences">
+            <tr *ngFor="let incident of incidences" class="transition-all hover:bg-gray-100 hover:shadow-lg">
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex-shrink-0 w-10 h-10" *ngIf="incident.employee">
+                  <img class="w-10 h-10 rounded-full" [src]="incident.employee.photo" alt="" *ngIf="incident.employee.photo">
+                </div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900 font-bold">{{ incident.employee?.name }} {{ incident.employee?.surname }}</div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900">{{ incident.incident_type }}</div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900">{{ incident.employee?.email }}</div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900">{{ incident.description }}</div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900">{{ incident.date }}</div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                  Completado
+                </span>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-template #noIncidences>
+            <tr>
+              <td colspan="7" class="py-4 text-center">No hay incidencias disponibles.</td>
+            </tr>
+          </ng-template>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -10,15 +10,13 @@ export class MyGuardGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
     if (this.authService.isAuthenticated()) {
-      // Si el usuario está autenticado, verifica si tiene acceso a la ruta
-      if (route.data['roles'] && route.data['roles'].includes(this.authService.getUserRole())) {
+      const userRole = this.authService.getUserRole();
+      if (route.data['roles'] && route.data['roles'].includes(userRole)) {
         // Si el rol del usuario está permitido para esta ruta, permite el acceso
         return true;
       } else {
         // Si el rol del usuario no está permitido para esta ruta, redirige a una página de acceso denegado
-        // this.router.navigate(['/access-denied']);
-        alert('No tienes permisos para esta ruta')
-       // window.location.reload()
+        alert('No tienes permisos para esta ruta');
         return false;
       }
     } else {

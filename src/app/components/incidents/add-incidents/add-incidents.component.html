@@ -1,0 +1,57 @@
+<div class="container mx-auto mt-8">
+  <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <div class="mb-4">
+      <h2 class="text-xl font-bold mb-4">Crear Incidencia</h2>
+    </div>
+    <form [formGroup]="incidentForm" (ngSubmit)="addIncident()">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="type">
+            Tipo de Incidencia
+          </label>
+          <input formControlName="incident_type" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="type" type="text" placeholder="Tipo de incidencia">
+          <div *ngIf="incidentForm.get('incident_type')?.invalid && incidentForm.get('incident_type')?.touched" class="text-red-500 text-sm mt-1">Tipo de incidencia es requerido</div>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="date">
+            Fecha de Incidencia
+          </label>
+          <input formControlName="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="date" type="date">
+          <div *ngIf="incidentForm.get('date')?.invalid && incidentForm.get('date')?.touched" class="text-red-500 text-sm mt-1">Fecha de incidencia es requerida</div>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
+          Descripción
+        </label>
+        <textarea formControlName="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" placeholder="Descripción de la incidencia"></textarea>
+        <div *ngIf="incidentForm.get('description')?.invalid && incidentForm.get('description')?.touched" class="text-red-500 text-sm mt-1">Descripción es requerida</div>
+      </div>
+      <div class="flex items-center justify-between">
+        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+          Crear Incidencia
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!--
+ <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+  <div class="mb-4">
+    <h2 class="text-xl font-bold mb-4">Historial de Incidencias</h2>
+  </div>
+  <div *ngIf="userIncidents.length > 0; else noIncidents">
+
+    <ul>
+      <li *ngFor="let incident of userIncidents">
+
+        {{ incident.incident_type }} - {{ incident.date | date }} - {{ incident.description }}
+      </li>
+    </ul>
+  </div>
+  <ng-template #noIncidents>
+
+    <p>No hay incidencias registradas.</p>
+  </ng-template>
+</div> -->

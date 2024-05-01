@@ -42,6 +42,10 @@ export class AuthService {
     const role = this.getUserRole();
     return !!role && role === 'admin';
   }
+  isEmployee(): boolean {
+    const role = this.getUserRole();
+    return !!role && role === 'empleado';
+  }
 
 
   logout(){
