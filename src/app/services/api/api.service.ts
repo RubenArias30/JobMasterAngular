@@ -104,7 +104,7 @@ export class ApiService {
   deleteEvent(employeeId: number, scheduleId: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/employees/${employeeId}/schedules/${scheduleId}`);
   }
-  
+
 
   //Incidents
 
@@ -134,21 +134,7 @@ getAusencias(): Observable<any[]> {
   return this.http.get<any[]>(`${this.apiUrl}/ausencias`);
 }
 
-createAusencia(ausenciaData: any): Observable<any> {
-  return this.http.post<any>(`${this.apiUrl}/ausencias`, ausenciaData);
-}
 
-getAusenciaById(ausenciaId: string): Observable<any> {
-  return this.http.get<any>(`${this.apiUrl}/ausencias/${ausenciaId}`);
-}
-
-updateAusencia(ausenciaId: string, ausenciaData: any): Observable<any> {
-  return this.http.put<any>(`${this.apiUrl}/ausencias/${ausenciaId}`, ausenciaData);
-}
-
-deleteAusencia(ausenciaId: string): Observable<any> {
-  return this.http.delete<any>(`${this.apiUrl}/ausencias/${ausenciaId}`);
-}
 
 
 }

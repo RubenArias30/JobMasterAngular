@@ -3,13 +3,12 @@ import { ApiService } from 'src/app/services/api/api.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 
-
 @Component({
-  selector: 'app-ausencias',
-  templateUrl: './ausencias.component.html',
-  styleUrls: ['./ausencias.component.css']
+  selector: 'app-absences',
+  templateUrl: './absences.component.html',
+  styleUrls: ['./absences.component.css']
 })
-export class AusenciasComponent {
+export class AbsencesComponent {
   employees: any[] = []; // Add this line
   ausenciaForm: FormGroup = this.formBuilder.group({});
 
@@ -19,7 +18,6 @@ export class AusenciasComponent {
     this.apiService.getEmployees().subscribe((employees) => {
       this.employees = employees;
 
-
       this.ausenciaForm = this.formBuilder.group({
         name: ['', Validators.required],
         absenceType: ['', Validators.required],
@@ -27,10 +25,10 @@ export class AusenciasComponent {
         endDate: ['', [Validators.required, this.validateEndDate]],
         description: ['', Validators.required]
 
-
         // Add other form controls here
       });
       });
+
   }
   validateStartDate(control: FormControl): { [key: string]: any } | null {
     const selectedDate = new Date(control.value);
@@ -44,7 +42,6 @@ export class AusenciasComponent {
     }
     return null;
   }
-
 
   validateEndDate(control: FormControl): { [key: string]: any } | null {
     const selectedDate = new Date(control.value);
@@ -66,14 +63,6 @@ export class AusenciasComponent {
 
   closeModal() {
     this.showModal = false;
-  }
-
-  isSwitchLeft = true; // Assuming this is your initial state for the switch
-  selectedOption: string = 'Medio día'; // Set the initial selected option here
-
-  toggleSwitch(option: string) {
-    this.selectedOption = option;
-    this.isSwitchLeft = !this.isSwitchLeft;
   }
 
   onSubmit(): void {
