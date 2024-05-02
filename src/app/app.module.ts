@@ -29,8 +29,6 @@ import { AusenciasComponent } from './components/ausencias/ausencias/ausencias.c
 import { IncidentsComponent } from './components/incidents/incidents.component';
 import { AddIncidentsComponent } from './components/incidents/add-incidents/add-incidents.component';
 import { HistoryIncidentsComponent } from './components/incidents/history-incidents/history-incidents.component';
-import { HistoryScheduleComponent } from './components/schedule/history-schedule/history-schedule.component';
-import { HistoryDocumentsComponent } from './components/documents/history-documents/history-documents.component';
 
 
 @NgModule({
@@ -69,8 +67,6 @@ import { HistoryDocumentsComponent } from './components/documents/history-docume
     IncidentsComponent,
     AddIncidentsComponent,
     HistoryIncidentsComponent,
-    HistoryScheduleComponent,
-    HistoryDocumentsComponent,
 
   ],
   imports: [

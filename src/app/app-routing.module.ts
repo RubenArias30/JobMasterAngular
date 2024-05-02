@@ -21,8 +21,6 @@ import { AusenciasComponent } from './components/ausencias/ausencias/ausencias.c
 import { IncidentsComponent } from './components/incidents/incidents.component';
 import { AddIncidentsComponent } from './components/incidents/add-incidents/add-incidents.component';
 import { HistoryIncidentsComponent } from './components/incidents/history-incidents/history-incidents.component';
-import { HistoryScheduleComponent } from './components/schedule/history-schedule/history-schedule.component';
-import { HistoryDocumentsComponent } from './components/documents/history-documents/history-documents.component';
 
 
 
@@ -89,24 +87,8 @@ const routes: Routes = [
       { path: 'add_incidents', component: AddIncidentsComponent },
     ],
   },
-  {
-    path: 'history_schedules',
-    component: LayoutComponent,
-    canActivate:[MyGuardGuard],
-    data: { roles: ['empleado'] },
-    children: [
-      { path: '', component: HistoryScheduleComponent }
-    ],
-  },
-  {
-    path: 'history_documents',
-    component: LayoutComponent,
-    canActivate:[MyGuardGuard],
-    data: { roles: ['empleado'] },
-    children: [
-      { path: '', component: HistoryDocumentsComponent}
-    ],
-  },
+
+
   {
     path: 'documents',
     component: LayoutComponent,

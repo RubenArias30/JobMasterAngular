@@ -108,18 +108,15 @@ formatTime(date: Date): string {
       this.loadEvents(this.employeeId); // Cargar eventos del servidor
     });
   }
-
-  handleEventClick(event: any) {
-
-    console.log('Evento seleccionado:', event); // Verificar la estructura del evento seleccionado
+  
+  handleEventClick(info: any) {
 
     // Almacena la información del evento seleccionado en una variable
     this.selectedEvent = {
-      id: event.event.id, // Asegúrate de asignar el ID del evento aquí
-      title: event.event.title,
-      start_datetime: event.event.start_datetime,
-      end_datetime: event.event.end_datetime,
-      employees_id: event.event.employees_id
+      title: info.event.title,
+      start_datetime: info.event.start_datetime,
+      end_datetime : info.event.end_datetime, 
+      employees_id : info.event.employees_id
     };
 
     // Abre el modal
@@ -132,30 +129,35 @@ formatTime(date: Date): string {
   this.selectedEvent = event;
   this.showModal = true;
 }
-  // Método para mostrar los detalles del evento seleccionado en el modal
-  showEventDetails(event: any): void {
-    this.selectedEvent = event;
-    this.showModal = true;
-  }
 
 // Función para cerrar el modal
 closeModal() {
   this.showModal = false;
-  this.selectedEvent = null; // Limpiar los detalles del evento seleccionado
-
 }
+confirmDeleteEvent(): void {
+  // Verifica si se ha seleccionado un evento y tiene un ID válido
+  if (!this.selectedEvent || !this.selectedEvent.id) {
+    console.error('No se pudo obtener el ID del evento seleccionado');
+    return;
+  }
 
-deleteEvent(scheduleId: number) {
+  const scheduleId = this.selectedEvent.id; // Obtiene el ID del evento seleccionado
+
+  // Llama al método deleteEvent del servicio para eliminar el evento del servidor
   this.apiService.deleteEvent(this.employeeId, scheduleId).subscribe(
     () => {
-      // Eliminación exitosa, actualizar la lista de eventos
-      this.loadEvents(this.employeeId);
+      console.log('Evento eliminado correctamente');
+      // Realiza cualquier otra acción después de eliminar el evento, como actualizar la lista de eventos
+      // También puedes cerrar el modal después de eliminar el evento si es necesario
+      this.closeModal();
     },
     (error) => {
       console.error('Error al eliminar el evento:', error);
+      // Maneja el error si es necesario
     }
   );
 }
+
 
 
 // Función para editar el evento (puedes implementarla según tus necesidades)
@@ -329,7 +331,15 @@ editEvent() {
       }
     }
 }
+deleteEventFromCalendar(eventToDelete: any) {
+  // Filtrar la lista de eventos para eliminar el evento específico
+  this.events = this.events.filter(event => event !== eventToDelete);
 
+  // Actualizar los eventos en el calendario después de eliminar el evento
+  const calendarApi = this.fullcalendar.getApi();
+  calendarApi.removeAllEvents();
+  calendarApi.addEventSource(this.events);
+}
 
 
 

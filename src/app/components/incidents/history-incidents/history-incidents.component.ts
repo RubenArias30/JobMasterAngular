@@ -18,7 +18,6 @@ export class HistoryIncidentsComponent implements OnInit {
 
   // Método para obtener las incidencias del usuario actual
   getUserIncidents() {
-
     this.apiService.getIncidents().subscribe(
       (response: any[]) => {
         this.userIncidents = response;
