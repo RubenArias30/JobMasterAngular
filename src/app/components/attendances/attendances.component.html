@@ -1,0 +1,14 @@
+<div class="container mx-auto mt-8">
+  <div class="bg-white p-8 rounded-lg shadow-md w-full sm:w-96">
+    <h2 class="text-2xl font-semibold mb-4">Registro de Fichaje</h2>
+    <hr class="my-4">
+    <div class="flex justify-center mb-4">
+      <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mr-2" (click)="registerEntry()">Registrar Entrada</button>
+      <button class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded" (click)="registerExit()">Registrar Salida</button>
+    </div>
+    <div *ngIf="showTimer" class="text-center">
+      <p class="text-lg font-semibold mb-2">Tiempo registrado:</p>
+      <p class="text-3xl font-bold">{{ timer }}</p>
+    </div>
+  </div>
+</div>

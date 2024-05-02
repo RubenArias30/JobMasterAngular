@@ -104,7 +104,7 @@ export class ApiService {
   deleteEvent(employeeId: number, scheduleId: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/employees/${employeeId}/schedules/${scheduleId}`);
   }
-  
+
 
   //Incidents
 
@@ -150,6 +150,13 @@ deleteAusencia(ausenciaId: string): Observable<any> {
   return this.http.delete<any>(`${this.apiUrl}/ausencias/${ausenciaId}`);
 }
 
+//Attendances
+registerEntry(): Observable<any> {
+  return this.http.post<any>(`${this.apiUrl}/attendances/entry`, {});
+}
 
+registerExit(): Observable<any> {
+  return this.http.post<any>(`${this.apiUrl}/attendances/exit`, {});
+}
 }
 
