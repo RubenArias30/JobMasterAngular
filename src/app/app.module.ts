@@ -29,6 +29,7 @@ import { AusenciasComponent } from './components/ausencias/ausencias/ausencias.c
 import { IncidentsComponent } from './components/incidents/incidents.component';
 import { AddIncidentsComponent } from './components/incidents/add-incidents/add-incidents.component';
 import { HistoryIncidentsComponent } from './components/incidents/history-incidents/history-incidents.component';
+import { AttendancesComponent } from './components/attendances/attendances.component';
 
 
 @NgModule({
@@ -67,6 +68,7 @@ import { HistoryIncidentsComponent } from './components/incidents/history-incide
     IncidentsComponent,
     AddIncidentsComponent,
     HistoryIncidentsComponent,
+    AttendancesComponent,
 
   ],
   imports: [
