@@ -1,4 +1,4 @@
-<p>absences works!</p>
+<div class="container mx-auto mt-8">
   <!-- Encabezado -->
   <div class="flex items-center justify-between mb-4 ml-5"> <!-- Added ml-4 for left space -->
     <div class="flex items-center">
@@ -51,12 +51,14 @@
                       required>
                 <option value="">Seleccione el empleado</option>
                 <!-- Populate options dynamically from database -->
-                <option *ngFor="let employee of employees" [value]="employee.id">{{ employee.nif}} {{ employee.surname }}</option>
+                <option *ngFor="let employee of employees" [value]="employee.id">{{ employee.name }} {{ employee.surname }}</option>
               </select>
               <div *ngIf="ausenciaForm.controls['name'].invalid && ausenciaForm.controls['name'].touched" class="text-red-500">
                 <p *ngIf="ausenciaForm.controls['name'].errors?.['required']">Empleado es obligatorio*</p>
               </div>
             </div>
+
+
 
             <div class="col-span-1">
               <label for="absenceType" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo de
@@ -107,6 +109,8 @@
             </div>
 
 
+
+
             <div class="col-span-2">
               <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Descripción
@@ -124,15 +128,17 @@
               </div>
             </div>
 
-            <div class="col-span-2 flex justify-center space-x-4 mt-4">
-              <button type="submit" class="flex items-center bg-blue-400 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-lg">
-                <i class='bx bx-check-square'></i>
-                <span class="ml-2">GUARDAR</span>
-              </button>
-            <button type="button" (click)="closeModal()" class="flex items-center bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-lg">
-                <i class='bx bx-error-circle'></i>
-                <span class="ml-2">CANCELAR</span>
-              </button>
+
+
+          <div class="col-span-2 flex justify-center space-x-4 mt-4">
+            <button class="flex items-center bg-blue-400 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-lg">
+              <i class='bx bx-check-square'></i>
+              <span class="ml-2">GUARDAR</span>
+            </button>
+            <button class="flex items-center bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-lg">
+              <i class='bx bx-error-circle'></i>
+              <span class="ml-2">CANCELAR</span>
+            </button>
           </div>
         </form>
       </div>
@@ -141,7 +147,10 @@
 
 
 
+
+
   <!-- TABLE -->
+
 
   <div class="px-4 py-2"> <!-- Added padding to the container -->
     <div class="w-full bg-white border border-green-400 rounded-xl p-4 mb-8"> <!-- Removed ml-4 and mr-4 -->
@@ -221,10 +230,10 @@
             </td> -->
               <td class="px-6 py-4 whitespace-nowrap">
                 <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                  <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                     style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;">
                     <path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z"></path>
-                  </svg> -->
+                  </svg>
                   Añadir ausencia
 
                 </span>

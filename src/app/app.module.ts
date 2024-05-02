@@ -25,13 +25,12 @@ import { DetailsComponent } from './components/documents/details/details.compone
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { AddScheduleComponent } from './components/schedule/add-schedule/add-schedule.component';
 import { AddDocumentsComponent } from './components/documents/add-documents/add-documents.component';
-
+import { AusenciasComponent } from './components/ausencias/ausencias/ausencias.component';
 import { IncidentsComponent } from './components/incidents/incidents.component';
 import { AddIncidentsComponent } from './components/incidents/add-incidents/add-incidents.component';
 import { HistoryIncidentsComponent } from './components/incidents/history-incidents/history-incidents.component';
 import { HistoryScheduleComponent } from './components/schedule/history-schedule/history-schedule.component';
 import { HistoryDocumentsComponent } from './components/documents/history-documents/history-documents.component';
-import { AbsencesComponent } from './components/absences/absences.component';
 
 
 @NgModule({
@@ -66,15 +65,12 @@ import { AbsencesComponent } from './components/absences/absences.component';
     DetailsComponent,
     AddScheduleComponent,
     AddDocumentsComponent,
-
+    AusenciasComponent,
     IncidentsComponent,
     AddIncidentsComponent,
     HistoryIncidentsComponent,
-
     HistoryScheduleComponent,
     HistoryDocumentsComponent,
-
-    AbsencesComponent,
 
   ],
   imports: [
