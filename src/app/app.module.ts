@@ -13,6 +13,20 @@ import { EmployeesComponent } from './components/employees/employees.component';
 import { AddEmployeeComponent } from './components/employees/add-employee/add-employee.component';
 import { EditEmployeeComponent } from './components/employees/edit-employee/edit-employee.component';
 import { JwtInterceptor } from '../app/interceptor/jwt.interceptor';
+import { NifValidatorDirective } from './directive/nif-validator.directive';
+import { BudgetComponent } from './components/budget/budget.component';
+import { GenerateBudgetComponent } from './components/budget/generate-budget/generate-budget.component';
+import { EditBudgetComponent } from './components/budget/edit-budget/edit-budget.component';
+import { IncidenciaComponent } from './components/incidencia/incidencia.component';
+import { DocumentsComponent } from './components/documents/documents.component';
+import { RouterModule } from '@angular/router';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { ScheduleComponent } from './components/schedule/schedule.component';
+import { DetailsComponent } from './components/documents/details/details.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { AddScheduleComponent } from './components/schedule/add-schedule/add-schedule.component';
+import { AddDocumentsComponent } from './components/documents/add-documents/add-documents.component';
+import { AusenciasComponent } from './components/ausencias/ausencias/ausencias.component';
 
 
 @NgModule({
@@ -20,12 +34,38 @@ import { JwtInterceptor } from '../app/interceptor/jwt.interceptor';
     AppComponent,
 
     LoginComponent,
-     DashboardComponent,
-     SidebarComponent,
-     LayoutComponent,
-     EmployeesComponent,
-     AddEmployeeComponent,
-     EditEmployeeComponent,
+    DashboardComponent,
+    SidebarComponent,
+    LayoutComponent,
+    EmployeesComponent,
+    AddEmployeeComponent,
+    EditEmployeeComponent,
+    NifValidatorDirective,
+    BudgetComponent,
+    GenerateBudgetComponent,
+    EditBudgetComponent,
+    IncidenciaComponent,
+    DocumentsComponent,
+    PageNotFoundComponent,
+    ScheduleComponent,
+    DashboardComponent,
+    SidebarComponent,
+    LayoutComponent,
+    EmployeesComponent,
+    AddEmployeeComponent,
+    EditEmployeeComponent,
+    NifValidatorDirective,
+    BudgetComponent,
+    GenerateBudgetComponent,
+    EditBudgetComponent,
+    IncidenciaComponent,
+    DocumentsComponent,
+    PageNotFoundComponent,
+    DetailsComponent,
+    AddScheduleComponent,
+    AddDocumentsComponent,
+    AusenciasComponent,
+
   ],
   imports: [
     BrowserModule,

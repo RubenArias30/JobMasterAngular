@@ -8,6 +8,25 @@ import { EmployeesComponent } from './components/employees/employees.component';
 import { AddEmployeeComponent } from './components/employees/add-employee/add-employee.component';
 import { EditEmployeeComponent } from './components/employees/edit-employee/edit-employee.component';
 import { MyGuardGuard } from './auth/my-guard.guard';
+<<<<<<< Updated upstream
+=======
+import { BudgetComponent } from './components/budget/budget.component';
+import { GenerateBudgetComponent } from './components/budget/generate-budget/generate-budget.component';
+import { EditBudgetComponent } from './components/budget/edit-budget/edit-budget.component';
+
+import { IncidenciaComponent } from './components/incidencia/incidencia.component';
+import { DocumentsComponent } from './components/documents/documents.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { DetailsComponent } from './components/documents/details/details.component';
+import { ScheduleComponent } from './components/schedule/schedule.component';
+import { AddScheduleComponent } from './components/schedule/add-schedule/add-schedule.component';
+import { AddDocumentsComponent } from './components/documents/add-documents/add-documents.component';
+import { AbsencesComponent } from './components/absences/absences.component';
+
+
+
+
+>>>>>>> Stashed changes
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -27,7 +46,68 @@ const routes: Routes = [
     { path: 'edit_employee', component: EditEmployeeComponent }
 
   ]
+<<<<<<< Updated upstream
 }
+=======
+},
+  { path: 'absences', component: LayoutComponent,
+  canActivate:[MyGuardGuard],data: { roles: ['admin'] },
+  children: [
+    { path: '', component: AbsencesComponent},
+    // { path: 'add_employee', component: AddEmployeeComponent },
+    // { path: 'edit_employee/:id', component: EditEmployeeComponent }
+
+  ]
+},
+{
+  path: 'budget',
+  component: LayoutComponent,
+  canActivate:[MyGuardGuard],data: { roles: ['admin'] },
+  children: [
+    { path: '', component: BudgetComponent },
+    { path: 'generate_budget', component: GenerateBudgetComponent },
+    { path: 'edit_budget', component: EditBudgetComponent }
+
+  ]
+},
+{
+  path: 'incidencia',
+  component: LayoutComponent,
+  canActivate:[MyGuardGuard],data: { roles: ['admin'] },
+  children: [
+    { path: '', component: IncidenciaComponent }],
+  },
+  {
+    path: 'documents',
+    component: LayoutComponent,
+    canActivate: [MyGuardGuard],
+    data: { roles: ['admin'] },
+    children: [
+      { path: '', component: DocumentsComponent },
+      { path: 'details/:employeeId', component: DetailsComponent },
+      { path: 'add_document/:employeeId', component: AddDocumentsComponent }
+
+    ]
+  },
+
+
+
+{
+  path: 'schedule',
+  component: LayoutComponent,
+  canActivate: [MyGuardGuard],
+  data: { roles: ['admin'] },
+  children: [
+    { path: '', component: ScheduleComponent },
+    { path: 'add_schedule/:id', component: AddScheduleComponent },
+
+  ]
+},
+
+
+
+{ path: '**', component: PageNotFoundComponent } ,
+>>>>>>> Stashed changes
 
 ];
 
