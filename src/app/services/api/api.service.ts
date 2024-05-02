@@ -128,9 +128,7 @@ export class ApiService {
   }
 
   getIncidents(): Observable<any[]> {
-    const url = `${this.apiUrl}/incidents`; // Obtener la URL completa
-    console.log('Ruta de la solicitud de incidencias:', url); // Mostrar la URL en la consola
-    return this.http.get<any[]>(url);
+    return this.http.get<any[]>(`${this.apiUrl}/incidents`);
   }
   getIncidentsByEmployeeId(employeeId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/incidents/${employeeId}`);
