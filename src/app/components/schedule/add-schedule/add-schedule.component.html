@@ -70,9 +70,10 @@ Modal para mostrar los detalles del evento
       <h4 class="font-bold">Título:</h4>
       <p>{{ selectedEvent?.title }}</p>
       <h4 class="font-bold">Fecha de inicio:</h4>
-      <p>{{ selectedEvent?.start }}</p>
+      <p>{{ selectedEvent?.start_datetime }}</p>
       <h4 class="font-bold">Fecha de fin:</h4>
-      <p>{{ selectedEvent?.end }}</p>
+      <p>{{ selectedEvent?.end_datetime }}</p>
+      <!-- Asegúrate de mostrar más campos si los necesitas -->
     </div>
     <div class="modal-footer">
       <button class="btn btn-danger" (click)="deleteEvent(selectedEvent?.id)">Eliminar</button>

@@ -115,11 +115,11 @@ formatTime(date: Date): string {
 
     // Almacena la información del evento seleccionado en una variable
     this.selectedEvent = {
-      id: event.event.id, // Asegúrate de asignar el ID del evento aquí
+      id: event.event.id,
       title: event.event.title,
       start_datetime: event.event.start_datetime,
-      end_datetime: event.event.end_datetime,
-      employees_id: event.event.employees_id
+      end_datetime: event.event.end_datetime
+      // employees_id: event.event.employees_id
     };
 
     // Abre el modal
