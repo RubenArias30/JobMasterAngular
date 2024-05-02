@@ -93,6 +93,12 @@ export class ApiService {
     return this.http.get(`${this.apiUrl}/documents/${employeeId}`);
   }
 
+  // getDocumentsByEmployeeIdEMPLEADO(): Observable<any[]> {
+  //   // Hacer la llamada al backend para obtener los documentos del empleado actual
+  //   return this.http.get<any[]>(`${this.apiUrl}/documents`);
+  // }
+
+
   //Schedule
   addSchedule(employeeId: number, scheduleData: any) {
     return this.http.post(`${this.apiUrl}/employees/${employeeId}/schedule`, scheduleData);
@@ -101,10 +107,19 @@ export class ApiService {
     return this.http.get<Event[]>(`${this.apiUrl}/employees/${employeeId}/events`);
   }
 
+  // deleteEvent(employeeId: number, scheduleId: number): Observable<any> {
+  //   return this.http.delete<any>(`${this.apiUrl}/employees/${employeeId}/schedules/${scheduleId}`);
+  // }
   deleteEvent(employeeId: number, scheduleId: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/employees/${employeeId}/schedules/${scheduleId}`);
   }
-  
+
+
+  //SCHEDULE EMPLOYEE:
+  getEmployeeSchedule(employeeId: number) {
+    return this.http.get<any[]>(`${this.apiUrl}/schedules/${employeeId}`);
+  }
+
 
   //Incidents
 
@@ -113,10 +128,13 @@ export class ApiService {
   }
 
   getIncidents(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/incidents`);
+    const url = `${this.apiUrl}/incidents`; // Obtener la URL completa
+    console.log('Ruta de la solicitud de incidencias:', url); // Mostrar la URL en la consola
+    return this.http.get<any[]>(url);
   }
   getIncidentsByEmployeeId(employeeId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/incidents/${employeeId}`);
+
   }
 
    addIncident(incidentData: any): Observable<any> {

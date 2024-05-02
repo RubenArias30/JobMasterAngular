@@ -61,7 +61,7 @@
   </div>
 <!-- AddScheduleComponent template -->
 
-<!-- Modal para mostrar los detalles del evento -->
+Modal para mostrar los detalles del evento
 <div class="modal" *ngIf="showModal">
   <div class="modal-content">
     <span class="close" (click)="closeModal()">&times;</span>
@@ -70,12 +70,12 @@
       <h4 class="font-bold">Título:</h4>
       <p>{{ selectedEvent?.title }}</p>
       <h4 class="font-bold">Fecha de inicio:</h4>
-      <p>{{ selectedEvent?.start_datetime }}</p>
+      <p>{{ selectedEvent?.start }}</p>
       <h4 class="font-bold">Fecha de fin:</h4>
-      <p>{{ selectedEvent?.end_datetime  }}</p>
+      <p>{{ selectedEvent?.end }}</p>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-danger" (click)="confirmDeleteEvent()">Eliminar</button>
+      <button class="btn btn-danger" (click)="deleteEvent(selectedEvent?.id)">Eliminar</button>
       <button class="btn btn-primary" (click)="editEvent()">Editar</button>
       <button class="btn btn-secondary" (click)="closeModal()">Cerrar</button>
     </div>
@@ -84,7 +84,15 @@
 
 <!-- Resto del contenido del AddScheduleComponent -->
 
-
+   <!-- Listado de eventos -->
+   <div class="mt-8">
+    <h2 class="text-lg font-bold mb-4">Eventos Recibidos</h2>
+    <ul>
+      <li *ngFor="let event of events" (click)="showEventDetails(event)">
+        <span>{{ event.title }}</span> - <span>{{ event.start }}</span> - <span>{{ event.end }}</span>
+      </li>
+    </ul>
+  </div>
 
   <!-- Botón de volver atrás -->
   <div class="flex justify-center mt-4">
