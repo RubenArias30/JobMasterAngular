@@ -85,7 +85,7 @@ formatTime(date: Date): string {
     events: this.events, // Usar la lista de eventos
     eventColor: '#92E3A9',
     eventContent: this.customEventContent,
-    eventClick: this.openModal.bind(this)
+    eventClick: this.handleEventClick.bind(this)
 
   };
 
@@ -108,15 +108,17 @@ formatTime(date: Date): string {
       this.loadEvents(this.employeeId); // Cargar eventos del servidor
     });
   }
-  
+
   handleEventClick(info: any) {
+    console.log('ID del evento:', info.event.id);
 
     // Almacena la información del evento seleccionado en una variable
     this.selectedEvent = {
+      id: info.event.id,
       title: info.event.title,
-      start_datetime: info.event.start_datetime,
-      end_datetime : info.event.end_datetime, 
-      employees_id : info.event.employees_id
+      start: info.event.start,
+      end : info.event.end,
+      // employees_id : info.event.employees_id
     };
 
     // Abre el modal
@@ -141,14 +143,15 @@ confirmDeleteEvent(): void {
     return;
   }
 
-  const scheduleId = this.selectedEvent.id; // Obtiene el ID del evento seleccionado
+  const eventId = this.selectedEvent.id; // Obtiene el ID del evento seleccionado
 
   // Llama al método deleteEvent del servicio para eliminar el evento del servidor
-  this.apiService.deleteEvent(this.employeeId, scheduleId).subscribe(
+  this.apiService.deleteEvent(eventId).subscribe(
     () => {
       console.log('Evento eliminado correctamente');
-      // Realiza cualquier otra acción después de eliminar el evento, como actualizar la lista de eventos
-      // También puedes cerrar el modal después de eliminar el evento si es necesario
+      // Elimina el evento del calendario Angular
+      this.deleteEventFromCalendar(this.selectedEvent);
+      // Cierra el modal después de eliminar el evento
       this.closeModal();
     },
     (error) => {
@@ -160,9 +163,12 @@ confirmDeleteEvent(): void {
 
 
 
+
+
 // Función para editar el evento (puedes implementarla según tus necesidades)
 editEvent() {
   console.log('Editar evento:', this.selectedEvent);
+
   this.closeModal();
 }
   loadEvents(employeeId: number): void {
@@ -179,6 +185,7 @@ editEvent() {
           while (currentDate <= endDate) {
             const formattedDate = currentDate.toISOString().split('T')[0];
             const newEvent: EventInput = {
+              id: event.id, // Asegúrate de incluir la propiedad id
               title: event.title,
               start: `${formattedDate}T${this.getFormattedTime(currentDate)}:00`,
               end: `${formattedDate}T${this.getFormattedTime(endDate)}:00`
@@ -261,6 +268,12 @@ editEvent() {
       };
 
       this.events.push(nuevoEvento); // Agregar evento a la lista
+      this.calendarOptions.events = this.events; // Actualizar los eventos en el calendario
+
+        // Actualizar el calendario localmente
+  const calendarApi = this.fullcalendar.getApi();
+  calendarApi.addEvent(nuevoEvento); // Agregar el nuevo evento al calendario
+
     }
 
     // Actualizar los eventos en el calendario después de agregar todos los eventos
@@ -270,9 +283,9 @@ editEvent() {
     const calendarApi = this.fullcalendar.getApi();
     calendarApi.removeAllEvents();
     calendarApi.addEventSource(this.events);
+    this.reloadPage();
 
-    // Recargar la página para reflejar los cambios (puedes no necesitar esto, dependiendo de cómo manejes la actualización)
-    // this.loadEvents(this.employeeId);
+
   }
 
 
@@ -334,11 +347,18 @@ editEvent() {
 deleteEventFromCalendar(eventToDelete: any) {
   // Filtrar la lista de eventos para eliminar el evento específico
   this.events = this.events.filter(event => event !== eventToDelete);
+  this.calendarOptions.events = this.events; // Actualizar los eventos en el calendario
 
   // Actualizar los eventos en el calendario después de eliminar el evento
   const calendarApi = this.fullcalendar.getApi();
   calendarApi.removeAllEvents();
   calendarApi.addEventSource(this.events);
+  this.reloadPage();
+
+}
+reloadPage() {
+  // Recargar la página actual
+  window.location.reload();
 }
 
 
