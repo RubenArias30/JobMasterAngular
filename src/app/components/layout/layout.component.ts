@@ -18,14 +18,14 @@ export class LayoutComponent implements OnInit{
       this.actualizarFechaHora();
     }, 1000); // Actualizar cada segundo
 
-    // this.apiService.getLoggedInUserName().subscribe(
-    //   (response) => {
-    //     this.nombreUsuario = response.name;
-    //   },
-    //   (error) => {
-    //     console.error(error);
-    //   }
-    // );
+    this.apiService.getLoggedInUserName().subscribe(
+      (response) => {
+        this.nombreUsuario = response.name;
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 
   private actualizarFechaHora(): void {
