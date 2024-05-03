@@ -158,5 +158,13 @@ registerEntry(): Observable<any> {
 registerExit(): Observable<any> {
   return this.http.post<any>(`${this.apiUrl}/attendances/exit`, {});
 }
+getStartTime() {
+  return this.http.get(`${this.apiUrl}/attendance/start-time`);
+}
+checkActiveEntry(userId: string) {
+  return this.http.get<boolean>(`${this.apiUrl}/attendances/check-active-entry/${userId}`);
+}
+
+
 }
 
