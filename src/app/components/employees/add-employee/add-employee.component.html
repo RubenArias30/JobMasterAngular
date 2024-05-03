@@ -196,9 +196,10 @@
 </div>
 
 <!-- Mensaje de error -->
-<div *ngIf="showError" class="text-red-500 mt-2 text-center">
+<div *ngIf="showError && !employeeForm.valid" class="text-red-500 mt-2 text-center">
   Por favor, completa todos los campos obligatorios.
 </div>
+
 <!-- Botón "Añadir Usuario" y CANCELAR-->
 <div class="mt-8 mb-3 flex justify-center">
   <button type="submit" class="bg-custom-500 text-white px-6 py-3 rounded-lg mr-4">Añadir Usuario</button>
