@@ -14,6 +14,7 @@ export class EditEmployeeComponent implements OnInit {
   showError: boolean = false;
   employeeData: any;
   formModified: boolean = false;
+  updateError: boolean = false; // Variable para controlar si se produce un error al actualizar
 
 
   constructor(
@@ -116,14 +117,25 @@ export class EditEmployeeComponent implements OnInit {
       return;
     }
 
+      // Si el formulario es inválido, mostrar mensaje de error y salir
+  if (this.employeeForm.invalid) {
+    this.showError = true;
+    return;
+  }
     // Si el formulario es válido, enviar los datos actualizados del empleado
     this.apiService.updateEmployee(this.employeeId, this.employeeForm.value).subscribe(
+
       (response) => {
         console.log('Empleado actualizado exitosamente:', response);
+        this.updateError = false;
+
         this.router.navigate(['/employees']); // Redirigir a la lista de empleados después de la actualización
+
       },
       (error) => {
         console.error('Error al actualizar el empleado:', error);
+        this.updateError = true;
+
       }
     );
   }
@@ -134,22 +146,17 @@ export class EditEmployeeComponent implements OnInit {
       this.router.navigate(['/employees']);
     }
   }
-
-   // Función de validación personalizada para la extensión de imagen
-   imageExtensionValidator(control: AbstractControl): { [key: string]: boolean } | null {
+  // Función de validación personalizada para la extensión de imagen
+  imageExtensionValidator(control: any) {
     if (control.value) {
-      const file = control.value as File; // Obtener el archivo del valor del control
       const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-
-      // Validar si el archivo tiene una extensión permitida
-      if (!allowedExtensions.test(file.name)) {
-        // Si la extensión del archivo no es válida, establecer el valor del control en nulo
-        control.setValue(null);
+      if (!allowedExtensions.test(control.value)) {
         return { invalidImageExtension: true };
       }
     }
     return null;
   }
+
 
 
   // Función de validación personalizada para la contraseña
