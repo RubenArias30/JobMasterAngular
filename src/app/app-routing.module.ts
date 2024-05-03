@@ -17,11 +17,12 @@ import { DetailsComponent } from './components/documents/details/details.compone
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { AddScheduleComponent } from './components/schedule/add-schedule/add-schedule.component';
 import { AddDocumentsComponent } from './components/documents/add-documents/add-documents.component';
-import { AusenciasComponent } from './components/ausencias/ausencias/ausencias.component';
 import { IncidentsComponent } from './components/incidents/incidents.component';
 import { AddIncidentsComponent } from './components/incidents/add-incidents/add-incidents.component';
 import { HistoryIncidentsComponent } from './components/incidents/history-incidents/history-incidents.component';
 import { AttendancesComponent } from './components/attendances/attendances.component';
+import { AbsencesComponent } from './components/absences/absences.component';
+import { AddAbsencesComponent } from './components/absences/add-absences/add-absences.component';
 
 
 
@@ -44,11 +45,11 @@ const routes: Routes = [
 
   ]
 },
-  { path: 'ausencias', component: LayoutComponent,
+  { path: 'absences', component: LayoutComponent,
   canActivate:[MyGuardGuard],data: { roles: ['admin'] },
   children: [
-    { path: '', component: AusenciasComponent },
-    // { path: 'add_employee', component: AddEmployeeComponent },
+    { path: '', component: AbsencesComponent },
+     { path: 'add-absences', component: AddAbsencesComponent },
     // { path: 'edit_employee/:id', component: EditEmployeeComponent }
 
   ]
