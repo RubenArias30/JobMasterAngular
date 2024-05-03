@@ -41,6 +41,8 @@ export class AddEmployeeComponent {
       return; // Detener la ejecución del método si el formulario es inválido
     }
     if (this.employeeForm.valid) {
+      this.showError = false;
+
       // Si es válido, envía los datos del empleado
       this.apiService.addEmployees(this.employeeForm.value).subscribe(
         (response) => {

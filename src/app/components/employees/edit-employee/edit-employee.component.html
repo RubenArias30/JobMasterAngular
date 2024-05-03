@@ -206,6 +206,14 @@
         </div>
       </div>
     </div>
+    <!-- Mensajes de error -->
+    <div *ngIf="showError && !employeeForm.valid" class="text-red-500 mt-2 text-center">
+      Por favor, completa todos los campos obligatorios.
+    </div>
+
+    <div *ngIf="updateError" class="text-red-500 mt-2 text-center">
+      Error al actualizar el empleado. Por favor, inténtalo de nuevo más tarde.
+    </div>
 
     <!-- Botón "Añadir Usuario" y "Cancelar"-->
     <div class="mt-8 mb-3 flex justify-center">
