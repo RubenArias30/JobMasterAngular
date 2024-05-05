@@ -72,6 +72,7 @@ import { AddAbsencesComponent } from './components/absences/add-absences/add-abs
     AbsencesComponent,
     AddAbsencesComponent,
 
+
   ],
   imports: [
     BrowserModule,
