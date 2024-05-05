@@ -58,9 +58,13 @@ export class LoginComponent implements OnInit {
         // Si la autenticación es exitosa, redirige al usuario a la página de dashboard
         this.route.navigate(['/dashboard']);
       },
-      (error: any) => {
-        // Manejo de error
-        this.mensaje = 'Credenciales incorrectas.';
+      (error: any) =>  {
+        // Manejo de error (NO FUNCIONA)
+        if (error.status === 401) {
+          this.mensaje = 'Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.';
+        } else {
+          this.mensaje = 'Se produjo un error al intentar iniciar sesión. Por favor, inténtalo de nuevo más tarde.';
+        }
       }
     );
   }

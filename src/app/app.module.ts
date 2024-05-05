@@ -31,6 +31,7 @@ import { HistoryIncidentsComponent } from './components/incidents/history-incide
 import { AttendancesComponent } from './components/attendances/attendances.component';
 import { AbsencesComponent } from './components/absences/absences.component';
 import { AddAbsencesComponent } from './components/absences/add-absences/add-absences.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 @NgModule({
@@ -71,6 +72,7 @@ import { AddAbsencesComponent } from './components/absences/add-absences/add-abs
     AttendancesComponent,
     AbsencesComponent,
     AddAbsencesComponent,
+    ProfileComponent,
 
   ],
   imports: [

@@ -12,6 +12,7 @@ export class AddEmployeeComponent {
   employeeForm!: FormGroup;
   employeeDatos: any = {};
   showError: boolean = false;
+  errorMessage: string = '';
 
   constructor(private apiService: ApiService, private router: Router, private fb: FormBuilder) {
     // Inicializa el formulario y define las reglas de validación
@@ -52,6 +53,11 @@ export class AddEmployeeComponent {
         },
         (error) => {
           console.error('Error al agregar el empleado:', error);
+          if (error.status === 500) {
+            this.errorMessage = 'Ya existe un empleado con este NIF. Por favor, intente con otro NIF.';
+          } else {
+            this.errorMessage = 'Se produjo un error al agregar el empleado. Por favor, inténtelo de nuevo más tarde.';
+          }        
         }
       );
     } else {

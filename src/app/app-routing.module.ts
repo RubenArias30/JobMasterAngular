@@ -23,6 +23,7 @@ import { HistoryIncidentsComponent } from './components/incidents/history-incide
 import { AttendancesComponent } from './components/attendances/attendances.component';
 import { AbsencesComponent } from './components/absences/absences.component';
 import { AddAbsencesComponent } from './components/absences/add-absences/add-absences.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 
@@ -129,7 +130,15 @@ const routes: Routes = [
   ]
 },
 
-
+{
+  path: 'profile',
+  component: LayoutComponent,
+  canActivate: [MyGuardGuard],
+  data: { roles: ['empleado'] },
+  children: [
+    { path: '', component: ProfileComponent }
+  ]
+},
 
 { path: '**', component: PageNotFoundComponent } ,
 

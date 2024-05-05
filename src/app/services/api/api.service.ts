@@ -164,5 +164,11 @@ addAbsence(formData: any): Observable<any> {
 }
 
 
+//MiPerfil (EMPLOYEE)
+getProfile(): Observable<any> {
+  return this.http.get<any>(`${this.apiUrl}/profile`);
+}
+
+
 }
 
