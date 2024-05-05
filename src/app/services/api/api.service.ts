@@ -109,6 +109,10 @@ export class ApiService {
     return this.http.delete<any>(`${this.apiUrl}/events/${eventId}`);
   }
 
+  //edit event (schedule)
+  getEvent(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/events/${id}`);
+  }
 
 
   //Incidents

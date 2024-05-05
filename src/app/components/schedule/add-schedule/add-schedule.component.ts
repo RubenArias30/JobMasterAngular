@@ -361,7 +361,33 @@ reloadPage() {
   window.location.reload();
 }
 
+//edit event:
+openEditModal(eventId: number) {
+  this.apiService.getEvent(eventId).subscribe(
+    (data) => {
+      const startDate = new Date(data.start_datetime);
+      const endDate = new Date(data.end_datetime);
+      // Asignamos los valores al formulario
+      this.form.patchValue({
+        title: data.title,
+        fechaInicio: this.formatDate(startDate), // Utilizamos la función formatDate para formatear la fecha de inicio
+        horaInicio: this.formatTime(startDate), // Utilizamos la función formatTime para formatear la hora de inicio
+        fechaFin: this.formatDate(endDate), // Utilizamos la función formatDate para formatear la fecha de fin
+        horaFin: this.formatTime(endDate) // Utilizamos la función formatTime para formatear la hora de fin
+      });
+      // Aquí puedes abrir el modal si es necesario
+    },
+    (error) => {
+      console.error(error);
+      // Maneja el error si no se puede obtener el evento
+    }
+  );
+}
 
+// Función para formatear la fecha (YYYY-MM-DD)
+private formatDate(date: Date): string {
+  return date.toISOString().split('T')[0];
+}
 
 
 }
