@@ -132,8 +132,9 @@ export class ApiService {
     return this.http.delete<any>(`${this.apiUrl}/incidents/${incidentId}`);
   }
 
-
-
+  updateIncidentStatus(incidentId: number, status: string): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/incidents/${incidentId}/status`, { status });
+  }
 
 //Attendances
 registerEntry(): Observable<any> {

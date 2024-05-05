@@ -12,7 +12,9 @@ export class AttendancesComponent implements OnInit, OnDestroy {
   startTime: number | null = null;
   timerInterval: any;
   currentUser!: string;
-  entryActive: boolean = false; // Variable para controlar si hay una entrada activa
+  entryActive: boolean = false;
+  lastEntryDate: string | null = null;
+  lastExitDate: string | null = null;
 
   constructor(private apiService: ApiService) { }
 
@@ -21,7 +23,7 @@ export class AttendancesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    clearInterval(this.timerInterval); // Limpiar el intervalo cuando el componente se destruye
+    clearInterval(this.timerInterval);
   }
 
   getCurrentUserId(): void {
@@ -29,7 +31,7 @@ export class AttendancesComponent implements OnInit, OnDestroy {
       response => {
         this.currentUser = response.name;
         console.log('Datos del usuario:', this.currentUser);
-        this.fetchStartTime(); // Llama a fetchStartTime después de obtener el nombre de usuario
+        this.fetchStartTime();
       },
       error => {
         console.error('Error al obtener los datos del usuario:', error);
@@ -41,7 +43,7 @@ export class AttendancesComponent implements OnInit, OnDestroy {
     const storedStartTime = localStorage.getItem(`startTime_${this.currentUser}`);
     if (storedStartTime) {
       this.startTime = parseInt(storedStartTime, 10);
-      this.entryActive = true; // Hay una entrada activa para este usuario
+      this.entryActive = true;
       this.showTimer = true;
       this.updateTimer();
     }
@@ -55,8 +57,6 @@ export class AttendancesComponent implements OnInit, OnDestroy {
         this.timer = this.formatTime(elapsedTime);
       }
     }, 1000);
-
-    console.log(this.timer);
   }
 
   formatTime(milliseconds: number): string {
@@ -72,18 +72,17 @@ export class AttendancesComponent implements OnInit, OnDestroy {
   }
 
   registerEntry(): void {
-    // Verificar si hay un registro de tiempo de inicio en localStorage para el usuario actual
     const storedStartTime = localStorage.getItem(`startTime_${this.currentUser}`);
     if (storedStartTime) {
-      // Si hay un registro activo para este usuario, solo mostrar un mensaje de error
       console.error('Ya hay un registro de entrada activo para este usuario');
       return;
     }
 
-    // Si no hay un registro activo para este usuario, continuar con el registro de la entrada
     this.showTimer = true;
     this.startTime = Date.now();
     localStorage.setItem(`startTime_${this.currentUser}`, this.startTime.toString());
+    this.entryActive = true;
+    this.lastEntryDate = new Date().toLocaleString();
     this.updateTimer();
     this.apiService.registerEntry().subscribe(
       response => {
@@ -98,8 +97,11 @@ export class AttendancesComponent implements OnInit, OnDestroy {
   registerExit(): void {
     this.showTimer = false;
     clearInterval(this.timerInterval);
-    localStorage.removeItem(`startTime_${this.currentUser}`);
-    this.entryActive = false; // Marcar la entrada como no activa
+    const exitDate = new Date().toLocaleString();
+    this.lastExitDate = exitDate;
+    localStorage.removeItem(`startTime_${this.currentUser}`); // Eliminar el tiempo de inicio del usuario actual del almacenamiento local
+    this.entryActive = false;
+    console.log(exitDate);
     this.apiService.registerExit().subscribe(
       response => {
         console.log('Salida registrada correctamente');
@@ -109,4 +111,10 @@ export class AttendancesComponent implements OnInit, OnDestroy {
       }
     );
   }
+  formatDateTime(dateTime: string | null): string {
+    if (!dateTime) return '';
+    return new Date(dateTime).toLocaleString();
+  }
+
+
 }

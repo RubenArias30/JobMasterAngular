@@ -74,6 +74,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     AddAbsencesComponent,
     ProfileComponent,
 
+
   ],
   imports: [
     BrowserModule,

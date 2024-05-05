@@ -8,7 +8,10 @@ import { ApiService } from 'src/app/services/api/api.service';
 })
 export class IncidentsComponent implements OnInit {
   incidences: any[] = [];
-
+  originalIncidences: any[] = [];
+  selectedStatus: string = '';
+  pending: number = 0;
+  completed: number = 0;
 
   constructor(private apiService: ApiService) { }
 
@@ -20,6 +23,48 @@ export class IncidentsComponent implements OnInit {
     this.apiService.getAllIncidents()
       .subscribe((data: any[]) => {
         this.incidences = data;
+        this.originalIncidences = data.slice();
+        this.countIncidentStatus();
+        console.log(data);
       });
+  }
+
+  // Función para filtrar incidencias por estado
+  filterByStatus(): void {
+    if (this.selectedStatus) {
+      this.incidences = this.originalIncidences.filter(incident => incident.status === this.selectedStatus);
+    } else {
+      this.incidences = this.originalIncidences.slice(); // Restaurar la lista original
+    }
+  }
+
+  getDocumentStatusClass(status: string): string {
+    return status === 'completed' ? 'bg-green-200' : 'bg-red-200';
+  }
+
+  countIncidentStatus(): void {
+    this.pending = this.incidences.filter(incident => incident.status === 'pending').length;
+    this.completed = this.incidences.filter(incident => incident.status === 'completed').length;
+  }
+
+  toggleCompletion(incident: any): void {
+    // Cambiar el estado de la incidencia entre completada y pendiente
+    if (incident.status === 'completed') {
+      incident.status = 'pending';
+    } else {
+      incident.status = 'completed';
+    }
+
+    // Llamar al servicio API para actualizar el estado de la incidencia
+    this.apiService.updateIncidentStatus(incident.id, incident.status)
+      .subscribe(
+        (updatedIncident: any) => {
+          console.log('Estado de incidencia actualizado:', updatedIncident);
+          this.getIncidents(); // Recargar los datos después de cambiar el estado
+        },
+        (error) => {
+          console.error('Error al actualizar el estado de la incidencia:', error);
+        }
+      );
   }
 }
