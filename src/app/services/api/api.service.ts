@@ -92,6 +92,9 @@ export class ApiService {
   getDocumentsByEmployeeId(employeeId: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/documents/${employeeId}`);
   }
+  getMyDocuments(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/my-documents`);
+  }
 
   //Schedule
   addSchedule(employeeId: number, scheduleData: any) {
@@ -114,6 +117,10 @@ export class ApiService {
     return this.http.get<any>(`${this.apiUrl}/events/${id}`);
   }
 
+  updateEvent(eventId: number, eventData: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/events/${eventId}`, eventData);
+
+  }
 
   //Incidents
 
