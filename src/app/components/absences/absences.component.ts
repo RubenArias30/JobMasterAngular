@@ -9,8 +9,11 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./absences.component.css']
 })
 export class AbsencesComponent {
+  absences: any[] = [];
   employees: any[] = []; // Add this line
   ausenciaForm: FormGroup = this.formBuilder.group({});
+  dropdownStates: { [key: string]: boolean } = {};
+  currentOpenDropdown: number | null = null;
 
   constructor(private apiService: ApiService, private formBuilder: FormBuilder)  {
 
@@ -27,12 +30,26 @@ export class AbsencesComponent {
 
   }
 
+  // ngOnInit(): void {
+  //   this.apiService.getEmployees().subscribe((employees) => {
+  //     this.employees = employees;
+
+  //     });
+
+
+
+  // }
+
   ngOnInit(): void {
+    // Fetch absences
+    this.apiService.getAusencias().subscribe((absences) => {
+      this.absences = absences;
+    });
+
+    // Fetch employees
     this.apiService.getEmployees().subscribe((employees) => {
       this.employees = employees;
-
-      });
-
+    });
   }
   validateStartDate(control: FormControl): { [key: string]: any } | null {
     const selectedDate = new Date(control.value);
@@ -67,6 +84,34 @@ export class AbsencesComponent {
 
   closeModal() {
     this.showModal = false;
+  }
+ toggleDropdown(id: number) {
+  if (this.currentOpenDropdown === id) {
+    this.currentOpenDropdown = null; // Close the dropdown if it's already open
+  } else {
+    this.currentOpenDropdown = id; // Open the clicked dropdown
+  }
+}
+
+  // Method to check if a dropdown is open
+  isDropdownOpen(id: number): boolean {
+    return this.currentOpenDropdown === id;
+  }
+
+
+  editAbsence(absenceId: string): void {
+    // Handle edit action here
+    console.log('Editing absence with ID:', absenceId);
+  }
+
+  viewAbsence(absenceId: string): void {
+    // Handle view action here
+    console.log('Viewing absence with ID:', absenceId);
+  }
+
+  deleteAbsence(absenceId: string): void {
+    // Handle delete action here
+    console.log('Deleting absence with ID:', absenceId);
   }
 
   onSubmit(): void {
