@@ -1,7 +1,11 @@
 import { Component,OnInit  } from '@angular/core';
+import { ViewChild } from '@angular/core';
 import { ApiService } from 'src/app/services/api/api.service';
+import { SuccessAlertComponent } from 'src/app/success-alert/success-alert.component';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DeleteConfirmationModalComponent } from 'src/app/delete-confirmation-modal/delete-confirmation-modal.component';
+
 
 @Component({
   selector: 'app-absences',
@@ -14,8 +18,14 @@ export class AbsencesComponent {
   ausenciaForm: FormGroup = this.formBuilder.group({});
   dropdownStates: { [key: string]: boolean } = {};
   currentOpenDropdown: number | null = null;
+  @ViewChild('deleteConfirmation') deleteConfirmation!: DeleteConfirmationModalComponent;
+  // showDeleteConfirmationModal = false;
+  showDeleteConfirmationModal = false;
+  absenceIdToDelete: string | null = null;
+  deleteSuccess: boolean = false;
 
-  constructor(private apiService: ApiService, private formBuilder: FormBuilder)  {
+
+  constructor(private apiService: ApiService, private formBuilder: FormBuilder,private router : Router)  {
 
     this.ausenciaForm = this.formBuilder.group({
       // name: ['', Validators.required],
@@ -109,10 +119,35 @@ export class AbsencesComponent {
     console.log('Viewing absence with ID:', absenceId);
   }
 
-  deleteAbsence(absenceId: string): void {
-    // Handle delete action here
-    console.log('Deleting absence with ID:', absenceId);
+//  deleteAbsence(absenceId: string): void {
+//     this.apiService.deleteAbsence(absenceId).subscribe(() => {
+//       // Update the absences array after deletion
+//       this.absences = this.absences.filter((absence) => absence.id !== absenceId);
+//     });
+//   }
+deleteAbsence(absenceId: string): void {
+  // Set the flag to show the delete confirmation modal
+  this.showDeleteConfirmationModal = true; // Change here
+
+  // Pass the absence ID to a variable to be used for deletion upon confirmation
+  this.absenceIdToDelete = absenceId;
+}
+
+performDelete(): void {
+  if (this.absenceIdToDelete) {
+    this.apiService.deleteAbsence(this.absenceIdToDelete).subscribe(() => {
+      // Update the absences array after deletion
+      this.absences = this.absences.filter((absence) => absence.id !== this.absenceIdToDelete);
+
+      // Reset the absenceIdToDelete and close the confirmation modal
+      this.absenceIdToDelete = null;
+      this.showDeleteConfirmationModal = false;
+
+      // Set the flag for successful deletion
+      this.deleteSuccess = true;
+    });
   }
+}
 
   onSubmit(): void {
     // Log the form data before submitting
@@ -122,6 +157,8 @@ export class AbsencesComponent {
     this.apiService.addAbsence(this.ausenciaForm.value).subscribe({
       next: (response) => {
         console.log('Response from server:', response);
+        this.router.navigate(['/absences']);
+
         // Optionally handle the response here
       },
       error: (error) => {

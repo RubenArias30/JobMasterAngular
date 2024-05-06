@@ -167,6 +167,10 @@ addAbsence(formData: any): Observable<any> {
 
   return this.http.post<any>(`${this.apiUrl}/absences`, formData);
 }
+deleteAbsence(absenceId: string): Observable<any> {
+  return this.http.delete<any>(`${this.apiUrl}/absences/${absenceId}`);
+}
+
 
 
 //MiPerfil (EMPLOYEE)

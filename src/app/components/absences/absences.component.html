@@ -224,7 +224,7 @@
                   </div>
                 </div>
               </td>
-                          </tr>
+            </tr>
           </ng-container>
           <ng-template #noAbsences>
             <tr>
@@ -235,13 +235,19 @@
           </ng-template>
         </tbody>
       </table>
-      <ng-template #noAbsences>
-        <tr>
-          <td colspan="6" class="px-6 py-8 text-center text-gray-500">
-            No Hay Ausencias
-          </td>
-        </tr>
-      </ng-template>
+
     </div>
   </div>
 </div>
+<!-- Success alert using SuccessAlertComponent -->
+<app-success-alert [show]="deleteSuccess" message="Deletion was successful."></app-success-alert>
+
+<app-delete-confirmation-modal
+  [showConfirmationModal]="showDeleteConfirmationModal"
+  (closeModalEvent)="showDeleteConfirmationModal = false"
+  (confirmDelete)="performDelete()">
+</app-delete-confirmation-modal>
+
+
+
+

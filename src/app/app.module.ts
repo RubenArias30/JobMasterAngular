@@ -32,6 +32,8 @@ import { AttendancesComponent } from './components/attendances/attendances.compo
 import { AbsencesComponent } from './components/absences/absences.component';
 import { AddAbsencesComponent } from './components/absences/add-absences/add-absences.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { DeleteConfirmationModalComponent } from './delete-confirmation-modal/delete-confirmation-modal.component';
+import { SuccessAlertComponent } from './success-alert/success-alert.component';
 
 
 @NgModule({
@@ -73,6 +75,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     AbsencesComponent,
     AddAbsencesComponent,
     ProfileComponent,
+    DeleteConfirmationModalComponent,
+    SuccessAlertComponent,
 
 
   ],
