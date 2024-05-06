@@ -7,7 +7,7 @@ import { ApiService } from 'src/app/services/api/api.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit{
-profileData: any; // Objeto para almacenar los datos del perfil del empleado
+  profileData: any = {}; // Objeto para almacenar los datos del perfil del empleado
 
   constructor(private apiService: ApiService) { } // Inyecta el servicio ApiService
 
@@ -15,6 +15,8 @@ profileData: any; // Objeto para almacenar los datos del perfil del empleado
     // Llama al método en el servicio para obtener los datos del perfil del empleado
     this.apiService.getProfile().subscribe(
       (data: any) => {
+        console.log('Datos del perfil recibidos:', data); // Verifica los datos recibidos
+
         this.profileData = data; // Asigna los datos del perfil obtenidos del servidor al objeto profileData
       },
       (error: any) => {

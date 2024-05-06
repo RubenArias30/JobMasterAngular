@@ -1,19 +1,17 @@
 <!-- Contenedor principal -->
 <div class="bg-white p-8 rounded-xl shadow-lg mx-4 my-8">
   <!-- Título -->
-  <h1 class="text-2xl font-bold mb-4">Nombre del empleado</h1>
-
+  <h1 class="text-2xl font-bold mb-4">{{ profileData.name }} {{ profileData.surname }}</h1>
 
   <!-- Div redondeado con icono de usuario -->
   <div class="flex items-center mb-6">
     <hr class="my-2 w-full border-t-2 border-gray-400">
   </div>
 
-
   <!-- Detalles de la foto -->
   <div class="flex items-center mb-6">
     <div class="rounded-full bg-gray-300 p-4 mr-4">
-      <i class='bx bxs-user text-4xl'></i> <!-- Icono de usuario de Boxicons -->
+      <img src="{{ profileData.photo }}" alt="Foto del empleado" class="rounded-full bg-gray-300 p-4 mr-4">
     </div>
     <div>
       <p class="text-sm font-semibold">Detalles del perfil</p>
@@ -21,64 +19,50 @@
     </div>
   </div>
 
-
   <!-- Detalles del perfil -->
   <div class="grid grid-cols-3 gap-4 mb-6">
     <div>
       <p class="font-bold text-lg">NOMBRE</p>
-      <p>Nombre del trabajador</p>
+      <p>{{ profileData.name }}</p>
     </div>
     <div>
       <p class="font-bold text-lg">APELLIDO</p>
-      <p>Apellido del trabajador</p>
+      <p>{{ profileData.surname }}</p>
     </div>
     <div>
       <p class="font-bold text-lg">NIF</p>
-      <p>NIF correspondiente</p>
+      <p>{{ profileData.users?.nif }}</p>
     </div>
     <div>
       <p class="font-bold text-lg">NACIONALIDAD</p>
-      <p>Nacionalidad del trabajador</p>
+      <p>{{ profileData.country }}</p>
     </div>
     <div>
       <p class="font-bold text-lg">GÉNERO</p>
-      <p>Género del trabajador</p>
+      <p>{{ profileData.gender }}</p>
     </div>
     <div></div> <!-- Placeholder para mantener la estructura de 3x3 -->
   </div>
 
-
   <hr class="my-4 w-full border-t-2 border-gray-400">
-
 
   <!-- Detalles de contacto -->
   <h2 class="text-lg font-semibold mb-2">Detalles de contacto</h2>
   <div class="grid grid-cols-3 gap-4">
     <div>
       <p class="font-bold text-lg">EMAIL</p>
-      <p>Email del trabajador</p>
+      <p>{{ profileData.email }}</p>
     </div>
     <div>
       <p class="font-bold text-lg">TELÉFONO</p>
-      <p>Teléfono del trabajador</p>
+      <p>{{ profileData.telephone }}</p>
     </div>
     <div>
       <p class="font-bold text-lg">DIRECCIÓN</p>
-      <p>Dirección del trabajador</p>
+      <p>{{ profileData.addresses?.street }}, {{ profileData.addresses?.postal_code }}, {{ profileData.addresses?.city }}</p>
     </div>
     <div></div> <!-- Placeholder para mantener la estructura de 3x3 -->
     <div></div> <!-- Placeholder para mantener la estructura de 3x3 -->
     <div></div> <!-- Placeholder para mantener la estructura de 3x3 -->
   </div>
-
-
-  <div *ngIf="profileData">
-    <h2>Perfil del empleado</h2>
-    <p><strong>Nombre:</strong> {{ profileData.name }}</p>
-    <p><strong>Apellido:</strong> {{ profileData.surname }}</p>
-    <p><strong>Email:</strong> {{ profileData.email }}</p>
-    <p><strong>NIF:</strong> {{ profileData.nif }}</p>
-    <p><strong>STREET:</strong> {{ profileData.street }}</p>
-
-    <!-- Agrega más campos según sea necesario -->
-  </div>
+</div>
