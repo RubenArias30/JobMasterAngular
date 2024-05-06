@@ -34,6 +34,9 @@ import { AddAbsencesComponent } from './components/absences/add-absences/add-abs
 import { ProfileComponent } from './components/profile/profile.component';
 import { DeleteConfirmationModalComponent } from './delete-confirmation-modal/delete-confirmation-modal.component';
 import { SuccessAlertComponent } from './success-alert/success-alert.component';
+import { ViewDocumentsComponent } from './components/documents/view-documents/view-documents.component';
+
+
 
 
 @NgModule({
@@ -77,6 +80,9 @@ import { SuccessAlertComponent } from './success-alert/success-alert.component';
     ProfileComponent,
     DeleteConfirmationModalComponent,
     SuccessAlertComponent,
+    ViewDocumentsComponent
+
+
 
 
   ],
