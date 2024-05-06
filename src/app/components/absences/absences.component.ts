@@ -1,4 +1,5 @@
-import { Component,OnInit  } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import {  ElementRef } from '@angular/core'; // Import ElementRef
 import { ViewChild } from '@angular/core';
 import { ApiService } from 'src/app/services/api/api.service';
 import { SuccessAlertComponent } from 'src/app/success-alert/success-alert.component';
@@ -12,7 +13,7 @@ import { DeleteConfirmationModalComponent } from 'src/app/delete-confirmation-mo
   templateUrl: './absences.component.html',
   styleUrls: ['./absences.component.css']
 })
-export class AbsencesComponent {
+export class AbsencesComponent implements OnInit, OnDestroy {
   absences: any[] = [];
   employees: any[] = []; // Add this line
   ausenciaForm: FormGroup = this.formBuilder.group({});
@@ -25,7 +26,7 @@ export class AbsencesComponent {
   deleteSuccess: boolean = false;
 
 
-  constructor(private apiService: ApiService, private formBuilder: FormBuilder,private router : Router)  {
+  constructor(private apiService: ApiService, private formBuilder: FormBuilder,private router : Router,private elementRef: ElementRef)  {
 
     this.ausenciaForm = this.formBuilder.group({
       // name: ['', Validators.required],
@@ -60,7 +61,21 @@ export class AbsencesComponent {
     this.apiService.getEmployees().subscribe((employees) => {
       this.employees = employees;
     });
+    // Add document click event listener
+    document.addEventListener('click', this.onDocumentClick);
   }
+  ngOnDestroy(): void {
+    // Remove document click event listener when component is destroyed
+    document.removeEventListener('click', this.onDocumentClick);
+  }
+
+  onDocumentClick = (event: MouseEvent) => {
+    // Check if the clicked element is outside the dropdown
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      // Close the dropdown if it's open
+      this.currentOpenDropdown = null;
+    }
+  };
   validateStartDate(control: FormControl): { [key: string]: any } | null {
     const selectedDate = new Date(control.value);
     const currentDate = new Date();
@@ -109,6 +124,8 @@ export class AbsencesComponent {
   }
 
 
+
+
   editAbsence(absenceId: string): void {
     // Handle edit action here
     console.log('Editing absence with ID:', absenceId);
@@ -131,6 +148,7 @@ deleteAbsence(absenceId: string): void {
 
   // Pass the absence ID to a variable to be used for deletion upon confirmation
   this.absenceIdToDelete = absenceId;
+
 }
 
 performDelete(): void {
@@ -145,6 +163,11 @@ performDelete(): void {
 
       // Set the flag for successful deletion
       this.deleteSuccess = true;
+      setTimeout(() => {
+        this.deleteSuccess = false;
+      }, 3000); // Reset after 2 seconds
+
+
     });
   }
 }

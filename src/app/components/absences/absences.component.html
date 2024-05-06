@@ -152,7 +152,7 @@
         <thead class="bg-gray-50">
           <tr>
             <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-              ID
+              FOTO
             </th>
             <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
               NOMBRE
@@ -176,7 +176,10 @@
         <tbody class="bg-white divide-y divide-gray-200">
           <ng-container *ngIf="absences.length > 0; else noAbsences">
             <tr class="transition-all hover:bg-gray-100 hover:shadow-lg" *ngFor="let absence of absences">
-              <td class="px-6 py-4 whitespace-nowrap">{{ absence.id }}</td>
+              <!-- <td class="px-6 py-4 whitespace-nowrap">{{ absence.id }}</td> -->
+              <td class="px-6 py-4 whitespace-nowrap">
+                <img src="{{ absence.employee.photo }}" alt="Employee Photo" class="w-10 h-10 rounded-full">
+              </td>
               <td class="px-6 py-4 whitespace-nowrap">{{ absence.employee.name }} {{ absence.employee.surname }}</td>
               <td class="px-6 py-4 whitespace-nowrap">{{ absence.type_absence }}</td>
               <td class="px-6 py-4 whitespace-nowrap">{{ absence.start_date }}</td>
@@ -239,14 +242,15 @@
     </div>
   </div>
 </div>
-<!-- Success alert using SuccessAlertComponent -->
-<app-success-alert [show]="deleteSuccess" message="Deletion was successful."></app-success-alert>
-
 <app-delete-confirmation-modal
   [showConfirmationModal]="showDeleteConfirmationModal"
   (closeModalEvent)="showDeleteConfirmationModal = false"
   (confirmDelete)="performDelete()">
 </app-delete-confirmation-modal>
+
+<app-success-alert *ngIf="deleteSuccess" message="La ausencia ha sido eliminada correctamente"></app-success-alert>
+
+
 
 
 
