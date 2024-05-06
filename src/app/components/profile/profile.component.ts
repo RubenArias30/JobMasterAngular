@@ -7,7 +7,7 @@ import { ApiService } from 'src/app/services/api/api.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit{
-  profileData: any; // Objeto para almacenar los datos del perfil del empleado
+profileData: any; // Objeto para almacenar los datos del perfil del empleado
 
   constructor(private apiService: ApiService) { } // Inyecta el servicio ApiService
 

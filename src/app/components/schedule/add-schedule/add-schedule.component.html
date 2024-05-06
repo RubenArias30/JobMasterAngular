@@ -8,7 +8,7 @@
     <div class="w-full md:w-1/4 px-4 md:pl-8">
       <div class="bg-white p-5 rounded-lg shadow">
         <h2 class="text-lg font-bold mb-4">Agregar Turno</h2>
-        <form [formGroup]="form" (submit)="agregarHorario()">
+        <form [formGroup]="form" (submit)="guardarHorario()">
           <div class="mb-4">
             <label for="title" class="block text-sm font-bold mb-1">Título:</label>
             <input type="text"
@@ -48,7 +48,8 @@
               class="text-red-500 mb-2">La fecha/hora de inicio debe ser anterior a la fecha/hora de fin.</div>
           </div>
           <div class="flex justify-center">
-            <button type="submit" class="bg-green-400 hover:bg-green-500 text-white py-2 px-4 rounded">Agregar</button>
+            <button type="submit" class="bg-green-400 hover:bg-green-500 text-white py-2 px-4 rounded" *ngIf="showAddButton" (click)="agregarHorario()">Guardar</button>
+            <button type="submit" class="bg-blue-400 hover:bg-blue-500 text-white py-2 px-4 rounded" *ngIf="!showAddButton" (click)="actualizarEvento()">Editar</button>
           </div>
           <div *ngIf="showErrorField" class="text-red-500 mt-2 text-center">
             Por favor, completa todos los campos obligatorios.
