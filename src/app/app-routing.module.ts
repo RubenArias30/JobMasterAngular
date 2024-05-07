@@ -22,9 +22,10 @@ import { AddIncidentsComponent } from './components/incidents/add-incidents/add-
 import { HistoryIncidentsComponent } from './components/incidents/history-incidents/history-incidents.component';
 import { AttendancesComponent } from './components/attendances/attendances.component';
 import { AbsencesComponent } from './components/absences/absences.component';
-import { AddAbsencesComponent } from './components/absences/add-absences/add-absences.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ViewDocumentsComponent } from './components/documents/view-documents/view-documents.component';
+import { AddAbsencesComponent } from './components/absences/add-absences/add-absences.component';
+
 
 
 
@@ -51,7 +52,9 @@ const routes: Routes = [
   canActivate:[MyGuardGuard],data: { roles: ['admin'] },
   children: [
     { path: '', component: AbsencesComponent },
-     { path: 'add-absences', component: AddAbsencesComponent },
+
+    { path: 'add-absence', component: AddAbsencesComponent }
+    //  { path: 'edit-absences', component: EditAbsenceComponent },
     // { path: 'edit_employee/:id', component: EditEmployeeComponent }
 
   ]

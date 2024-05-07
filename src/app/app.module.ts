@@ -39,6 +39,7 @@ import { ViewDocumentsComponent } from './components/documents/view-documents/vi
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,7 +81,8 @@ import { ViewDocumentsComponent } from './components/documents/view-documents/vi
     ProfileComponent,
     DeleteConfirmationModalComponent,
     SuccessAlertComponent,
-    ViewDocumentsComponent
+    ViewDocumentsComponent,
+
 
 
 
