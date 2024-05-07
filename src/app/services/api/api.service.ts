@@ -118,6 +118,12 @@ export class ApiService {
 
   }
 
+  //schedule employees
+  getEmployeeSchedule(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/employees/events`);
+  }
+
+
   //Incidents
   getAllIncidents() {
     return this.http.get<any[]>(`${this.apiUrl}/all_incidents`);

@@ -1,21 +1,41 @@
 <div class="container mx-auto">
-<div class="flex items-center justify-between">
+  <div class="flex items-center justify-between">
     <h1 class="text-3xl font-bold mt-8 mb-4">Documentos de {{ employeeName }}</h1>
 
-    <div class="flex ml-auto mr-8"> <!-- Increased mr-8 for more right space -->
-      <button routerLink="/documents/" class="flex items-center bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-lg mr-2">
+
+    <div class="flex ml-auto mr-8">
+      <button routerLink="/documents/"
+        class="flex items-center bg-gray-200 hover:bg-green-400 px-2 py-1 rounded-lg mr-2">
         <i class='bx bxs-left-arrow-circle'></i>
         <span class="ml-1">Volver</span>
       </button>
-      <button [routerLink]="['/documents/add_document', employeeId]" class="flex items-center bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-lg mr-2">
+      <button [routerLink]="['/documents/add_document', employeeId]"
+        class="flex items-center bg-gray-200 hover:bg-green-400 px-2 py-1 rounded-lg mr-2">
         <i class='bx bxs-file-plus text-xl'></i>
         <span class="ml-1">Añadir</span>
       </button>
+      <div class="relative">
+        <button class="flex items-center bg-gray-200 hover:bg-green-400 px-2 py-1 rounded-lg mr-2"
+          (click)="toggleDropdown()">
+          <i class='bx bx-filter text-xl'></i>
+          <span class="ml-1">Filtros</span>
+        </button>
+        <div *ngIf="showDropdown"
+          class="absolute bg-white border border-gray-300 rounded-lg mt-1 py-1 px-2 w-auto sm:w-48 z-10">
+          <button class="block px-2 py-1 text-sm text-gray-800 hover:bg-gray-200 w-full"
+            (click)="filterDocuments('all')">Ver Todos</button>
+          <button *ngFor="let documentType of documentTypes"
+            class="block px-2 py-1 text-sm text-gray-800 hover:bg-gray-200 w-full"
+            (click)="filterDocuments(documentType)">{{ documentType }}</button>
+        </div>
+
+      </div>
     </div>
   </div>
   <hr class="border border-black mb-4">
 
-  <div *ngIf="documents.length > 0; else noDocuments" class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto">
+  <div *ngIf="documents.length > 0; else noDocuments"
+    class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto">
     <table class="w-full">
       <thead>
         <tr class="bg-gray-200">
@@ -31,13 +51,13 @@
           <td class="text-center px-4 py-2">
             <!-- <button (click)="navigateToDocuments(employee)">
               </button> -->
-              <button>
-                <i class='bx bxs-file-pdf text-xl'></i>
-              </button>
-              <button (click)="deleteDocument(doc.id)">
-                <i class='bx bx-trash text-xl text-red-600'></i>
-              </button>
-              <!-- <button (click)="downloadAsPdf(doc.id)">
+            <button>
+              <i class='bx bxs-file-pdf text-xl'></i>
+            </button>
+            <button (click)="deleteDocument(doc.id)">
+              <i class='bx bx-trash text-xl text-red-600'></i>
+            </button>
+            <!-- <button (click)="downloadAsPdf(doc.id)">
                 <i class='bx bx-download text-xl text-blue-600'></i>
               </button> -->
           </td>
@@ -50,4 +70,6 @@
   <ng-template #noDocuments>
     <p class="text-lg">No hay documentos disponibles para este empleado.</p>
   </ng-template>
+
+
 </div>

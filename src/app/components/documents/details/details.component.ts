@@ -11,6 +11,9 @@ export class DetailsComponent implements OnInit {
   documents: any[] = [];
   employeeName: string = '';
   employeeId: number | undefined; // Inicializa como indefinido
+  showDropdown: boolean = false;
+  documentTypes: string[] = ['contracts', 'nif', 'curriculum', 'laboral_life', 'payroll', 'proof'];
+  selectedType: string = '';
 
   constructor(private router: Router, private apiService: ApiService, private route: ActivatedRoute) { }
 
@@ -28,20 +31,39 @@ export class DetailsComponent implements OnInit {
 
       this.getDocuments(this.employeeId);
     });
+    // Set selectedType to 'all' to display all documents by default
+    this.selectedType = 'all';
   }
 
+  // getDocuments(employeeId: number): void {
+  //   this.apiService.getDocumentsByEmployeeId(employeeId).subscribe(
+  //     (response: any[]) => {
+  //       console.log('Respuesta del servicio:', response);
+  //       this.documents = response;
+  //     },
+  //     (error) => {
+  //       console.error('Error al obtener la lista de documentos:', error);
+  //     }
+  //   );
+  // }
   getDocuments(employeeId: number): void {
     this.apiService.getDocumentsByEmployeeId(employeeId).subscribe(
       (response: any[]) => {
         console.log('Respuesta del servicio:', response);
-        this.documents = response;
+
+        // Check if "Ver Todos" is selected
+        if (this.selectedType === 'all') {
+          this.documents = response; // Assign all documents
+        } else {
+          // Apply filter if a type is selected
+          this.documents = response.filter(document => document.type_documents === this.selectedType);
+        }
       },
       (error) => {
         console.error('Error al obtener la lista de documentos:', error);
       }
     );
   }
-
 
   getEmployeeName(employeeId: number): void {
     this.apiService.getEmployeeDetails(employeeId).subscribe(
@@ -53,6 +75,25 @@ export class DetailsComponent implements OnInit {
         console.error('Error al obtener el nombre del empleado:', error);
       }
     );
+  }
+  toggleDropdown(): void {
+    this.showDropdown = !this.showDropdown;
+  }
+
+  filterDocuments(documentType: string): void {
+    // Update the selected type
+    this.selectedType = documentType;
+
+    // Ensure employeeId is defined before fetching documents
+    if (this.employeeId !== undefined) {
+      // Reload documents
+      this.getDocuments(this.employeeId);
+    } else {
+      console.error("Employee ID is undefined.");
+    }
+
+    // Close the dropdown after selection
+    this.showDropdown = false;
   }
 
   deleteDocument(documentId: number): void {
