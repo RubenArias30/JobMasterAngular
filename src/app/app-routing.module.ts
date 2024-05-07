@@ -25,6 +25,9 @@ import { AbsencesComponent } from './components/absences/absences.component';
 import { AddAbsencesComponent } from './components/absences/add-absences/add-absences.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ViewDocumentsComponent } from './components/documents/view-documents/view-documents.component';
+import { RequestResetComponent } from './components/password/request-reset/request-reset.component';
+import { ResponseResetComponent } from './components/password/response-reset/response-reset.component';
+import { ViewScheduleComponent } from './components/schedule/view-schedule/view-schedule.component';
 
 
 
@@ -113,6 +116,16 @@ const routes: Routes = [
     ]
   },
 
+  {
+    path: 'request-password-reset',
+    component: RequestResetComponent,
+
+  },
+  {
+    path: 'response-password-reset',
+    component: ResponseResetComponent,
+
+  },
 
 
 {
