@@ -13,25 +13,21 @@ export class ApiService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  ///Login
+  //Login
   login(nif: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, { nif, password })
-
-    // .pipe(
-    //   tap(response => {
-    //     console.log(response)
-    //     // Si la autenticación es exitosa, guarda el token JWT en el servicio de autenticación
-    //     this.authService.setToken(response.access_token);
-    //     this.authService.setUserRole(response.roles);
-
-    //   }),
-    //   catchError(error => {
-    //     return throwError(error); // Maneja el error en el componente que llama a este método
-    //   })
-    // );
   }
   getLoggedInUserName(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/me`);
+  }
+
+  //Reset Password
+  sendPasswordLink(data: any){
+    return this.http.post(`${this.apiUrl}/sendPasswordResetLink`, data);
+  }
+  changedPassword(data: any){
+    console.log(data)
+    return this.http.post(`${this.apiUrl}/resetPassword`, data);
   }
 
   //Employees
@@ -122,20 +118,23 @@ export class ApiService {
 
   }
 
-  //Incidents
+  //schedule employees
+  getEmployeeSchedule(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/employees/events`);
+  }
 
+
+  //Incidents
   getAllIncidents() {
     return this.http.get<any[]>(`${this.apiUrl}/all_incidents`);
   }
-
   getIncidents(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/incidents`);
   }
   getIncidentsByEmployeeId(employeeId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/incidents/${employeeId}`);
   }
-
-   addIncident(incidentData: any): Observable<any> {
+  addIncident(incidentData: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/incidents`, incidentData);
   }
 
@@ -147,20 +146,20 @@ export class ApiService {
     return this.http.put<any>(`${this.apiUrl}/incidents/${incidentId}/status`, { status });
   }
 
-//Attendances
-registerEntry(): Observable<any> {
-  return this.http.post<any>(`${this.apiUrl}/attendances/entry`, {});
-}
+  //Attendances
+  registerEntry(): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/attendances/entry`, {});
+  }
 
-registerExit(): Observable<any> {
-  return this.http.post<any>(`${this.apiUrl}/attendances/exit`, {});
-}
-getStartTime() {
-  return this.http.get(`${this.apiUrl}/attendance/start-time`);
-}
-checkActiveEntry(userId: string) {
-  return this.http.get<boolean>(`${this.apiUrl}/attendances/check-active-entry/${userId}`);
-}
+  registerExit(): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/attendances/exit`, {});
+  }
+  getStartTime() {
+    return this.http.get(`${this.apiUrl}/attendance/start-time`);
+  }
+  checkActiveEntry(userId: string) {
+    return this.http.get<boolean>(`${this.apiUrl}/attendances/check-active-entry/${userId}`);
+  }
 
 
 
@@ -190,10 +189,13 @@ getAbsencesByType(type: string): Observable<any[]> {
   return this.http.get<any[]>(`${this.apiUrl}/absences?type=${type}`);
 }
 
-//MiPerfil (EMPLOYEE)
-getProfile(): Observable<any> {
-  return this.http.get<any>(`${this.apiUrl}/profile`);
-}
+
+
+
+  //MiPerfil (EMPLOYEE)
+  getProfile(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/profile`);
+  }
 
 
 }
