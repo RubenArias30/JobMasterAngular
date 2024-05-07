@@ -4,27 +4,39 @@
       <img class="mx-auto h-40 w-auto" src="assets/img/logo.webp" alt="Logo de Job Master">
       <h2 class="mt-10 text-center text-3xl font-semibold leading-9 tracking-tight text-gray-900">Nueva Contraseña</h2>
 
-      <form class="space-y-6 mt-8" #ResetPsswordForm=ngForm (ngSubmit)="onSubmit()">
+      <form [formGroup]="resetForm" (ngSubmit)="onSubmit()" class="space-y-6 mt-8">
         <div>
           <label for="email" class="block text-lg font-medium leading-6 text-gray-900">Email</label>
           <div class="mt-2">
-            <input id="email" name="email" type="text" placeholder="Introduce tu Email" required [(ngModel)]="form.email"
+            <input formControlName="email" id="email" name="email" type="email" placeholder="Introduce tu Email"
               class="block w-full rounded-md border-0 py-2 pl-2 text-lg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-lg sm:leading-6">
+            <div *ngIf="resetForm.get('email')?.errors?.['required'] && (resetForm.get('email')?.dirty || resetForm.get('email')?.touched)"
+              class="text-red-500 mt-2">Email es obligatorio.</div>
+            <div *ngIf="resetForm.get('email')?.errors?.['pattern'] && (resetForm.get('email')?.dirty || resetForm.get('email')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce un formato de correo electrónico válido.</div>
           </div>
         </div>
         <div>
           <label for="password" class="block text-lg font-medium leading-6 text-gray-900">Contraseña</label>
           <div class="mt-2">
-            <input id="password" name="password" type="password" placeholder="Nueva Contraseña" required [(ngModel)]="form.password"
+            <input formControlName="password" id="password" name="password" type="password" placeholder="Nueva Contraseña"
               class="block w-full rounded-md border-0 py-2 pl-2 text-lg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-lg sm:leading-6">
+            <div *ngIf="resetForm.get('password')?.errors?.['required'] && (resetForm.get('password')?.dirty || resetForm.get('password')?.touched)"
+              class="text-red-500 mt-2">Contraseña es obligatoria.</div>
+            <div *ngIf="resetForm.get('password')?.errors?.['invalidPassword'] && (resetForm.get('password')?.dirty || resetForm.get('password')?.touched)"
+              class="text-red-500 mt-2">La contraseña debe contener al menos 8 caracteres, incluyendo al menos una letra mayúscula, una minúscula y un número.</div>
           </div>
         </div>
 
         <div>
           <label for="password_confirmation" class="block text-lg font-medium leading-6 text-gray-900">Confirmar Contraseña</label>
           <div class="mt-2">
-            <input id="password_confirmation" name="password_confirmation" type="password" placeholder="Confirmar Contraseña" required [(ngModel)]="form.password_confirmation"
-              class="block w-full rounded-md border-0 py-2 pl-2 text-lg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-lg sm:leading-6">
+            <input formControlName="password_confirmation" id="password_confirmation" name="password_confirmation" type="password"
+              placeholder="Confirmar Contraseña" class="block w-full rounded-md border-0 py-2 pl-2 text-lg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-lg sm:leading-6">
+            <div *ngIf="resetForm.get('password_confirmation')?.errors?.['required'] && (resetForm.get('password_confirmation')?.dirty || resetForm.get('password_confirmation')?.touched)"
+              class="text-red-500 mt-2">La confirmación de la contraseña es obligatoria.</div>
+            <div *ngIf="resetForm.get('password_confirmation')?.errors?.['passwordMismatch'] && (resetForm.get('password_confirmation')?.dirty || resetForm.get('password_confirmation')?.touched)"
+              class="text-red-500 mt-2">Las contraseñas no coinciden.</div>
           </div>
         </div>
 

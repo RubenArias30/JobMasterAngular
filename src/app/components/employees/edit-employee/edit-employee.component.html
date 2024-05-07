@@ -214,6 +214,9 @@
     <div *ngIf="updateError" class="text-red-500 mt-2 text-center">
       Error al actualizar el empleado. Por favor, inténtalo de nuevo más tarde.
     </div>
+    <div *ngIf="errorMessage" class="text-red-500 mt-2 text-center">
+      {{ errorMessage }}
+    </div>
 
     <!-- Botón "Añadir Usuario" y "Cancelar"-->
     <div class="mt-8 mb-3 flex justify-center">

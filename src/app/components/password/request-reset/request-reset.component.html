@@ -7,12 +7,16 @@
         Se ha enviado un mensaje a tu correo electrónico para restablecer tu contraseña.
       </div>
 
-      <form class="space-y-6 mt-8" #RequestResetForm="ngForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="resetForm" (ngSubmit)="onSubmit()" class="space-y-6 mt-8">
         <div>
           <label for="email" class="block text-lg font-medium leading-6 text-gray-900">EMAIL</label>
           <div class="mt-2">
-            <input id="email" name="email" type="text" placeholder="Introduce tu Email" required [(ngModel)]="form.email"
+            <input formControlName="email" id="email" name="email" type="text" placeholder="Introduce tu Email"
               class="block w-full rounded-md border-0 py-2 pl-2 text-lg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-lg sm:leading-6">
+            <div *ngIf="resetForm.get('email')?.errors?.['required'] && (resetForm.get('email')?.dirty || resetForm.get('email')?.touched)"
+              class="text-red-500 mt-2">Email es obligatorio.</div>
+            <div *ngIf="resetForm.get('email')?.errors?.['pattern'] && (resetForm.get('email')?.dirty || resetForm.get('email')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce un formato de correo electrónico válido.</div>
           </div>
         </div>
 

@@ -14,17 +14,15 @@ export class EditEmployeeComponent implements OnInit {
   showError: boolean = false;
   employeeData: any;
   formModified: boolean = false;
-  updateError: boolean = false; // Variable para controlar si se produce un error al actualizar
-
+  updateError: boolean = false;
+  errorMessage: string = '';
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
     private apiService: ApiService
-
   ) {
-
     this.employeeForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
       surname: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
@@ -36,15 +34,20 @@ export class EditEmployeeComponent implements OnInit {
       street: ['', [Validators.required]],
       city: ['', [Validators.required, Validators.pattern('^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ ]+$')]],
       postal_code: ['', [Validators.required, Validators.minLength(5),Validators.pattern('^[0-9]+$')]],
-      nif: ['', [Validators.required, Validators.pattern('^(?=.*[XYZ0-9])[XYZ0-9][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$',)]],
+      nif: ['', [Validators.required, Validators.pattern('^(?=.*[XYZ0-9])[XYZ0-9][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$')]],
       photo: [null, [Validators.required, this.imageExtensionValidator]],
       password: ['', [Validators.required, this.passwordValidator]]
+    });
+
+    // Suscribirse a los cambios en el campo de NIF
+    this.employeeForm.get('nif')?.valueChanges.subscribe(() => {
+      // Al cambiar el valor del campo de NIF, ocultar el mensaje de error
+      this.errorMessage = '';
     });
   }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-
       const id = params.get('id');
       if (id !== null) {
         this.formModified = true;
@@ -67,7 +70,6 @@ export class EditEmployeeComponent implements OnInit {
         console.log('Datos del empleado:', this.employeeData);
 
         if (this.employeeData) {
-          // Cargar datos de la tabla 'addresses'
           const addressData = this.employeeData.addresses;
           console.log('Datos de dirección:', addressData);
           if (addressData) {
@@ -78,7 +80,6 @@ export class EditEmployeeComponent implements OnInit {
             });
           }
 
-          // Cargar datos de la tabla 'users'
           const userData = this.employeeData.users;
           console.log('Datos de usuario:', userData);
           if (userData) {
@@ -88,7 +89,6 @@ export class EditEmployeeComponent implements OnInit {
             });
           }
 
-          // Cargar datos de la tabla 'employees'
           this.employeeForm.patchValue({
             name: this.employeeData.name || '',
             surname: this.employeeData.surname || '',
@@ -109,44 +109,41 @@ export class EditEmployeeComponent implements OnInit {
     );
   }
 
-
-
   updateEmployee(): void {
     if (this.employeeId === null) {
       console.error('No se ha proporcionado un ID de empleado válido.');
       return;
     }
 
-      // Si el formulario es inválido, mostrar mensaje de error y salir
-  if (this.employeeForm.invalid) {
-    this.showError = true;
-    return;
-  }
-    // Si el formulario es válido, enviar los datos actualizados del empleado
+    if (this.employeeForm.invalid) {
+      this.showError = true;
+      return;
+    }
     this.apiService.updateEmployee(this.employeeId, this.employeeForm.value).subscribe(
-
       (response) => {
         console.log('Empleado actualizado exitosamente:', response);
         this.updateError = false;
-
-        this.router.navigate(['/employees']); // Redirigir a la lista de empleados después de la actualización
-
+        this.errorMessage = '';
+        this.router.navigate(['/employees']);
       },
       (error) => {
         console.error('Error al actualizar el empleado:', error);
+        if (error.status === 500) {
+          this.errorMessage = 'Ya existe un empleado con este NIF. Por favor, intente con otro NIF.';
+        } else {
+          this.errorMessage = 'Se produjo un error al actualizar el empleado. Por favor, inténtelo de nuevo más tarde.';
+        }
         this.updateError = true;
-
       }
     );
   }
 
   cancelEdit(): void {
     if (confirm('¿Estás seguro de cancelar la edición?')) {
-      // Si el usuario confirma la cancelación, redirige a la página de administración de empleados
       this.router.navigate(['/employees']);
     }
   }
-  // Función de validación personalizada para la extensión de imagen
+
   imageExtensionValidator(control: any) {
     if (control.value) {
       const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
@@ -157,9 +154,6 @@ export class EditEmployeeComponent implements OnInit {
     return null;
   }
 
-
-
-  // Función de validación personalizada para la contraseña
   passwordValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
     if (!passwordRegex.test(control.value)) {
@@ -168,20 +162,18 @@ export class EditEmployeeComponent implements OnInit {
     return null;
   }
 
-
-   // Función de validación personalizada para los campos name y surname
-   validateField(control: AbstractControl) {
-    const fieldPattern = /^[a-zA-Z\s]*$/; // Expresión regular para validar solo letras y espacios
+  validateField(control: AbstractControl) {
+    const fieldPattern = /^[a-zA-Z\s]*$/;
     if (fieldPattern.test(control.value)) {
-      return null; // La validación pasa
+      return null;
     } else {
-      return { 'invalidField': true }; // La validación falla
+      return { 'invalidField': true };
     }
   }
-   // Función de validación del número de teléfono
-   phoneNumberValidator(): Validators {
+
+  phoneNumberValidator(): Validators {
     return (control: AbstractControl): { [key: string]: any } | null => {
-      const phoneNumberRegex = /^[679]{1}[0-9]{8}$/; // Expresión regular para validar números de teléfono
+      const phoneNumberRegex = /^[679]{1}[0-9]{8}$/;
       if (control.value && !phoneNumberRegex.test(control.value)) {
         return { 'invalidPhoneNumber': true };
       }
@@ -189,25 +181,20 @@ export class EditEmployeeComponent implements OnInit {
     };
   }
 
-
-  // Función de validación personalizada para verificar la edad mínima y la fecha futura
   ageValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const dob = new Date(control.value);
     const today = new Date();
 
-    // Calcula la edad del empleado
     let age = today.getFullYear() - dob.getFullYear();
     const monthDiff = today.getMonth() - dob.getMonth();
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
       age--;
     }
 
-    // Verifica si la edad es menor de 18 años o si la fecha es en el futuro
     if (age < 18 || dob >= today) {
       return { 'invalidAgeOrDate': true };
     }
 
-    // Verifica si la fecha de nacimiento es anterior a 70 años desde hoy
     const maxAllowedDate = new Date(today.getFullYear() - 70, today.getMonth(), today.getDate());
     if (dob < maxAllowedDate) {
       return { 'invalidDateInThePast': true };
