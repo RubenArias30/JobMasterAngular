@@ -25,6 +25,7 @@ import { AbsencesComponent } from './components/absences/absences.component';
 import { AddAbsencesComponent } from './components/absences/add-absences/add-absences.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ViewDocumentsComponent } from './components/documents/view-documents/view-documents.component';
+import { ViewScheduleComponent } from './components/schedule/view-schedule/view-schedule.component';
 
 
 
@@ -113,13 +114,22 @@ const routes: Routes = [
     ]
   },
 
+  {
+    path: 'scheduleEmp',
+    component: LayoutComponent,
+    canActivate: [MyGuardGuard],
+    data: { roles: ['empleado'] },
+    children: [
+      { path: '', component: ViewScheduleComponent },
 
+    ]
+  },
 
 {
   path: 'schedule',
   component: LayoutComponent,
   canActivate: [MyGuardGuard],
-  data: { roles: ['admin'] },
+  data: { roles: ['admin']},
   children: [
     { path: '', component: ScheduleComponent },
     { path: 'add_schedule/:id', component: AddScheduleComponent },

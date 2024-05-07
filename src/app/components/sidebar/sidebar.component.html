@@ -83,12 +83,23 @@
         </a>
       </li>
 
-      <li *ngIf="userRole === 'empleado'">
-        <a href="/history_incidents"
+      <li *ngIf="userRole === 'admin'">
+        <a href="#"
           class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-custom-500">
           <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400 hover:text-green-500"
-            style="color: inherit;"><i class='bx bx-message-error'></i></span>
-          <span class="text-sm font-medium hover:custom-500">Incidencias</span>
+            style="color: inherit;"><i class='bx bx-cog'></i></span>
+
+
+          <span class="text-sm font-medium hover:custom-500">Configuración</span>
+        </a>
+      </li>
+
+      <li *ngIf="userRole === 'empleado'">
+        <a href="/scheduleEmp"
+          class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-custom-500">
+          <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400 hover:text-green-500"
+            style="color: inherit;"><i class='bx bxs-calendar'></i></span>
+          <span class="text-sm font-medium hover:custom-500">Horarios</span>
         </a>
       </li>
 
@@ -98,17 +109,6 @@
           <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400 hover:text-green-500"
             style="color: inherit;"><i class='bx bx-file'></i></span>
           <span class="text-sm font-medium hover:custom-500">Documentos</span>
-        </a>
-      </li>
-
-      <li *ngIf="userRole === 'admin'">
-        <a href="#"
-          class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-custom-500">
-          <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400 hover:text-green-500"
-            style="color: inherit;"><i class='bx bx-cog'></i></span>
-
-
-          <span class="text-sm font-medium hover:custom-500">Configuración</span>
         </a>
       </li>
 
@@ -122,7 +122,14 @@
           <span class="text-sm font-medium hover:custom-500">Fichaje</span>
         </a>
       </li>
-
+      <li *ngIf="userRole === 'empleado'">
+        <a href="/history_incidents"
+          class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-custom-500">
+          <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400 hover:text-green-500"
+            style="color: inherit;"><i class='bx bx-message-error'></i></span>
+          <span class="text-sm font-medium hover:custom-500">Incidencias</span>
+        </a>
+      </li>
       <li *ngIf="userRole === 'empleado'">
         <a href="/profile"
           class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-custom-500">
