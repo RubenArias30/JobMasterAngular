@@ -35,6 +35,8 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { DeleteConfirmationModalComponent } from './delete-confirmation-modal/delete-confirmation-modal.component';
 import { SuccessAlertComponent } from './success-alert/success-alert.component';
 import { ViewDocumentsComponent } from './components/documents/view-documents/view-documents.component';
+import { RequestResetComponent } from './components/password/request-reset/request-reset.component';
+import { ResponseResetComponent } from './components/password/response-reset/response-reset.component';
 
 
 
@@ -80,7 +82,9 @@ import { ViewDocumentsComponent } from './components/documents/view-documents/vi
     ProfileComponent,
     DeleteConfirmationModalComponent,
     SuccessAlertComponent,
-    ViewDocumentsComponent
+    ViewDocumentsComponent,
+    RequestResetComponent,
+    ResponseResetComponent
 
 
 
