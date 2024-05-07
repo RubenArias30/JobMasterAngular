@@ -59,7 +59,6 @@ export class LoginComponent implements OnInit {
         this.route.navigate(['/dashboard']);
       },
       (error: any) =>  {
-        // Manejo de error (NO FUNCIONA)
         if (error.status === 401) {
           this.mensaje = 'Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.';
         } else {

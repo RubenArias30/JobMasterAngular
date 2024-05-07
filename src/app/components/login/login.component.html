@@ -11,12 +11,6 @@
           <div *ngIf="login?.get('nif')?.invalid && (login?.get('nif')?.dirty || login?.get('nif')?.touched)"
           class="text-red-500 mt-2">Por favor, introduce un NIF válido.</div>
 
-          <!-- <div *ngIf="login.get('nif')?.errors?.['required'] && (login.get('nif')?.dirty || login.get('nif')?.touched)"
-          class="text-red-500 mt-2">El campo NIF es obligatorio.</div>
-
-        <div *ngIf="login.get('nif')?.errors?.['pattern'] && (login.get('nif')?.dirty || login.get('nif')?.touched)"
-          class="text-red-500 mt-2">Por favor, introduce un NIF válido.</div> -->
-
           <div class="mt-2">
             <input id="nif" name="nif" type="text" placeholder="Introduce tu NIF" formControlName="nif" appNifValidator
               required maxlength="9"
@@ -57,7 +51,7 @@
       </form>
 
       <div class="text-center mt-4">
-        <a href="#" class="text-lg text-gray-500 hover:text-gray-900">¿Olvidaste tu contraseña?</a>
+        <a routerLink="/request-password-reset" class="text-lg text-gray-500 hover:text-gray-900">¿Olvidaste tu contraseña?</a>
       </div>
     </div>
   </div>
