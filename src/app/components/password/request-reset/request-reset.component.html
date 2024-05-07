@@ -1,0 +1,29 @@
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 font-poppins">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="card bg-white shadow-md p-8 rounded-lg mt-8">
+      <img class="mx-auto h-40 w-auto" src="assets/img/logo.webp" alt="Logo de Job Master">
+      <h2 class="mt-10 text-center text-3xl font-semibold leading-9 tracking-tight text-gray-900">Recuperar Contraseña</h2>
+      <div *ngIf="sentMessage" class="mt-4 text-center text-green-600 font-semibold">
+        Se ha enviado un mensaje a tu correo electrónico para restablecer tu contraseña.
+      </div>
+
+      <form class="space-y-6 mt-8" #RequestResetForm="ngForm" (ngSubmit)="onSubmit()">
+        <div>
+          <label for="email" class="block text-lg font-medium leading-6 text-gray-900">EMAIL</label>
+          <div class="mt-2">
+            <input id="email" name="email" type="text" placeholder="Introduce tu Email" required [(ngModel)]="form.email"
+              class="block w-full rounded-md border-0 py-2 pl-2 text-lg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-lg sm:leading-6">
+          </div>
+        </div>
+
+        <button type="submit"
+          class="flex w-full justify-center rounded-md bg-green-400 px-4 py-2 text-lg font-semibold leading-6 text-black shadow-sm hover:bg-green-500 hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+          style="background-color: #92E3A9;">Enviar</button>
+      </form>
+
+      <button (click)="goBack()"
+        class="flex w-full justify-center rounded-md bg-gray-300 px-4 py-2 mt-4 text-lg font-semibold leading-6 text-black shadow-sm hover:bg-gray-400 hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+        style="background-color: #CCCCCC;">Volver atrás</button>
+    </div>
+  </div>
+</div>
