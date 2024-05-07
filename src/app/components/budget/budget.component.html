@@ -1,43 +1,61 @@
 <div class="container mx-auto mt-8">
-  <div class="flex items-center justify-between mb-4 ml-5"> <!-- Added ml-4 for left space -->
+  <div class="flex items-center justify-between mb-4 ml-5"> 
     <div class="flex items-center">
-        <h1 class="text-lg font-bold mr-2 sm:text-xl md:text-2xl lg:text-3xl">Presupuesto</h1> <!-- Changed text -->
+      <h1 class="text-lg font-bold mr-2 sm:text-xl md:text-2xl lg:text-3xl">Presupuesto</h1>
       <div class="border-l h-6 mr-2"></div>
-      <div class="text-sm text-gray-500">{{ invoices.length }} Presupuestos</div> <!-- Changed text -->
+      <div class="text-sm text-gray-500">{{ invoices.length }} Presupuestos</div>
     </div>
-    <div class="flex ml-auto mr-8"> <!-- Increased mr-8 for more right space -->
-      <button routerLink="/budget/generate_budget" class="flex items-center bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-lg mr-2"> <!-- Changed routerLink -->
+    <div class="flex ml-auto mr-8">
+      <button routerLink="/budget/generate_budget"
+        class="flex items-center bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-lg mr-2">
         <i class='bx bxs-user-plus text-xl'></i>
         <span class="ml-1">Añadir</span>
       </button>
-      <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-2 py-1 rounded-lg">
-        <i class='bx bx-filter text-xl'></i>
-        <span class="ml-1">Filtros</span>
-      </button>
+      <div class="relative">
+        <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-2 py-1 rounded-lg"
+          (click)="toggleDropdown()">
+          <i class='bx bx-filter text-xl'></i>
+          <span class="ml-1">{{ filterButtonText }}</span>
+        </button>
+        <div *ngIf="showDropdown"
+          class="absolute bg-white border border-gray-300 rounded-lg mt-1 py-1 px-2 w-auto sm:w-40 z-10 mr-2">
+
+          <button
+            class="block px-2 py-1 text-xs sm:text-sm md:text-base lg:text-lg text-gray-800 hover:bg-gray-200 w-full"
+            (click)="sortInvoices('default')">Mostrar todos</button>
+          <button
+            class="block px-2 py-1 text-xs sm:text-sm md:text-base lg:text-lg text-gray-800 hover:bg-gray-200 w-full"
+            (click)="sortInvoices('asc')">Ascendente</button>
+          <button
+            class="block px-2 py-1 text-xs sm:text-sm md:text-base lg:text-lg text-gray-800 hover:bg-gray-200 w-full"
+            (click)="sortInvoices('desc')">Descendente</button>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto"> <!-- Added overflow-x-auto for horizontal scrolling -->
+  <div class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto">
+    <!-- Added overflow-x-auto for horizontal scrolling -->
     <table class="w-full">
       <!-- Cabecera de la tabla -->
       <thead>
         <tr class="bg-gray-200">
-          <th class="text-center px-4 py-2">Cliente</th> <!-- Changed to text-center and px-4 class -->
-          <th class="text-center px-4 py-2">Compañia</th> <!-- Changed to text-center and px-4 class -->
-          <th class="text-center px-4 py-2">Subtotal</th> <!-- Changed to text-center and px-4 class -->
-          <th class="text-center px-4 py-2">Total</th> <!-- Changed to text-center and px-4 class -->
-          <th class="text-center px-4 py-2">Acción</th> <!-- Changed to text-center and px-4 class -->
+          <th class="text-center px-4 py-2">Cliente</th>
+          <th class="text-center px-4 py-2">Compañia</th>
+          <th class="text-center px-4 py-2">Subtotal</th>
+          <th class="text-center px-4 py-2">Total</th>
+          <th class="text-center px-4 py-2">Acción</th>
         </tr>
       </thead>
       <!-- Datos de los presupuestos -->
       <tbody>
         <tr *ngFor="let invoice of invoices" class="border-b border-gray-200">
-          <td class="text-center px-4 py-2">{{ invoice.clients.client_name }}</td> <!-- Changed to text-center and px-4 class -->
-          <td class="text-center px-4 py-2">{{ invoice.companies.company_name }}</td> <!-- Changed to text-center and px-4 class -->
-          <td class="text-center px-4 py-2">{{ invoice.subtotal }}€</td> <!-- Changed to text-center and px-4 class -->
-          <td class="text-center px-4 py-2">{{ invoice.total }}€</td> <!-- Changed to text-center and px-4 class -->
+          <td class="text-center px-4 py-2">{{ invoice.clients.client_name }}</td>
+          <td class="text-center px-4 py-2">{{ invoice.companies.company_name }}</td>
+          <td class="text-center px-4 py-2">{{ invoice.subtotal }}€</td>
+          <td class="text-center px-4 py-2">{{ invoice.total }}€</td>
           <td class="text-center px-4 py-2">
-            <a >
+            <a>
               <i class='bx bxs-file-pdf text-xl mr-2'></i>
             </a>
             <button (click)="confirmDeleteInvoice(invoice.id)">
