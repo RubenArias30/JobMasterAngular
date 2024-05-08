@@ -37,6 +37,8 @@ import { SuccessAlertComponent } from './success-alert/success-alert.component';
 import { ViewDocumentsComponent } from './components/documents/view-documents/view-documents.component';
 import { RequestResetComponent } from './components/password/request-reset/request-reset.component';
 import { ResponseResetComponent } from './components/password/response-reset/response-reset.component';
+import { ViewScheduleComponent } from './components/schedule/view-schedule/view-schedule.component';
+import { EditScheduleComponent } from './components/schedule/edit-schedule/edit-schedule.component';
 
 
 
@@ -85,7 +87,9 @@ import { ResponseResetComponent } from './components/password/response-reset/res
     SuccessAlertComponent,
     ViewDocumentsComponent,
     RequestResetComponent,
-    ResponseResetComponent
+    ResponseResetComponent,
+    ViewScheduleComponent,
+    EditScheduleComponent
 
 
 
