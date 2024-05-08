@@ -1,5 +1,5 @@
 <div class="container mx-auto mt-8">
-  <div class="flex items-center justify-between mb-4 ml-5"> 
+  <div class="flex items-center justify-between mb-4 ml-5">
     <div class="flex items-center">
       <h1 class="text-lg font-bold mr-2 sm:text-xl md:text-2xl lg:text-3xl">Presupuesto</h1>
       <div class="border-l h-6 mr-2"></div>
@@ -55,9 +55,11 @@
           <td class="text-center px-4 py-2">{{ invoice.subtotal }}€</td>
           <td class="text-center px-4 py-2">{{ invoice.total }}€</td>
           <td class="text-center px-4 py-2">
-            <a>
+            <a (click)="generatePDF(invoice)">
               <i class='bx bxs-file-pdf text-xl mr-2'></i>
             </a>
+
+
             <button (click)="confirmDeleteInvoice(invoice.id)">
               <i class='bx bx-trash text-xl text-red-600'></i>
             </button>
@@ -67,3 +69,4 @@
     </table>
   </div>
 </div>
+

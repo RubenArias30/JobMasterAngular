@@ -73,6 +73,7 @@ export class GenerateBudgetComponent implements OnInit {
     }
   }
 
+
   // Método para eliminar un concepto del FormArray
   removeConcept(index: number): void {
     this.concepts.removeAt(index);
@@ -197,4 +198,5 @@ export class GenerateBudgetComponent implements OnInit {
       return null;
     };
   }
+
 }
