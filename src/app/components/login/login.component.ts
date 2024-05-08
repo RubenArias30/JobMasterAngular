@@ -21,8 +21,7 @@ export class LoginComponent implements OnInit {
       ]),
       password: new FormControl('', [
         Validators.required,
-        Validators.minLength(8), // Mínimo 8 caracteres
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/) // Requisitos de contraseña
+
       ]),
     });
   }
@@ -38,7 +37,7 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     const nif = this.login.value.nif;
     const password = this.login.value.password;
-  
+
      // Verifica si los campos están vacíos
   if (!nif || !password) {
     this.mensaje = 'Por favor, completa todos los campos.';
@@ -46,7 +45,7 @@ export class LoginComponent implements OnInit {
   } else {
     this.mensaje = ''; // Vaciar el mensaje si ambos campos están llenos
   }
-  
+
     // Si el NIF y la contraseña son "admin", omitir la validación de la contraseña
     if (nif.toLowerCase() === 'admin' && password.toLowerCase() === 'admin') {
       // Llamada al servicio para autenticar al usuario
@@ -81,5 +80,5 @@ export class LoginComponent implements OnInit {
       );
     }
   }
-  
+
 }
