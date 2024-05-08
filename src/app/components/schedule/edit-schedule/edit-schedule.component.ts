@@ -9,10 +9,10 @@ import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'app-add-schedule',
-  templateUrl: './add-schedule.component.html',
-  styleUrls: ['./add-schedule.component.css']
+  templateUrl: './edit-schedule.component.html',
+  styleUrls: ['./edit-schedule.component.css']
 })
-export class AddScheduleComponent implements OnInit {
+export class EditScheduleComponent implements OnInit {
   @ViewChild('fullcalendar') fullcalendar: any;
   @Input() eventDetails: any;
 
@@ -60,6 +60,18 @@ export class AddScheduleComponent implements OnInit {
 
     return `${formattedHour}:${formattedMinute}`;
   }
+
+  formatDate(date: string | Date): string {
+    let formattedDate = '';
+    if (typeof date === 'string') {
+      const parsedDate = new Date(date);
+      formattedDate = `${parsedDate.getFullYear()}-${(parsedDate.getMonth() + 1).toString().padStart(2, '0')}-${parsedDate.getDate().toString().padStart(2, '0')}`;
+    } else {
+      formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+    }
+    return formattedDate;
+  }
+
   // Opciones del calendario
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
@@ -103,21 +115,45 @@ export class AddScheduleComponent implements OnInit {
     });
   }
 
+
   handleEventClick(info: any) {
-    console.log('ID del evento:', info.event.id);
+    if (info.event) {
+      console.log('ID del evento:', info.event.id);
 
-    // Almacena la información del evento seleccionado en una variable
-    this.selectedEvent = {
-      id: info.event.id,
-      title: info.event.title,
-      start: info.event.start,
-      end: info.event.end,
-      // employees_id : info.event.employees_id
-    };
+      // Almacena la información del evento seleccionado en una variable
+      this.selectedEvent = {
+        id: info.event.id,
+        title: info.event.title,
+        start: info.event.start,
+        end: info.event.end,
+      };
 
-    // Abre el modal
-    this.showModal = true;
+      // Abre el modal
+      this.showModal = true;
+    }
   }
+
+  openEditForm() {
+
+    // // Inicializa los campos del formulario con los datos del evento seleccionado
+    // this.form.patchValue({
+    //   title: this.selectedEvent.title,
+    //   fechaInicio: this.formatDate(this.selectedEvent.start),
+    //   horaInicio: this.formatTime(this.selectedEvent.start),
+    //   fechaFin: this.formatDate(this.selectedEvent.end),
+    //   horaFin: this.formatTime(this.selectedEvent.end)
+    // });
+
+     // Inicializar el formulario de edición con las fechas del evento seleccionado
+  this.form.patchValue({
+    title: this.selectedEvent.title,
+    startDate: this.selectedEvent.start,
+    endDate: this.selectedEvent.end
+  });
+    this.closeModal(); // Cerrar el modal
+    // Lógica para abrir el formulario de edición, por ejemplo, navegando a una nueva ruta
+  }
+
 
 
   // Función para mostrar el modal y pasar el evento seleccionado
@@ -187,75 +223,22 @@ export class AddScheduleComponent implements OnInit {
   }
 
   // Agregar un nuevo horario
-  agregarHorario() {
-    // Resetear los mensajes de error
-    this.showErrorField = false;
-    this.showError = false;
+  editarHorario() {
 
-    if (this.form.invalid) {
-      this.showErrorField = true;
-      return;
-    }
-
-    const scheduleData = {
-      title: this.form.get('title')?.value,
-      start_datetime: `${this.form.get('fechaInicio')?.value} ${this.form.get('horaInicio')?.value}`,
-      end_datetime: `${this.form.get('fechaFin')?.value} ${this.form.get('horaFin')?.value}`
-    };
-
-    // Enviar el horario al servidor
-    this.onSubmit(scheduleData);
-
-    // Limpiar el formulario después de agregar el horario
-    this.clearForm();
-
-    // Crear un nuevo evento para cada día dentro del rango especificado y agregarlo a la lista de eventos
-    const start = new Date(scheduleData.start_datetime);
-    const end = new Date(scheduleData.end_datetime);
-    if (start >= end) {
-      const temp = scheduleData.start_datetime;
-      scheduleData.start_datetime = scheduleData.end_datetime;
-      scheduleData.end_datetime = temp;
-    }
-
-    for (let currentDate = new Date(start); currentDate <= end; currentDate.setDate(currentDate.getDate() + 1)) {
-      const formattedDate = currentDate.toISOString().split('T')[0];
-      const nuevoEvento: EventInput = {
-        title: scheduleData.title,
-        start: `${formattedDate}T${scheduleData.start_datetime.split(' ')[1]}:00`,
-        end: `${formattedDate}T${scheduleData.end_datetime.split(' ')[1]}:00`
-      };
-
-      this.events.push(nuevoEvento); // Agregar evento a la lista
-      this.calendarOptions.events = this.events; // Actualizar los eventos en el calendario
-
-      // Actualizar el calendario localmente
-      const calendarApi = this.fullcalendar.getApi();
-      calendarApi.addEvent(nuevoEvento); // Agregar el nuevo evento al calendario
-
-    }
-
-    // Actualizar los eventos en el calendario después de agregar todos los eventos
-    this.calendarOptions.events = this.events;
-
-    // Limpiar el calendario y volver a cargar los eventos
-    const calendarApi = this.fullcalendar.getApi();
-    calendarApi.removeAllEvents();
-    calendarApi.addEventSource(this.events);
 
   }
 
 
   // Enviar el horario al servidor
   onSubmit(scheduleData: any) {
-    this.apiService.addSchedule(this.employeeId, scheduleData).subscribe(
-      response => {
-        console.log('Horario agregado correctamente:', response);
-      },
-      error => {
-        console.error('Error al agregar el horario:', error);
-      }
-    );
+    // this.apiService.addSchedule(this.employeeId, scheduleData).subscribe(
+    //   response => {
+    //     console.log('Horario agregado correctamente:', response);
+    //   },
+    //   error => {
+    //     console.error('Error al agregar el horario:', error);
+    //   }
+    // );
   }
 
 

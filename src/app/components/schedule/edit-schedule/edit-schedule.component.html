@@ -7,8 +7,8 @@
 
     <div class="w-full md:w-1/4 px-4 md:pl-8">
       <div class="bg-white p-5 rounded-lg shadow">
-        <h2 class="text-lg font-bold mb-4">Agregar Turno</h2>
-        <form [formGroup]="form" (submit)="agregarHorario()">
+        <h2 class="text-lg font-bold mb-4">Editar Turno</h2>
+        <form [formGroup]="form" (submit)="editarHorario()">
           <div class="mb-4">
             <label for="title" class="block text-sm font-bold mb-1">Título:</label>
             <input type="text"
@@ -48,10 +48,7 @@
               class="text-red-500 mb-2">La fecha/hora de inicio debe ser anterior a la fecha/hora de fin.</div>
           </div>
           <div class="flex justify-center">
-            <button type="submit" class="bg-green-400 hover:bg-green-500 text-white py-2 px-4 rounded"
-              >Agregar</button>
-            <!-- <button type="submit" class="bg-blue-400 hover:bg-blue-500 text-white py-2 px-4 rounded"
-              *ngIf="!showAddButton" (click)="actualizarEvento()">Editar</button> -->
+            <button type="submit" class="bg-green-400 hover:bg-green-500 text-white py-2 px-4 rounded">Guardar</button>
           </div>
           <div *ngIf="showErrorField" class="text-red-500 mt-2 text-center">
             Por favor, completa todos los campos obligatorios.
@@ -83,6 +80,8 @@
             </svg>
             <span class="sr-only">Close modal</span>
           </button>
+
+
         </div>
         <!-- Modal body -->
         <div class="p-4 md:p-5">
@@ -94,8 +93,11 @@
           <p>{{ selectedEvent?.end }}</p>
           <hr class="my-4">
           <div class="flex justify-center space-x-4 mt-4">
-
-
+            <button class="flex items-center bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg text-lg"
+              (click)="openEditForm()" *ngIf="selectedEvent">
+              <i class='bx bx-edit-alt'></i>
+              <span class="ml-2">Editar</span>
+            </button>
             <button class="flex items-center bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg text-lg"
               (click)="closeModal()">
               <i class='bx bx-x'></i>
