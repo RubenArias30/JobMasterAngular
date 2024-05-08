@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   login!: FormGroup;
   mensaje: string='';
   token: string | null = null;
+  mensajeCredenttial: string='';
 
   constructor(private authService: AuthService, private peticiones: ApiService, private route: Router) {
     this.login = new FormGroup({
@@ -38,7 +39,7 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     const nif = this.login.value.nif;
     const password = this.login.value.password;
-  
+
      // Verifica si los campos están vacíos
   if (!nif || !password) {
     this.mensaje = 'Por favor, completa todos los campos.';
@@ -46,7 +47,7 @@ export class LoginComponent implements OnInit {
   } else {
     this.mensaje = ''; // Vaciar el mensaje si ambos campos están llenos
   }
-  
+
     // Si el NIF y la contraseña son "admin", omitir la validación de la contraseña
     if (nif.toLowerCase() === 'admin' && password.toLowerCase() === 'admin') {
       // Llamada al servicio para autenticar al usuario
@@ -76,10 +77,10 @@ export class LoginComponent implements OnInit {
         },
         (error: any) => {
           // Manejo de error
-          this.mensaje = 'Credenciales incorrectas.';
+          this.mensajeCredenttial = 'Credenciales incorrectas.';
         }
       );
     }
   }
-  
+
 }
