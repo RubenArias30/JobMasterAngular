@@ -81,7 +81,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token', response.access_token);
           this.authService.setUserRole(response.roles);
           // Si la autenticación es exitosa, redirige al usuario a la página de dashboard
-          this.route.navigate(['/dashboard']);
+          this.route.navigate(['/dashboard-employee']);
         },
         (error: any) => {
           // Manejo de error

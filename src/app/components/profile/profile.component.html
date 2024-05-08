@@ -1,9 +1,9 @@
 <!-- Contenedor principal -->
 <div class="bg-white p-8 rounded-xl shadow-lg mx-4 my-8 flex items-start border border-black">
   <!-- Foto -->
-  <div class="rounded-full bg-gray-300 p-4 mr-4 border border-black">
-    <img src="{{ profileData.photo }}" alt="Foto del empleado" class="rounded-full bg-gray-300 p-4 mr-4" style="max-width: 100px;">
-  </div>
+  <div class="border-2 border-black rounded-full overflow-hidden mb-4">
+    <img [src]="profileData.photo" alt="Foto del empleado" class="w-32 h-32 rounded-full">
+</div>
 
   <!-- Detalles del perfil -->
   <div>
