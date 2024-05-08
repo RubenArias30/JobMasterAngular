@@ -100,9 +100,10 @@ export class ApiService {
     return this.http.get<Event[]>(`${this.apiUrl}/employees/${employeeId}/events`);
   }
 
-  updateEvent(id: number, eventData: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/events/${id}`, eventData);
+  updateSchedule(id: number, formData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/events/${id}`, formData);
   }
+
 
   // deleteEvent(eventId: number): Observable<any> {
   //   return this.http.delete<any>(`${this.apiUrl}/events/${eventId}`);

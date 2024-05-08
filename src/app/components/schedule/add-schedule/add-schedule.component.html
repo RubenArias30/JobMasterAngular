@@ -48,8 +48,7 @@
               class="text-red-500 mb-2">La fecha/hora de inicio debe ser anterior a la fecha/hora de fin.</div>
           </div>
           <div class="flex justify-center">
-            <button type="submit" class="bg-green-400 hover:bg-green-500 text-white py-2 px-4 rounded"
-              >Agregar</button>
+            <button type="submit" class="bg-green-400 hover:bg-green-500 text-white py-2 px-4 rounded">Agregar</button>
             <!-- <button type="submit" class="bg-blue-400 hover:bg-blue-500 text-white py-2 px-4 rounded"
               *ngIf="!showAddButton" (click)="actualizarEvento()">Editar</button> -->
           </div>
@@ -84,25 +83,58 @@
             <span class="sr-only">Close modal</span>
           </button>
         </div>
+
         <!-- Modal body -->
-        <div class="p-4 md:p-5">
-          <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Título:</h4>
-          <p>{{ selectedEvent?.title }}</p>
-          <h4 class="text-lg font-semibold text-gray-900 dark:text-white mt-4">Fecha de inicio:</h4>
-          <p>{{ selectedEvent?.start }}</p>
-          <h4 class="text-lg font-semibold text-gray-900 dark:text-white mt-4">Fecha de fin:</h4>
-          <p>{{ selectedEvent?.end }}</p>
-          <hr class="my-4">
-          <div class="flex justify-center space-x-4 mt-4">
+        <form [formGroup]="formEdit" >
+          <div class="p-4 md:p-5">
+            <label for="title" class="block text-sm font-bold mb-1">Título:</label>
+            <input type="text"
+              class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
+              formControlName="title" required>
+            <div *ngIf="formEdit.get('title')?.invalid && (formEdit.get('title')?.dirty || formEdit.get('title')?.touched)"
+              class="text-red-500 mt-1">Título es requerido.</div>
+            <label for="startDate" class="block text-sm font-bold mb-1">Fecha de inicio:</label>
+            <input type="date"
+              class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
+              formControlName="fechaInicio" required>
+            <input type="time"
+              class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
+              formControlName="horaInicio" required>
+            <label for="endDate" class="block text-sm font-bold mb-1">Fecha de fin:</label>
+            <input type="date"
+              class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
+              formControlName="fechaFin" required>
+            <input type="time"
+              class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
+              formControlName="horaFin" required>
+            <!-- Mensaje de error para la validación de fecha de fin -->
+            <div *ngIf="formEdit.get('fechaFin')?.invalid && (formEdit.get('fechaFin')?.dirty || formEdit.get('fechaFin')?.touched)"
+              class="text-red-500 mt-1">Fecha de fin es requerida.</div>
+            <div
+              *ngIf="formEdit.hasError('dateRange') && (formEdit.get('fechaInicio')?.touched || formEdit.get('fechaFin')?.touched)"
+              class="text-red-500 mb-2">La fecha/hora de inicio debe ser anterior a la fecha/hora de fin.</div>
+            <hr class="my-4">
+            <div class="flex justify-center space-x-4 mt-4">
 
+              <button (click)="editarHorario()" class="flex items-center bg-green-400 hover:bg-green-500 text-white px-4 py-2 rounded-lg text-lg"
+                (click)="closeModal()">
+                <i class='bx bx-edit'></i>
+                <span class="ml-2">Editar</span>
+              </button>
+              <button class="flex items-center bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg text-lg"
+                (click)="closeModal()">
+                <i class='bx bx-trash'></i>
+                <span class="ml-2">Eliminar</span>
+              </button>
 
-            <button class="flex items-center bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg text-lg"
-              (click)="closeModal()">
-              <i class='bx bx-x'></i>
-              <span class="ml-2">Cancelar</span>
-            </button>
+              <button class="flex items-center bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg text-lg"
+                (click)="closeModal()">
+                <i class='bx bx-x'></i>
+                <span class="ml-2">Cancelar</span>
+              </button>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>

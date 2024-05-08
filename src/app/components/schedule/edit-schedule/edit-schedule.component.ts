@@ -128,30 +128,50 @@ export class EditScheduleComponent implements OnInit {
         end: info.event.end,
       };
 
-      // Abre el modal
+      // Abre el modal si es necesario
       this.showModal = true;
     }
   }
 
+
   openEditForm() {
+    // Verificar si hay un evento seleccionado
+    if (!this.selectedEvent) {
+      console.error('No se ha seleccionado ningún evento para editar.');
+      return;
+    }
 
-    // // Inicializa los campos del formulario con los datos del evento seleccionado
-    // this.form.patchValue({
-    //   title: this.selectedEvent.title,
-    //   fechaInicio: this.formatDate(this.selectedEvent.start),
-    //   horaInicio: this.formatTime(this.selectedEvent.start),
-    //   fechaFin: this.formatDate(this.selectedEvent.end),
-    //   horaFin: this.formatTime(this.selectedEvent.end)
-    // });
+    // Obtener el título del evento
+    const title = this.selectedEvent.title;
 
-     // Inicializar el formulario de edición con las fechas del evento seleccionado
-  this.form.patchValue({
-    title: this.selectedEvent.title,
-    startDate: this.selectedEvent.start,
-    endDate: this.selectedEvent.end
-  });
-    this.closeModal(); // Cerrar el modal
-    // Lógica para abrir el formulario de edición, por ejemplo, navegando a una nueva ruta
+    // Obtener las fechas de inicio y fin del evento seleccionado
+    const startDate = this.selectedEvent.start;
+    const endDate = this.selectedEvent.end;
+
+    // Convertir las fechas de inicio y fin a objetos Date
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    // Calcular la duración en milisegundos del evento
+    const durationMs = end.getTime() - start.getTime();
+
+    // Calcular las fechas y horas de inicio y fin en formato de cadena ISO
+    const formattedStartDate = this.formatDate(start);
+    const formattedStartTime = this.formatTime(start);
+    const formattedEndDate = this.formatDate(end);
+    const formattedEndTime = this.formatTime(end);
+
+    // Inicializar el formulario de edición con el rango completo de fechas y horas del evento seleccionado
+    this.form.patchValue({
+      title: title,
+      fechaInicio: formattedStartDate,
+      horaInicio: formattedStartTime,
+      fechaFin: formattedEndDate,
+      horaFin: formattedEndTime
+    });
+
+    // Cerrar el modal
+    this.closeModal();
   }
 
 
@@ -222,23 +242,46 @@ export class EditScheduleComponent implements OnInit {
     return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
   }
 
-  // Agregar un nuevo horario
+  // Editar un nuevo horario
   editarHorario() {
 
+    // Verificar si hay un evento seleccionado
+    if (!this.selectedEvent) {
+      console.error('No se ha seleccionado ningún evento para editar.');
+      return;
+    }
+    // Obtener los datos del formulario
+    const formData = {
+      title: this.form.get('title')?.value,
+      start_datetime: `${this.form.get('fechaInicio')?.value} ${this.form.get('horaInicio')?.value}`,
+      end_datetime: `${this.form.get('fechaFin')?.value} ${this.form.get('horaFin')?.value}`
+    };
+    console.log(formData);
 
+    // Obtener el ID del evento seleccionado
+    const eventId = this.selectedEvent.id;
+    console.log(eventId);
+
+    // Llamar al método updateSchedule del ApiService para actualizar el evento
+    this.apiService.updateSchedule(eventId, formData).subscribe(
+      (response) => {
+        console.log(response)
+        // Actualización exitosa, puedes mostrar un mensaje de éxito o redirigir a otra página si es necesario
+        console.log('Evento actualizado exitosamente:', response);
+        // Aquí puedes agregar una lógica adicional, como mostrar un mensaje de éxito o redirigir a otra página
+      },
+      (error) => {
+        // Manejar errores, puedes mostrar un mensaje de error al usuario o registrar el error en la consola
+        console.error('Error al actualizar el evento:', error);
+      }
+    );
   }
+
 
 
   // Enviar el horario al servidor
   onSubmit(scheduleData: any) {
-    // this.apiService.addSchedule(this.employeeId, scheduleData).subscribe(
-    //   response => {
-    //     console.log('Horario agregado correctamente:', response);
-    //   },
-    //   error => {
-    //     console.error('Error al agregar el horario:', error);
-    //   }
-    // );
+
   }
 
 
