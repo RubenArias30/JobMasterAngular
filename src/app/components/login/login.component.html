@@ -20,26 +20,38 @@
 
         <div>
           <div class="flex items-center justify-between">
-            <label for="password" class="block text-lg font-medium leading-6 text-gray-900">Contraseña</label>
+              <label for="password" class="block text-lg font-medium leading-6 text-gray-900">Contraseña</label>
           </div>
 
+
+          <div class="mt-2 relative">
+              <input id="password" name="password" [type]="passwordVisible ? 'text' : 'password'" autocomplete="current-password"
+                  formControlName="password" placeholder="Introduce tu contraseña" required
+                  class="block w-full rounded-md border-0 py-2 pl-2 pr-10 text-lg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-lg sm:leading-6">
+              <button type="button" class="absolute right-0 top-0 h-full bg-custom-800 rounded-r-md text-black px-3 py-2"
+                  (click)="togglePasswordVisibility()">
+                  {{ passwordVisible ? 'Ocultar' : 'Mostrar' }}
+              </button>
+
+          </div>
           <div *ngIf="login.get('password')?.errors?.['required'] && (login.get('password')?.dirty || login.get('password')?.touched)"
-            class="text-red-500 mt-2">La contraseña es requerida.</div>
+              class="text-red-500 mt-2">La contraseña es requerida.</div>
 
           <div *ngIf="login.get('password')?.errors?.['pattern'] && (login.get('password')?.dirty || login.get('password')?.touched) && login.get('nif')?.value.toLowerCase() !== 'admin'"
-            class="text-red-500 mt-2">La contraseña debe tener al menos 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula, y un número.</div>
-          <div class="mt-2">
-            <input id="password" name="password" type="password" autocomplete="current-password"
-              formControlName="password" placeholder="Introduce tu contraseña" required
-              class="block w-full rounded-md border-0 py-2 pl-2 text-lg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-lg sm:leading-6">
-          </div>
-        </div>
+              class="text-red-500 mt-2">La contraseña debe tener al menos 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula, y un número.</div>
+      </div>
+
+
+
 
         <div>
           <!-- Mensaje de error si falla el login admin -->
           <div *ngIf="mensaje" class="text-red-500 mt-2">{{ mensaje }}</div>
            <!-- Mensaje de error si falla el ,login empleado -->
            <div *ngIf="mensajeCredenttial" class="text-red-500 mt-2">{{ mensajeCredenttial }}</div>
+
+          <!-- Mensaje de error de campos vacios -->
+          <div *ngIf="mensajeEmptyField" class="text-red-500 mt-2">{{ mensajeEmptyField }}</div>
 
           <button type="submit"
             class="flex w-full justify-center rounded-md bg-green-400 px-4 py-2 text-lg font-semibold leading-6 text-black shadow-sm hover:bg-green-500 hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"

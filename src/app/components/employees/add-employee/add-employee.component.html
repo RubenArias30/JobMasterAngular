@@ -176,20 +176,24 @@
               *ngIf="employeeForm.get('nif')?.errors?.['required'] && (employeeForm.get('nif')?.dirty || employeeForm.get('nif')?.touched)"
               class="text-red-500 mt-2">NIF es obligatorio.</div> -->
         </div>
-        <div class="mt-5">
-          <label for="password" class="block">Password</label>
-          <input type="password" id="password" formControlName="password"
-            class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Contraseña" maxlength="25">
-          <div
-            *ngIf="employeeForm.get('password')?.errors?.['required'] && (employeeForm.get('password')?.dirty || employeeForm.get('password')?.touched)"
-            class="text-red-500 mt-2">Contraseña es obligatoria.</div>
-          <div
-            *ngIf="employeeForm.get('password')?.errors?.['invalidPassword'] && (employeeForm.get('password')?.dirty || employeeForm.get('password')?.touched)"
-            class="text-red-500 mt-2">
-            La contraseña debe tener al menos 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula
-            ,un número.
-          </div>
+        <div class="relative mt-5">
+          <input type="{{ showPassword ? 'text' : 'password' }}" id="password" formControlName="password"
+            class="border border-gray-300 rounded-md p-2 pr-10 w-full shadow-inner" placeholder="Contraseña" maxlength="35">
+          <button type="button" class="absolute inset-y-0 right-0 flex items-center px-3" (click)="togglePasswordVisibility()">
+            <i *ngIf="!showPassword" class='bx bx-show-alt'></i>
+            <i *ngIf="showPassword" class='bx bxs-hide'></i>
+          </button>
         </div>
+        <div
+          *ngIf="employeeForm.get('password')?.errors?.['required'] && (employeeForm.get('password')?.dirty || employeeForm.get('password')?.touched)"
+          class="text-red-500 mt-2">Contraseña es obligatoria.</div>
+        <div
+          *ngIf="employeeForm.get('password')?.errors?.['invalidPassword'] && (employeeForm.get('password')?.dirty || employeeForm.get('password')?.touched)"
+          class="text-red-500 mt-2">
+          La contraseña debe tener al menos 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula
+          ,un número.
+        </div>
+
 
       </div>
     </div>

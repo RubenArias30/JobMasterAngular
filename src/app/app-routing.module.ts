@@ -29,6 +29,7 @@ import { ResponseResetComponent } from './components/password/response-reset/res
 import { AddAbsencesComponent } from './components/absences/add-absences/add-absences.component';
 import { ViewScheduleComponent } from './components/schedule/view-schedule/view-schedule.component';
 import { EditScheduleComponent } from './components/schedule/edit-schedule/edit-schedule.component';
+import { DasboardEmployeeComponent } from './components/dashboard/dasboard-employee/dasboard-employee.component';
 
 
 
@@ -39,7 +40,14 @@ const routes: Routes = [
     path: 'dashboard',
     component: LayoutComponent,
     children: [
-      { path: '', component: DashboardComponent, canActivate:[MyGuardGuard] ,data: { roles: ['admin','empleado'] }}
+      { path: '', component: DashboardComponent, canActivate:[MyGuardGuard] ,data: { roles: ['admin'] }}
+    ]
+  },
+  {
+    path: 'dashboard-employee',
+    component: LayoutComponent,
+    children: [
+      { path: '', component: DasboardEmployeeComponent, canActivate:[MyGuardGuard] ,data: { roles: ['empleado'] }}
     ]
   },
   { path: 'employees', component: LayoutComponent,

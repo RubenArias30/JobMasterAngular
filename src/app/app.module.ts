@@ -39,6 +39,7 @@ import { RequestResetComponent } from './components/password/request-reset/reque
 import { ResponseResetComponent } from './components/password/response-reset/response-reset.component';
 import { ViewScheduleComponent } from './components/schedule/view-schedule/view-schedule.component';
 import { EditScheduleComponent } from './components/schedule/edit-schedule/edit-schedule.component';
+import { DasboardEmployeeComponent } from './components/dashboard/dasboard-employee/dasboard-employee.component';
 
 
 

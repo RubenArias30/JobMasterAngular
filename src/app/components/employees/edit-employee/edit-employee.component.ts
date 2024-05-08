@@ -16,6 +16,7 @@ export class EditEmployeeComponent implements OnInit {
   formModified: boolean = false;
   updateError: boolean = false;
   errorMessage: string = '';
+  showPassword: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,7 +36,7 @@ export class EditEmployeeComponent implements OnInit {
       city: ['', [Validators.required, Validators.pattern('^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ ]+$')]],
       postal_code: ['', [Validators.required, Validators.minLength(5),Validators.pattern('^[0-9]+$')]],
       nif: ['', [Validators.required, Validators.pattern('^(?=.*[XYZ0-9])[XYZ0-9][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$')]],
-      photo: [null, [Validators.required, this.imageExtensionValidator]],
+      photo: [null, [ this.imageExtensionValidator]],
       password: ['', [Validators.required, this.passwordValidator]]
     });
 
@@ -201,5 +202,9 @@ export class EditEmployeeComponent implements OnInit {
     }
 
     return null;
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }
