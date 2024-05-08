@@ -1,23 +1,36 @@
 <div class="container mx-auto mt-8 flex justify-center">
   <!-- Divs de la parte izquierda -->
   <div class="flex flex-col justify-between w-1/3">
+<!-- Div 2 -->
+<div class="bg-white rounded-lg shadow-md text-center mb-8" (click)="redirectToSchedule()">
+    <div class="relative">
+      <img src="assets/img/horarios-2.webp" alt="Horario" class="w-full max-h-48 object-cover rounded-t-lg">
+      <hr class="border-green-500 my-0 w-full border-t-4">
+    </div>
+    <div class="p-4">
+      <h2 class="text-lg font-bold mb-2">Horario</h2>
+      <p class="text-gray-500">Consultar tu horario</p>
+    </div>
+  </div>
+  
+  <!-- Div 3 -->
+  <div class="bg-white rounded-lg shadow-md text-center" (click)="redirectToDocuments()">
+    <div class="relative">
+      <img src="assets/img/16917433212434.webp" alt="Documentos" class="w-full max-h-48 object-cover rounded-t-lg">
+      <hr class="border-green-500 my-0 w-full border-t-4">
+    </div>
+    <div class="p-4">
+      <h2 class="text-lg font-bold mb-2">Documentos</h2>
+      <p class="text-gray-500">Consulta tus documentos privados</p>
+    </div>
+  </div>
+  
+  
+  
 
-      <!-- Div 2 -->
-      <div class="bg-white rounded-lg p-8 mb-8 flex flex-col items-start">
-          <h2 class="text-lg font-bold mb-2"><i class="bx bx-time-five text-2xl text-green-500 mr-4"></i>Horario</h2>
-          <div class="flex justify-center">
-              <img src="assets/img/schedule.webp" alt="Imagen del Div 2" class="w-32 h-32 object-cover mb-4">
-          </div>
-          <button class="bg-custom-800 text-white px-4 py-2 rounded-md mx-auto block">Ver el horario</button>
-      </div>
-      <!-- Div 3 -->
-      <div class="bg-white rounded-lg p-8 flex flex-col items-start">
-          <h2 class="text-lg font-bold mb-2"><i class="bx bx-folder text-2xl text-green-500 mr-4"></i>Documentos</h2>
-          <div class="flex justify-center">
-              <img src="ruta/a/la/imagen3.jpg" alt="Imagen del Div 3" class="w-32 h-32 object-cover mb-4">
-          </div>
-          <button class="bg-custom-800 text-white px-4 py-2 rounded-md mx-auto block">Ver los documentos</button>
-      </div>
+  
+  
+  
   </div>
 
   <!-- Div de la parte derecha -->
