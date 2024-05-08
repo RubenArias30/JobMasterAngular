@@ -25,6 +25,13 @@ export class AbsencesComponent implements OnInit, OnDestroy {
   absenceIdToDelete: string | null = null;
   deleteSuccess: boolean = false;
   isLoading = true;
+// Add an additional option to filter all absences
+filterOptions = ['Mostrar Todo', 'Vacaciones', 'Enfermedad', 'Maternidad/Paternidad', 'Compensatorias', 'Baja', 'Otros'];
+  selectedFilter: string | null = null;
+  showFilterDropdown = false;
+
+
+
 
   constructor
     (
@@ -130,4 +137,53 @@ export class AbsencesComponent implements OnInit, OnDestroy {
   openAddAbsenceModal() {
     this.addAbsenceModal.openModal(); // Call the openModal method of AddAbsenceComponent
   }
+
+
+  // filter logic
+  toggleFilterDropdown() {
+    this.showFilterDropdown = !this.showFilterDropdown;
+  }
+  selectFilter(option: string): void {
+    if (option === 'Mostrar Todo') {
+      this.fetchAbsences(); // Fetch all absences
+    } else {
+      this.selectedFilter = option;
+      this.fetchAbsences(option); // Fetch absences based on selected filter
+    }
+    this.showFilterDropdown = false;
+  }
+
+
+  fetchAbsences(type?: string): void {
+    this.isLoading = true;
+    if (!type) {
+      this.apiService.getAusencias().subscribe(
+        (absences) => {
+          this.absences = absences;
+          this.isLoading = false;
+        },
+        (error) => {
+          console.error(error);
+          this.isLoading = false;
+        }
+      );
+    } else {
+      this.apiService.getAbsencesByType(type).subscribe(
+        (absences) => {
+          if (type === 'Mostrar Todo') {
+            this.absences = absences; // Assign all absences directly
+          } else {
+            // Filter absences based on the selected type
+            this.absences = absences.filter(absence => absence.type_absence === this.selectedFilter);
+          }
+          this.isLoading = false;
+        },
+        (error) => {
+          console.error(error);
+          this.isLoading = false;
+        }
+      );
+    }
+  }
+
 }

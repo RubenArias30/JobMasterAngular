@@ -1,16 +1,29 @@
-<!-- Encabezado -->
-<div class="flex items-center justify-between mb-4 ml-5"> <!-- Added ml-4 for left space -->
+<div class="flex items-center justify-between mb-4 ml-5">
   <div class="flex items-center">
     <h1 class="text-lg font-bold mr-2">Ausencias</h1>
-
   </div>
   <div class="flex ml-auto mr-8">
-    <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-2 py-1 rounded-lg" (click)="openAddAbsenceModal()">
+    <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-2 py-1 rounded-lg mr-2" (click)="openAddAbsenceModal()">
       <i class='bx bx-plus'></i>
-      <span class="ml-1">Add absence</span>
+      <span class="ml-1">Añadir ausencia</span>
     </button>
+    <div class="relative">
+      <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-2 py-1 rounded-lg" (click)="toggleFilterDropdown()">
+        <i class='bx bx-filter text-xl'></i>
+        <span class="ml-1">Filtros</span>
+      </button>
+      <!-- Filter dropdown -->
+      <div *ngIf="showFilterDropdown" class="absolute right-0 mt-1 bg-white border border-gray-300 rounded-lg py-1 px-2 w-32 sm:w-48 z-10">
+        <ul class="py-1">
+          <li *ngFor="let option of filterOptions" (click)="selectFilter(option)" class="px-4 py-2 cursor-pointer hover:bg-gray-100">{{ option }}</li>
+        </ul>
+
+      </div>
     </div>
-</div>
+    </div>
+    </div>
+
+
 
 <!-- TABLE -->
 
@@ -20,9 +33,6 @@
 
     <div class="overflow-x-auto">
       <table class="w-full divide-y divide-gray-200">
-        <!-- <div class="flex justify-center items-center" *ngIf="isLoading">
-          <div class="spinner"></div>
-        </div> -->
         <!-- Add a div with a fixed position to center the spinner -->
         <div class="fixed top-0 left-0 w-full h-full flex justify-center items-center" *ngIf="isLoading">
           <div role="status" class="flex flex-col items-center">

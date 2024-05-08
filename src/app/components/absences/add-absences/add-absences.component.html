@@ -70,28 +70,26 @@
 
           <div class="col-span-2 mt-4 grid grid-cols-2 gap-4">
             <div>
-              <label for="start_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start
-                Date</label>
-              <input type="date" id="start_date" name="start_date" placeholder="Select start date"
+              <label for="start_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de incio</label>
+              <input type="date" id="start_date" name="start_date" placeholder="Seleccione fecha de inicio"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500
                        {{ ausenciaForm.get('start_date')?.invalid && ausenciaForm.get('start_date')?.touched ? 'border-red-500' : '' }}" formControlName="start_date">
               <div *ngIf="ausenciaForm.get('start_date')?.invalid && ausenciaForm.get('start_date')?.touched"
                 class="text-red-500">
-                <p *ngIf="ausenciaForm.get('start_date')?.errors?.['required']">Start Date is required</p>
-                <p *ngIf="ausenciaForm.get('start_date')?.errors?.['invalidStartDate']">Invalid Start Date</p>
+                <p *ngIf="ausenciaForm.get('start_date')?.errors?.['required']">La fecha de inicio es obligatoria</p>
+                <p *ngIf="ausenciaForm.get('start_date')?.errors?.['invalidStartDate']">La Fecha de incio es inválida</p>
               </div>
             </div>
 
             <div>
-              <label for="end_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">End
-                Date</label>
-              <input type="date" id="end_date" name="end_date" placeholder="Select end date"
+              <label for="end_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha final</label>
+              <input type="date" id="end_date" name="end_date" placeholder="Seleccione fecha final"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500
                      {{ ausenciaForm.get('end_date')?.invalid && ausenciaForm.get('end_date')?.touched ? 'border-red-500' : '' }}" formControlName="end_date">
               <div *ngIf="ausenciaForm.get('end_date')?.invalid && ausenciaForm.get('end_date')?.touched"
                 class="text-red-500">
-                <p *ngIf="ausenciaForm.get('end_date')?.errors?.['required']">End Date is required</p>
-                <p *ngIf="ausenciaForm.get('end_date')?.errors?.['invalidEndDate']">Invalid End Date</p>
+                <p *ngIf="ausenciaForm.get('end_date')?.errors?.['required']">La fecha final es obligatoria</p>
+                <p *ngIf="ausenciaForm.get('end_date')?.errors?.['invalidEndDate']">La Fecha final es inválida</p>
               </div>
             </div>
 
@@ -126,7 +124,7 @@
             <span class="ml-2">CANCELAR</span>
           </button>
         </div>
-        
+
       </form>
     </div>
   </div>

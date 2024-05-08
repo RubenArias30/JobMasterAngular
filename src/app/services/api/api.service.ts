@@ -185,9 +185,11 @@ updateAbsence(absenceId: string, updatedFormData: any): Observable<any> {
 
 
 }
-getAbsencesByType(type: string): Observable<any[]> {
-  return this.http.get<any[]>(`${this.apiUrl}/absences?type=${type}`);
+getAbsencesByType(type?: string): Observable<any[]> {
+  const url = type ? `${this.apiUrl}/absences?type=${type}` : `${this.apiUrl}/absences`;
+  return this.http.get<any[]>(url);
 }
+
 
 
 
