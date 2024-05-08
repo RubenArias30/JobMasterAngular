@@ -45,8 +45,10 @@
 
 
         <div>
-          <!-- Mensaje de error personalizado -->
+          <!-- Mensaje de error si falla el login admin -->
           <div *ngIf="mensaje" class="text-red-500 mt-2">{{ mensaje }}</div>
+           <!-- Mensaje de error si falla el ,login empleado -->
+           <div *ngIf="mensajeCredenttial" class="text-red-500 mt-2">{{ mensajeCredenttial }}</div>
 
           <!-- Mensaje de error de campos vacios -->
           <div *ngIf="mensajeEmptyField" class="text-red-500 mt-2">{{ mensajeEmptyField }}</div>

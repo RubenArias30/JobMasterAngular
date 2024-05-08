@@ -143,6 +143,17 @@ const routes: Routes = [
 },
 
 {
+  path: 'view-schedule',
+  component: LayoutComponent,
+  canActivate: [MyGuardGuard],
+  data: { roles: ['empleado']},
+  children: [
+    { path: '', component: ViewScheduleComponent },
+
+  ]
+},
+
+{
   path: 'attendances',
   component: LayoutComponent,
   canActivate: [MyGuardGuard],

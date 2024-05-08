@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
   token: string | null = null;
   passwordVisible: boolean = false; // Variable para controlar la visibilidad de la contraseña
 
+  mensajeCredenttial: string='';
+
   constructor(private authService: AuthService, private peticiones: ApiService, private route: Router) {
     this.login = new FormGroup({
       nif: new FormControl('', [
@@ -83,7 +85,7 @@ export class LoginComponent implements OnInit {
         },
         (error: any) => {
           // Manejo de error
-          this.mensaje = 'Credenciales incorrectas.';
+          this.mensajeCredenttial = 'Credenciales incorrectas.';
         }
       );
     }
