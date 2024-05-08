@@ -30,6 +30,7 @@ export class AddScheduleComponent implements OnInit {
   horaFin: string = '';
   employeeName: string = '';
   form: FormGroup;
+  formEdit: FormGroup;
   showError: boolean = false;
   showErrorField: boolean = false;
 
@@ -60,6 +61,18 @@ export class AddScheduleComponent implements OnInit {
 
     return `${formattedHour}:${formattedMinute}`;
   }
+
+  formatDate(date: string | Date): string {
+    let formattedDate = '';
+    if (typeof date === 'string') {
+      const parsedDate = new Date(date);
+      formattedDate = `${parsedDate.getFullYear()}-${(parsedDate.getMonth() + 1).toString().padStart(2, '0')}-${parsedDate.getDate().toString().padStart(2, '0')}`;
+    } else {
+      formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+    }
+    return formattedDate;
+  }
+
   // Opciones del calendario
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
@@ -92,6 +105,14 @@ export class AddScheduleComponent implements OnInit {
       fechaFin: ['', Validators.required],
       horaFin: ['', [Validators.required, Validators.pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)]]
     }, { validator: this.dateRangeValidator });
+    // Inicializar el formulario reactivo
+    this.formEdit = this.formBuilder.group({
+      title: ['', Validators.required],
+      fechaInicio: ['', Validators.required],
+      horaInicio: ['', [Validators.required, Validators.pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)]],
+      fechaFin: ['', Validators.required],
+      horaFin: ['', [Validators.required, Validators.pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)]]
+    }, { validator: this.dateRangeValidator });
   }
 
   ngOnInit(): void {
@@ -103,27 +124,64 @@ export class AddScheduleComponent implements OnInit {
     });
   }
 
+
   handleEventClick(info: any) {
-    console.log('ID del evento:', info.event.id);
+    if (info.event) {
+      console.log('ID del evento:', info.event.id);
 
-    // Almacena la información del evento seleccionado en una variable
-    this.selectedEvent = {
-      id: info.event.id,
-      title: info.event.title,
-      start: info.event.start,
-      end: info.event.end,
-      // employees_id : info.event.employees_id
-    };
+      // Almacena la información del evento seleccionado en una variable
+      this.selectedEvent = {
+        id: info.event.id,
+        title: info.event.title,
+        start: info.event.start,
+        end: info.event.end,
+      };
 
-    // Abre el modal
-    this.showModal = true;
+        // Verificar si hay un evento seleccionado
+    if (!this.selectedEvent) {
+      console.error('No se ha seleccionado ningún evento para editar.');
+      return;
+    }
+
+    // Obtener el título del evento
+    const title = this.selectedEvent.title;
+
+    // Obtener las fechas de inicio y fin del evento seleccionado
+    const startDate = this.selectedEvent.start;
+    const endDate = this.selectedEvent.end;
+
+    // Convertir las fechas de inicio y fin a objetos Date
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    // Calcular la duración en milisegundos del evento
+    const durationMs = end.getTime() - start.getTime();
+
+    // Calcular las fechas y horas de inicio y fin en formato de cadena ISO
+    const formattedStartDate = this.formatDate(start);
+    const formattedStartTime = this.formatTime(start);
+    const formattedEndDate = this.formatDate(end);
+    const formattedEndTime = this.formatTime(end);
+
+    // Inicializar el formulario de edición con el rango completo de fechas y horas del evento seleccionado
+    this.formEdit.patchValue({
+      title: title,
+      fechaInicio: formattedStartDate,
+      horaInicio: formattedStartTime,
+      fechaFin: formattedEndDate,
+      horaFin: formattedEndTime
+    });
+
+      // Abre el modal si es necesario
+      this.showModal = true;
+    }
   }
-
 
   // Función para mostrar el modal y pasar el evento seleccionado
   openModal(event: any) {
     this.selectedEvent = event;
     this.showModal = true;
+
   }
 
   // Función para cerrar el modal
@@ -254,6 +312,39 @@ export class AddScheduleComponent implements OnInit {
       },
       error => {
         console.error('Error al agregar el horario:', error);
+      }
+    );
+  }
+
+  editarHorario(){
+    // Verificar si hay un evento seleccionado
+    if (!this.selectedEvent) {
+      console.error('No se ha seleccionado ningún evento para editar.');
+      return;
+    }
+    // Obtener los datos del formulario
+    const formData = {
+      title: this.formEdit.get('title')?.value,
+      start_datetime: `${this.formEdit.get('fechaInicio')?.value} ${this.formEdit.get('horaInicio')?.value}`,
+      end_datetime: `${this.formEdit.get('fechaFin')?.value} ${this.formEdit.get('horaFin')?.value}`
+    };
+    console.log(formData);
+
+    // Obtener el ID del evento seleccionado
+    const eventId = this.selectedEvent.id;
+    console.log(eventId);
+
+    // Llamar al método updateSchedule del ApiService para actualizar el evento
+    this.apiService.updateSchedule(eventId, formData).subscribe(
+      (response) => {
+        console.log(response)
+        // Actualización exitosa, puedes mostrar un mensaje de éxito o redirigir a otra página si es necesario
+        console.log('Evento actualizado exitosamente:', response);
+        // Aquí puedes agregar una lógica adicional, como mostrar un mensaje de éxito o redirigir a otra página
+      },
+      (error) => {
+        // Manejar errores, puedes mostrar un mensaje de error al usuario o registrar el error en la consola
+        console.error('Error al actualizar el evento:', error);
       }
     );
   }

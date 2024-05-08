@@ -25,7 +25,7 @@
             <input type="time"
               class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
               formControlName="horaInicio" required>
-            <!-- Mensaje de error para la validación de fecha de inicio -->
+
             <div
               *ngIf="form.get('fechaInicio')?.invalid && (form.get('fechaInicio')?.dirty || form.get('fechaInicio')?.touched)"
               class="text-red-500 mt-1">Fecha de inicio es requerida.</div>
@@ -40,7 +40,7 @@
             <input type="time"
               class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
               formControlName="horaFin" required>
-            <!-- Mensaje de error para la validación de fecha de fin -->
+
             <div *ngIf="form.get('fechaFin')?.invalid && (form.get('fechaFin')?.dirty || form.get('fechaFin')?.touched)"
               class="text-red-500 mt-1">Fecha de fin es requerida.</div>
             <div
@@ -53,11 +53,12 @@
           <div *ngIf="showErrorField" class="text-red-500 mt-2 text-center">
             Por favor, completa todos los campos obligatorios.
           </div>
-          <!-- Aquí se mostrará el mensaje de error -->
+
           <div *ngIf="showError" class="text-red-500 mt-2">Ya existe un horario en el rango de fechas especificado</div>
         </form>
       </div>
     </div>
+
   </div>
 
   <!-- Main modal -->
