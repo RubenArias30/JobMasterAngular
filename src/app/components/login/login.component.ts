@@ -11,8 +11,11 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   login!: FormGroup;
+  mostrarMensaje: boolean = false;
   mensaje: string='';
+  mensajeEmptyField: string='';
   token: string | null = null;
+  passwordVisible: boolean = false; // Variable para controlar la visibilidad de la contraseña
 
   constructor(private authService: AuthService, private peticiones: ApiService, private route: Router) {
     this.login = new FormGroup({
@@ -40,10 +43,10 @@ export class LoginComponent implements OnInit {
 
      // Verifica si los campos están vacíos
   if (!nif || !password) {
-    this.mensaje = 'Por favor, completa todos los campos.';
+    this.mensajeEmptyField = 'Por favor, completa todos los campos.';
     return;
   } else {
-    this.mensaje = ''; // Vaciar el mensaje si ambos campos están llenos
+    this.mensajeEmptyField = ''; // Vaciar el mensaje si ambos campos están llenos
   }
 
     // Si el NIF y la contraseña son "admin", omitir la validación de la contraseña
@@ -56,11 +59,16 @@ export class LoginComponent implements OnInit {
           this.authService.setUserRole(response.roles);
           // Si la autenticación es exitosa, redirige al usuario a la página de dashboard
           this.route.navigate(['/dashboard']);
+          this.mostrarMensaje = false;
+
         },
         (error: any) => {
+          this.mostrarMensaje = true;
+
           // Manejo de error
           this.mensaje = 'Credenciales incorrectas.';
         }
+
       );
     } else {
       // Si no son "admin", realizar la validación normal de la contraseña
@@ -80,5 +88,7 @@ export class LoginComponent implements OnInit {
       );
     }
   }
-
+  togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
+  }
 }

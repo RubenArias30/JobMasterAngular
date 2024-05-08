@@ -53,6 +53,7 @@ export class ResponseResetComponent implements OnInit {
     }
   }
 
+
    // Función de validación personalizada para la contraseña
    passwordValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
@@ -61,7 +62,7 @@ export class ResponseResetComponent implements OnInit {
     }
     return null;
   }
-  
+
   // Función de validación personalizada para asegurar que la confirmación de la contraseña coincida con la contraseña
   passwordConfirmationValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const password = control.root.get('password');

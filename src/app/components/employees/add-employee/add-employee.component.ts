@@ -12,6 +12,7 @@ export class AddEmployeeComponent {
   employeeForm!: FormGroup;
   showError: boolean = false;
   errorMessage: string = '';
+  showPassword: boolean = false;
 
   constructor(private apiService: ApiService, private router: Router, private fb: FormBuilder) {
     // Inicializa el formulario y define las reglas de validación
@@ -43,7 +44,7 @@ export class AddEmployeeComponent {
       this.showError = true;
       return;
     }
-  
+
     this.apiService.addEmployees(this.employeeForm.value).subscribe(
       (response) => {
         console.log('Empleado agregado exitosamente:', response);
@@ -60,7 +61,7 @@ export class AddEmployeeComponent {
       }
     );
   }
-  
+
 
   cancelEdit(): void {
     if (confirm('¿Estás seguro de cancelar la edición?')) {
@@ -124,5 +125,8 @@ export class AddEmployeeComponent {
       }
       return null;
     };
+  }
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }
