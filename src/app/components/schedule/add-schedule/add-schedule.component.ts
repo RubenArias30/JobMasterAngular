@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input} from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -32,8 +32,6 @@ export class AddScheduleComponent implements OnInit {
   form: FormGroup;
   showError: boolean = false;
   showErrorField: boolean = false;
-  showAddButton: boolean = true; // Variable para controlar la visibilidad del botón de agregar
-
 
 
   customEventContent = (arg: any) => {
@@ -50,9 +48,9 @@ export class AddScheduleComponent implements OnInit {
     `;
 
     return { html };
-};
+  };
 
-formatTime(date: Date): string {
+  formatTime(date: Date): string {
     const hour = date.getHours();
     const minute = date.getMinutes();
 
@@ -61,12 +59,7 @@ formatTime(date: Date): string {
     const formattedMinute = minute < 10 ? `0${minute}` : `${minute}`;
 
     return `${formattedHour}:${formattedMinute}`;
-}
-
-
-
-
-
+  }
   // Opciones del calendario
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
@@ -118,7 +111,7 @@ formatTime(date: Date): string {
       id: info.event.id,
       title: info.event.title,
       start: info.event.start,
-      end : info.event.end,
+      end: info.event.end,
       // employees_id : info.event.employees_id
     };
 
@@ -127,54 +120,17 @@ formatTime(date: Date): string {
   }
 
 
- // Función para mostrar el modal y pasar el evento seleccionado
- openModal(event: any) {
-  this.selectedEvent = event;
-  this.showModal = true;
-
-  this.showAddButton = !this.selectedEvent || !this.selectedEvent.id;
-
-}
-
-// Función para cerrar el modal
-closeModal() {
-  this.showModal = false;
-}
-confirmDeleteEvent(): void {
-  // Verifica si se ha seleccionado un evento y tiene un ID válido
-  if (!this.selectedEvent || !this.selectedEvent.id) {
-    console.error('No se pudo obtener el ID del evento seleccionado');
-    return;
+  // Función para mostrar el modal y pasar el evento seleccionado
+  openModal(event: any) {
+    this.selectedEvent = event;
+    this.showModal = true;
   }
 
-  const eventId = this.selectedEvent.id; // Obtiene el ID del evento seleccionado
+  // Función para cerrar el modal
+  closeModal() {
+    this.showModal = false;
+  }
 
-  // Llama al método deleteEvent del servicio para eliminar el evento del servidor
-  this.apiService.deleteEvent(eventId).subscribe(
-    () => {
-      console.log('Evento eliminado correctamente');
-      // Elimina el evento del calendario Angular
-      this.deleteEventFromCalendar(this.selectedEvent);
-      // Cierra el modal después de eliminar el evento
-      this.closeModal();
-    },
-    (error) => {
-      console.error('Error al eliminar el evento:', error);
-      // Maneja el error si es necesario
-    }
-  );
-}
-
-
-
-
-
-// Función para editar el evento (puedes implementarla según tus necesidades)
-editEvent() {
-  console.log('Editar evento:', this.selectedEvent);
-
-  this.closeModal();
-}
   loadEvents(employeeId: number): void {
     this.apiService.getEvents(employeeId).subscribe(
       (events: any[]) => {
@@ -225,7 +181,6 @@ editEvent() {
     );
   }
 
-
   getFormattedTime(date: Date): string {
     // Formatear la hora en formato HH:MM
     return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
@@ -247,8 +202,6 @@ editEvent() {
       start_datetime: `${this.form.get('fechaInicio')?.value} ${this.form.get('horaInicio')?.value}`,
       end_datetime: `${this.form.get('fechaFin')?.value} ${this.form.get('horaFin')?.value}`
     };
-
-
 
     // Enviar el horario al servidor
     this.onSubmit(scheduleData);
@@ -276,9 +229,9 @@ editEvent() {
       this.events.push(nuevoEvento); // Agregar evento a la lista
       this.calendarOptions.events = this.events; // Actualizar los eventos en el calendario
 
-        // Actualizar el calendario localmente
-  const calendarApi = this.fullcalendar.getApi();
-  calendarApi.addEvent(nuevoEvento); // Agregar el nuevo evento al calendario
+      // Actualizar el calendario localmente
+      const calendarApi = this.fullcalendar.getApi();
+      calendarApi.addEvent(nuevoEvento); // Agregar el nuevo evento al calendario
 
     }
 
@@ -289,8 +242,6 @@ editEvent() {
     const calendarApi = this.fullcalendar.getApi();
     calendarApi.removeAllEvents();
     calendarApi.addEventSource(this.events);
-    this.reloadPage();
-
 
   }
 
@@ -319,37 +270,6 @@ editEvent() {
       }
     );
   }
-
-  guardarHorario() {
-    // Resetear los mensajes de error
-    this.showErrorField = false;
-    this.showError = false;
-
-    if (this.form.invalid) {
-      this.showErrorField = true;
-      return;
-    }
-
-    const scheduleData = {
-      title: this.form.get('title')?.value,
-      start_datetime: `${this.form.get('fechaInicio')?.value} ${this.form.get('horaInicio')?.value}`,
-      end_datetime: `${this.form.get('fechaFin')?.value} ${this.form.get('horaFin')?.value}`
-    };
-
-    if (this.selectedEvent && this.selectedEvent.id) {
-      this.actualizarEvento();
-    } else {
-      this.agregarHorario();
-    }
-
-
-    // Enviar el horario al servidor
-    this.onSubmit(scheduleData);
-
-    // Limpiar el formulario después de agregar el horario
-    this.clearForm();
-  }
-
   // Limpiar el formulario
   clearForm(): void {
     this.form.reset();
@@ -380,105 +300,5 @@ editEvent() {
         return null; // Retorna nulo si la validación es exitosa
       }
     }
-}
-
-actualizarEvento() {
-  if (!this.selectedEvent || !this.selectedEvent.id) {
-    console.error('No se pudo obtener el ID del evento seleccionado');
-    return;
   }
-
-  const eventId = this.selectedEvent.id; // Obtener el ID del evento seleccionado
-
-  const scheduleData = {
-    title: this.form.get('title')?.value,
-    start_datetime: `${this.form.get('fechaInicio')?.value} ${this.form.get('horaInicio')?.value}`,
-    end_datetime: `${this.form.get('fechaFin')?.value} ${this.form.get('horaFin')?.value}`
-  };
-
-  // Llama al método de actualización del evento en el servicio
-  this.apiService.updateEvent(eventId, scheduleData).subscribe(
-    () => {
-      console.log('Evento actualizado correctamente');
-      // Actualizar el evento en el calendario visualmente
-      this.actualizarEventoEnCalendario(eventId, scheduleData);
-      // Cierra el modal después de actualizar el evento
-      this.closeModal();
-    },
-    (error) => {
-      console.error('Error al actualizar el evento:', error);
-      // Manejar el error si es necesario
-    }
-  );
-}
-actualizarEventoEnCalendario(eventId: number, scheduleData: any) {
-  // Filtrar la lista de eventos para encontrar el evento específico
-  const eventoActualizado = this.events.find(event => Number(event.id) === eventId);
-  if (eventoActualizado) {
-    eventoActualizado.title = scheduleData.title;
-    eventoActualizado.start = scheduleData.start_datetime;
-    eventoActualizado.end = scheduleData.end_datetime;
-
-    // Actualizar el calendario localmente
-    const calendarApi = this.fullcalendar.getApi();
-    calendarApi.updateEvent(eventoActualizado); // Corregir el método a updateEvent
-
-  } else {
-    console.error('No se encontró el evento con el ID:', eventId);
-  }
-}
-
-
-
-
-
-
-deleteEventFromCalendar(eventToDelete: any) {
-  // Filtrar la lista de eventos para eliminar el evento específico
-  this.events = this.events.filter(event => event !== eventToDelete);
-  this.calendarOptions.events = this.events; // Actualizar los eventos en el calendario
-
-  // Actualizar los eventos en el calendario después de eliminar el evento
-  const calendarApi = this.fullcalendar.getApi();
-  calendarApi.removeAllEvents();
-  calendarApi.addEventSource(this.events);
-  this.reloadPage();
-
-}
-reloadPage() {
-  // Recargar la página actual
-  window.location.reload();
-}
-
-//edit event:
-openEditModal(eventId: number) {
-  this.apiService.getEvent(eventId).subscribe(
-    (data) => {
-      const startDate = new Date(data.start_datetime);
-      const endDate = new Date(data.end_datetime);
-      // Asignamos los valores al formulario
-      this.form.patchValue({
-        title: data.title,
-        fechaInicio: this.formatDate(startDate), // Utilizamos la función formatDate para formatear la fecha de inicio
-        horaInicio: this.formatTime(startDate), // Utilizamos la función formatTime para formatear la hora de inicio
-        fechaFin: this.formatDate(endDate), // Utilizamos la función formatDate para formatear la fecha de fin
-        horaFin: this.formatTime(endDate) // Utilizamos la función formatTime para formatear la hora de fin
-      });
-      this.selectedEvent = data; // Actualizamos el evento seleccionado
-      this.showAddButton = false; // Cambiamos el estado del botón a "Editar"
-      this.showModal = true; // Abrimos el modal
-        },
-    (error) => {
-      console.error(error);
-      // Maneja el error si no se puede obtener el evento
-    }
-  );
-}
-
-// Función para formatear la fecha (YYYY-MM-DD)
-private formatDate(date: Date): string {
-  return date.toISOString().split('T')[0];
-}
-
-
 }
