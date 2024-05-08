@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 export class DasboardEmployeeComponent implements OnInit{
   profileData: any = {}; // Objeto para almacenar los datos del perfil del empleado
 
-  constructor(private apiService: ApiService) { } // Inyecta el servicio ApiService
+  constructor(private apiService: ApiService,private router: Router) { } // Inyecta el servicio ApiService
 
   ngOnInit(): void {
     // Llama al método en el servicio para obtener los datos del perfil del empleado
@@ -24,4 +25,13 @@ export class DasboardEmployeeComponent implements OnInit{
       }
     );
 }
+
+redirectToSchedule() {
+  this.router.navigate(['/view-schedule']);
+}
+
+redirectToDocuments() {
+  this.router.navigate(['/view-documents']);
+}
+
 }
