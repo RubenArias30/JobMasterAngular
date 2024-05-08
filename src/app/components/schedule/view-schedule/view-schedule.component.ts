@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { CalendarOptions } from '@fullcalendar/core';
+import { Component, OnInit, ViewChild, Input} from '@angular/core';
+import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
@@ -12,7 +13,7 @@ import { ApiService } from 'src/app/services/api/api.service';
   styleUrls: ['./view-schedule.component.css']
 })
 export class ViewScheduleComponent implements OnInit {
-  employeeId!: number;
+
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
@@ -28,33 +29,10 @@ export class ViewScheduleComponent implements OnInit {
       week: 'Semana',
       day: 'Día'
     },
-    eventColor: '#92E3A9'
+    eventColor: '#92E3A9',
   };
 
-  constructor(private route: ActivatedRoute, private apiService: ApiService) { }
-
   ngOnInit(): void {
-    console.log('Employee ID obtenida:', this.employeeId); // Console.log para verificar la employeeId
 
-    // Obtener el employeeId de los parámetros de la ruta
-    this.route.params.subscribe(params => {
-      this.employeeId = +params['employeeId']; // Convertir a número
-      // Llamar a loadSchedule solo si employeeId está definido
-      if (this.employeeId) {
-        console.log('Employee ID obtenida:', this.employeeId); // Console.log para verificar la employeeId
-
-        this.loadSchedule();
-
-      }
-    });
-  }
-
-  loadSchedule(): void {
-
-    this.apiService.getEmployeeSchedule().subscribe(events => {
-      // Asignar los eventos al calendario
-      this.calendarOptions.events = events;
-      console.log('Eventos cargados:', );
-    });
   }
 }

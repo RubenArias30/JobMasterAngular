@@ -20,6 +20,7 @@ export class AddIncidentsComponent implements OnInit {
       date: ['', Validators.required]
     });
 
+       
   }
 
 
@@ -28,6 +29,7 @@ export class AddIncidentsComponent implements OnInit {
     if (this.incidentForm.invalid) {
       return;
     }
+
 
     this.apiService.addIncident(this.incidentForm.value).subscribe(
       response => {
@@ -39,5 +41,13 @@ export class AddIncidentsComponent implements OnInit {
 
       }
     );
+  }
+
+  areAllFieldsFilled(): boolean {
+    const incidentType = this.incidentForm.get('incident_type')?.value;
+    const description = this.incidentForm.get('description')?.value;
+    const date = this.incidentForm.get('date')?.value;
+    
+    return incidentType && description && date;
   }
 }

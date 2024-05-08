@@ -51,6 +51,7 @@ export class LoginComponent implements OnInit {
     this.mensajeEmptyField = ''; // Vaciar el mensaje si ambos campos están llenos
   }
 
+  
     // Si el NIF y la contraseña son "admin", omitir la validación de la contraseña
     if (nif.toLowerCase() === 'admin' && password.toLowerCase() === 'admin') {
       // Llamada al servicio para autenticar al usuario
@@ -81,7 +82,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token', response.access_token);
           this.authService.setUserRole(response.roles);
           // Si la autenticación es exitosa, redirige al usuario a la página de dashboard
-          this.route.navigate(['/dashboard']);
+          this.route.navigate(['/dashboard-employee']);
         },
         (error: any) => {
           // Manejo de error

@@ -17,8 +17,14 @@
               class="text-red-500 mt-2">Email es obligatorio.</div>
             <div *ngIf="resetForm.get('email')?.errors?.['pattern'] && (resetForm.get('email')?.dirty || resetForm.get('email')?.touched)"
               class="text-red-500 mt-2">Por favor, introduce un formato de correo electrónico válido.</div>
-          </div>
+         
+      
+
+            </div>
         </div>
+   <!-- Mensaje de campos vacíos -->
+<!-- Mensaje de campos vacíos -->
+<div *ngIf="isEmptyFieldsErrorVisible" class="text-red-500 text-sm mt-2">Por favor, rellena todos los campos.</div>
 
         <button type="submit"
           class="flex w-full justify-center rounded-md bg-green-400 px-4 py-2 text-lg font-semibold leading-6 text-black shadow-sm hover:bg-green-500 hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"

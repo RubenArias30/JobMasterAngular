@@ -26,8 +26,10 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ViewDocumentsComponent } from './components/documents/view-documents/view-documents.component';
 import { RequestResetComponent } from './components/password/request-reset/request-reset.component';
 import { ResponseResetComponent } from './components/password/response-reset/response-reset.component';
-import { ViewScheduleComponent } from './components/schedule/view-schedule/view-schedule.component';
 import { AddAbsencesComponent } from './components/absences/add-absences/add-absences.component';
+import { ViewScheduleComponent } from './components/schedule/view-schedule/view-schedule.component';
+import { EditScheduleComponent } from './components/schedule/edit-schedule/edit-schedule.component';
+import { DasboardEmployeeComponent } from './components/dashboard/dasboard-employee/dasboard-employee.component';
 
 
 
@@ -38,7 +40,14 @@ const routes: Routes = [
     path: 'dashboard',
     component: LayoutComponent,
     children: [
-      { path: '', component: DashboardComponent, canActivate:[MyGuardGuard] ,data: { roles: ['admin','empleado'] }}
+      { path: '', component: DashboardComponent, canActivate:[MyGuardGuard] ,data: { roles: ['admin'] }}
+    ]
+  },
+  {
+    path: 'dashboard-employee',
+    component: LayoutComponent,
+    children: [
+      { path: '', component: DasboardEmployeeComponent, canActivate:[MyGuardGuard] ,data: { roles: ['empleado'] }}
     ]
   },
   { path: 'employees', component: LayoutComponent,
@@ -138,6 +147,7 @@ const routes: Routes = [
   children: [
     { path: '', component: ScheduleComponent },
     { path: 'add_schedule/:id', component: AddScheduleComponent },
+    { path: 'edit_schedule/:id', component: EditScheduleComponent },
 
   ]
 },

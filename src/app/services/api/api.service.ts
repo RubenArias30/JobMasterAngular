@@ -100,25 +100,21 @@ export class ApiService {
     return this.http.get<Event[]>(`${this.apiUrl}/employees/${employeeId}/events`);
   }
 
-  // deleteEvent(employeeId: number, scheduleId: number): Observable<any> {
-  //   return this.http.delete<any>(`${this.apiUrl}/employees/${employeeId}/schedules/${scheduleId}`);
-  // }
-
-  deleteEvent(eventId: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/events/${eventId}`);
+  updateSchedule(id: number, formData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/events/${id}`, formData);
   }
+
+
+  // deleteEvent(eventId: number): Observable<any> {
+  //   return this.http.delete<any>(`${this.apiUrl}/events/${eventId}`);
+  // }
 
   //edit event (schedule)
   getEvent(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/events/${id}`);
   }
 
-  updateEvent(eventId: number, eventData: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/events/${eventId}`, eventData);
-
-  }
-
-  //schedule employees
+  //Schedule Employees
   getEmployeeSchedule(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/employees/events`);
   }

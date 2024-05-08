@@ -9,10 +9,10 @@ import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'app-add-schedule',
-  templateUrl: './add-schedule.component.html',
-  styleUrls: ['./add-schedule.component.css']
+  templateUrl: './edit-schedule.component.html',
+  styleUrls: ['./edit-schedule.component.css']
 })
-export class AddScheduleComponent implements OnInit {
+export class EditScheduleComponent implements OnInit {
   @ViewChild('fullcalendar') fullcalendar: any;
   @Input() eventDetails: any;
 
@@ -30,7 +30,6 @@ export class AddScheduleComponent implements OnInit {
   horaFin: string = '';
   employeeName: string = '';
   form: FormGroup;
-  formEdit: FormGroup;
   showError: boolean = false;
   showErrorField: boolean = false;
 
@@ -105,14 +104,6 @@ export class AddScheduleComponent implements OnInit {
       fechaFin: ['', Validators.required],
       horaFin: ['', [Validators.required, Validators.pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)]]
     }, { validator: this.dateRangeValidator });
-    // Inicializar el formulario reactivo
-    this.formEdit = this.formBuilder.group({
-      title: ['', Validators.required],
-      fechaInicio: ['', Validators.required],
-      horaInicio: ['', [Validators.required, Validators.pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)]],
-      fechaFin: ['', Validators.required],
-      horaFin: ['', [Validators.required, Validators.pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)]]
-    }, { validator: this.dateRangeValidator });
   }
 
   ngOnInit(): void {
@@ -137,7 +128,14 @@ export class AddScheduleComponent implements OnInit {
         end: info.event.end,
       };
 
-        // Verificar si hay un evento seleccionado
+      // Abre el modal si es necesario
+      this.showModal = true;
+    }
+  }
+
+
+  openEditForm() {
+    // Verificar si hay un evento seleccionado
     if (!this.selectedEvent) {
       console.error('No se ha seleccionado ningún evento para editar.');
       return;
@@ -164,7 +162,7 @@ export class AddScheduleComponent implements OnInit {
     const formattedEndTime = this.formatTime(end);
 
     // Inicializar el formulario de edición con el rango completo de fechas y horas del evento seleccionado
-    this.formEdit.patchValue({
+    this.form.patchValue({
       title: title,
       fechaInicio: formattedStartDate,
       horaInicio: formattedStartTime,
@@ -172,16 +170,16 @@ export class AddScheduleComponent implements OnInit {
       horaFin: formattedEndTime
     });
 
-      // Abre el modal si es necesario
-      this.showModal = true;
-    }
+    // Cerrar el modal
+    this.closeModal();
   }
+
+
 
   // Función para mostrar el modal y pasar el evento seleccionado
   openModal(event: any) {
     this.selectedEvent = event;
     this.showModal = true;
-
   }
 
   // Función para cerrar el modal
@@ -244,79 +242,9 @@ export class AddScheduleComponent implements OnInit {
     return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
   }
 
-  // Agregar un nuevo horario
-  agregarHorario() {
-    // Resetear los mensajes de error
-    this.showErrorField = false;
-    this.showError = false;
+  // Editar un nuevo horario
+  editarHorario() {
 
-    if (this.form.invalid) {
-      this.showErrorField = true;
-      return;
-    }
-
-    const scheduleData = {
-      title: this.form.get('title')?.value,
-      start_datetime: `${this.form.get('fechaInicio')?.value} ${this.form.get('horaInicio')?.value}`,
-      end_datetime: `${this.form.get('fechaFin')?.value} ${this.form.get('horaFin')?.value}`
-    };
-
-    // Enviar el horario al servidor
-    this.onSubmit(scheduleData);
-
-    // Limpiar el formulario después de agregar el horario
-    this.clearForm();
-
-    // Crear un nuevo evento para cada día dentro del rango especificado y agregarlo a la lista de eventos
-    const start = new Date(scheduleData.start_datetime);
-    const end = new Date(scheduleData.end_datetime);
-    if (start >= end) {
-      const temp = scheduleData.start_datetime;
-      scheduleData.start_datetime = scheduleData.end_datetime;
-      scheduleData.end_datetime = temp;
-    }
-
-    for (let currentDate = new Date(start); currentDate <= end; currentDate.setDate(currentDate.getDate() + 1)) {
-      const formattedDate = currentDate.toISOString().split('T')[0];
-      const nuevoEvento: EventInput = {
-        title: scheduleData.title,
-        start: `${formattedDate}T${scheduleData.start_datetime.split(' ')[1]}:00`,
-        end: `${formattedDate}T${scheduleData.end_datetime.split(' ')[1]}:00`
-      };
-
-      this.events.push(nuevoEvento); // Agregar evento a la lista
-      this.calendarOptions.events = this.events; // Actualizar los eventos en el calendario
-
-      // Actualizar el calendario localmente
-      const calendarApi = this.fullcalendar.getApi();
-      calendarApi.addEvent(nuevoEvento); // Agregar el nuevo evento al calendario
-
-    }
-
-    // Actualizar los eventos en el calendario después de agregar todos los eventos
-    this.calendarOptions.events = this.events;
-
-    // Limpiar el calendario y volver a cargar los eventos
-    const calendarApi = this.fullcalendar.getApi();
-    calendarApi.removeAllEvents();
-    calendarApi.addEventSource(this.events);
-
-  }
-
-
-  // Enviar el horario al servidor
-  onSubmit(scheduleData: any) {
-    this.apiService.addSchedule(this.employeeId, scheduleData).subscribe(
-      response => {
-        console.log('Horario agregado correctamente:', response);
-      },
-      error => {
-        console.error('Error al agregar el horario:', error);
-      }
-    );
-  }
-
-  editarHorario(){
     // Verificar si hay un evento seleccionado
     if (!this.selectedEvent) {
       console.error('No se ha seleccionado ningún evento para editar.');
@@ -324,9 +252,9 @@ export class AddScheduleComponent implements OnInit {
     }
     // Obtener los datos del formulario
     const formData = {
-      title: this.formEdit.get('title')?.value,
-      start_datetime: `${this.formEdit.get('fechaInicio')?.value} ${this.formEdit.get('horaInicio')?.value}`,
-      end_datetime: `${this.formEdit.get('fechaFin')?.value} ${this.formEdit.get('horaFin')?.value}`
+      title: this.form.get('title')?.value,
+      start_datetime: `${this.form.get('fechaInicio')?.value} ${this.form.get('horaInicio')?.value}`,
+      end_datetime: `${this.form.get('fechaFin')?.value} ${this.form.get('horaFin')?.value}`
     };
     console.log(formData);
 
@@ -347,6 +275,13 @@ export class AddScheduleComponent implements OnInit {
         console.error('Error al actualizar el evento:', error);
       }
     );
+  }
+
+
+
+  // Enviar el horario al servidor
+  onSubmit(scheduleData: any) {
+
   }
 
 

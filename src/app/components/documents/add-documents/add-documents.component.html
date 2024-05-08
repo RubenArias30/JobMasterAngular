@@ -54,6 +54,13 @@
         </div>
       </div>
     </div>
+<!-- Otros elementos del formulario -->
+
+<div *ngIf="showMissingFieldsError && documentForm.invalid" class="text-red-500 mt-2">
+  Por favor rellena todos los campos.
+</div>
+
+<!-- Otros elementos del formulario -->
 
     <!-- Botón "Añadir Documento" y CANCELAR-->
     <div class="mt-8 mb-3">

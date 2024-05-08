@@ -38,8 +38,11 @@
           <td class="text-center px-4 py-2">{{ employee.telephone }}</td>
           <td class="text-center px-4 py-2">{{ employee.country }}</td>
           <td class="text-center px-4 py-2">
-            <a [routerLink]="['/schedule/add_schedule', employee.id]" class="text-blue-500 hover:text-blue-700">
+            <a [routerLink]="['/schedule/add_schedule', employee.id]" class="text-blue-500 hover:text-blue-700 mt-2">
               <i class='bx bxs-calendar-plus text-xl'></i>
+            </a>
+            <a [routerLink]="['/schedule/edit_schedule', employee.id]" class="text-blue-500 hover:text-blue-700 mt-2">
+              <i class='bx bxs-calendar-edit text-xl'></i>
             </a>
           </td>
         </tr>

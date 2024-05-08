@@ -38,6 +38,10 @@ import { ViewDocumentsComponent } from './components/documents/view-documents/vi
 import { RequestResetComponent } from './components/password/request-reset/request-reset.component';
 import { ResponseResetComponent } from './components/password/response-reset/response-reset.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { ViewScheduleComponent } from './components/schedule/view-schedule/view-schedule.component';
+import { EditScheduleComponent } from './components/schedule/edit-schedule/edit-schedule.component';
+import { DasboardEmployeeComponent } from './components/dashboard/dasboard-employee/dasboard-employee.component';
+
 
 
 
@@ -85,7 +89,9 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     SuccessAlertComponent,
     ViewDocumentsComponent,
     RequestResetComponent,
-    ResponseResetComponent
+    ResponseResetComponent,
+    ViewScheduleComponent,
+    EditScheduleComponent
 
 
 
