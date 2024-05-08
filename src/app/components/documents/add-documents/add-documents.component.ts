@@ -12,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class AddDocumentsComponent implements OnInit {
   documentForm: FormGroup;
   employeeId: number | null = null; // Inicializa la propiedad con un valor seguro
+  showMissingFieldsError: boolean = false;
 
   constructor(
     private apiService: ApiService,
@@ -23,8 +24,8 @@ export class AddDocumentsComponent implements OnInit {
       type_documents: ['', Validators.required],
       name: ['', Validators.required],
       description: ['', Validators.required],
-      date: ['', Validators.required],
-      route: ['', Validators.required]
+      date: ['', [Validators.required, this.dateValidator()]], 
+      route: ['', [Validators.required, this.fileExtensionValidator]]
     });
   }
 
@@ -37,8 +38,10 @@ export class AddDocumentsComponent implements OnInit {
 
   submitForm(): void {
     if (this.documentForm.invalid) {
+      this.showMissingFieldsError = true; // Mostrar mensaje de error
       return;
     }
+    this.showMissingFieldsError = false;
 
     this.apiService.addDocumentToEmployee(this.employeeId!, this.documentForm.value).subscribe(
       (response) => {
