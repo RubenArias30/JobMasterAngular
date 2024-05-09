@@ -57,8 +57,11 @@
 
 <!-- Sección de Incidencias -->
 <div class="px-4 py-2 w-full">
-  <div class="bg-white border border-green-400 rounded-xl p-4 mb-8">
-    <h2 class="text-xl font-bold mb-4">Incidencias</h2>
+  <div class="bg-white border border-green-400 rounded-xl p-4 mb-8 relative">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-bold inline-block">Incidencias</h2>
+      <button (click)="navigateToIncidents()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">Ir a Incidencias <i class='bx bxs-right-arrow-circle text-lg'></i></button>
+    </div>
     <div class="overflow-x-auto">
       <table class="w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
@@ -109,13 +112,18 @@
         </tbody>
       </table>
     </div>
+
   </div>
+
 </div>
 
 <!-- Sección de Ausencias Recientes -->
 <div class="px-4 py-2 w-full">
-  <div class="bg-white border border-green-400 rounded-xl p-4 mb-8">
-    <h2 class="text-xl font-bold mb-4">Ausencias Recientes</h2>
+  <div class="bg-white border border-green-400 rounded-xl p-4 mb-8 relative">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-bold inline-block">Ausencias Recientes</h2>
+      <button (click)="navigateToAbsences()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">Ir a Ausencias <i class='bx bxs-right-arrow-circle text-lg'></i></button>
+    </div>
     <div class="overflow-x-auto">
       <table class="w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">

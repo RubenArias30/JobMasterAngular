@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api/api.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -17,13 +17,34 @@ export class AddIncidentsComponent implements OnInit {
     this.incidentForm = this.formBuilder.group({
       incident_type: ['', Validators.required],
       description: ['', Validators.required],
-      date: ['', Validators.required]
+      date: ['', [Validators.required,this.dateValidator()]]
     });
 
-       
+
   }
 
 
+// Función para validar que la fecha no sea del pasado ni del futuro
+dateValidator(): any {
+  return (control: AbstractControl): { [key: string]: boolean } | null => {
+    const selectedDate = new Date(control.value);
+    const currentDate = new Date();
+    const oneYearAgo = new Date();
+    oneYearAgo.setFullYear(currentDate.getFullYear() - 1);
+
+    // Validación de fecha pasada
+    if (selectedDate > currentDate) {
+      return { 'invalidFutureDate': true };
+    }
+
+    // Validación de fecha futura
+    if (selectedDate < oneYearAgo) {
+      return { 'invalidPastDate': true };
+    }
+
+    return null;
+  };
+}
 
   addIncident() {
     if (this.incidentForm.invalid) {
@@ -47,7 +68,7 @@ export class AddIncidentsComponent implements OnInit {
     const incidentType = this.incidentForm.get('incident_type')?.value;
     const description = this.incidentForm.get('description')?.value;
     const date = this.incidentForm.get('date')?.value;
-    
+
     return incidentType && description && date;
   }
 }

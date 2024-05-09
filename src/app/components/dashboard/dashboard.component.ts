@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class DashboardComponent implements OnInit {
   incidences: any[] = [];
   recentAbsences: any[] = [];
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, private router: Router) { }
 
   ngOnInit(): void {
     this.actualizarFechaHora();
@@ -68,5 +69,16 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
-  
+
+
+// Método para navegar a la ruta de Ausencias
+navigateToAbsences() {
+  this.router.navigate(['/absences']);
+}
+
+// Método para navegar a la ruta de Incidencias
+navigateToIncidents() {
+  this.router.navigate(['/incidents']);
+}
+
 }
