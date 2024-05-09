@@ -16,6 +16,7 @@ ausenciaForm: FormGroup = this.formBuilder.group({});
 absences: any[] = [];
  employees: any[] = [];
  submitted = false;
+ 
 
  constructor(private apiService: ApiService, private formBuilder: FormBuilder,private router : Router)  {
 
@@ -102,7 +103,7 @@ ngOnInit(): void {
     // Clear form data and close modal
     this.ausenciaForm.reset();
     this.closeModal();
-    
+
   }
 
 

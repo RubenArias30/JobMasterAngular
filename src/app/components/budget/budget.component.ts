@@ -145,7 +145,7 @@ export class BudgetComponent implements OnInit {
             \n${invoice.clients.client_name}
             \n${invoice.clients.client_telephone}
             \n${invoice.clients.client_email}
-            \n${invoice.clients.city}
+            \n${invoice.clients.client_street}
             \n${invoice.clients.client_city}
             \n${invoice.clients.client_postal_code}`,
           },
@@ -154,9 +154,9 @@ export class BudgetComponent implements OnInit {
                   \n${invoice.companies.company_name}
                   \n${invoice.companies.company_telephone}
                   \n${invoice.companies.company_email}
-                  \n${invoice.companies.street}
-                  \n${invoice.companies.city}
-                  \n${invoice.companies.postal_code}`,
+                  \n${invoice.companies.company_street}
+                  \n${invoice.companies.company_city}
+                  \n${invoice.companies.company_postal_code}`,
           }
         ]
       ],
