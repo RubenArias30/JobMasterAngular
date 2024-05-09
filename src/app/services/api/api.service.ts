@@ -46,6 +46,7 @@ export class ApiService {
   }
   updateEmployee(id: string, employeeData: any): Observable<any> {
     const url = `${this.apiUrl}/employees/${id}`;
+    console.log('Hola editar' + employeeData.photo)
     return this.http.put(url, employeeData).pipe(
       catchError(error => {
         return throwError(error);
