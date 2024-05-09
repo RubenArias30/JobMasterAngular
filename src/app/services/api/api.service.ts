@@ -104,6 +104,12 @@ export class ApiService {
     return this.http.put(`${this.apiUrl}/events/${id}`, formData);
   }
 
+  getScheduleEmployees(employeeId : number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/schedule/${employeeId}`);
+  }
+
+
+
 
   // deleteEvent(eventId: number): Observable<any> {
   //   return this.http.delete<any>(`${this.apiUrl}/events/${eventId}`);
