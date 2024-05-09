@@ -91,7 +91,8 @@ import { DasboardEmployeeComponent } from './components/dashboard/dasboard-emplo
     RequestResetComponent,
     ResponseResetComponent,
     ViewScheduleComponent,
-    EditScheduleComponent
+    EditScheduleComponent,
+
 
 
 
@@ -105,6 +106,7 @@ import { DasboardEmployeeComponent } from './components/dashboard/dasboard-emplo
     FullCalendarModule,
     AppRoutingModule,
     NgxExtendedPdfViewerModule
+
 
 
   ],
