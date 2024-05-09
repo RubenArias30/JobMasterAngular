@@ -9,7 +9,7 @@
 
   <!-- Línea divisora -->
   <hr class="my-4 border-gray-400">
-  <form [formGroup]="employeeForm" (submit)="addEmployee()">
+  <form [formGroup]="employeeForm" (submit)="addEmployee()" enctype="multipart/form-data">
 
     <div class="container mx-auto mt-8 flex">
       <!-- Información personal -->
@@ -20,7 +20,7 @@
 
           <div class="mt-2">
             <label for="nombre" class="block">Nombre</label>
-            <input type="text" id="name" formControlName="name"
+            <input type="text" id="name" formControlName="name" name="name"
               class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Nombre" maxlength="20">
             <div
               *ngIf="employeeForm.get('name')?.errors?.['required'] && (employeeForm.get('name')?.dirty || employeeForm.get('name')?.touched)"
@@ -31,7 +31,7 @@
           </div>
           <div class="mt-2">
             <label for="apellido" class="block">Apellido</label>
-            <input type="text" id="surname" formControlName="surname"
+            <input type="text" id="surname" formControlName="surname" name="surname"
               class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Apellidos" maxlength="20">
             <div
               *ngIf="employeeForm.get('surname')?.errors?.['required'] && (employeeForm.get('surname')?.dirty || employeeForm.get('surname')?.touched)"
@@ -43,7 +43,7 @@
           </div>
           <div class="mt-2">
             <label for="fecha-nacimiento" class="block">Fecha de nacimiento</label>
-            <input type="date" id="date_of_birth" formControlName="date_of_birth"
+            <input type="date" id="date_of_birth" formControlName="date_of_birth" name="date_of_birth"
               class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Fecha de nacimiento">
             <div
               *ngIf="employeeForm.get('date_of_birth')?.errors?.['required'] && (employeeForm.get('date_of_birth')?.dirty || employeeForm.get('date_of_birth')?.touched)"
@@ -58,7 +58,7 @@
         </div>
         <div class="mt-2">
           <label for="nacionalidad" class="block">Pais</label>
-          <input type="text" id="nacionalidad" formControlName="country"
+          <input type="text" id="nacionalidad" formControlName="country" name="country"
             class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Nacionalidad" maxlength="20">
           <div
             *ngIf="employeeForm.get('country')?.errors?.['required'] && (employeeForm.get('country')?.dirty || employeeForm.get('country')?.touched)"
@@ -69,7 +69,7 @@
         </div>
         <div class="mt-2">
           <label for="genero" class="block">Género</label>
-          <select id="genero" formControlName="gender"
+          <select id="genero" formControlName="gender" name="gender"
             class="border border-gray-300 rounded-md p-2 w-full shadow-inner">
             <option value="" disabled selected>Seleccione su género</option>
             <option value="masculino">Masculino</option>
@@ -81,7 +81,7 @@
         </div>
         <div class="mt-2">
           <label for="email" class="block">Email</label>
-          <input type="email" id="email" formControlName="email"
+          <input type="email" id="email" formControlName="email" name="email"
             class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Email" maxlength="35">
           <div
             *ngIf="employeeForm.get('email')?.errors?.['required'] && (employeeForm.get('email')?.dirty || employeeForm.get('email')?.touched)"
@@ -92,7 +92,7 @@
         </div>
         <div class="mt-2">
           <label for="telefono" class="block">Teléfono</label>
-          <input type="text" id="telephone" formControlName="telephone"
+          <input type="text" id="telephone" formControlName="telephone" name="telephone"
             class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Teléfono" maxlength="9">
           <div
             *ngIf="employeeForm.get('telephone')?.errors?.['required'] && (employeeForm.get('telephone')?.dirty || employeeForm.get('telephone')?.touched)"
@@ -107,8 +107,8 @@
         </div>
 
         <div class="mt-2">
-          <label for="foto" class="block">Foto</label>
-          <input type="file" id="photo" formControlName="photo" accept="image/*" class="mt-1">
+          <label for="photo" class="block">Foto</label>
+          <input type="file" name="photo" id="photo" formControlName="photo" accept="image/*" class="mt-1" (change)="imageUpload($event)">
           <div
             *ngIf="employeeForm.get('photo')?.errors?.['required'] && (employeeForm.get('photo')?.dirty || employeeForm.get('photo')?.touched)"
             class="text-red-500 mt-2">Foto es obligatoria.</div>
@@ -129,16 +129,16 @@
         <h2 class="text-lg font-bold">Direccion</h2>
         <hr class="my- border-gray-400">
         <div class="mt-2">
-          <label for="direccion" class="block">Dirección</label>
-          <input type="text" id="direccion" formControlName="street"
+          <label for="street" class="block">Dirección</label>
+          <input type="text" id="street" formControlName="street" name="street"
             class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2" placeholder="Nombre y número de la calle" maxlength="20">
           <div
             *ngIf="employeeForm.get('street')?.errors?.['required'] && (employeeForm.get('street')?.dirty || employeeForm.get('street')?.touched)"
             class="text-red-500 mt-2">Dirección es obligatoria.</div>
         </div>
         <div class="mt-2">
-          <label for="ciudad" class="block">Ciudad</label>
-          <input type="text" id="ciudad" formControlName="city"
+          <label for="city" class="block">Ciudad</label>
+          <input type="text" id="city" formControlName="city" name="city"
             class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2" placeholder="Ciudad" maxlength="20">
           <div
             *ngIf="employeeForm.get('city')?.errors?.['required'] && (employeeForm.get('city')?.dirty || employeeForm.get('city')?.touched)"
@@ -150,7 +150,7 @@
 
         <div class="mt-2">
           <label for="ciudad" class="block">Código Postal</label>
-          <input type="text" id="cp" formControlName="postal_code"
+          <input type="text" id="cp" formControlName="postal_code" name="postal_code"
             class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2" placeholder="Código Postal" maxlength="5">
           <div
             *ngIf="employeeForm.get('postal_code')?.errors?.['required'] && (employeeForm.get('postal_code')?.dirty || employeeForm.get('postal_code')?.touched)"
@@ -167,7 +167,7 @@
 
         <div class="mt-4">
           <label for="nif" class="block">NIF</label>
-          <input type="text" id="nif" formControlName="nif" appNifValidator
+          <input type="text"  name="nif" id="nif" formControlName="nif" appNifValidator
             class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="12345678Z" maxlength="9">
           <div
             *ngIf="employeeForm?.get('nif')?.invalid && (employeeForm?.get('nif')?.dirty || employeeForm?.get('nif')?.touched)"
@@ -177,7 +177,7 @@
               class="text-red-500 mt-2">NIF es obligatorio.</div> -->
         </div>
         <div class="relative mt-5">
-          <input type="{{ showPassword ? 'text' : 'password' }}" id="password" formControlName="password"
+          <input type="{{ showPassword ? 'text' : 'password' }}" id="password" formControlName="password" name="password"
             class="border border-gray-300 rounded-md p-2 pr-10 w-full shadow-inner" placeholder="Contraseña" maxlength="35">
           <button type="button" class="absolute inset-y-0 right-0 flex items-center px-3" (click)="togglePasswordVisibility()">
             <i *ngIf="!showPassword" class='bx bx-show-alt'></i>
