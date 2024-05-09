@@ -81,8 +81,8 @@ export class ViewScheduleComponent implements OnInit {
   }
 
   viewScheduleEmployees(): void {
-    const empleadoId = 6; // Reemplaza con la ID del empleado actual
-    this.apiService.getScheduleEmployees(empleadoId)
+   // const empleadoId = 6; // Reemplaza con la ID del empleado actual
+    this.apiService.getScheduleForEmployee()
       .subscribe(
         (events: any[]) => {
           console.log('Eventos recibidos de la API:', events);
