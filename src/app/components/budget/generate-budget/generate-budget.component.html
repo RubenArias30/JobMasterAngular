@@ -63,34 +63,34 @@
                 class="text-red-500 mt-2">Por favor, introduce un formato de correo electrónico válido.</div>
             </div>
             <div>
-              <label for="street" class="block mb-1">Dirección:</label>
-              <input formControlName="street" name="street" id="street" type="text" placeholder="calle maig 56"
+              <label for="company_street" class="block mb-1">Dirección:</label>
+              <input formControlName="company_street" name="company_street" id="company_street" type="text" placeholder="calle maig 56"
                 class="border p-2 rounded-md w-full" maxlength="20">
               <div
-                *ngIf="budgetForm.get('street')?.errors?.['required'] && (budgetForm.get('street')?.dirty || budgetForm.get('street')?.touched)"
+                *ngIf="budgetForm.get('company_street')?.errors?.['required'] && (budgetForm.get('company_street')?.dirty || budgetForm.get('company_street')?.touched)"
                 class="text-red-500 mt-2">Dirección es obligatoria.</div>
             </div>
             <div>
-              <label for="city" class="block mb-1">Ciudad:</label>
-              <input formControlName="city" name="city" id="city" type="text" placeholder="Barcelona"
+              <label for="company_city" class="block mb-1">Ciudad:</label>
+              <input formControlName="company_city" name="company_city" id="company_city" type="text" placeholder="Barcelona"
                 class="border p-2 rounded-md w-full" maxlength="20">
               <div
-                *ngIf="budgetForm.get('city')?.errors?.['required'] && (budgetForm.get('city')?.dirty || budgetForm.get('city')?.touched)"
+                *ngIf="budgetForm.get('company_city')?.errors?.['required'] && (budgetForm.get('company_city')?.dirty || budgetForm.get('company_city')?.touched)"
                 class="text-red-500 mt-2">Ciudad es obligatoria.</div>
               <div
-                *ngIf="budgetForm.get('city')?.errors?.['pattern'] && (budgetForm.get('city')?.dirty || budgetForm.get('city')?.touched)"
+                *ngIf="budgetForm.get('company_city')?.errors?.['pattern'] && (budgetForm.get('company_city')?.dirty || budgetForm.get('company_city')?.touched)"
                 class="text-red-500 mt-2">Por favor, introduce la ciudad con la primera letra en mayúscula y solo
                 letras.</div>
             </div>
             <div>
-              <label for="postal_code" class="block mb-1">Código Postal:</label>
-              <input formControlName="postal_code" name="postal_code" id="postal_code" type="text" placeholder="90876"
+              <label for="company_postal_code" class="block mb-1">Código Postal:</label>
+              <input formControlName="company_postal_code" name="company_postal_code" id="company_postal_code" type="text" placeholder="90876"
                 class="border p-2 rounded-md w-full" maxlength="5">
               <div
-                *ngIf="budgetForm.get('postal_code')?.errors?.['required'] && (budgetForm.get('postal_code')?.dirty || budgetForm.get('postal_code')?.touched)"
+                *ngIf="budgetForm.get('company_postal_code')?.errors?.['required'] && (budgetForm.get('company_postal_code')?.dirty || budgetForm.get('company_postal_code')?.touched)"
                 class="text-red-500 mt-2">Código Postal es obligatorio.</div>
               <div
-                *ngIf="budgetForm.get('postal_code')?.errors?.['pattern'] && (budgetForm.get('postal_code')?.dirty || budgetForm.get('postal_code')?.touched)"
+                *ngIf="budgetForm.get('company_postal_code')?.errors?.['pattern'] && (budgetForm.get('company_postal_code')?.dirty || budgetForm.get('company_postal_code')?.touched)"
                 class="text-red-500 mt-2">Por favor, introduce solo números para el código postal.</div>
             </div>
           </div>
@@ -150,34 +150,34 @@
                 class="text-red-500 mt-2">Por favor, introduce un formato de correo electrónico válido.</div>
             </div>
             <div>
-              <label for="street" class="block mb-1">Dirección:</label>
-              <input formControlName="street" id="street" name="street" type="text" placeholder="calle maig 56"
+              <label for="client_street" class="block mb-1">Dirección:</label>
+              <input formControlName="client_street" id="client_street" name="client_street" type="text" placeholder="calle maig 56"
                 class="border p-2 rounded-md w-full" maxlength="20">
               <div
-                *ngIf="budgetForm.get('street')?.errors?.['required'] && (budgetForm.get('street')?.dirty || budgetForm.get('street')?.touched)"
+                *ngIf="budgetForm.get('client_street')?.errors?.['required'] && (budgetForm.get('client_street')?.dirty || budgetForm.get('client_street')?.touched)"
                 class="text-red-500 mt-2">Dirección es obligatoria.</div>
             </div>
             <div>
-              <label for="city" class="block mb-1">Ciudad:</label>
-              <input formControlName="city" id="city" name="city" type="text" placeholder="Barcelona"
+              <label for="client_city" class="block mb-1">Ciudad:</label>
+              <input formControlName="client_city" id="client_city" name="client_city" type="text" placeholder="Barcelona"
                 class="border p-2 rounded-md w-full" maxlength="20">
               <div
-                *ngIf="budgetForm.get('city')?.errors?.['required'] && (budgetForm.get('city')?.dirty || budgetForm.get('city')?.touched)"
+                *ngIf="budgetForm.get('client_city')?.errors?.['required'] && (budgetForm.get('client_city')?.dirty || budgetForm.get('client_city')?.touched)"
                 class="text-red-500 mt-2">Ciudad es obligatoria.</div>
               <div
-                *ngIf="budgetForm.get('city')?.errors?.['pattern'] && (budgetForm.get('city')?.dirty || budgetForm.get('city')?.touched)"
+                *ngIf="budgetForm.get('client_city')?.errors?.['pattern'] && (budgetForm.get('client_city')?.dirty || budgetForm.get('client_city')?.touched)"
                 class="text-red-500 mt-2">Por favor, introduce la ciudad con la primera letra en mayúscula y solo
                 letras.</div>
             </div>
             <div>
-              <label for="postal_code" class="block mb-1">Codigo Postal:</label>
-              <input formControlName="postal_code" id="postal_code" name="postal_code" type="text" placeholder="90876"
+              <label for="client_postal_code" class="block mb-1">Codigo Postal:</label>
+              <input formControlName="client_postal_code" id="client_postal_code" name="client_postal_code" type="text" placeholder="90876"
                 class="border p-2 rounded-md w-full" maxlength="5">
               <div
-                *ngIf="budgetForm.get('postal_code')?.errors?.['required'] && (budgetForm.get('postal_code')?.dirty || budgetForm.get('postal_code')?.touched)"
+                *ngIf="budgetForm.get('client_postal_code')?.errors?.['required'] && (budgetForm.get('client_postal_code')?.dirty || budgetForm.get('client_postal_code')?.touched)"
                 class="text-red-500 mt-2">Código Postal es obligatorio.</div>
               <div
-                *ngIf="budgetForm.get('postal_code')?.errors?.['pattern'] && (budgetForm.get('postal_code')?.dirty || budgetForm.get('postal_code')?.touched)"
+                *ngIf="budgetForm.get('client_postal_code')?.errors?.['pattern'] && (budgetForm.get('client_postal_code')?.dirty || budgetForm.get('client_postal_code')?.touched)"
                 class="text-red-500 mt-2">Por favor, introduce solo números para el código postal.</div>
             </div>
           </div>
