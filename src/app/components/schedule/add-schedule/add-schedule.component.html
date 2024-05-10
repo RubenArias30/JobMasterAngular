@@ -63,13 +63,13 @@
   </div>
 
   <!-- Main modal -->
-  <div id="crud-modal" *ngIf="showModal" tabindex="-1" aria-hidden="true"
+  <!-- <div id="crud-modal" *ngIf="showModal" tabindex="-1" aria-hidden="true"
     class="fixed inset-0 flex items-center justify-center z-50">
     <div class="absolute inset-0 bg-black opacity-50"></div>
     <div class="relative p-4 w-full max-w-2xl">
-      <!-- Modal content -->
+      <!-- Modal content
       <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-        <!-- Modal header -->
+        <!-- Modal header
         <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
           <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
             Detalles de evento
@@ -84,7 +84,7 @@
           </button>
         </div>
 
-        <!-- Modal body -->
+        <!-- Modal body
         <form [formGroup]="formEdit" >
           <div class="p-4 md:p-5">
             <label for="title" class="block text-sm font-bold mb-1">Título:</label>
@@ -107,7 +107,7 @@
             <input type="time"
               class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
               formControlName="horaFin" required>
-            <!-- Mensaje de error para la validación de fecha de fin -->
+            <!-- Mensaje de error para la validación de fecha de fin
             <div *ngIf="formEdit.get('fechaFin')?.invalid && (formEdit.get('fechaFin')?.dirty || formEdit.get('fechaFin')?.touched)"
               class="text-red-500 mt-1">Fecha de fin es requerida.</div>
             <div
@@ -137,7 +137,7 @@
         </form>
       </div>
     </div>
-  </div>
+  </div> -->
   <!-- Botón de volver atrás -->
   <div class="flex justify-center mt-4">
     <button class="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded" (click)="goBack()">Volver

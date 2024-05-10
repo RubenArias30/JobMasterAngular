@@ -13,6 +13,8 @@ export class AddEmployeeComponent {
   showError: boolean = false;
   errorMessage: string = '';
   showPassword: boolean = false;
+  file: any;
+
 
   constructor(private apiService: ApiService, private router: Router, private fb: FormBuilder) {
     // Inicializa el formulario y define las reglas de validación
@@ -28,7 +30,7 @@ export class AddEmployeeComponent {
       city: ['', [Validators.required, Validators.pattern('^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ ]+$')]],
       postal_code: ['', [Validators.required, Validators.minLength(5), Validators.pattern('^[0-9]+$')]],
       nif: ['', [Validators.required, Validators.pattern('^(?=.*[XYZ0-9])[XYZ0-9][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$')]],
-      photo: ['', [Validators.required, this.imageExtensionValidator]],
+      photo: [null, [Validators.required, this.imageExtensionValidator]],
       password: ['', [Validators.required, this.passwordValidator]]
     });
 
@@ -39,14 +41,40 @@ export class AddEmployeeComponent {
     });
   }
 
+  imageUpload(event: any) {
+    //console.log(event)
+    this.file = event.target.files[0];
+    console.log(this.file)
+  }
+
+
+
   addEmployee(): void {
     if (this.employeeForm.invalid) {
       this.showError = true;
       return;
     }
 
-    this.apiService.addEmployees(this.employeeForm.value).subscribe(
+    const formData = new FormData();
+    formData.append('photo', this.file);
+
+    const employeeData = this.employeeForm.value;
+    formData.append('name', employeeData.name);
+    formData.append('surname', employeeData.surname);
+    formData.append('date_of_birth', employeeData.date_of_birth);
+    formData.append('country', employeeData.country);
+    formData.append('gender', employeeData.gender);
+    formData.append('email', employeeData.email);
+    formData.append('telephone', employeeData.telephone);
+    formData.append('street', employeeData.street);
+    formData.append('city', employeeData.city);
+    formData.append('postal_code', employeeData.postal_code);
+    formData.append('nif', employeeData.nif);
+    formData.append('password', employeeData.password);
+
+    this.apiService.addEmployees(formData).subscribe(
       (response) => {
+        console.log(response)
         console.log('Empleado agregado exitosamente:', response);
         this.router.navigate(['/employees']);
       },
@@ -61,6 +89,7 @@ export class AddEmployeeComponent {
       }
     );
   }
+
 
 
   cancelEdit(): void {

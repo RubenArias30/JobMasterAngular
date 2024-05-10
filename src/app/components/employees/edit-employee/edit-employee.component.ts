@@ -16,7 +16,8 @@ export class EditEmployeeComponent implements OnInit {
   formModified: boolean = false;
   updateError: boolean = false;
   errorMessage: string = '';
-  showPassword: boolean = false;
+  file!: any;
+  // showPassword: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -27,17 +28,17 @@ export class EditEmployeeComponent implements OnInit {
     this.employeeForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
       surname: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
-      date_of_birth: ['', [Validators.required,this.ageValidator]],
+      date_of_birth: ['', [Validators.required, this.ageValidator]],
       country: ['', [Validators.required, Validators.pattern('^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ ]+$')]],
       gender: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')]],
       telephone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
       street: ['', [Validators.required]],
       city: ['', [Validators.required, Validators.pattern('^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ ]+$')]],
-      postal_code: ['', [Validators.required, Validators.minLength(5),Validators.pattern('^[0-9]+$')]],
+      postal_code: ['', [Validators.required, Validators.minLength(5), Validators.pattern('^[0-9]+$')]],
       nif: ['', [Validators.required, Validators.pattern('^(?=.*[XYZ0-9])[XYZ0-9][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$')]],
-      photo: [null, [ this.imageExtensionValidator]],
-      password: ['', [Validators.required, this.passwordValidator]]
+      photo: [null, [this.imageExtensionValidator]],
+
     });
 
     // Suscribirse a los cambios en el campo de NIF
@@ -86,7 +87,7 @@ export class EditEmployeeComponent implements OnInit {
           if (userData) {
             this.employeeForm.patchValue({
               nif: userData.nif || '',
-              password: userData.password || ''
+
             });
           }
 
@@ -98,6 +99,8 @@ export class EditEmployeeComponent implements OnInit {
             gender: this.employeeData.gender || '',
             email: this.employeeData.email || '',
             telephone: this.employeeData.telephone || '',
+
+
           });
           console.log('Formulario de empleado:', this.employeeForm.value);
         } else {
@@ -110,16 +113,17 @@ export class EditEmployeeComponent implements OnInit {
     );
   }
 
+
+
+
   updateEmployee(): void {
     if (this.employeeId === null) {
       console.error('No se ha proporcionado un ID de empleado válido.');
       return;
     }
 
-    if (this.employeeForm.invalid) {
-      this.showError = true;
-      return;
-    }
+
+
     this.apiService.updateEmployee(this.employeeId, this.employeeForm.value).subscribe(
       (response) => {
         console.log('Empleado actualizado exitosamente:', response);
@@ -155,13 +159,6 @@ export class EditEmployeeComponent implements OnInit {
     return null;
   }
 
-  passwordValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-    if (!passwordRegex.test(control.value)) {
-      return { 'invalidPassword': true };
-    }
-    return null;
-  }
 
   validateField(control: AbstractControl) {
     const fieldPattern = /^[a-zA-Z\s]*$/;
@@ -204,7 +201,4 @@ export class EditEmployeeComponent implements OnInit {
     return null;
   }
 
-  togglePasswordVisibility() {
-    this.showPassword = !this.showPassword;
-  }
 }
