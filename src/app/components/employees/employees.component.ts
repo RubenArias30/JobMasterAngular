@@ -10,6 +10,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 })
 export class EmployeesComponent {
   employees: any[] = [];
+  selectedEmployee: any = null;
 
   constructor(private apiService: ApiService, private router: Router) { }
 
@@ -18,42 +19,50 @@ export class EmployeesComponent {
 
   }
   getEmployees(): void {
-  this.apiService.getEmployees().subscribe(
-    (response: any[]) => {
-      console.log('Respuesta del servicio:', response);
-      this.employees = response;
+    this.apiService.getEmployees().subscribe(
+      (response: any[]) => {
 
-    },
-    (error) => {
-      console.error('Error al obtener la lista de empleados:', error);
-    }
-  );
-}
-confirmDeleteEmployee(employeeId: string): void {
-  // Mostrar un cuadro de diálogo de confirmación
-  const confirmDelete = confirm('¿Estás seguro de que deseas eliminar este empleado?');
+        this.employees = response;
 
-  // Procesar la eliminación si el usuario confirma la acción
-  if (confirmDelete) {
-    this.deleteEmployee(employeeId);
+      },
+      (error) => {
+        console.error('Error al obtener la lista de empleados:', error);
+      }
+    );
   }
-}
 
-deleteEmployee(employeeId: string): void {
-  this.apiService.deleteEmployee(employeeId).subscribe(
-    () => {
-      // Eliminar el empleado de la lista localmente después de eliminarlo del servidor
-      this.employees = this.employees.filter(employee => employee.id !== employeeId);
-    },
-    (error) => {
-      console.error('Error al eliminar el empleado:', error);
+  openEmployeeModal(employee: any): void {
+    this.selectedEmployee = employee;
+
+  }
+
+
+  closeEmployeeModal(): void {
+    this.selectedEmployee = null;
+  }
+
+  confirmDeleteEmployee(employeeId: string): void {
+    // Mostrar un cuadro de diálogo de confirmación
+    const confirmDelete = confirm('¿Estás seguro de que deseas eliminar este empleado?');
+
+    // Procesar la eliminación si el usuario confirma la acción
+    if (confirmDelete) {
+      this.deleteEmployee(employeeId);
     }
-  );
-}
-navigateToDocuments(employee: any): void {
-  this.router.navigate(['/documents', { employeeName: `${employee.name} ${employee.surname}` }]);
-}
+  }
 
-
-
+  deleteEmployee(employeeId: string): void {
+    this.apiService.deleteEmployee(employeeId).subscribe(
+      () => {
+        // Eliminar el empleado de la lista localmente después de eliminarlo del servidor
+        this.employees = this.employees.filter(employee => employee.id !== employeeId);
+      },
+      (error) => {
+        console.error('Error al eliminar el empleado:', error);
+      }
+    );
+  }
+  navigateToDocuments(employee: any): void {
+    this.router.navigate(['/documents', { employeeName: `${employee.name} ${employee.surname}` }]);
+  }
 }
