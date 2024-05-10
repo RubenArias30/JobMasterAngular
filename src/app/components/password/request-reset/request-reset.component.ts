@@ -36,7 +36,6 @@ export class RequestResetComponent implements OnInit {
       this.isEmptyFieldsErrorVisible = false; // Reinicia el estado del mensaje si el formulario es válido
       this.apiService.sendPasswordLink(this.resetForm.value).subscribe(
         data => {
-          console.log(data);
           this.sentMessage = true;
 
         },

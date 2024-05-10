@@ -40,7 +40,6 @@ export class ResponseResetComponent implements OnInit {
     if (this.resetForm.valid) {
       this.apiService.changedPassword(this.resetForm.value).subscribe(
         data => {
-          console.log(data);
           this.router.navigate(['/login']);
         },
         error => {

@@ -45,7 +45,6 @@ export class AddDocumentsComponent implements OnInit {
 
     this.apiService.addDocumentToEmployee(this.employeeId!, this.documentForm.value).subscribe(
       (response) => {
-        console.log('Documento agregado exitosamente:', response);
         this.router.navigate(['/documents/details', this.employeeId]);
       },
       (error) => {

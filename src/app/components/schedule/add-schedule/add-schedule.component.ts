@@ -127,7 +127,6 @@ export class AddScheduleComponent implements OnInit {
 
   handleEventClick(info: any) {
     if (info.event) {
-      console.log('ID del evento:', info.event.id);
 
       // Almacena la información del evento seleccionado en una variable
       this.selectedEvent = {
@@ -192,7 +191,6 @@ export class AddScheduleComponent implements OnInit {
   loadEvents(employeeId: number): void {
     this.apiService.getEvents(employeeId).subscribe(
       (events: any[]) => {
-        console.log('Eventos recibidos de la API:', events);
         this.events = []; // Limpiar la lista de eventos
         events.forEach(event => {
           const startDate = new Date(event.start_datetime);
@@ -231,7 +229,6 @@ export class AddScheduleComponent implements OnInit {
         });
 
         this.calendarOptions.events = this.events; // Actualizar los eventos en el calendario
-        console.log('Eventos en formato EventInput:', this.events);
       },
       (error) => {
         console.error('Error al obtener los eventos del servidor:', error);
@@ -308,7 +305,6 @@ export class AddScheduleComponent implements OnInit {
   onSubmit(scheduleData: any) {
     this.apiService.addSchedule(this.employeeId, scheduleData).subscribe(
       response => {
-        console.log('Horario agregado correctamente:', response);
       },
       error => {
         console.error('Error al agregar el horario:', error);
@@ -328,18 +324,14 @@ export class AddScheduleComponent implements OnInit {
       start_datetime: `${this.formEdit.get('fechaInicio')?.value} ${this.formEdit.get('horaInicio')?.value}`,
       end_datetime: `${this.formEdit.get('fechaFin')?.value} ${this.formEdit.get('horaFin')?.value}`
     };
-    console.log(formData);
 
     // Obtener el ID del evento seleccionado
     const eventId = this.selectedEvent.id;
-    console.log(eventId);
 
     // Llamar al método updateSchedule del ApiService para actualizar el evento
     this.apiService.updateSchedule(eventId, formData).subscribe(
       (response) => {
-        console.log(response)
         // Actualización exitosa, puedes mostrar un mensaje de éxito o redirigir a otra página si es necesario
-        console.log('Evento actualizado exitosamente:', response);
         // Aquí puedes agregar una lógica adicional, como mostrar un mensaje de éxito o redirigir a otra página
       },
       (error) => {

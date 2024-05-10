@@ -19,7 +19,6 @@ export class DocumentsComponent implements OnInit {
   getEmployees(): void {
     this.apiService.getEmployees().subscribe(
       (response: any[]) => {
-        console.log('Respuesta del servicio:', response);
         this.employees = response;
       },
       (error) => {

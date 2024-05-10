@@ -85,7 +85,6 @@ export class ViewScheduleComponent implements OnInit {
     this.apiService.getScheduleForEmployee()
       .subscribe(
         (events: any[]) => {
-          console.log('Eventos recibidos de la API:', events);
           this.events = []; // Limpiar la lista de eventos
           events.forEach(event => {
             const startDate = new Date(event.start_datetime);
@@ -124,7 +123,6 @@ export class ViewScheduleComponent implements OnInit {
           });
 
           this.calendarOptions.events = this.events; // Actualizar los eventos en el calendario
-          console.log('Eventos en formato EventInput:', this.events);
         },
         error => {
           console.error('Error al obtener los horarios:', error);

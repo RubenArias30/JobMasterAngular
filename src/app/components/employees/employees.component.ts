@@ -27,7 +27,6 @@ export class EmployeesComponent {
       },
       (error) => {
         console.error('Error al obtener la lista de empleados:', error);
-      }
     );
   }
 
