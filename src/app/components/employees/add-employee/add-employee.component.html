@@ -155,6 +155,8 @@
           <div
             *ngIf="employeeForm.get('postal_code')?.errors?.['required'] && (employeeForm.get('postal_code')?.dirty || employeeForm.get('postal_code')?.touched)"
             class="text-red-500 mt-2">Código Postal es obligatorio.</div>
+            <div *ngIf="employeeForm.get('postal_code')?.errors?.['minlength'] && (employeeForm.get('postal_code')?.dirty || employeeForm.get('postal_code')?.touched)"
+            class="text-red-500 mt-2">El código postal debe tener exactamente 5 caracteres.</div>
             <div
             *ngIf="employeeForm.get('postal_code')?.errors?.['pattern'] && (employeeForm.get('postal_code')?.dirty || employeeForm.get('postal_code')?.touched)"
             class="text-red-500 mt-2">Por favor, introduce solo números para el código postal.</div>

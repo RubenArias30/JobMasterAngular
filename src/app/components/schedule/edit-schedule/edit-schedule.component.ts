@@ -190,7 +190,6 @@ export class EditScheduleComponent implements OnInit {
   loadEvents(employeeId: number): void {
     this.apiService.getEvents(employeeId).subscribe(
       (events: any[]) => {
-        console.log('Eventos recibidos de la API:', events);
         this.events = []; // Limpiar la lista de eventos
         events.forEach(event => {
           const startDate = new Date(event.start_datetime);
@@ -256,18 +255,14 @@ export class EditScheduleComponent implements OnInit {
       start_datetime: `${this.form.get('fechaInicio')?.value} ${this.form.get('horaInicio')?.value}`,
       end_datetime: `${this.form.get('fechaFin')?.value} ${this.form.get('horaFin')?.value}`
     };
-    console.log(formData);
 
     // Obtener el ID del evento seleccionado
     const eventId = this.selectedEvent.id;
-    console.log(eventId);
 
     // Llamar al método updateSchedule del ApiService para actualizar el evento
     this.apiService.updateSchedule(eventId, formData).subscribe(
       (response) => {
-        console.log(response)
         // Actualización exitosa, puedes mostrar un mensaje de éxito o redirigir a otra página si es necesario
-        console.log('Evento actualizado exitosamente:', response);
         // Aquí puedes agregar una lógica adicional, como mostrar un mensaje de éxito o redirigir a otra página
       },
       (error) => {

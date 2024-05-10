@@ -16,7 +16,6 @@ export class DasboardEmployeeComponent implements OnInit{
     // Llama al método en el servicio para obtener los datos del perfil del empleado
     this.apiService.getProfile().subscribe(
       (data: any) => {
-        console.log('Datos del perfil recibidos:', data); // Verifica los datos recibidos
 
         this.profileData = data; // Asigna los datos del perfil obtenidos del servidor al objeto profileData
       },

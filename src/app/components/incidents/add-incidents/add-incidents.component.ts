@@ -54,7 +54,6 @@ dateValidator(): any {
 
     this.apiService.addIncident(this.incidentForm.value).subscribe(
       response => {
-        console.log('Incidencia creada con éxito:', response);
         this.router.navigate(['/history_incidents']);
       },
       error => {

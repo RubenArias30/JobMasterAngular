@@ -25,7 +25,6 @@ export class IncidentsComponent implements OnInit {
         this.incidences = data;
         this.originalIncidences = data.slice();
         this.countIncidentStatus();
-        console.log(data);
       });
   }
 
@@ -59,7 +58,6 @@ export class IncidentsComponent implements OnInit {
     this.apiService.updateIncidentStatus(incident.id, incident.status)
       .subscribe(
         (updatedIncident: any) => {
-          console.log('Estado de incidencia actualizado:', updatedIncident);
           this.getIncidents(); // Recargar los datos después de cambiar el estado
         },
         (error) => {

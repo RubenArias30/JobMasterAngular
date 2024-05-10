@@ -29,12 +29,12 @@ export class EditEmployeeComponent implements OnInit {
       name: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
       surname: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
       date_of_birth: ['', [Validators.required, this.ageValidator]],
-      country: ['', [Validators.required, Validators.pattern('^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ ]+$')]],
+      country: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
       gender: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')]],
       telephone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
       street: ['', [Validators.required]],
-      city: ['', [Validators.required, Validators.pattern('^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ ]+$')]],
+      city: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
       postal_code: ['', [Validators.required, Validators.minLength(5), Validators.pattern('^[0-9]+$')]],
       nif: ['', [Validators.required, Validators.pattern('^(?=.*[XYZ0-9])[XYZ0-9][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$')]],
       photo: [null, [this.imageExtensionValidator]],
@@ -69,11 +69,9 @@ export class EditEmployeeComponent implements OnInit {
     this.apiService.getEmployeeById(this.employeeId).subscribe(
       (data) => {
         this.employeeData = data;
-        console.log('Datos del empleado:', this.employeeData);
 
         if (this.employeeData) {
           const addressData = this.employeeData.addresses;
-          console.log('Datos de dirección:', addressData);
           if (addressData) {
             this.employeeForm.patchValue({
               street: addressData.street || '',
@@ -83,7 +81,6 @@ export class EditEmployeeComponent implements OnInit {
           }
 
           const userData = this.employeeData.users;
-          console.log('Datos de usuario:', userData);
           if (userData) {
             this.employeeForm.patchValue({
               nif: userData.nif || '',
@@ -102,7 +99,6 @@ export class EditEmployeeComponent implements OnInit {
 
 
           });
-          console.log('Formulario de empleado:', this.employeeForm.value);
         } else {
           console.error('Datos del empleado no encontrados');
         }
@@ -126,7 +122,6 @@ export class EditEmployeeComponent implements OnInit {
 
     this.apiService.updateEmployee(this.employeeId, this.employeeForm.value).subscribe(
       (response) => {
-        console.log('Empleado actualizado exitosamente:', response);
         this.updateError = false;
         this.errorMessage = '';
         this.router.navigate(['/employees']);

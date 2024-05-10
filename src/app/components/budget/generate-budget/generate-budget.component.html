@@ -89,6 +89,9 @@
               <div
                 *ngIf="budgetForm.get('company_postal_code')?.errors?.['required'] && (budgetForm.get('company_postal_code')?.dirty || budgetForm.get('company_postal_code')?.touched)"
                 class="text-red-500 mt-2">Código Postal es obligatorio.</div>
+                <div *ngIf="budgetForm.get('company_postal_code')?.errors?.['minlength'] && (budgetForm.get('company_postal_code')?.dirty || budgetForm.get('company_postal_code')?.touched)"
+                class="text-red-500 mt-2">El código postal debe tener exactamente 5 caracteres.</div>
+                
               <div
                 *ngIf="budgetForm.get('company_postal_code')?.errors?.['pattern'] && (budgetForm.get('company_postal_code')?.dirty || budgetForm.get('company_postal_code')?.touched)"
                 class="text-red-500 mt-2">Por favor, introduce solo números para el código postal.</div>
@@ -176,6 +179,8 @@
               <div
                 *ngIf="budgetForm.get('client_postal_code')?.errors?.['required'] && (budgetForm.get('client_postal_code')?.dirty || budgetForm.get('client_postal_code')?.touched)"
                 class="text-red-500 mt-2">Código Postal es obligatorio.</div>
+                <div *ngIf="budgetForm.get('client_postal_code')?.errors?.['minlength'] && (budgetForm.get('client_postal_code')?.dirty || budgetForm.get('client_postal_code')?.touched)"
+                class="text-red-500 mt-2">El código postal debe tener exactamente 5 caracteres.</div>
               <div
                 *ngIf="budgetForm.get('client_postal_code')?.errors?.['pattern'] && (budgetForm.get('client_postal_code')?.dirty || budgetForm.get('client_postal_code')?.touched)"
                 class="text-red-500 mt-2">Por favor, introduce solo números para el código postal.</div>

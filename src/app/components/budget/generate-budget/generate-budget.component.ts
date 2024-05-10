@@ -27,14 +27,14 @@ export class GenerateBudgetComponent implements OnInit {
       client_email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')]],
       client_nif: ['', [Validators.required, Validators.pattern('^(?=.*[XYZ0-9])[XYZ0-9][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$')]],
       client_street: ['', [Validators.required]],
-      client_city: ['', [Validators.required, Validators.pattern('^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ ]+$')]],
+      client_city: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
       client_postal_code: ['', [Validators.required, Validators.minLength(5), Validators.pattern('^[0-9]+$')]],
       company_name: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
       company_telephone: ['', [Validators.required,  this.phoneNumberValidator()]],
       company_email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')]],
       company_nif: ['', [Validators.required, Validators.pattern('^(?=.*[XYZ0-9])[XYZ0-9][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$')]],
       company_street: ['', [Validators.required]],
-      company_city: ['', [Validators.required, Validators.pattern('^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ ]+$')]],
+      company_city: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
       company_postal_code: ['', [Validators.required, Validators.minLength(5), Validators.pattern('^[0-9]+$')]],
       // street: ['', [Validators.required]],
       // city: ['', [Validators.required, Validators.pattern('^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ ]+$')]],
@@ -164,7 +164,6 @@ export class GenerateBudgetComponent implements OnInit {
       total: this.total.value
     };
 
-    console.log(formData);
 
     if (this.budgetForm.invalid) {
       this.showError = true; // Mostrar el mensaje de error
@@ -175,7 +174,6 @@ export class GenerateBudgetComponent implements OnInit {
        // Llama al método del servicio API para crear el presupuesto con todos los datos
     this.apiService.createInvoice(formData).subscribe(
       (response) => {
-        console.log('Presupuesto creado exitosamente:', response);
         this.router.navigate(['/budget']);
       },
       (error) => {

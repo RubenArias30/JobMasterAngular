@@ -27,7 +27,6 @@ export class ViewDocumentsComponent implements OnInit {
         if (this.selectedType !== '') {
           this.documents = this.documents.filter(document => document.type_documents === this.selectedType);
         }
-        console.log(response);
       },
       (error) => {
         console.error('Error al cargar los documentos:', error);

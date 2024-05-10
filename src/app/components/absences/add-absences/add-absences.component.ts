@@ -82,7 +82,6 @@ ngOnInit(): void {
 
   onSubmit(): void {
     // Log the form data before submitting
-    console.log('Form Data:', this.ausenciaForm.value);
 
     // Emit the form data
     this.absenceAdded.emit(this.ausenciaForm.value);
@@ -90,7 +89,6 @@ ngOnInit(): void {
     // Call the addAbsence method of ApiService with form data
     this.apiService.addAbsence(this.ausenciaForm.value).subscribe({
       next: (response) => {
-        console.log('Response from server:', response);
         this.router.navigate(['/absences']);
         // Optionally handle the response here
       },

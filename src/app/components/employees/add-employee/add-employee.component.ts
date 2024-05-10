@@ -22,12 +22,12 @@ export class AddEmployeeComponent {
       name: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
       surname: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
       date_of_birth: ['', [Validators.required, this.ageValidator]],
-      country: ['', [Validators.required, Validators.pattern('^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ ]+$')]],
+      country: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
       gender: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')]],
       telephone: ['', [Validators.required, this.phoneNumberValidator()]],
       street: ['', [Validators.required]],
-      city: ['', [Validators.required, Validators.pattern('^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ ]+$')]],
+      city: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
       postal_code: ['', [Validators.required, Validators.minLength(5), Validators.pattern('^[0-9]+$')]],
       nif: ['', [Validators.required, Validators.pattern('^(?=.*[XYZ0-9])[XYZ0-9][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$')]],
       photo: [null, [Validators.required, this.imageExtensionValidator]],
@@ -44,7 +44,6 @@ export class AddEmployeeComponent {
   imageUpload(event: any) {
     //console.log(event)
     this.file = event.target.files[0];
-    console.log(this.file)
   }
 
 
@@ -74,8 +73,7 @@ export class AddEmployeeComponent {
 
     this.apiService.addEmployees(formData).subscribe(
       (response) => {
-        console.log(response)
-        console.log('Empleado agregado exitosamente:', response);
+        
         this.router.navigate(['/employees']);
       },
       (error) => {
