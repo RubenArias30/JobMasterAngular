@@ -21,12 +21,11 @@ export class EmployeesComponent {
   getEmployees(): void {
     this.apiService.getEmployees().subscribe(
       (response: any[]) => {
-
         this.employees = response;
-
       },
       (error) => {
         console.error('Error al obtener la lista de empleados:', error);
+      }
     );
   }
 
