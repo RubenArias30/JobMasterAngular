@@ -22,10 +22,10 @@ export class ApiService {
   }
 
   //Reset Password
-  sendPasswordLink(data: any){
+  sendPasswordLink(data: any) {
     return this.http.post(`${this.apiUrl}/sendPasswordResetLink`, data);
   }
-  changedPassword(data: any){
+  changedPassword(data: any) {
     console.log(data)
     return this.http.post(`${this.apiUrl}/resetPassword`, data);
   }
@@ -55,6 +55,10 @@ export class ApiService {
   }
   getEmployeeDetails(employeeId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/employees/${employeeId}`);
+  }
+  //Verificar si ya existe el nif
+  checkNifExists(nif: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}/employees/checkNifExists/${nif}`);
   }
 
   //Invoices
@@ -166,32 +170,32 @@ export class ApiService {
 
 
 
-//Ausencias
-getAusencias(): Observable<any[]> {
-  return this.http.get<any[]>(`${this.apiUrl}/absences`);
-}
+  //Ausencias
+  getAusencias(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/absences`);
+  }
 
-addAbsence(formData: any): Observable<any> {
+  addAbsence(formData: any): Observable<any> {
 
-  return this.http.post<any>(`${this.apiUrl}/absences`, formData);
-}
-deleteAbsence(absenceId: string): Observable<any> {
-  return this.http.delete<any>(`${this.apiUrl}/absences/${absenceId}`);
-}
-getAbsenceDetails(absenceId: any): Observable<any> {
-  // Make an HTTP GET request to fetch absence details based on absenceId
-  return this.http.get<any>(`${this.apiUrl}/absences/${absenceId}`);
-}
-updateAbsence(absenceId: string, updatedFormData: any): Observable<any> {
-  return this.http.put<any>(`${this.apiUrl}/absences/${absenceId}`, updatedFormData);
+    return this.http.post<any>(`${this.apiUrl}/absences`, formData);
+  }
+  deleteAbsence(absenceId: string): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/absences/${absenceId}`);
+  }
+  getAbsenceDetails(absenceId: any): Observable<any> {
+    // Make an HTTP GET request to fetch absence details based on absenceId
+    return this.http.get<any>(`${this.apiUrl}/absences/${absenceId}`);
+  }
+  updateAbsence(absenceId: string, updatedFormData: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/absences/${absenceId}`, updatedFormData);
 
 
 
-}
-getAbsencesByType(type?: string): Observable<any[]> {
-  const url = type ? `${this.apiUrl}/absences?type=${type}` : `${this.apiUrl}/absences`;
-  return this.http.get<any[]>(url);
-}
+  }
+  getAbsencesByType(type?: string): Observable<any[]> {
+    const url = type ? `${this.apiUrl}/absences?type=${type}` : `${this.apiUrl}/absences`;
+    return this.http.get<any[]>(url);
+  }
 
 
 

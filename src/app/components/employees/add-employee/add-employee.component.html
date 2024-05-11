@@ -21,22 +21,22 @@
           <div class="mt-2">
             <label for="nombre" class="block">Nombre</label>
             <input type="text" id="name" formControlName="name" name="name"
-              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Nombre" maxlength="20">
+              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Nombre" maxlength="50">
             <div
               *ngIf="employeeForm.get('name')?.errors?.['required'] && (employeeForm.get('name')?.dirty || employeeForm.get('name')?.touched)"
               class="text-red-500 mt-2">Nombre es obligatorio.</div>
-              <div
+            <div
               *ngIf="employeeForm.get('name')?.errors?.['pattern'] && (employeeForm.get('name')?.dirty || employeeForm.get('name')?.touched)"
               class="text-red-500 mt-2">Por favor, introduce solo letras para el nombre.</div>
           </div>
           <div class="mt-2">
             <label for="apellido" class="block">Apellido</label>
             <input type="text" id="surname" formControlName="surname" name="surname"
-              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Apellidos" maxlength="20">
+              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Apellidos" maxlength="50">
             <div
               *ngIf="employeeForm.get('surname')?.errors?.['required'] && (employeeForm.get('surname')?.dirty || employeeForm.get('surname')?.touched)"
               class="text-red-500 mt-2">Apellido es obligatorio.</div>
-              <div
+            <div
               *ngIf="employeeForm.get('surname')?.errors?.['pattern'] && (employeeForm.get('surname')?.dirty || employeeForm.get('surname')?.touched)"
               class="text-red-500 mt-2">Por favor, introduce solo letras para el apellido.</div>
 
@@ -49,174 +49,178 @@
               *ngIf="employeeForm.get('date_of_birth')?.errors?.['required'] && (employeeForm.get('date_of_birth')?.dirty || employeeForm.get('date_of_birth')?.touched)"
               class="text-red-500 mt-2">Fecha de nacimiento es obligatoria.</div>
 
-              <div *ngIf="employeeForm.get('date_of_birth')?.errors?.['invalidAgeOrDate'] && (employeeForm.get('date_of_birth')?.dirty || employeeForm.get('date_of_birth')?.touched)"
+            <div
+              *ngIf="employeeForm.get('date_of_birth')?.errors?.['invalidAgeOrDate'] && (employeeForm.get('date_of_birth')?.dirty || employeeForm.get('date_of_birth')?.touched)"
               class="text-red-500 mt-2">Debes tener al menos 18 años.</div>
-              <div *ngIf="employeeForm.get('date_of_birth')?.errors?.['invalidDateInThePast'] && (employeeForm.get('date_of_birth')?.dirty || employeeForm.get('date_of_birth')?.touched)"
+            <div
+              *ngIf="employeeForm.get('date_of_birth')?.errors?.['invalidDateInThePast'] && (employeeForm.get('date_of_birth')?.dirty || employeeForm.get('date_of_birth')?.touched)"
               class="text-red-500 mt-2">La fecha no puede ser tan antigua.</div>
 
 
-        </div>
-        <div class="mt-2">
-          <label for="nacionalidad" class="block">Pais</label>
-          <input type="text" id="nacionalidad" formControlName="country" name="country"
-            class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Nacionalidad" maxlength="20">
-          <div
-            *ngIf="employeeForm.get('country')?.errors?.['required'] && (employeeForm.get('country')?.dirty || employeeForm.get('country')?.touched)"
-            class="text-red-500 mt-2">Pais es obligatorio.</div>
+          </div>
+          <div class="mt-2">
+            <label for="nacionalidad" class="block">Pais</label>
+            <input type="text" id="nacionalidad" formControlName="country" name="country"
+              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Nacionalidad"
+              maxlength="50">
+            <div
+              *ngIf="employeeForm.get('country')?.errors?.['required'] && (employeeForm.get('country')?.dirty || employeeForm.get('country')?.touched)"
+              class="text-red-500 mt-2">Pais es obligatorio.</div>
             <div
               *ngIf="employeeForm.get('country')?.errors?.['pattern'] && (employeeForm.get('country')?.dirty || employeeForm.get('country')?.touched)"
-              class="text-red-500 mt-2">Por favor, introduce su pais con la primera letra en mayúscula y solo letras.</div>
-        </div>
-        <div class="mt-2">
-          <label for="genero" class="block">Género</label>
-          <select id="genero" formControlName="gender" name="gender"
-            class="border border-gray-300 rounded-md p-2 w-full shadow-inner">
-            <option value="" disabled selected>Seleccione su género</option>
-            <option value="masculino">Masculino</option>
-            <option value="femenino">Femenino</option>
-          </select>
-          <div
-            *ngIf="employeeForm.get('gender')?.errors?.['required'] && (employeeForm.get('gender')?.dirty || employeeForm.get('gender')?.touched)"
-            class="text-red-500 mt-2">Género es obligatorio.</div>
-        </div>
-        <div class="mt-2">
-          <label for="email" class="block">Email</label>
-          <input type="email" id="email" formControlName="email" name="email"
-            class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Email" maxlength="35">
-          <div
-            *ngIf="employeeForm.get('email')?.errors?.['required'] && (employeeForm.get('email')?.dirty || employeeForm.get('email')?.touched)"
-            class="text-red-500 mt-2">Email es obligatorio.</div>
+              class="text-red-500 mt-2">Por favor, introduce un país correcto</div>
+          </div>
+          <div class="mt-2">
+            <label for="genero" class="block">Género</label>
+            <select id="genero" formControlName="gender" name="gender"
+              class="border border-gray-300 rounded-md p-2 w-full shadow-inner">
+              <option value="" disabled selected>Seleccione su género</option>
+              <option value="masculino">Masculino</option>
+              <option value="femenino">Femenino</option>
+            </select>
             <div
-    *ngIf="employeeForm.get('email')?.errors?.['pattern'] && (employeeForm.get('email')?.dirty || employeeForm.get('email')?.touched)"
-    class="text-red-500 mt-2">Por favor, introduce un formato de correo electrónico válido.</div>
-        </div>
-        <div class="mt-2">
-          <label for="telefono" class="block">Teléfono</label>
-          <input type="text" id="telephone" formControlName="telephone" name="telephone"
-            class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Teléfono" maxlength="9">
-          <div
-            *ngIf="employeeForm.get('telephone')?.errors?.['required'] && (employeeForm.get('telephone')?.dirty || employeeForm.get('telephone')?.touched)"
-            class="text-red-500 mt-2">Teléfono es obligatorio.</div>
+              *ngIf="employeeForm.get('gender')?.errors?.['required'] && (employeeForm.get('gender')?.dirty || employeeForm.get('gender')?.touched)"
+              class="text-red-500 mt-2">Género es obligatorio.</div>
+          </div>
+          <div class="mt-2">
+            <label for="email" class="block">Email</label>
+            <input type="email" id="email" formControlName="email" name="email"
+              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Email" maxlength="35">
             <div
-            *ngIf="employeeForm.get('telephone')?.errors?.['pattern'] && (employeeForm.get('telephone')?.dirty || employeeForm.get('telephone')?.touched)"
-            class="text-red-500 mt-2">Por favor, introduce solo números para el telefono.</div>
+              *ngIf="employeeForm.get('email')?.errors?.['required'] && (employeeForm.get('email')?.dirty || employeeForm.get('email')?.touched)"
+              class="text-red-500 mt-2">Email es obligatorio.</div>
             <div
-            *ngIf="employeeForm.get('telephone')?.errors?.['invalidPhoneNumber'] && (employeeForm.get('telephone')?.dirty || employeeForm.get('telephone')?.touched)"
-            class="text-red-500 mt-2">Por favor, introduce un número de teléfono válido.</div>
+              *ngIf="employeeForm.get('email')?.errors?.['pattern'] && (employeeForm.get('email')?.dirty || employeeForm.get('email')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce un formato de correo electrónico válido.</div>
+          </div>
+          <div class="mt-2">
+            <label for="telefono" class="block">Teléfono</label>
+            <input type="text" id="telephone" formControlName="telephone" name="telephone"
+              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Teléfono" maxlength="9">
+            <div
+              *ngIf="employeeForm.get('telephone')?.errors?.['required'] && (employeeForm.get('telephone')?.dirty || employeeForm.get('telephone')?.touched)"
+              class="text-red-500 mt-2">Teléfono es obligatorio.</div>
+            <div
+              *ngIf="employeeForm.get('telephone')?.errors?.['pattern'] && (employeeForm.get('telephone')?.dirty || employeeForm.get('telephone')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce solo números para el telefono.</div>
+            <div
+              *ngIf="employeeForm.get('telephone')?.errors?.['invalidPhoneNumber'] && (employeeForm.get('telephone')?.dirty || employeeForm.get('telephone')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce un número de teléfono válido.</div>
 
-        </div>
+          </div>
 
-        <div class="mt-2">
-          <label for="photo" class="block">Foto</label>
-          <input type="file" name="photo" id="photo" formControlName="photo" accept="image/*" class="mt-1" (change)="imageUpload($event)">
-          <div
-            *ngIf="employeeForm.get('photo')?.errors?.['required'] && (employeeForm.get('photo')?.dirty || employeeForm.get('photo')?.touched)"
-            class="text-red-500 mt-2">Foto es obligatoria.</div>
-          <div
-            *ngIf="employeeForm.get('photo')?.errors?.['invalidImageExtension'] && (employeeForm.get('photo')?.dirty || employeeForm.get('photo')?.touched)"
-            class="text-red-500 mt-2">La foto debe tener una extensión de archivo válida (jpg, jpeg, png, gif).</div>
-          <div *ngIf="employeeForm.get('photo')?.value && !employeeForm.get('photo')?.errors"
-            class="text-green-500 mt-2">
-            Foto válida.
+          <div class="mt-2">
+            <label for="photo" class="block">Foto</label>
+            <input type="file" name="photo" id="photo" formControlName="photo" accept="image/*" class="mt-1"
+              (change)="imageUpload($event)">
+            <div
+              *ngIf="employeeForm.get('photo')?.errors?.['required'] && (employeeForm.get('photo')?.dirty || employeeForm.get('photo')?.touched)"
+              class="text-red-500 mt-2">Foto es obligatoria.</div>
+            <div
+              *ngIf="employeeForm.get('photo')?.errors?.['invalidImageExtension'] && (employeeForm.get('photo')?.dirty || employeeForm.get('photo')?.touched)"
+              class="text-red-500 mt-2">La foto debe tener una extensión de archivo válida (jpg, jpeg, png, gif).</div>
+            <div *ngIf="employeeForm.get('photo')?.value && !employeeForm.get('photo')?.errors"
+              class="text-green-500 mt-2">
+              Foto válida.
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!--  Direccion  y Credenciales -->
-    <div class="flex-1 ml-4">
-      <div class="bg-white border border-black p-4 rounded-lg">
-        <h2 class="text-lg font-bold">Direccion</h2>
-        <hr class="my- border-gray-400">
-        <div class="mt-2">
-          <label for="street" class="block">Dirección</label>
-          <input type="text" id="street" formControlName="street" name="street"
-            class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2" placeholder="Nombre y número de la calle" maxlength="20">
-          <div
-            *ngIf="employeeForm.get('street')?.errors?.['required'] && (employeeForm.get('street')?.dirty || employeeForm.get('street')?.touched)"
-            class="text-red-500 mt-2">Dirección es obligatoria.</div>
-        </div>
-        <div class="mt-2">
-          <label for="city" class="block">Ciudad</label>
-          <input type="text" id="city" formControlName="city" name="city"
-            class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2" placeholder="Ciudad" maxlength="20">
-          <div
-            *ngIf="employeeForm.get('city')?.errors?.['required'] && (employeeForm.get('city')?.dirty || employeeForm.get('city')?.touched)"
-            class="text-red-500 mt-2">Ciudad es obligatoria.</div>
+      <!--  Direccion  y Credenciales -->
+      <div class="flex-1 ml-4">
+        <div class="bg-white border border-black p-4 rounded-lg">
+          <h2 class="text-lg font-bold">Direccion</h2>
+          <hr class="my- border-gray-400">
+          <div class="mt-2">
+            <label for="street" class="block">Dirección</label>
+            <input type="text" id="street" formControlName="street" name="street"
+              class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2"
+              placeholder="Nombre y número de la calle" maxlength="100">
             <div
-            *ngIf="employeeForm.get('city')?.errors?.['pattern'] && (employeeForm.get('city')?.dirty || employeeForm.get('city')?.touched)"
-            class="text-red-500 mt-2">Por favor, introduce la ciudad con la primera letra en mayúscula y solo letras.</div>
-        </div>
+              *ngIf="employeeForm.get('street')?.errors?.['required'] && (employeeForm.get('street')?.dirty || employeeForm.get('street')?.touched)"
+              class="text-red-500 mt-2">Dirección es obligatoria.</div>
+          </div>
+          <div class="mt-2">
+            <label for="city" class="block">Ciudad</label>
+            <input type="text" id="city" formControlName="city" name="city"
+              class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2" placeholder="Ciudad"
+              maxlength="60">
+            <div
+              *ngIf="employeeForm.get('city')?.errors?.['required'] && (employeeForm.get('city')?.dirty || employeeForm.get('city')?.touched)"
+              class="text-red-500 mt-2">Ciudad es obligatoria.</div>
+            <div
+              *ngIf="employeeForm.get('city')?.errors?.['pattern'] && (employeeForm.get('city')?.dirty || employeeForm.get('city')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce una ciudad correcta.</div>
+          </div>
 
-        <div class="mt-2">
-          <label for="ciudad" class="block">Código Postal</label>
-          <input type="text" id="cp" formControlName="postal_code" name="postal_code"
-            class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2" placeholder="Código Postal" maxlength="5">
-          <div
-            *ngIf="employeeForm.get('postal_code')?.errors?.['required'] && (employeeForm.get('postal_code')?.dirty || employeeForm.get('postal_code')?.touched)"
-            class="text-red-500 mt-2">Código Postal es obligatorio.</div>
-            <div *ngIf="employeeForm.get('postal_code')?.errors?.['minlength'] && (employeeForm.get('postal_code')?.dirty || employeeForm.get('postal_code')?.touched)"
-            class="text-red-500 mt-2">El código postal debe tener exactamente 5 caracteres.</div>
+          <div class="mt-2">
+            <label for="ciudad" class="block">Código Postal</label>
+            <input type="text" id="cp" formControlName="postal_code" name="postal_code"
+              class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2" placeholder="Código Postal"
+              maxlength="5">
             <div
-            *ngIf="employeeForm.get('postal_code')?.errors?.['pattern'] && (employeeForm.get('postal_code')?.dirty || employeeForm.get('postal_code')?.touched)"
-            class="text-red-500 mt-2">Por favor, introduce solo números para el código postal.</div>
+              *ngIf="employeeForm.get('postal_code')?.errors?.['required'] && (employeeForm.get('postal_code')?.dirty || employeeForm.get('postal_code')?.touched)"
+              class="text-red-500 mt-2">Código Postal es obligatorio.</div>
+            <div
+              *ngIf="employeeForm.get('postal_code')?.errors?.['minlength'] && (employeeForm.get('postal_code')?.dirty || employeeForm.get('postal_code')?.touched)"
+              class="text-red-500 mt-2">El código postal debe tener exactamente 5 caracteres.</div>
+            <div
+              *ngIf="employeeForm.get('postal_code')?.errors?.['pattern'] && (employeeForm.get('postal_code')?.dirty || employeeForm.get('postal_code')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce solo números para el código postal.</div>
+          </div>
+        </div>
+        <br>
+        <div class="bg-white border border-black p-4 rounded-lg">
+          <h2 class="text-lg font-bold">Credenciales</h2>
+          <hr class="my-2 border-gray-400">
+
+          <div class="mt-4">
+            <label for="nif" class="block">NIF</label>
+            <input type="text" name="nif" id="nif" formControlName="nif" appNifValidator
+              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="12345678Z" maxlength="9">
+            <div
+              *ngIf="employeeForm?.get('nif')?.invalid && (employeeForm?.get('nif')?.dirty || employeeForm?.get('nif')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce un NIF válido.</div>
+          </div>
+          <div *ngIf="errorMessageNif" class="text-red-500 mt-2">{{ errorMessageNif }}</div>
+
+          <div class="relative mt-5">
+            <input type="{{ showPassword ? 'text' : 'password' }}" id="password" formControlName="password"
+              name="password" class="border border-gray-300 rounded-md p-2 pr-10 w-full shadow-inner"
+              placeholder="Contraseña" maxlength="35">
+            <button type="button" class="absolute inset-y-0 right-0 flex items-center px-3"
+              (click)="togglePasswordVisibility()">
+              <i *ngIf="!showPassword" class='bx bx-show-alt'></i>
+              <i *ngIf="showPassword" class='bx bxs-hide'></i>
+            </button>
+          </div>
+          <div
+            *ngIf="employeeForm.get('password')?.errors?.['required'] && (employeeForm.get('password')?.dirty || employeeForm.get('password')?.touched)"
+            class="text-red-500 mt-2">Contraseña es obligatoria.</div>
+          <div
+            *ngIf="employeeForm.get('password')?.errors?.['invalidPassword'] && (employeeForm.get('password')?.dirty || employeeForm.get('password')?.touched)"
+            class="text-red-500 mt-2">
+            La contraseña debe tener al menos 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula
+            ,un número.
+          </div>
+
         </div>
       </div>
-      <br>
-      <div class="bg-white border border-black p-4 rounded-lg">
-        <h2 class="text-lg font-bold">Credenciales</h2>
-        <hr class="my-2 border-gray-400">
-
-        <div class="mt-4">
-          <label for="nif" class="block">NIF</label>
-          <input type="text"  name="nif" id="nif" formControlName="nif" appNifValidator
-            class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="12345678Z" maxlength="9">
-          <div
-            *ngIf="employeeForm?.get('nif')?.invalid && (employeeForm?.get('nif')?.dirty || employeeForm?.get('nif')?.touched)"
-            class="text-red-500 mt-2">Por favor, introduce un NIF válido.</div>
-          <!-- <div
-              *ngIf="employeeForm.get('nif')?.errors?.['required'] && (employeeForm.get('nif')?.dirty || employeeForm.get('nif')?.touched)"
-              class="text-red-500 mt-2">NIF es obligatorio.</div> -->
-        </div>
-        <div class="relative mt-5">
-          <input type="{{ showPassword ? 'text' : 'password' }}" id="password" formControlName="password" name="password"
-            class="border border-gray-300 rounded-md p-2 pr-10 w-full shadow-inner" placeholder="Contraseña" maxlength="35">
-          <button type="button" class="absolute inset-y-0 right-0 flex items-center px-3" (click)="togglePasswordVisibility()">
-            <i *ngIf="!showPassword" class='bx bx-show-alt'></i>
-            <i *ngIf="showPassword" class='bx bxs-hide'></i>
-          </button>
-        </div>
-        <div
-          *ngIf="employeeForm.get('password')?.errors?.['required'] && (employeeForm.get('password')?.dirty || employeeForm.get('password')?.touched)"
-          class="text-red-500 mt-2">Contraseña es obligatoria.</div>
-        <div
-          *ngIf="employeeForm.get('password')?.errors?.['invalidPassword'] && (employeeForm.get('password')?.dirty || employeeForm.get('password')?.touched)"
-          class="text-red-500 mt-2">
-          La contraseña debe tener al menos 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula
-          ,un número.
-        </div>
-
-
-      </div>
     </div>
-</div>
 
-<!-- Mensaje de error -->
-<div *ngIf="showError && !employeeForm.valid" class="text-red-500 mt-2 text-center">
-  Por favor, completa todos los campos obligatorios.
-</div>
-<div *ngIf="errorMessage" class="text-red-500 mt-2 text-center">
-  {{ errorMessage }}
-</div>
+    <!-- Mensaje de error -->
+    <div *ngIf="showError && !employeeForm.valid" class="text-red-500 mt-2 text-center">
+      Por favor, completa todos los campos obligatorios.
+    </div>
+    <div *ngIf="errorMessage" class="text-red-500 mt-2 text-center">
+      {{ errorMessage }}
+    </div>
 
-<!-- Botón "Añadir Usuario" y CANCELAR-->
-<div class="mt-8 mb-3 flex justify-center">
-  <button type="submit" class="bg-custom-500 text-white px-6 py-3 rounded-lg mr-4">Añadir Usuario</button>
-  <button type="button" class="bg-gray-500 text-white px-6 py-3 rounded-lg" (click)="cancelEdit()">Cancelar</button>
-
-
-</div>
-
-
-</form>
+    <!-- Botón "Añadir Usuario" y CANCELAR-->
+    <div class="mt-8 mb-3 flex justify-center">
+      <button type="submit" class="bg-custom-500 text-white px-6 py-3 rounded-lg mr-4">Añadir Usuario</button>
+      <button type="button" class="bg-gray-500 text-white px-6 py-3 rounded-lg" (click)="cancelEdit()">Cancelar</button>
+    </div>
+  </form>
 </div>
