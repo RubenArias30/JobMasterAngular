@@ -86,6 +86,10 @@
             <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
               ESTADO
             </th>
+            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+              ACCIÓN
+            </th>
+
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
@@ -121,6 +125,11 @@
                   <span class="ml-3 text-gray-700">{{ incident.status === 'completed' ? 'Completada' : 'Pendiente'
                     }}</span>
                 </label>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <button (click)="confirmDelete(incident.id)">
+                  <i class='bx bx-trash text-xl text-red-600'></i>
+                </button>
               </td>
             </tr>
           </ng-container>

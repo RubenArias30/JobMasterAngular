@@ -10,41 +10,50 @@ import { Router } from '@angular/router';
 })
 export class AddIncidentsComponent implements OnInit {
   incidentForm!: FormGroup;
+  currentDateFormatted!: string; // Inicialización de la propiedad
 
   constructor(private formBuilder: FormBuilder, private apiService: ApiService,private router: Router) {}
 
   ngOnInit(): void {
+    this.currentDateFormatted = this.getCurrentDateFormatted(); // Get current date formatted
+
     this.incidentForm = this.formBuilder.group({
       incident_type: ['', Validators.required],
       description: ['', Validators.required],
-      date: ['', [Validators.required,this.dateValidator()]]
+      date: [this.currentDateFormatted]
     });
 
 
+
+  }
+  // Function to format the current date as "YYYY-MM-DD"
+  getCurrentDateFormatted(): string {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+    const yyyy = today.getFullYear();
+    return yyyy + '-' + mm + '-' + dd;
   }
 
+  // Function to validate the date
+  dateValidator(): any {
+    return (control: { value: string; }): { [key: string]: boolean } | null => {
+      const selectedDate = new Date(control.value);
+      const currentDate = new Date();
 
-// Función para validar que la fecha no sea del pasado ni del futuro
-dateValidator(): any {
-  return (control: AbstractControl): { [key: string]: boolean } | null => {
-    const selectedDate = new Date(control.value);
-    const currentDate = new Date();
-    const oneYearAgo = new Date();
-    oneYearAgo.setFullYear(currentDate.getFullYear() - 1);
+      // Validation for past dates
+      if (selectedDate < currentDate) {
+        return { 'invalidFutureDate': true };
+      }
 
-    // Validación de fecha pasada
-    if (selectedDate > currentDate) {
-      return { 'invalidFutureDate': true };
-    }
+      // Validation for future dates (if needed)
+      // if (selectedDate > currentDate) {
+      //   return { 'invalidPastDate': true };
+      // }
 
-    // Validación de fecha futura
-    if (selectedDate < oneYearAgo) {
-      return { 'invalidPastDate': true };
-    }
-
-    return null;
-  };
-}
+      return null;
+    };
+  }
 
   addIncident() {
     if (this.incidentForm.invalid) {
@@ -66,8 +75,15 @@ dateValidator(): any {
   areAllFieldsFilled(): boolean {
     const incidentType = this.incidentForm.get('incident_type')?.value;
     const description = this.incidentForm.get('description')?.value;
-    const date = this.incidentForm.get('date')?.value;
+    // const date = this.incidentForm.get('date')?.value;
 
-    return incidentType && description && date;
+    // return incidentType && description && date;
+    return incidentType && description;
+  }
+
+  cancelEdit(): void {
+    if (confirm('¿Estás seguro de cancelar la edición?')) {
+      this.router.navigate(['/history_incidents']);
+    }
   }
 }

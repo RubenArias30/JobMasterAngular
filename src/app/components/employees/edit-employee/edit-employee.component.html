@@ -61,10 +61,9 @@
             <div
               *ngIf="employeeForm.get('country')?.errors?.['required'] && (employeeForm.get('country')?.dirty || employeeForm.get('country')?.touched)"
               class="text-red-500 mt-2">Pais es obligatorio.</div>
-            <div
+              <div
               *ngIf="employeeForm.get('country')?.errors?.['pattern'] && (employeeForm.get('country')?.dirty || employeeForm.get('country')?.touched)"
-              class="text-red-500 mt-2">Por favor, introduce su pais con la primera letra en mayúscula y solo letras.
-            </div>
+              class="text-red-500 mt-2">Por favor, introduce un país correcto</div>
 
           </div>
           <div class="mt-2">
@@ -134,7 +133,7 @@
             <label for="street" class="block">Dirección</label>
             <input type="text" id="street" formControlName="street" name="street"
               class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2" placeholder="Dirección"
-              maxlength="20">
+              maxlength="100">
             <div
               *ngIf="employeeForm.get('street')?.errors?.['required'] && (employeeForm.get('street')?.dirty || employeeForm.get('street')?.touched)"
               class="text-red-500 mt-2">Dirección es obligatoria.</div>
@@ -147,10 +146,9 @@
             <div
               *ngIf="employeeForm.get('city')?.errors?.['required'] && (employeeForm.get('city')?.dirty || employeeForm.get('city')?.touched)"
               class="text-red-500 mt-2">Ciudad es obligatoria.</div>
-            <div
+              <div
               *ngIf="employeeForm.get('city')?.errors?.['pattern'] && (employeeForm.get('city')?.dirty || employeeForm.get('city')?.touched)"
-              class="text-red-500 mt-2">Por favor, introduce la ciudad con la primera letra en mayúscula y solo letras.
-            </div>
+              class="text-red-500 mt-2">Por favor, introduce una ciudad correcta.</div>
           </div>
 
           <div class="mt-2">
@@ -180,6 +178,8 @@
             <div
               *ngIf="employeeForm?.get('nif')?.invalid && (employeeForm?.get('nif')?.dirty || employeeForm?.get('nif')?.touched)"
               class="text-red-500 mt-2">Por favor, introduce un NIF válido.</div>
+              <div *ngIf="errorMessageNif" class="text-red-500 mt-2">{{ errorMessageNif }}</div>
+
           </div>
           <!-- <div class="relative mt-5">
             <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password"
@@ -218,8 +218,8 @@
     <!-- Botón "Añadir Usuario" y "Cancelar"-->
     <div class="mt-8 mb-3 flex justify-center">
       <button type="submit" [disabled]="!formModified"
-        class="bg-custom-500 text-white px-6 py-3 rounded-lg mr-4">Editar</button>
-      <button type="button" class="bg-gray-500 text-white px-6 py-3 rounded-lg" (click)="cancelEdit()">Cancelar</button>
+        class="bg-green-500 hover:bg-green-700 text-white font-bold px-6 py-3 rounded-lg mr-4">Editar</button>
+      <button type="button" class="bg-gray-500 hover:bg-red-500 text-white font-bold px-6 py-3 rounded-lg" (click)="cancelEdit()">Cancelar</button>
     </div>
 
   </form>
