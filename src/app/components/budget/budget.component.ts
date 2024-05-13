@@ -60,6 +60,8 @@ export class BudgetComponent implements OnInit {
 
 
 
+
+
   toggleDropdown(): void {
     this.showDropdown = !this.showDropdown;
   }
@@ -91,124 +93,88 @@ export class BudgetComponent implements OnInit {
   generatePDF(invoice: any): void {
     const doc = new jsPDF();
 
+
     autoTable(doc, {
       body: [
         [
-          {
-            content: 'Company brand',
-            styles: {
-              halign: 'left',
-              fontSize: 20,
-              textColor: '#ffffff'
-            }
-          },
-          {
-            content: 'JOBMASTER', // Replace with your heading text
-            styles: {
-              halign: 'left',
-              fontSize: 20,
-              textColor: '#ffffff'
-            }
-          }
+            {
+                content: 'JOBMASTER PRESUPUESTO',
+                colSpan: 2,
+                styles: {
+                    halign: 'center',
+                    fontSize: 20,
+                    textColor: '#000000', // Adjust text color for better visibility
+                },
+            },
         ],
-      ],
-      theme: 'plain',
-      styles: {
-        fillColor: '#3366ff'
-      }
+
+    ],
+    theme: 'plain',
+    styles: {
+        fillColor: '#ffffff', // Set the background color of the heading
+        lineColor: '#000000', // Set the border color
+        lineWidth: 0.1, // Set border width
+        font: 'helvetica', // Set font family
+    },
     });
 
     autoTable(doc, {
       body: [
         [
           {
-            content: ` Data: ${new Date().toLocaleDateString()}`, // Assuming invoice.amount_due contains the amount due fetched from the database
+            content: `Datos del cliente:\nNombre: ${invoice.clients.client_name}\nTeléfono:${invoice.clients.client_telephone}\nEmail:${invoice.clients.client_email}\nDirección:${invoice.clients.client_street}\nCiudad:${invoice.clients.client_city}\nCódigo Postal:${invoice.clients.client_postal_code}`,
             styles: {
-            halign: 'left',
-            fontSize: 20,
-
+              // fillColor: '#F2F2F2', // Light gray background
+              textColor: '#333333', // Dark gray text color
+              fontStyle: 'bold', // Bold font for header
+              fontSize: 10, // Font size
+              cellPadding: 6, // Padding
+              // lineWidth: 0.5, // Grid line width
             }
-          }
-        ],
-
-      ],
-      theme: 'plain'
-    });
-
-    autoTable(doc, {
-      body: [
-        [
-          {
-            content: `Cliente:
-            \n${invoice.clients.client_name}
-            \n${invoice.clients.client_telephone}
-            \n${invoice.clients.client_email}
-            \n${invoice.clients.client_street}
-            \n${invoice.clients.client_city}
-            \n${invoice.clients.client_postal_code}`,
           },
           {
-            content: `Empresa:
-                  \n${invoice.companies.company_name}
-                  \n${invoice.companies.company_telephone}
-                  \n${invoice.companies.company_email}
-                  \n${invoice.companies.company_street}
-                  \n${invoice.companies.company_city}
-                  \n${invoice.companies.company_postal_code}`,
+            content: `Datos de la empresa:\nNombre:${invoice.companies.company_name}\nTeléfono${invoice.companies.company_telephone}\nEmail:${invoice.companies.company_email}\nDirección:${invoice.companies.company_street}\nCiudad:${invoice.companies.company_city}\nCódigo Postal:${invoice.companies.company_postal_code}`,
+            styles: {
+              // fillColor: '#E8E8E8', // Lighter gray background
+              textColor: '#333333', // Dark gray text color
+              fontStyle: 'bold', // Bold font for header
+              fontSize: 10, // Font size
+              cellPadding: 6, // Padding
+              // lineWidth: 0.5, // Grid line width
+            }
           }
         ]
       ],
-      theme: 'plain'
-    });
-    autoTable(doc, {
-      body: [
-        [
-          {
-            content: 'Amount due:',
-            styles: {
-              halign:'left',
-              fontSize: 14
-            }
-          }
-        ],
-        [
-          {
-            content: ` ${invoice.total}€`, // Assuming invoice.amount_due contains the amount due fetched from the database
-            styles: {
-            halign: 'left',
-            fontSize: 20,
-            textColor: '#3366ff'
-            }
-          }
-        ],
-
-      ],
-      theme: 'plain'
+      theme: 'grid', // Apply grid theme
     });
 
-    autoTable(doc, {
-      body: [
-        [
-          {
-            content: `Subtotal: ${invoice.subtotal}€`
-          },
-          {
-            content: `Total: ${invoice.total}€`
-          }
-        ]
-      ],
-      theme: 'plain'
-    });
+
+    // autoTable(doc, {
+    //   body: [
+    //     [
+    //       {
+    //         content: `Subtotal: ${invoice.subtotal}€`
+    //       },
+    //       {
+    //         content: `Total: ${invoice.total}€`
+    //       }
+    //     ]
+    //   ],
+    //   theme: 'plain'
+    // });
 
 
      autoTable(doc, {
       body: [
         [
           {
-            content: 'Products & Services',
+            content: 'Conceptos y información',
             styles: {
               halign:'left',
-              fontSize: 14
+              fontSize: 14,
+              fontStyle: 'bold', // Bold font for header
+
+
             }
           }
         ]
@@ -219,12 +185,49 @@ export class BudgetComponent implements OnInit {
     autoTable(doc, {
       head: [['Concepto', 'Precio', 'Cantidad', 'Descuento', 'IVA', 'IRPF']],
       body: [
+        [invoice.concepts.concepts, invoice.price,invoice.quantity,invoice.invoice_discount,invoice.invoice_iva,invoice.invoice_irpf, /* Add more data here if needed */]
 
       ],
       theme: 'striped',
       headStyles:{
         fillColor: '#343a40'
       }
+    });
+    autoTable(doc, {
+      body: [
+        [
+          {
+            content: 'Total:',
+            styles: {
+              halign:'right',
+              fontSize: 14,
+              fontStyle: 'bold', // Bold font for header
+
+            }
+          }
+        ],
+        [
+          {
+            content: ` ${invoice.total}€`, // Assuming invoice.amount_due contains the amount due fetched from the database
+            styles: {
+            halign: 'right',
+            fontSize: 20,
+            textColor: '#3366ff'
+            }
+          }
+        ],
+        [
+          {
+            content: ` Fecha: ${new Date().toLocaleDateString()}`, // Assuming invoice.amount_due contains the amount due fetched from the database
+            styles: {
+              halign:'right'
+            }
+          }
+        ],
+
+
+      ],
+      theme: 'plain'
     });
 
     // Generate Base64 representation of the PDF
@@ -245,3 +248,4 @@ export class BudgetComponent implements OnInit {
   }
 
 }
+
