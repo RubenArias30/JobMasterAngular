@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
     this.mensajeEmptyField = ''; // Vaciar el mensaje si ambos campos están llenos
   }
 
-  
+
     // Si el NIF y la contraseña son "admin", omitir la validación de la contraseña
     if (nif.toLowerCase() === 'admin' && password.toLowerCase() === 'admin') {
       // Llamada al servicio para autenticar al usuario
@@ -67,8 +67,6 @@ export class LoginComponent implements OnInit {
         (error: any) => {
           this.mostrarMensaje = true;
 
-          // Manejo de error
-          this.mensaje = 'Credenciales incorrectas.';
         }
 
       );

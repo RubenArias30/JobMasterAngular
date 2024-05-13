@@ -16,10 +16,10 @@
           <label class="block text-gray-700 text-sm font-bold mb-2" for="date">
             Fecha de Incidencia
           </label>
-          <input formControlName="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="date" type="date">
-          <div *ngIf="incidentForm.get('date')?.invalid && (incidentForm.get('date')?.touched || incidentForm.get('date')?.value)" class="text-red-500 text-sm mt-1">Fecha de incidencia es requerida</div>
+          <input formControlName="date" readonly class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="date" type="date" [value]="currentDateFormatted">
+          <!-- <div *ngIf="incidentForm.get('date')?.invalid && (incidentForm.get('date')?.touched || incidentForm.get('date')?.value)" class="text-red-500 text-sm mt-1">Fecha de incidencia es requerida</div>
           <div *ngIf="incidentForm.get('date')?.errors?.['invalidPastDate'] && (incidentForm.get('date')?.dirty || incidentForm.get('date')?.touched)" class="text-red-500 mt-2">La fecha no puede ser tan antigua.</div>
-          <div *ngIf="incidentForm.get('date')?.errors?.['invalidFutureDate'] && (incidentForm.get('date')?.dirty || incidentForm.get('date')?.touched)" class="text-red-500 mt-2">La fecha no puede ser del futuro.</div>
+          <div *ngIf="incidentForm.get('date')?.errors?.['invalidFutureDate'] && (incidentForm.get('date')?.dirty || incidentForm.get('date')?.touched)" class="text-red-500 mt-2">La fecha no puede ser del futuro.</div> -->
         </div>
       </div>
       <div class="mb-4">
@@ -29,10 +29,11 @@
         <textarea formControlName="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" placeholder="Descripción de la incidencia"></textarea>
         <div *ngIf="incidentForm.get('description')?.invalid && (incidentForm.get('description')?.touched || incidentForm.get('description')?.value)" class="text-red-500 text-sm mt-1">Descripción es requerida</div>
       </div>
-      <div class="flex items-center justify-between">
+      <div class="flex justify-start">
         <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
           Crear Incidencia
         </button>
+        <button type="button" class="bg-gray-500 hover:bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-4" (click)="cancelEdit()">Cancelar</button>
       </div>
     </form>
 

@@ -65,4 +65,19 @@ export class IncidentsComponent implements OnInit {
         }
       );
   }
+
+   // Función para confirmar y eliminar una incidencia
+   confirmDelete(incidentId: number): void {
+    if (confirm('¿Estás seguro de que quieres eliminar esta incidencia?')) {
+      this.apiService.deleteIncident(incidentId)
+        .subscribe(
+          () => {
+            this.getIncidents(); // Recargar los datos después de eliminar la incidencia
+          },
+          (error) => {
+            console.error('Error al eliminar la incidencia:', error);
+          }
+        );
+    }
+  }
 }

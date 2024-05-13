@@ -65,7 +65,7 @@
             <div>
               <label for="company_street" class="block mb-1">Dirección:</label>
               <input formControlName="company_street" name="company_street" id="company_street" type="text" placeholder="calle maig 56"
-                class="border p-2 rounded-md w-full" maxlength="20">
+                class="border p-2 rounded-md w-full" maxlength="100">
               <div
                 *ngIf="budgetForm.get('company_street')?.errors?.['required'] && (budgetForm.get('company_street')?.dirty || budgetForm.get('company_street')?.touched)"
                 class="text-red-500 mt-2">Dirección es obligatoria.</div>
@@ -79,8 +79,7 @@
                 class="text-red-500 mt-2">Ciudad es obligatoria.</div>
               <div
                 *ngIf="budgetForm.get('company_city')?.errors?.['pattern'] && (budgetForm.get('company_city')?.dirty || budgetForm.get('company_city')?.touched)"
-                class="text-red-500 mt-2">Por favor, introduce la ciudad con la primera letra en mayúscula y solo
-                letras.</div>
+                class="text-red-500 mt-2">Por favor, introduce una ciudad correcta.</div>
             </div>
             <div>
               <label for="company_postal_code" class="block mb-1">Código Postal:</label>
@@ -91,7 +90,7 @@
                 class="text-red-500 mt-2">Código Postal es obligatorio.</div>
                 <div *ngIf="budgetForm.get('company_postal_code')?.errors?.['minlength'] && (budgetForm.get('company_postal_code')?.dirty || budgetForm.get('company_postal_code')?.touched)"
                 class="text-red-500 mt-2">El código postal debe tener exactamente 5 caracteres.</div>
-                
+
               <div
                 *ngIf="budgetForm.get('company_postal_code')?.errors?.['pattern'] && (budgetForm.get('company_postal_code')?.dirty || budgetForm.get('company_postal_code')?.touched)"
                 class="text-red-500 mt-2">Por favor, introduce solo números para el código postal.</div>
@@ -155,7 +154,7 @@
             <div>
               <label for="client_street" class="block mb-1">Dirección:</label>
               <input formControlName="client_street" id="client_street" name="client_street" type="text" placeholder="calle maig 56"
-                class="border p-2 rounded-md w-full" maxlength="20">
+                class="border p-2 rounded-md w-full" maxlength="100">
               <div
                 *ngIf="budgetForm.get('client_street')?.errors?.['required'] && (budgetForm.get('client_street')?.dirty || budgetForm.get('client_street')?.touched)"
                 class="text-red-500 mt-2">Dirección es obligatoria.</div>
@@ -169,8 +168,7 @@
                 class="text-red-500 mt-2">Ciudad es obligatoria.</div>
               <div
                 *ngIf="budgetForm.get('client_city')?.errors?.['pattern'] && (budgetForm.get('client_city')?.dirty || budgetForm.get('client_city')?.touched)"
-                class="text-red-500 mt-2">Por favor, introduce la ciudad con la primera letra en mayúscula y solo
-                letras.</div>
+                class="text-red-500 mt-2">Por favor, introduce una ciudad correcta.</div>
             </div>
             <div>
               <label for="client_postal_code" class="block mb-1">Codigo Postal:</label>
@@ -253,7 +251,7 @@
 
 
   <div class="col-span-full p-8">
-    <button (click)="addConcept()" class="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded w-full">
+    <button (click)="addConcept()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full">
       + Añadir nuevo concepto
     </button>
   </div>
@@ -292,10 +290,10 @@
 </div>
   <div class="flex justify-center mt-4">
     <button (click)="addBudget()"
-      class="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-8 rounded-lg mr-4">Crear
+      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-8 rounded-lg mr-4">Crear
       Presupuesto</button>
 
-    <button type="button" class="bg-gray-500 text-white px-6 py-3 rounded-lg " (click)="cancelEdit()">Cancelar</button>
+    <button type="button" class="bg-gray-500 hover:bg-red-500 text-white font-bold px-6 py-3 rounded-lg " (click)="cancelEdit()">Cancelar</button>
   </div>
 
 </form>

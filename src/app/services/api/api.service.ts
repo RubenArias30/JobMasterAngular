@@ -145,7 +145,7 @@ export class ApiService {
     return this.http.post<any>(`${this.apiUrl}/incidents`, incidentData);
   }
 
-  deleteIncident(incidentId: string): Observable<any> {
+  deleteIncident(incidentId: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/incidents/${incidentId}`);
   }
 
