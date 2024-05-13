@@ -30,7 +30,6 @@ export class AttendancesComponent implements OnInit, OnDestroy {
     this.apiService.getLoggedInUserName().subscribe(
       response => {
         this.currentUser = response.name;
-        console.log('Datos del usuario:', this.currentUser);
         this.fetchStartTime();
       },
       error => {
@@ -101,7 +100,6 @@ export class AttendancesComponent implements OnInit, OnDestroy {
     this.lastExitDate = exitDate;
     localStorage.removeItem(`startTime_${this.currentUser}`); // Eliminar el tiempo de inicio del usuario actual del almacenamiento local
     this.entryActive = false;
-    console.log(exitDate);
     this.apiService.registerExit().subscribe(
       response => {
         console.log('Salida registrada correctamente');

@@ -30,7 +30,6 @@ export class BudgetComponent implements OnInit {
   getInvoices(): void {
     this.apiService.getInvoices().subscribe(
       (response: any[]) => {
-        console.log('Respuesta del servicio:', response);
         this.invoices = response;
         this.sortInvoices(this.sortBy);
       },
@@ -76,7 +75,6 @@ export class BudgetComponent implements OnInit {
       // Show as default (no sorting)
       this.apiService.getInvoices().subscribe(
         (response: any[]) => {
-          console.log('Respuesta del servicio:', response);
           this.invoices = response;
           this.filterButtonText = 'Filtros'; // Update filter button text
         },

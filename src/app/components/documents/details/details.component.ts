@@ -49,7 +49,6 @@ export class DetailsComponent implements OnInit {
   getDocuments(employeeId: number): void {
     this.apiService.getDocumentsByEmployeeId(employeeId).subscribe(
       (response: any[]) => {
-        console.log('Respuesta del servicio:', response);
 
         // Check if "Ver Todos" is selected
         if (this.selectedType === 'all') {
@@ -68,7 +67,6 @@ export class DetailsComponent implements OnInit {
   getEmployeeName(employeeId: number): void {
     this.apiService.getEmployeeDetails(employeeId).subscribe(
       (response: any) => {
-        console.log('Respuesta del servicio de detalles de empleado:', response);
         this.employeeName = response.name;
       },
       (error) => {

@@ -12,6 +12,7 @@ export class AddEmployeeComponent {
   employeeForm!: FormGroup;
   showError: boolean = false;
   errorMessage: string = '';
+  errorMessageNif: string = '';
   showPassword: boolean = false;
   file: any;
 
@@ -22,12 +23,12 @@ export class AddEmployeeComponent {
       name: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
       surname: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
       date_of_birth: ['', [Validators.required, this.ageValidator]],
-      country: ['', [Validators.required, Validators.pattern('^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ ]+$')]],
+      country: ['', [Validators.required, Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\' ]+$')]],
       gender: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')]],
       telephone: ['', [Validators.required, this.phoneNumberValidator()]],
       street: ['', [Validators.required]],
-      city: ['', [Validators.required, Validators.pattern('^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ ]+$')]],
+      city: ['', [Validators.required, Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\' ]+$')]],
       postal_code: ['', [Validators.required, Validators.minLength(5), Validators.pattern('^[0-9]+$')]],
       nif: ['', [Validators.required, Validators.pattern('^(?=.*[XYZ0-9])[XYZ0-9][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$')]],
       photo: [null, [Validators.required, this.imageExtensionValidator]],
@@ -44,7 +45,6 @@ export class AddEmployeeComponent {
   imageUpload(event: any) {
     //console.log(event)
     this.file = event.target.files[0];
-    console.log(this.file)
   }
 
 
@@ -72,23 +72,45 @@ export class AddEmployeeComponent {
     formData.append('nif', employeeData.nif);
     formData.append('password', employeeData.password);
 
-    this.apiService.addEmployees(formData).subscribe(
-      (response) => {
-        console.log(response)
-        console.log('Empleado agregado exitosamente:', response);
-        this.router.navigate(['/employees']);
+    // Verificar si el NIF ya existe
+    this.apiService.checkNifExists(employeeData.nif).subscribe(
+      (exists) => {
+        if (exists) {
+          this.errorMessageNif = 'El NIF ya existe. Por favor, ingresa un NIF diferente.';
+          this.showError = true;
+        } else {
+          // El NIF no existe, agregar el empleado
+          this.apiService.addEmployees(formData).subscribe(
+            (response) => {
+              this.router.navigate(['/employees']);
+            },
+            (error) => {
+              console.error('Error al agregar el empleado:', error);
+              if (error.status === 500) {
+                this.errorMessage = 'Error 500 - Error interno del servidor';
+              } else {
+                this.errorMessage = 'Se produjo un error al agregar el empleado. Por favor, inténtelo de nuevo más tarde.';
+              }
+              this.showError = true;
+            }
+          );
+        }
       },
       (error) => {
-        console.error('Error al agregar el empleado:', error);
-        if (error.status === 500) {
-          this.errorMessage = 'Ya existe un empleado con este NIF. Por favor, intente con otro NIF.';
-        } else {
-          this.errorMessage = 'Se produjo un error al agregar el empleado. Por favor, inténtelo de nuevo más tarde.';
-        }
+        console.error('Error al verificar el NIF:', error);
+        this.errorMessage = 'Se produjo un error al verificar el NIF. Por favor, inténtelo de nuevo más tarde.';
         this.showError = true;
       }
     );
+
+    // Suscribirse a los cambios en el campo de NIF
+    this.employeeForm.get('nif')?.valueChanges.subscribe(() => {
+      // Al cambiar el valor del campo de NIF, ocultar el mensaje de error
+      this.errorMessageNif = '';
+    });
   }
+
+
 
 
 

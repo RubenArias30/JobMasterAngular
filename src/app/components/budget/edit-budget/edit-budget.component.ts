@@ -119,7 +119,6 @@ export class EditBudgetComponent implements OnInit {
       // Si el formulario es válido, envía los datos actualizados de la factura
       this.apiService.updateInvoice(this.invoiceId, this.invoiceForm.value).subscribe(
         (response) => {
-          console.log('Factura actualizada exitosamente:', response);
           this.router.navigate(['/budget']); // Redirige a la lista de facturas después de la actualización
         },
         (error) => {

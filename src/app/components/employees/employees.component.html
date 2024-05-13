@@ -1,57 +1,62 @@
 <div class="container mx-auto mt-8">
   <!-- Encabezado -->
-  <div class="flex items-center justify-between mb-4 ml-5"> <!-- Added ml-4 for left space -->
+  <div class="flex items-center justify-between mb-4 ml-5">
     <div class="flex items-center">
       <h1 class="text-lg font-bold mr-2 sm:text-xl md:text-2xl lg:text-3xl">Empleados</h1>
       <div class="border-l h-6 mr-2"></div>
       <div class="text-sm text-gray-500">{{ employees.length }} Trabajadores</div>
     </div>
-    <div class="flex ml-auto mr-8"> <!-- Increased mr-8 for more right space -->
-      <button routerLink="/employees/add_employee" class="flex items-center bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-lg mr-2">
+    <div class="flex ml-auto mr-8">
+      <button routerLink="/employees/add_employee"
+        class="flex items-center bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-lg mr-2">
         <i class='bx bxs-user-plus text-xl'></i>
         <span class="ml-1">Añadir</span>
       </button>
-
     </div>
   </div>
 
-  <div class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto"> <!-- Added overflow-x-auto for horizontal scrolling -->
+  <div class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto">
     <table class="w-full">
       <!-- Cabecera de la tabla -->
       <thead>
         <tr class="bg-gray-200">
-          <th class="text-center px-4 py-2">ID</th> <!-- Added text-center and px-4 class -->
-          <th class="text-center px-4 py-2">Foto</th> <!-- Added text-center and px-4 class -->
-          <th class="text-center px-4 py-2">Nombre</th> <!-- Added text-center and px-4 class -->
-          <th class="text-center px-4 py-2">Email</th> <!-- Added text-center and px-4 class -->
-          <th class="text-center px-4 py-2">Teléfono</th> <!-- Added text-center and px-4 class -->
-          <th class="text-center px-4 py-2">País</th> <!-- Added text-center and px-4 class -->
-          <th class="text-center px-4 py-2">Acción</th> <!-- Added text-center and px-4 class -->
+          <th class="text-center px-4 py-2">ID</th>
+          <th class="text-center px-4 py-2">Foto</th>
+          <th class="text-center px-4 py-2">Nombre</th>
+          <th class="text-center px-4 py-2">Email</th>
+          <th class="text-center px-4 py-2">Teléfono</th>
+          <th class="text-center px-4 py-2">País</th>
+          <th class="text-center px-4 py-2">Acción</th>
         </tr>
       </thead>
       <!-- Datos de los empleados -->
       <tbody>
         <ng-container *ngFor="let employee of employees; let i = index">
-          <tr>
-            <td class="text-center px-4 py-2">{{ employee.id }}</td> <!-- Changed to text-center -->
-            <td class="text-center px-4 py-2"> <!-- Changed to text-center -->
+          <tr (click)="openEmployeeModal(employee)">
+            <td class="text-center px-4 py-2">{{ employee.id }}</td>
+            <td class="text-center px-4 py-2">
               <div class="rounded-full overflow-hidden border border-gray-300 h-8 w-8">
-                <img [src]="employee.photo" alt="Foto de {{ employee.name }}" class="h-full w-full object-cover" width="25" height="25">
+                <img [src]="employee.photo" alt="Foto de {{ employee.name }}" class="h-full w-full object-cover"
+                  width="25" height="25">
               </div>
             </td>
-            <td class="text-center px-4 py-2">{{ employee.name }} {{ employee.surname }}</td> <!-- Changed to text-center -->
-            <td class="text-center px-4 py-2">{{ employee.email }}</td> <!-- Changed to text-center -->
-            <td class="text-center px-4 py-2">{{ employee.telephone }}</td> <!-- Changed to text-center -->
-            <td class="text-center px-4 py-2">{{ employee.country }}</td> <!-- Changed to text-center -->
+            <td class="text-center px-4 py-2">{{ employee.name }} {{ employee.surname }}</td>
+            <td class="text-center px-4 py-2">{{ employee.email }}</td>
+            <td class="text-center px-4 py-2">{{ employee.telephone }}</td>
+            <td class="text-center px-4 py-2">{{ employee.country }}</td>
             <td class="text-center px-4 py-2">
-              <!--  <button (click)="navigateToDocuments(employee)"> -->
 
+              <button (click)="openEmployeeModal(employee)">
+                <i class='bx bxs-show text-xl mr-2'></i>
+              </button>
               <a [routerLink]="['/employees/edit_employee', employee.id]">
                 <i class='bx bx-edit text-xl text-black mr-2'></i>
               </a>
               <button (click)="confirmDeleteEmployee(employee.id)">
                 <i class='bx bx-trash text-xl text-red-600'></i>
               </button>
+
+
             </td>
           </tr>
           <!-- Línea separadora -->
@@ -62,4 +67,113 @@
       </tbody>
     </table>
   </div>
+
+  <!-- Modal de Detalles del Empleado -->
+  <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" *ngIf="selectedEmployee">
+    <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-lg">
+      <!-- Encabezado del modal-->
+      <div class="flex items-center justify-center mb-4">
+        <div class="flex-shrink-0 mr-4">
+          <div class="rounded-full overflow-hidden bg-gray-200 p-1">
+            <img [src]="selectedEmployee.photo" alt="Foto de {{ selectedEmployee.name }}"
+              class="h-16 w-16 object-cover rounded-full">
+          </div>
+        </div>
+        <h2 class="text-2xl font-bold text-black-400">{{ selectedEmployee.name }} {{ selectedEmployee.surname }}</h2>
+      </div>
+
+      <!-- Línea divisora-->
+      <div class="flex items-center justify-center mb-4">
+        <div class="border-b border-gray-300 flex-grow mr-4"></div>
+        <div class="text-gray-500">Datos Personales</div>
+        <div class="border-b border-gray-300 flex-grow ml-4"></div>
+      </div>
+
+      <!-- Sección de Emails y Contactos -->
+      <div class="mb-4 text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="col-span-1">
+          <p class="text-sm"><strong>NIF</strong></p>
+          <p class="text-gray-900">{{ selectedEmployee.users.nif }}</p>
+        </div>
+        <div class="col-span-1">
+          <p class="text-sm"><strong>Fecha de Nacimiento</strong></p>
+          <p class="text-gray-900">{{ selectedEmployee.date_of_birth }}</p>
+        </div>
+        <div class="col-span-1">
+          <p class="text-sm"><strong>Género</strong></p>
+          <p class="text-gray-900">{{ selectedEmployee.gender }}</p>
+        </div>
+        <div class="col-span-1">
+          <p class="text-sm"><strong>Nacionalidad</strong></p>
+          <p class="text-gray-900">{{ selectedEmployee.country }}</p>
+        </div>
+      </div>
+
+
+
+      <!-- Línea divisora -->
+      <div class="flex items-center justify-center mb-4">
+        <div class="border-b border-gray-300 flex-grow mr-4"></div>
+        <div class="text-gray-500">Contacto</div>
+        <div class="border-b border-gray-300 flex-grow ml-4"></div>
+      </div>
+
+      <!-- Sección de Emails y Contactos -->
+      <div class="mb-4 text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="col-span-1">
+          <p class="text-sm"><strong>Email</strong></p>
+          <p class="text-gray-900">{{ selectedEmployee.email }}</p>
+        </div>
+        <div class="col-span-1">
+          <p class="text-sm"><strong>Télefono</strong></p>
+          <p class="text-gray-900">{{ selectedEmployee.telephone }}</p>
+        </div>
+      </div>
+
+      <!-- Línea divisora  -->
+      <div class="flex items-center justify-center mb-4">
+        <div class="border-b border-gray-300 flex-grow mr-4"></div>
+        <div class="text-gray-500">Dirección</div>
+        <div class="border-b border-gray-300 flex-grow ml-4"></div>
+      </div>
+
+      <div class="mb-4 text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="col-span-1">
+          <p class="text-sm"><strong>Dirección</strong></p>
+          <p class="text-gray-900">{{selectedEmployee.addresses.street}}</p>
+        </div>
+        <div class="col-span-1">
+          <p class="text-sm"><strong>Ciudad</strong></p>
+          <p class="text-gray-900">{{ selectedEmployee.addresses?.city }}</p>
+        </div>
+        <div class="col-span-1">
+          <p class="text-sm"><strong>Codigo Postal</strong></p>
+          <p class="text-gray-900">{{ selectedEmployee.addresses?.postal_code }}</p>
+        </div>
+        <div class="col-span-1">
+          <p class="text-sm"><strong>País</strong></p>
+          <p class="text-gray-900">{{ selectedEmployee.country }}</p>
+        </div>
+      </div>
+      <!-- Botón de Cerrar -->
+      <button class="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-full w-full"
+        (click)="closeEmployeeModal()">Cerrar</button>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>

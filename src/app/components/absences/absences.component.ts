@@ -86,15 +86,7 @@ filterOptions = ['Mostrar Todo', 'Vacaciones', 'Enfermedad', 'Maternidad/Paterni
     return this.currentOpenDropdown === id;
   }
 
-  editAbsence(absenceId: string): void {
-    // Handle edit action here
-    console.log('Editing absence with ID:', absenceId);
-  }
 
-  viewAbsence(absenceId: string): void {
-    // Handle view action here
-    console.log('Viewing absence with ID:', absenceId);
-  }
 
   deleteAbsence(absenceId: string): void {
     // Set the flag to show the delete confirmation modal
