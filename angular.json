@@ -14,6 +14,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/job-master-angular",
+            "allowedCommonJsDependencies": ["canvg", "jspdf-autotable"],
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
