@@ -16,36 +16,49 @@
   </div>
 
   <div class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto">
-    <table class="w-full">
+    <table class="w-full divide-y divide-gray-200">
       <!-- Cabecera de la tabla -->
-      <thead>
-        <tr class="bg-gray-200">
-          <th class="text-center px-4 py-2">ID</th>
-          <th class="text-center px-4 py-2">Foto</th>
-          <th class="text-center px-4 py-2">Nombre</th>
-          <th class="text-center px-4 py-2">Email</th>
-          <th class="text-center px-4 py-2">Teléfono</th>
-          <th class="text-center px-4 py-2">País</th>
-          <th class="text-center px-4 py-2">Acción</th>
+      <thead class="bg-gray-100">
+        <tr>
+          <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">
+            ID
+          </th>
+          <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">
+            Foto
+          </th>
+          <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">
+            Nombre
+          </th>
+          <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">
+            Email
+          </th>
+          <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">
+            Teléfono
+          </th>
+          <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">
+            País
+          </th>
+          <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">
+            Acción
+          </th>
         </tr>
       </thead>
       <!-- Datos de los empleados -->
-      <tbody>
+      <tbody class="bg-white divide-y divide-gray-200">
         <ng-container *ngFor="let employee of employees; let i = index">
-          <tr (click)="openEmployeeModal(employee)">
-            <td class="text-center px-4 py-2">{{ employee.id }}</td>
-            <td class="text-center px-4 py-2">
+          <tr (click)="openEmployeeModal(employee)" class="transition-all hover:bg-gray-100 hover:shadow-lg">
+            <td class="text-center px-4 py-2 whitespace-nowrap">{{ employee.id }}</td>
+            <td class="text-center px-4 py-2 whitespace-nowrap">
               <div class="rounded-full overflow-hidden border border-gray-300 h-8 w-8">
                 <img [src]="employee.photo" alt="Foto de {{ employee.name }}" class="h-full w-full object-cover"
                   width="25" height="25">
               </div>
             </td>
-            <td class="text-center px-4 py-2">{{ employee.name }} {{ employee.surname }}</td>
-            <td class="text-center px-4 py-2">{{ employee.email }}</td>
-            <td class="text-center px-4 py-2">{{ employee.telephone }}</td>
-            <td class="text-center px-4 py-2">{{ employee.country }}</td>
-            <td class="text-center px-4 py-2">
-
+            <td class="text-center px-4 py-2 whitespace-nowrap">{{ employee.name }} {{ employee.surname }}</td>
+            <td class="text-center px-4 py-2 whitespace-nowrap">{{ employee.email }}</td>
+            <td class="text-center px-4 py-2 whitespace-nowrap">{{ employee.telephone }}</td>
+            <td class="text-center px-4 py-2 whitespace-nowrap">{{ employee.country }}</td>
+            <td class="text-center px-4 py-2 whitespace-nowrap">
               <button (click)="openEmployeeModal(employee)">
                 <i class='bx bxs-show text-xl mr-2'></i>
               </button>
@@ -55,14 +68,9 @@
               <button (click)="confirmDeleteEmployee(employee.id)">
                 <i class='bx bx-trash text-xl text-red-600'></i>
               </button>
-
-
             </td>
           </tr>
-          <!-- Línea separadora -->
-          <tr *ngIf="i !== employees.length - 1">
-            <td colspan="7" class="border-t border-gray-300"></td>
-          </tr>
+
         </ng-container>
       </tbody>
     </table>
@@ -108,8 +116,6 @@
           <p class="text-gray-900">{{ selectedEmployee.country }}</p>
         </div>
       </div>
-
-
 
       <!-- Línea divisora -->
       <div class="flex items-center justify-center mb-4">
@@ -160,20 +166,4 @@
         (click)="closeEmployeeModal()">Cerrar</button>
     </div>
   </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>

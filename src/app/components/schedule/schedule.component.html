@@ -9,21 +9,21 @@
   </div>
   <!-- Tabla de empleados -->
   <div class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto">
-    <table class="w-full">
+    <table class="w-full divide-y divide-gray-200">
       <!-- Cabecera de la tabla -->
-      <thead>
-        <tr class="bg-gray-200">
-          <th class="text-center px-4 py-2">Id</th>
-          <th class="text-center px-4 py-2">Foto</th>
-          <th class="text-center px-4 py-2">Nombre</th>
-          <th class="text-center px-4 py-2">Email</th>
-          <th class="text-center px-4 py-2">Teléfono</th>
-          <th class="text-center px-4 py-2">País</th>
-          <th class="text-center px-4 py-2">Acción</th>
+      <thead class="bg-gray-100">
+        <tr>
+          <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">Id</th>
+          <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">Foto</th>
+          <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">Nombre</th>
+          <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">Email</th>
+          <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">Teléfono</th>
+          <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">País</th>
+          <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">Acción</th>
         </tr>
       </thead>
       <!-- Datos de los empleados -->
-      <tbody>
+      <tbody class="divide-y divide-gray-200">
         <tr *ngFor="let employee of employees" class="border-t">
           <td class="text-center px-4 py-2">{{ employee.id }}</td>
           <td class="text-center px-4 py-2">

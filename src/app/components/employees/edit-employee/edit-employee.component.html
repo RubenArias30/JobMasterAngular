@@ -179,6 +179,7 @@
               *ngIf="employeeForm?.get('nif')?.invalid && (employeeForm?.get('nif')?.dirty || employeeForm?.get('nif')?.touched)"
               class="text-red-500 mt-2">Por favor, introduce un NIF válido.</div>
               <div *ngIf="errorMessageNif" class="text-red-500 mt-2">{{ errorMessageNif }}</div>
+              <div *ngIf="employeeForm.get('nif')?.touched && errorMessageNif" class="text-danger">{{ errorMessageNif }}</div>
 
           </div>
           <!-- <div class="relative mt-5">
