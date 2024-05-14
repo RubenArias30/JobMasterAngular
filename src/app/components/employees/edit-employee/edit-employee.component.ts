@@ -10,15 +10,17 @@ import { ApiService } from 'src/app/services/api/api.service';
 })
 export class EditEmployeeComponent implements OnInit {
   employeeForm: FormGroup;
-  employeeId: string | null = null;
+  employeeId: any;
   showError: boolean = false;
+  showErrorInvalid: boolean = false;
   employeeData: any;
   formModified: boolean = false;
   updateError: boolean = false;
   errorMessage: string = '';
   file!: any;
-  errorMessageNif: string = '';
-  originalNif: string | null = null;
+  errorMessageNif: string='';
+
+  // showPassword: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,10 +41,13 @@ export class EditEmployeeComponent implements OnInit {
       postal_code: ['', [Validators.required, Validators.minLength(5), Validators.pattern('^[0-9]+$')]],
       nif: ['', [Validators.required, Validators.pattern('^(?=.*[XYZ0-9])[XYZ0-9][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$')]],
       photo: [null, [this.imageExtensionValidator]],
+
     });
 
+    // Suscribirse a los cambios en el campo de NIF
     this.employeeForm.get('nif')?.valueChanges.subscribe(() => {
-      this.errorMessageNif = '';
+      // Al cambiar el valor del campo de NIF, ocultar el mensaje de error
+      this.errorMessage = '';
     });
   }
 
@@ -80,9 +85,9 @@ export class EditEmployeeComponent implements OnInit {
 
           const userData = this.employeeData.users;
           if (userData) {
-            this.originalNif = userData.nif || '';
             this.employeeForm.patchValue({
-              nif: this.originalNif,
+              nif: userData.nif || '',
+
             });
           }
 
@@ -94,6 +99,8 @@ export class EditEmployeeComponent implements OnInit {
             gender: this.employeeData.gender || '',
             email: this.employeeData.email || '',
             telephone: this.employeeData.telephone || '',
+
+
           });
         } else {
           console.error('Datos del empleado no encontrados');
@@ -105,19 +112,33 @@ export class EditEmployeeComponent implements OnInit {
     );
   }
 
+
+
+
   updateEmployee(): void {
     if (this.employeeId === null) {
       console.error('No se ha proporcionado un ID de empleado válido.');
       return;
     }
 
-    if (this.employeeForm.get('nif')?.value !== this.originalNif) {
-      this.apiService.checkNifExists(this.employeeForm.value.nif).subscribe(
+    if (this.employeeForm.invalid) {
+      this.showErrorInvalid = true;
+
+      return;
+    }
+
+    // Verificar si el NIF ha cambiado
+    const originalNif = this.employeeData ? this.employeeData.users.nif : '';
+    const newNif = this.employeeForm.value.nif;
+
+    if (newNif !== originalNif) {
+      // El NIF ha cambiado, verificar si ya existe en la base de datos
+      this.apiService.checkNifExists(newNif).subscribe(
         (exists) => {
           if (exists) {
             this.errorMessageNif = 'Ya existe un empleado con este NIF. Por favor, intente con otro NIF.';
-            return;
           } else {
+            // El NIF no existe, continuar con la actualización del empleado
             this.updateEmployeeData();
           }
         },
@@ -127,15 +148,15 @@ export class EditEmployeeComponent implements OnInit {
         }
       );
     } else {
+      // El NIF no ha cambiado, continuar con la actualización del empleado sin verificar el NIF
       this.updateEmployeeData();
     }
   }
 
   updateEmployeeData(): void {
-    const updatedEmployeeData = this.employeeForm.value;
-
-    this.apiService.updateEmployee(this.employeeId!, updatedEmployeeData).subscribe(
-      () => {
+    // Continuar con la actualización del empleado
+    this.apiService.updateEmployee(this.employeeId, this.employeeForm.value).subscribe(
+      (response) => {
         this.updateError = false;
         this.errorMessage = '';
         this.router.navigate(['/employees']);
@@ -152,6 +173,8 @@ export class EditEmployeeComponent implements OnInit {
     );
   }
 
+
+
   cancelEdit(): void {
     if (confirm('¿Estás seguro de cancelar la edición?')) {
       this.router.navigate(['/employees']);
@@ -167,6 +190,7 @@ export class EditEmployeeComponent implements OnInit {
     }
     return null;
   }
+
 
   validateField(control: AbstractControl) {
     const fieldPattern = /^[a-zA-Z\s]*$/;

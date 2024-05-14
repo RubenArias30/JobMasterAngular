@@ -175,11 +175,11 @@
             <label for="nif" class="block">NIF</label>
             <input type="text" id="nif" formControlName="nif" appNifValidator name="nif"
               class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="12345678Z" maxlength="9">
-            <div
+              <div
               *ngIf="employeeForm?.get('nif')?.invalid && (employeeForm?.get('nif')?.dirty || employeeForm?.get('nif')?.touched)"
               class="text-red-500 mt-2">Por favor, introduce un NIF válido.</div>
               <div *ngIf="errorMessageNif" class="text-red-500 mt-2">{{ errorMessageNif }}</div>
-              <div *ngIf="employeeForm.get('nif')?.touched && errorMessageNif" class="text-danger">{{ errorMessageNif }}</div>
+
 
           </div>
           <!-- <div class="relative mt-5">
@@ -205,15 +205,15 @@
       </div>
     </div>
     <!-- Mensajes de error -->
-    <div *ngIf="errorMessage && !employeeForm.valid" class="text-red-500 mt-2 text-center">
-      Por favor, completa todos los campos obligatorios.
+    <div *ngIf="errorMessage" class="text-red-500 mt-2 text-center">
+      {{ errorMessage }}
     </div>
 
     <!-- <div *ngIf="updateError" class="text-red-500 mt-2 text-center">
       Error al actualizar el empleado. Por favor, inténtalo de nuevo más tarde.
     </div> -->
-    <div *ngIf="errorMessage" class="text-red-500 mt-2 text-center">
-      {{ errorMessage }}
+    <div *ngIf="showErrorInvalid" class="text-red-500 mt-2 text-center">
+      Error al agregar empleado. Por favor, inténtelo de nuevo más tarde.
     </div>
 
     <!-- Botón "Añadir Usuario" y "Cancelar"-->
