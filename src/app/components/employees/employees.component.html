@@ -20,9 +20,7 @@
       <!-- Cabecera de la tabla -->
       <thead class="bg-gray-100">
         <tr>
-          <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">
-            ID
-          </th>
+
           <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">
             Foto
           </th>
@@ -47,9 +45,8 @@
       <tbody class="bg-white divide-y divide-gray-200">
         <ng-container *ngFor="let employee of employees; let i = index">
           <tr (click)="openEmployeeModal(employee)" class="transition-all hover:bg-gray-100 hover:shadow-lg">
-            <td class="text-center px-4 py-2 whitespace-nowrap">{{ employee.id }}</td>
             <td class="text-center px-4 py-2 whitespace-nowrap">
-              <div class="rounded-full overflow-hidden border border-gray-300 h-8 w-8">
+              <div class="rounded-full overflow-hidden border border-gray-300 h-8 w-8 mx-auto">
                 <img [src]="employee.photo" alt="Foto de {{ employee.name }}" class="h-full w-full object-cover"
                   width="25" height="25">
               </div>

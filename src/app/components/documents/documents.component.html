@@ -13,7 +13,6 @@
       <!-- Cabecera de la tabla -->
       <thead class="bg-gray-100">
         <tr>
-          <th class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">ID</th>
           <th class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">Nombre</th>
           <th class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">Correo Electrónico</th>
           <th class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">Teléfono</th>
@@ -24,7 +23,6 @@
       <tbody class="divide-y divide-gray-200">
         <ng-container *ngFor="let employee of employees; let i = index">
           <tr>
-            <td class="text-center px-4 py-2">{{ employee.id }}</td>
             <td class="text-center px-4 py-2">{{ employee.name }} {{ employee.surname }}</td>
             <td class="text-center px-4 py-2">{{ employee.email }}</td>
             <td class="text-center px-4 py-2">{{ employee.telephone }}</td>
