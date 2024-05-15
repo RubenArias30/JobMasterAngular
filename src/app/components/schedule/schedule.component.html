@@ -13,7 +13,6 @@
       <!-- Cabecera de la tabla -->
       <thead class="bg-gray-100">
         <tr>
-          <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">Id</th>
           <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">Foto</th>
           <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">Nombre</th>
           <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">Email</th>
@@ -25,7 +24,6 @@
       <!-- Datos de los empleados -->
       <tbody class="divide-y divide-gray-200">
         <tr *ngFor="let employee of employees" class="border-t">
-          <td class="text-center px-4 py-2">{{ employee.id }}</td>
           <td class="text-center px-4 py-2">
             <div class="flex justify-center items-center">
               <div class="rounded-full overflow-hidden border border-gray-300 h-8 w-8">
@@ -38,7 +36,7 @@
           <td class="text-center px-4 py-2">{{ employee.telephone }}</td>
           <td class="text-center px-4 py-2">{{ employee.country }}</td>
           <td class="text-center px-4 py-2">
-            <a [routerLink]="['/schedule/add_schedule', employee.id]" class="text-blue-500 hover:text-blue-700 mt-2">
+            <a [routerLink]="['/schedule/add_schedule', employee.id]" class="text-gray-900 ">
               <i class='bx bxs-calendar-plus text-xl'></i>
             </a>
             <!-- <a [routerLink]="['/schedule/edit_schedule', employee.id]" class="text-blue-500 hover:text-blue-700 mt-2">

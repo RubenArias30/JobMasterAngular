@@ -12,7 +12,13 @@ export class IncidentsComponent implements OnInit {
   selectedStatus: string = '';
   pending: number = 0;
   completed: number = 0;
+  showDropdown: boolean = false;
 
+  statusTranslations: any = {
+    '': 'Todos',
+    'pending': 'Pendientes',
+    'completed': 'Completadas'
+  };
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
@@ -27,9 +33,17 @@ export class IncidentsComponent implements OnInit {
         this.countIncidentStatus();
       });
   }
-
+  translateStatus(status: string): string {
+    return this.statusTranslations[status] || 'Todos';
+  }
+  toggleDropdown(): void {
+    this.showDropdown = !this.showDropdown;
+  }
   // Función para filtrar incidencias por estado
-  filterByStatus(): void {
+  filterByStatus(selectedStatus: string): void {
+    this.selectedStatus = selectedStatus; // Actualizar el estado seleccionado
+
+    // Filtrar las incidencias basadas en el estado seleccionado
     if (this.selectedStatus) {
       this.incidences = this.originalIncidences.filter(incident => incident.status === this.selectedStatus);
     } else {

@@ -14,6 +14,14 @@ export class DetailsComponent implements OnInit {
   showDropdown: boolean = false;
   documentTypes: string[] = ['contracts', 'nif', 'curriculum', 'laboral_life', 'payroll', 'proof'];
   selectedType: string = '';
+  documentTypeTranslations: any = {
+    'contracts': 'Contratos',
+    'nif': 'NIF',
+    'curriculum': 'Currículum',
+    'laboral_life': 'Vida Laboral',
+    'payroll': 'Nómina',
+    'proof': 'Comprobante'
+  };
 
   constructor(private router: Router, private apiService: ApiService, private route: ActivatedRoute) { }
 
@@ -108,5 +116,7 @@ export class DetailsComponent implements OnInit {
       );
     }
   }
-
+  translateDocumentType(documentType: string): string {
+    return this.documentTypeTranslations[documentType] || documentType;
+  }
 }
