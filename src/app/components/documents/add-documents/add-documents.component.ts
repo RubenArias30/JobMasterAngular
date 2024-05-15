@@ -24,7 +24,7 @@ export class AddDocumentsComponent implements OnInit {
       type_documents: ['', Validators.required],
       name: ['', Validators.required],
       description: ['', Validators.required],
-      date: ['', [Validators.required, this.dateValidator()]], 
+      date: ['', [Validators.required, this.dateValidator()]],
       route: ['', [Validators.required, this.fileExtensionValidator]]
     });
   }
