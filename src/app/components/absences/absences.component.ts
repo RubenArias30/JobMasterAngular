@@ -32,7 +32,6 @@ filterOptions = ['Mostrar Todo', 'Vacaciones', 'Enfermedad', 'Maternidad/Paterni
 
 
 
-
   constructor
     (
       private apiService: ApiService,
@@ -40,6 +39,7 @@ filterOptions = ['Mostrar Todo', 'Vacaciones', 'Enfermedad', 'Maternidad/Paterni
       private router: Router,
       private elementRef: ElementRef) {
   }
+  
 
   ngOnInit(): void {
     // Fetch absences
@@ -177,5 +177,15 @@ filterOptions = ['Mostrar Todo', 'Vacaciones', 'Enfermedad', 'Maternidad/Paterni
       );
     }
   }
+
+  selectedAbsence: any;
+
+closeAbsenceModal() {
+  this.selectedAbsence = null;
+}
+
+openAbsenceModal(absence: any) {
+  this.selectedAbsence = absence;
+}
 
 }
