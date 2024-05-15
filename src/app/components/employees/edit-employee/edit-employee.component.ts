@@ -10,8 +10,9 @@ import { ApiService } from 'src/app/services/api/api.service';
 })
 export class EditEmployeeComponent implements OnInit {
   employeeForm: FormGroup;
-  employeeId: string | null = null;
+  employeeId: any;
   showError: boolean = false;
+  showErrorInvalid: boolean = false;
   employeeData: any;
   formModified: boolean = false;
   updateError: boolean = false;
@@ -120,43 +121,59 @@ export class EditEmployeeComponent implements OnInit {
       return;
     }
 
-    // Verificar si el NIF ya existe
-    this.apiService.checkNifExists(this.employeeForm.value.nif).subscribe(
-      (exists) => {
-        if (exists) {
-          this.errorMessageNif = 'Ya existe un empleado con este NIF. Por favor, intente con otro NIF.';
-          return;
-        } else {
-          // El NIF no existe, continuar con la actualización del empleado
-          this.apiService.updateEmployee(this.employeeData.id, this.employeeForm.value).subscribe(
-            (response) => {
-              this.updateError = false;
-              this.errorMessage = '';
-              this.router.navigate(['/employees']);
-            },
-            (error) => {
-              console.error('Error al actualizar el empleado:', error);
-              if (error.status === 500) {
-                this.errorMessage = 'Se produjo un error interno del servidor al actualizar el empleado.';
-              } else {
-                this.errorMessage = 'Se produjo un error al actualizar el empleado. Por favor, inténtelo de nuevo más tarde.';
-              }
-              this.updateError = true;
-            }
-          );
+    if (this.employeeForm.invalid) {
+      this.showErrorInvalid = true;
+
+      return;
+    }
+
+    // Verificar si el NIF ha cambiado
+    const originalNif = this.employeeData ? this.employeeData.users.nif : '';
+    const newNif = this.employeeForm.value.nif;
+
+    if (newNif !== originalNif) {
+      // El NIF ha cambiado, verificar si ya existe en la base de datos
+      this.apiService.checkNifExists(newNif).subscribe(
+        (exists) => {
+          if (exists) {
+            this.errorMessageNif = 'Ya existe un empleado con este NIF. Por favor, intente con otro NIF.';
+          } else {
+            // El NIF no existe, continuar con la actualización del empleado
+            this.updateEmployeeData();
+          }
+        },
+        (error) => {
+          console.error('Error al verificar el NIF:', error);
+          this.errorMessage = 'Se produjo un error al verificar el NIF. Por favor, inténtelo de nuevo más tarde.';
         }
+      );
+    } else {
+      // El NIF no ha cambiado, continuar con la actualización del empleado sin verificar el NIF
+      this.updateEmployeeData();
+    }
+  }
+
+  updateEmployeeData(): void {
+    // Continuar con la actualización del empleado
+    this.apiService.updateEmployee(this.employeeId, this.employeeForm.value).subscribe(
+      (response) => {
+        this.updateError = false;
+        this.errorMessage = '';
+        this.router.navigate(['/employees']);
       },
       (error) => {
-        console.error('Error al verificar el NIF:', error);
-        this.errorMessage = 'Se produjo un error al verificar el NIF. Por favor, inténtelo de nuevo más tarde.';
+        console.error('Error al actualizar el empleado:', error);
+        if (error.status === 500) {
+          this.errorMessage = 'Se produjo un error interno del servidor al actualizar el empleado.';
+        } else {
+          this.errorMessage = 'Se produjo un error al actualizar el empleado. Por favor, inténtelo de nuevo más tarde.';
+        }
+        this.updateError = true;
       }
     );
-     // Suscribirse a los cambios en el campo de NIF
-     this.employeeForm.get('nif')?.valueChanges.subscribe(() => {
-      // Al cambiar el valor del campo de NIF, ocultar el mensaje de error
-      this.errorMessageNif = '';
-    });
   }
+
+
 
   cancelEdit(): void {
     if (confirm('¿Estás seguro de cancelar la edición?')) {

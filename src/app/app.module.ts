@@ -32,8 +32,8 @@ import { AttendancesComponent } from './components/attendances/attendances.compo
 import { AbsencesComponent } from './components/absences/absences.component';
 import { AddAbsencesComponent } from './components/absences/add-absences/add-absences.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { DeleteConfirmationModalComponent } from './delete-confirmation-modal/delete-confirmation-modal.component';
-import { SuccessAlertComponent } from './success-alert/success-alert.component';
+import { DeleteConfirmationModalComponent } from './components/alert-messages/delete-confirmation-modal/delete-confirmation-modal.component';
+import { SuccessAlertComponent } from './components/alert-messages/success-alert/success-alert.component';
 import { ViewDocumentsComponent } from './components/documents/view-documents/view-documents.component';
 import { RequestResetComponent } from './components/password/request-reset/request-reset.component';
 import { ResponseResetComponent } from './components/password/response-reset/response-reset.component';

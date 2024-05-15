@@ -2,10 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ElementRef } from '@angular/core'; // Import ElementRef
 import { ViewChild } from '@angular/core';
 import { ApiService } from 'src/app/services/api/api.service';
-import { SuccessAlertComponent } from 'src/app/success-alert/success-alert.component';
+import { SuccessAlertComponent } from 'src/app/components/alert-messages/success-alert/success-alert.component';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DeleteConfirmationModalComponent } from 'src/app/delete-confirmation-modal/delete-confirmation-modal.component';
+import { DeleteConfirmationModalComponent } from 'src/app/components/alert-messages/delete-confirmation-modal/delete-confirmation-modal.component';
 import { AddAbsencesComponent } from 'src/app/components/absences/add-absences/add-absences.component';
 
 @Component({

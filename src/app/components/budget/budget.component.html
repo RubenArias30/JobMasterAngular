@@ -36,19 +36,29 @@
 
   <div class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto">
     <!-- Added overflow-x-auto for horizontal scrolling -->
-    <table class="w-full">
+    <table class="w-full divide-y divide-gray-200">
       <!-- Cabecera de la tabla -->
-      <thead>
-        <tr class="bg-gray-200">
-          <th class="text-center px-4 py-2">Cliente</th>
-          <th class="text-center px-4 py-2">Compañia</th>
-          <th class="text-center px-4 py-2">Subtotal</th>
-          <th class="text-center px-4 py-2">Total</th>
-          <th class="text-center px-4 py-2">Acción</th>
+      <thead class="bg-gray-100">
+        <tr>
+          <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">
+            Cliente
+          </th>
+          <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">
+            Compañia
+          </th>
+          <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">
+            Subtotal
+          </th>
+          <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">
+            Total
+          </th>
+          <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">
+            Acción
+          </th>
         </tr>
       </thead>
       <!-- Datos de los presupuestos -->
-      <tbody>
+      <tbody class="divide-y divide-gray-200">
         <tr *ngFor="let invoice of invoices" class="border-b border-gray-200">
           <td class="text-center px-4 py-2">{{ invoice.clients.client_name }}</td>
           <td class="text-center px-4 py-2">{{ invoice.companies.company_name }}</td>
@@ -58,8 +68,6 @@
             <a (click)="generatePDF(invoice)">
               <i class='bx bxs-file-pdf text-xl mr-2'></i>
             </a>
-
-
             <button (click)="confirmDeleteInvoice(invoice.id)">
               <i class='bx bx-trash text-xl text-red-600'></i>
             </button>
@@ -69,4 +77,3 @@
     </table>
   </div>
 </div>
-
