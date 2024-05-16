@@ -129,6 +129,9 @@ export class ApiService {
   getEmployeeSchedule(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/employees/events`);
   }
+  getEmployeeStatus(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/employee-status`);
+  }
 
 
   //Incidents
@@ -164,10 +167,9 @@ export class ApiService {
   getStartTime() {
     return this.http.get(`${this.apiUrl}/attendance/start-time`);
   }
-  checkActiveEntry(userId: string) {
-    return this.http.get<boolean>(`${this.apiUrl}/attendances/check-active-entry/${userId}`);
+  getAttendanceStatus(userId: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/attendances/status/${userId}`);
   }
-
 
 
   //Ausencias
