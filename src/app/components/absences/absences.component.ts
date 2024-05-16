@@ -92,12 +92,15 @@ filterOptions = ['Mostrar Todo', 'Vacaciones', 'Enfermedad', 'Maternidad/Paterni
 
   deleteAbsence(absenceId: string): void {
 
-    // Set the flag to show the delete confirmation modal
-    this.showDeleteConfirmationModal = true; // Change here
-    this.showDetailsModal = false;
 
-    // Pass the absence ID to a variable to be used for deletion upon confirmation
-    this.absenceIdToDelete = absenceId;
+   // Ocultar los detalles de la ausencia
+   this.showDetailsModal = false;
+
+   // Mostrar la confirmación de eliminación
+   this.showDeleteConfirmationModal = true;
+
+ // Guardar el ID de la ausencia a eliminar
+ this.absenceIdToDelete = absenceId;
 
   }
 
@@ -186,16 +189,12 @@ filterOptions = ['Mostrar Todo', 'Vacaciones', 'Enfermedad', 'Maternidad/Paterni
 
 closeAbsenceModal() {
   this.selectedAbsence = null;
-  this.showDetailsModal = false;
-  this.showDeleteConfirmationModal = false; // Change here
 
 
 }
 
 openAbsenceModal(absence: any) {
   this.selectedAbsence = absence;
-  this.showDetailsModal = true; // Establecer la bandera en true al abrir el modal de detalles
-    this.showDeleteConfirmationModal = false; // Change here
 
 }
 
