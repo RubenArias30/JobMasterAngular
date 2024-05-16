@@ -94,20 +94,16 @@
               <td class="px-6 py-4 whitespace-nowrap">
                 <!-- Switch para marcar la incidencia como completada o pendiente -->
                 <label class="flex items-center cursor-pointer">
-                  <input type="checkbox" [checked]="incident.status === 'completed'"
-                    (change)="toggleCompletion(incident)" class="hidden">
-                  <span class="relative">
-                    <span
-                      [ngClass]="{'bg-red-300': incident.status === 'pending', 'bg-green-300': incident.status === 'completed'}"
-                      class="block w-14 h-8 rounded-full shadow-inner"></span>
-                    <span
-                      [ngClass]="{'translate-x-full bg-green-500': incident.status === 'completed', 'bg-red-500': incident.status === 'pending'}"
-                      class="absolute left-0 top-0 mt-1 ml-1 w-6 h-6 rounded-full shadow-md transition"></span>
-                  </span>
-                  <span class="ml-3 text-gray-700">{{ incident.status === 'completed' ? 'Completada' : 'Pendiente'
-                    }}</span>
+                    <input type="checkbox" [checked]="incident.status === 'completed'" (change)="toggleCompletion(incident)" class="hidden">
+                    <span class="relative">
+                        <span [ngClass]="{'bg-red-300': incident.status === 'pending', 'bg-green-300': incident.status === 'completed'}" class="block w-14 h-8 rounded-full shadow-inner"></span>
+                        <span [ngClass]="{'translate-x-full bg-green-500': incident.status === 'completed', 'bg-red-500': incident.status === 'pending'}" class="absolute left-0 top-0 mt-1 ml-1 w-6 h-6 rounded-full shadow-md transition"></span>
+                    </span>
+                    <span class="ml-3 text-gray-700" [ngClass]="{'text-custom-500': incident.status === 'completed', 'text-custom-600': incident.status === 'pending'}">{{ incident.status === 'completed' ? 'Completada' : 'Pendiente' }}</span>
                 </label>
-              </td>
+            </td>
+            
+              
               <td class="px-6 py-4 whitespace-nowrap">
                 <button (click)="confirmDelete(incident.id)">
                   <i class='bx bx-trash text-xl text-red-600'></i>

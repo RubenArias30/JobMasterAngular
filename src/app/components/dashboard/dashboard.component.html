@@ -86,8 +86,11 @@
                 <div class="text-sm text-gray-900">{{ incident.date }}</div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">{{ incident.status === 'completed' ? 'Completada' : 'Pendiente' }}</div>
+                <div [ngClass]="{'text-custom-500': incident.status === 'completed', 'text-custom-600': incident.status !== 'completed'}" class="text-sm font-semibold">
+                  {{ incident.status === 'completed' ? 'Completada' : 'Pendiente' }}
+                </div>
               </td>
+              
             </tr>
           </ng-container>
           <ng-template #noIncidences>

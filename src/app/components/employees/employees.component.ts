@@ -31,10 +31,8 @@ export class EmployeesComponent {
   }
 
   openEmployeeModal(employee: any): void {
-    // Solo abrir el modal si modalVisible es verdadero
-    if (this.modalVisible) {
-      this.selectedEmployee = employee;
-    }
+    this.selectedEmployee = employee;
+  this.modalVisible = true;
   }
 
 
