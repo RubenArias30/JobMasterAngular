@@ -239,6 +239,22 @@ export class AddScheduleComponent implements OnInit {
     );
   }
 
+  deleteEvent(eventId: number) {
+  this.apiService.deleteEvent(eventId).subscribe(
+    () => {
+      // Eliminación exitosa, recarga la pgina
+      window.location.reload(); // Recargar la página después de borrar el evento
+
+      // Cerrar el modal después de eliminar el evento
+      this.showModal = false;
+    },
+    (error) => {
+      // Manejo de errores
+      console.error('Error al eliminar el evento:', error);
+    }
+  );
+}
+
   getFormattedTime(date: Date): string {
     // Formatear la hora en formato HH:MM
     return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
@@ -311,7 +327,8 @@ export class AddScheduleComponent implements OnInit {
 
     this.apiService.addSchedule(this.employeeId, data).subscribe(
       response => {
-        this.loadEvents(this.employeeId); // Actualizar los eventos después de guardar
+        window.location.reload();
+
       },
       error => {
         console.error('Error al agregar el horario:', error);
