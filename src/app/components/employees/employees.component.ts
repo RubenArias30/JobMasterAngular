@@ -11,6 +11,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 export class EmployeesComponent {
   employees: any[] = [];
   selectedEmployee: any = null;
+  modalVisible: boolean = false;
 
   constructor(private apiService: ApiService, private router: Router) { }
 
@@ -30,13 +31,16 @@ export class EmployeesComponent {
   }
 
   openEmployeeModal(employee: any): void {
-    this.selectedEmployee = employee;
-
+    // Solo abrir el modal si modalVisible es verdadero
+    if (this.modalVisible) {
+      this.selectedEmployee = employee;
+    }
   }
 
 
   closeEmployeeModal(): void {
     this.selectedEmployee = null;
+    this.modalVisible = false; // Asegurarse de que modalVisible se establezca en falso al cerrar el modal
   }
 
   confirmDeleteEmployee(employeeId: string): void {
@@ -45,6 +49,7 @@ export class EmployeesComponent {
 
     // Procesar la eliminación si el usuario confirma la acción
     if (confirmDelete) {
+      this.modalVisible = false; // Ocultar el modal al confirmar la eliminación
       this.deleteEmployee(employeeId);
     }
   }
@@ -55,6 +60,7 @@ export class EmployeesComponent {
         // Eliminar el empleado de la lista localmente después de eliminarlo del servidor
         this.employees = this.employees.filter(employee => employee.id !== employeeId);
       },
+
       (error) => {
         console.error('Error al eliminar el empleado:', error);
       }
