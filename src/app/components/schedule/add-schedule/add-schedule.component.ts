@@ -33,6 +33,13 @@ export class AddScheduleComponent implements OnInit {
   formEdit: FormGroup;
   showError: boolean = false;
   showErrorField: boolean = false;
+  showTimeRangeError: boolean = false;
+  showDateRangeError: boolean = false;
+  showEqualTimeError: boolean = false;
+  showTimeRangeErrorEdit: boolean = false;
+  showDateRangeErrorEdit: boolean = false;
+  showEqualTimeErrorEdit: boolean = false;
+  isFormValid: boolean = false;
 
 
   customEventContent = (arg: any) => {
@@ -105,6 +112,7 @@ export class AddScheduleComponent implements OnInit {
       fechaFin: ['', Validators.required],
       horaFin: ['', [Validators.required, Validators.pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)]]
     }, { validator: this.dateRangeValidator });
+    this.isFormValid = false;
   }
 
   ngOnInit(): void {
@@ -118,66 +126,64 @@ export class AddScheduleComponent implements OnInit {
 
   handleEventClick(info: any) {
     if (info.event) {
-        this.selectedEvent = {
-            id: info.event.id,
-            title: info.event.title,
-            start: info.event.start,
-            end: info.event.end,
-        };
+      this.selectedEvent = {
+        id: info.event.id,
+        title: info.event.title,
+        start: info.event.start,
+        end: info.event.end,
+      };
 
-        if (!this.selectedEvent) {
-            console.error('No se ha seleccionado ningún evento para editar.');
-            return;
+      if (!this.selectedEvent) {
+        console.error('No se ha seleccionado ningún evento para editar.');
+        return;
+      }
+
+      const title = this.selectedEvent.title;
+      const startDate = new Date(this.selectedEvent.start);
+      const endDate = new Date(this.selectedEvent.end);
+      const formattedStartTime = this.formatTime(startDate);
+      const formattedEndTime = this.formatTime(endDate);
+
+      // Obtener todos los eventos del calendario
+      const allEvents = info.view.calendar.getEvents();
+
+      // Filtrar los eventos que tienen las mismas horas de inicio y fin
+      const matchingEvents = allEvents.filter((event: { start: Date, end: Date }) => {
+        const eventStartTime = this.formatTime(new Date(event.start));
+        const eventEndTime = this.formatTime(new Date(event.end));
+        return eventStartTime === formattedStartTime && eventEndTime === formattedEndTime;
+      });
+
+      // Determinar las fechas mínima y máxima de los eventos coincidentes
+      let minStartDate = startDate;
+      let maxEndDate = endDate;
+
+      matchingEvents.forEach((event: { start: Date, end: Date }) => {
+        const eventStartDate = new Date(event.start);
+        const eventEndDate = new Date(event.end);
+        if (eventStartDate < minStartDate) {
+          minStartDate = eventStartDate;
         }
+        if (eventEndDate > maxEndDate) {
+          maxEndDate = eventEndDate;
+        }
+      });
 
-        const title = this.selectedEvent.title;
-        const startDate = new Date(this.selectedEvent.start);
-        const endDate = new Date(this.selectedEvent.end);
-        const formattedStartTime = this.formatTime(startDate);
-        const formattedEndTime = this.formatTime(endDate);
+      const formattedMinStartDate = this.formatDate(minStartDate);
+      const formattedMaxEndDate = this.formatDate(maxEndDate);
 
-        // Obtener todos los eventos del calendario
-        const allEvents = info.view.calendar.getEvents();
+      // Actualizar el formulario con las fechas mínima y máxima
+      this.formEdit.patchValue({
+        title: title,
+        fechaInicio: formattedMinStartDate,
+        horaInicio: formattedStartTime,
+        fechaFin: formattedMaxEndDate,
+        horaFin: formattedEndTime
+      });
 
-        // Filtrar los eventos que tienen las mismas horas de inicio y fin
-        const matchingEvents = allEvents.filter((event: { start: Date, end: Date }) => {
-            const eventStartTime = this.formatTime(new Date(event.start));
-            const eventEndTime = this.formatTime(new Date(event.end));
-            return eventStartTime === formattedStartTime && eventEndTime === formattedEndTime;
-        });
-
-        // Determinar las fechas mínima y máxima de los eventos coincidentes
-        let minStartDate = startDate;
-        let maxEndDate = endDate;
-
-        matchingEvents.forEach((event: { start: Date, end: Date }) => {
-            const eventStartDate = new Date(event.start);
-            const eventEndDate = new Date(event.end);
-            if (eventStartDate < minStartDate) {
-                minStartDate = eventStartDate;
-            }
-            if (eventEndDate > maxEndDate) {
-                maxEndDate = eventEndDate;
-            }
-        });
-
-        const formattedMinStartDate = this.formatDate(minStartDate);
-        const formattedMaxEndDate = this.formatDate(maxEndDate);
-
-        // Actualizar el formulario con las fechas mínima y máxima
-        this.formEdit.patchValue({
-            title: title,
-            fechaInicio: formattedMinStartDate,
-            horaInicio: formattedStartTime,
-            fechaFin: formattedMaxEndDate,
-            horaFin: formattedEndTime
-        });
-
-        this.showModal = true;
+      this.showModal = true;
     }
-}
-
-
+  }
 
   // Función para mostrar el modal y pasar el evento seleccionado
   openModal(event: any) {
@@ -204,7 +210,7 @@ export class AddScheduleComponent implements OnInit {
           while (currentDate <= endDate) {
             const formattedDate = currentDate.toISOString().split('T')[0];
             const newEvent: EventInput = {
-              id: event.id, // Asegúrate de incluir la propiedad id
+              id: `${event.id}-${currentDate.getTime()}`, // Identificador único
               title: event.title,
               start: `${formattedDate}T${this.getFormattedTime(currentDate)}:00`,
               end: `${formattedDate}T${this.getFormattedTime(endDate)}:00`
@@ -220,6 +226,7 @@ export class AddScheduleComponent implements OnInit {
               while (currentDate.getMonth() === endDate.getMonth() && currentDate <= endDate) {
                 const formattedDateNextMonth = currentDate.toISOString().split('T')[0];
                 const newEventNextMonth: EventInput = {
+                  id: `${event.id}-${currentDate.getTime()}`, // Identificador único
                   title: event.title,
                   start: `${formattedDateNextMonth}T${this.getFormattedTime(currentDate)}:00`,
                   end: `${formattedDateNextMonth}T${this.getFormattedTime(endDate)}:00`
@@ -239,25 +246,22 @@ export class AddScheduleComponent implements OnInit {
     );
   }
 
-  deleteEvent(eventId: number) {
-  this.apiService.deleteEvent(eventId).subscribe(
-    () => {
-      // Eliminación exitosa, recarga la pgina
-      window.location.reload(); // Recargar la página después de borrar el evento
-
-      // Cerrar el modal después de eliminar el evento
-      this.showModal = false;
-    },
-    (error) => {
-      // Manejo de errores
-      console.error('Error al eliminar el evento:', error);
-    }
-  );
-}
 
   getFormattedTime(date: Date): string {
     // Formatear la hora en formato HH:MM
     return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+  }
+
+  combineDateAndTime(date: Date, time: Date): string {
+    const combinedDateTime = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      time.getHours(),
+      time.getMinutes(),
+      time.getSeconds()
+    );
+    return combinedDateTime.toISOString();
   }
 
   agregarHorario() {
@@ -274,38 +278,34 @@ export class AddScheduleComponent implements OnInit {
     const startDateTime = new Date(`${formData.fechaInicio}T${formData.horaInicio}`);
     const endDateTime = new Date(`${formData.fechaFin}T${formData.horaFin}`);
 
-    // Crear eventos separados para cada día si el evento se extiende a múltiples días
-    const currentDate = new Date(startDateTime);
+
+    // Verificar si la hora final está en el mismo día que la hora de inicio
+    if (
+      endDateTime.getDate() === startDateTime.getDate() &&
+      endDateTime.getHours() < startDateTime.getHours()
+    ) {
+      console.error('Error: La hora de finalización debe estar dentro del mismo día que la hora de inicio.');
+      return;
+    }
+
+    // Iterar sobre cada fecha entre la fecha de inicio y la fecha de finalización
+    let currentDate = new Date(startDateTime);
     while (currentDate <= endDateTime) {
-      const newStartDateTime = new Date(currentDate);
-      const newEndDateTime = new Date(currentDate);
-
-      // Establecer la hora de inicio para cada día
-      newStartDateTime.setHours(startDateTime.getHours(), startDateTime.getMinutes(), 0, 0);
-
-      // Establecer la hora de fin para cada día
-      if (currentDate.toDateString() === endDateTime.toDateString()) {
-        // Si es el último día, usar la hora de fin especificada por el usuario
-        newEndDateTime.setHours(endDateTime.getHours(), endDateTime.getMinutes(), 0, 0);
-      } else {
-        // Si no es el último día, usar la medianoche como hora de fin
-        newEndDateTime.setHours(23, 59, 59, 999);
-      }
-
+      // Crear el evento para la fecha actual
       const nuevoEvento: EventInput = {
         title: formData.title,
-        start: newStartDateTime.toISOString(),
-        end: newEndDateTime.toISOString()
+        start: this.combineDateAndTime(currentDate, startDateTime),
+        end: this.combineDateAndTime(currentDate, endDateTime)
       };
 
-      // Agregar el evento a la lista de eventos
+      // Agregar el evento al arreglo de eventos
       this.events.push(nuevoEvento);
 
-      // Actualizar el calendario
+      // Agregar el evento al calendario
       const calendarApi = this.fullcalendar.getApi();
       calendarApi.addEvent(nuevoEvento);
 
-      // Ir al siguiente día
+      // Avanzar al siguiente día
       currentDate.setDate(currentDate.getDate() + 1);
     }
 
@@ -314,29 +314,27 @@ export class AddScheduleComponent implements OnInit {
 
     // Limpiar el formulario después de agregar el horario
     this.clearForm();
-}
-
+    this.isFormValid = false;
+  }
 
   // Enviar el horario al servidor
   onSubmit(scheduleData: any) {
     const data = {
-        title: scheduleData.title,
-        start_datetime: `${scheduleData.fechaInicio}T${scheduleData.horaInicio}`,
-        end_datetime: `${scheduleData.fechaFin}T${scheduleData.horaFin}`
+      title: scheduleData.title,
+      start_datetime: `${scheduleData.fechaInicio}T${scheduleData.horaInicio}`,
+      end_datetime: `${scheduleData.fechaFin}T${scheduleData.horaFin}`
     };
 
     this.apiService.addSchedule(this.employeeId, data).subscribe(
       response => {
-        window.location.reload();
-
+        this.loadEvents(this.employeeId);
       },
       error => {
         console.error('Error al agregar el horario:', error);
         this.showError = true;
       }
     );
-}
-
+  }
 
   editarHorario() {
     // Verificar si hay un evento seleccionado
@@ -357,8 +355,6 @@ export class AddScheduleComponent implements OnInit {
 
     // Obtener el ID del evento seleccionado
     const eventId = this.selectedEvent.id;
-
-    // Llamar al método updateSchedule del ApiService para actualizar el evento
     this.apiService.updateSchedule(eventId, formData).subscribe(
       (response) => {
         // Actualización exitosa, actualizar el evento en el frontend
@@ -379,9 +375,41 @@ export class AddScheduleComponent implements OnInit {
     );
   }
 
+  deleteEvent(eventId: number) {
+    console.log('Deleting event with ID:', eventId);
 
+    // Extraer el ID original del evento del servidor
+    const originalEventId = eventId.toString().split('-')[0];
 
-  // Obtener los detalles del empleado desde el servidor
+    // Filtrar todos los eventos relacionados
+    const relatedEvents = this.events.filter(event => event.id && event.id.startsWith(`${originalEventId}-`));
+
+    if (relatedEvents.length > 0) {
+      // Llamar al servicio para eliminar el evento en el servidor
+      this.apiService.deleteEvent(Number(originalEventId)).subscribe(
+        response => {
+          // Eliminación exitosa en el servidor, eliminar todos los eventos relacionados del array y del calendario
+          relatedEvents.forEach(event => {
+            this.events = this.events.filter(e => e.id !== event.id);
+            const calendarEvent = this.fullcalendar.getApi().getEventById(event.id!);
+            if (calendarEvent) {
+              calendarEvent.remove();
+            }
+          });
+          // Cargar eventos actualizados después de la eliminación
+          this.loadEvents(this.employeeId);
+          this.showModal = false;
+        },
+        (error) => {
+          console.error('Error al eliminar el evento:', error);
+        }
+      );
+    } else {
+      console.error('No se encontró ningún evento con el ID proporcionado:', eventId);
+    }
+  }
+
+  // Obtener los detalles del empleado
   getEmployeeDetails(employeeId: number): void {
     this.apiService.getEmployeeDetails(employeeId).subscribe(
       (response: any) => {
@@ -402,7 +430,53 @@ export class AddScheduleComponent implements OnInit {
     this.router.navigate(['/schedule']);
   }
 
-  // Validador personalizado para verificar que la fecha de inicio sea anterior a la fecha de fin
+ // Método para validar el rango de fecha
+checkDateRange(editMode: boolean = false) {
+  const fechaInicio = new Date(this.form.get('fechaInicio')?.value);
+  const fechaFin = new Date(this.form.get('fechaFin')?.value);
+
+  if (fechaFin < fechaInicio) {
+    // Si la fecha de finalización es menor que la fecha de inicio, establecer la bandera de error
+    this.showDateRangeError = !editMode;
+  } else {
+    // Si no hay error, borrar la bandera de error
+    this.showDateRangeError = false;
+  }
+
+  // Actualizar la bandera de formulario válido
+  this.isFormValid = !this.showDateRangeError && !this.showTimeRangeError && !this.showEqualTimeError;
+}
+
+// Método para validar el rango de hora
+checkTimeRange(editMode: boolean = false) {
+  const fechaInicio = this.form.get('fechaInicio')?.value;
+  const horaInicio = this.form.get('horaInicio')?.value;
+  const fechaFin = this.form.get('fechaFin')?.value;
+  const horaFin = this.form.get('horaFin')?.value;
+
+  const horaInicioDate = new Date(`${fechaInicio}T${horaInicio}`);
+  const horaFinDate = new Date(`${fechaFin}T${horaFin}`);
+
+  // Verificar si la fecha de finalización es menor que la fecha de inicio
+  if (fechaFin < fechaInicio || (fechaFin === fechaInicio && horaFin <= horaInicio)) {
+    // Si la fecha de finalización es menor o igual a la fecha de inicio, o si la hora de finalización es menor o igual a la hora de inicio, establecer la bandera de error
+    this.showTimeRangeError = !editMode;
+  } else if (horaFin === horaInicio) {
+    // Si las horas de inicio y fin son iguales, establecer la bandera de error de horas iguales
+    this.showTimeRangeError = false;
+    this.showEqualTimeError = !editMode;
+  } else {
+    // Si no hay error, borrar la bandera de error
+    this.showTimeRangeError = false;
+    this.showEqualTimeError = false;
+  }
+
+  // Actualizar la bandera de formulario válido
+  this.isFormValid = !this.showDateRangeError && !this.showTimeRangeError && !this.showEqualTimeError;
+}
+
+
+  // Validador  para verificar que la fecha de entrda sea anterior a la fecha de salida
   dateRangeValidator(formGroup: FormGroup) {
     const fechaInicio = formGroup.get('fechaInicio')?.value;
     const horaInicio = formGroup.get('horaInicio')?.value;
@@ -413,11 +487,11 @@ export class AddScheduleComponent implements OnInit {
     const endDate = new Date(`${fechaFin}T${horaFin}`);
 
     if (startDate > endDate) {
-      return { dateRange: true }; // Devuelve un error si la fecha de inicio es posterior a la fecha de fin
+      return { dateRange: true }; // Devuelve un error si la fecha de entrda es posterior a la fecha de salida
     } else if (startDate.getTime() === endDate.getTime() && horaInicio >= horaFin) {
-      return { dateRange: true }; // Devuelve un error si la hora de inicio es mayor o igual a la hora de fin en el mismo día
+      return { dateRange: true }; // Devuelve un error si la hora de entrada es mayor o igual a la hora de salida en el mismo día
     } else {
-      return null; // Retorna nulo si la validación es exitosa
+      return null;
     }
   }
 
