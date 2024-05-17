@@ -67,13 +67,16 @@
 
 <!-- Sección de Incidencias -->
 <div class="px-4 py-2 w-full">
-  <div class="bg-white border border-green-400 rounded-xl p-4 mb-8">
-    <h2 class="text-xl font-bold mb-4">Incidencias</h2>
-    <!-- Display error message if there's an error fetching data -->
-    <div *ngIf="isError" class="text-red-600 font-bold mb-4">
-      Error al cargar las incidencias. Por favor, inténtelo de nuevo más tarde.
+  <h2 class="text-xl font-bold mb-4">Incidencias</h2>
+  <!-- Display error message if there's an error fetching data -->
+   <div  *ngIf="isError" class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto border border-green-400 " >
+    <div  class="text-red-600 font-bold mb-4">
+      Error al cargar las incidencias . Por favor, inténtelo de nuevo más tarde.
     </div>
-    <div *ngIf="!isError" class="overflow-x-auto">
+  </div>
+
+  <div  *ngIf="!isError" class="bg-white border border-green-400 rounded-xl p-4 mb-8">
+    <div  class="overflow-x-auto">
 
       <!-- Your incident list and other content here -->
 

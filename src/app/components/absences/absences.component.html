@@ -25,12 +25,15 @@
 <!-- TABLE -->
 
 <div class="px-4 py-2">
-  <div class="w-full bg-white border border-green-400 rounded-xl p-4 mb-8">
-    <h2 class="text-xl font-bold mb-4">Ausencias</h2>
-    <div *ngIf="isError" class="text-red-600 font-bold mb-4">
-      Error al cargar las ausencias. Por favor, inténtelo de nuevo más tarde.
+  <h2 class="text-xl font-bold mb-4">Ausencias</h2>
+  <div  *ngIf="isError" class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto border border-green-400 " >
+    <div  class="text-red-600 font-bold mb-4">
+      Error al cargar las ausencias.Por favor, inténtelo de nuevo más tarde.
     </div>
-    <div class="overflow-x-auto" *ngIf="!isError">
+  </div>
+  <div *ngIf="!isError" class="w-full bg-white border border-green-400 rounded-xl p-4 mb-8">
+
+    <div class="overflow-x-auto" >
       <table class="w-full divide-y divide-gray-200">
         <!-- Add a div with a fixed position to center the spinner -->
         <!-- <div class="fixed top-0 left-0 w-full h-full flex justify-center items-center" *ngIf="isLoading">
