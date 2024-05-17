@@ -93,6 +93,7 @@ export class AttendancesComponent implements OnInit, OnDestroy {
     );
   }
 
+
   registerExit(): void {
     this.showTimer = false;
     clearInterval(this.timerInterval);

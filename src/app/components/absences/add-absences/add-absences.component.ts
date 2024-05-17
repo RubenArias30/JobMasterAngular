@@ -46,18 +46,19 @@ ngOnInit(): void {
 
 }
 
-  validateStartDate(control: FormControl): { [key: string]: any } | null {
-    const selectedDate = new Date(control.value);
-    const currentDate = new Date();
-    currentDate.setHours(0, 0, 0, 0); // Set current date to midnight
-    const maxStartDate = new Date();
-    maxStartDate.setFullYear(currentDate.getFullYear() + 1); // Set max start date to one year from current date
+validateStartDate(control: FormControl): { [key: string]: any } | null {
+  const selectedDate = new Date(control.value);
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0); // Establecer la fecha actual a la medianoche
+  const minStartDate = new Date(currentDate);
+  minStartDate.setFullYear(currentDate.getFullYear() - 2); // Establecer la fecha mínima a dos años antes de la fecha actual
 
-    if (selectedDate < currentDate || selectedDate > maxStartDate) {
-      return { invalidStartDate: true };
-    }
-    return null;
+  if (selectedDate < minStartDate || selectedDate > currentDate) {
+    return { invalidStartDate: true };
   }
+  return null;
+}
+
 
   validateEndDate(control: FormControl): { [key: string]: any } | null {
     const selectedDate = new Date(control.value);

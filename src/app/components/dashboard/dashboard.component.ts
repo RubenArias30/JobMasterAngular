@@ -8,18 +8,21 @@ import { ApiService } from 'src/app/services/api/api.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  fechaHoraActual: string = ''; // Asignando un valor inicial vacío
-  totalTrabajadores: number = 0; // Inicializa el total de trabajadores
+  fechaHoraActual: string = '';
+  totalTrabajadores: number = 0;
   incidences: any[] = [];
   recentAbsences: any[] = [];
+  presentEmployeeCount: number = 0;
+  inactiveEmployeeCount: number = 0;
 
   constructor(private apiService: ApiService, private router: Router) { }
 
   ngOnInit(): void {
     this.actualizarFechaHora();
-    this.obtenerTotalTrabajadores(); // Obtener el total de trabajadores
+    this.getTotalEmployees();
     this.getRecentIncidents();
     this.loadRecentAbsences();
+    this.getEmployeeStatus();
 
     setInterval(() => {
       this.actualizarFechaHora();
@@ -34,11 +37,9 @@ export class DashboardComponent implements OnInit {
     // Formatear la fecha y hora
     this.fechaHoraActual = `Hora: ${hora} | Fecha: ${fecha}`;
   }
-  private obtenerTotalTrabajadores(): void {
-    // Llamada al servicio API para obtener la lista de trabajadores
+  private getTotalEmployees(): void {
     this.apiService.getEmployees().subscribe(
       (empleados: any[]) => {
-        // Asigna el número total de trabajadores obtenido del servicio
         this.totalTrabajadores = empleados.length;
       },
       (error: any) => {
@@ -46,6 +47,19 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+
+  getEmployeeStatus(): void {
+    this.apiService.getEmployeeStatus().subscribe(
+      (data: any) => {
+        this.presentEmployeeCount = data.present_employee_count;
+        this.inactiveEmployeeCount = data.inactive_employee_count;
+      },
+      error => {
+        console.error('Error al obtener el estado de los empleados:', error);
+      }
+    );
+  }
+
   getRecentIncidents(): void {
     this.apiService.getAllIncidents()
       .subscribe((data: any[]) => {

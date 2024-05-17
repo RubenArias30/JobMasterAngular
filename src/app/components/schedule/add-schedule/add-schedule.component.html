@@ -14,39 +14,54 @@
             <input type="text"
               class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
               formControlName="title" required>
-            <div *ngIf="form.get('title')?.invalid && (form.get('title')?.dirty || form.get('title')?.touched)"
-              class="text-red-500 mt-1">Título es requerido.</div>
           </div>
           <div class="mb-4">
-            <label for="startDate" class="block text-sm font-bold mb-1">Fecha de inicio:</label>
+            <label for="startDate" class="block text-sm font-bold mb-1">Fecha de entrada:</label>
             <input type="date"
               class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
               formControlName="fechaInicio" required>
-            <input type="time"
-              class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
-              formControlName="horaInicio" required>
-            <!-- Mensaje de error para la validación de fecha de inicio -->
-            <div
-              *ngIf="form.get('fechaInicio')?.invalid && (form.get('fechaInicio')?.dirty || form.get('fechaInicio')?.touched)"
-              class="text-red-500 mt-1">Fecha de inicio es requerida.</div>
+              <br>
+              </div>
+              <div class="mb-4">
 
-          </div>
-
-          <div class="mb-4">
-            <label for="endDate" class="block text-sm font-bold mb-1">Fecha de fin:</label>
-            <input type="date"
+              <label for="startDate" class="block text-sm font-bold mb-1">Fecha de salida:</label>
+              <input type="date"
               class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
               formControlName="fechaFin" required>
+
+             </div>
+
+          <div class="mb-4">
+            <label for="endDate" class="block text-sm font-bold mb-1">Hora de entrada:</label>
+              <input type="time"
+              class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
+              formControlName="horaInicio" required>
+            </div>
+
+            <div class="mb-4">
+              <label for="endDate" class="block text-sm font-bold mb-1">Hora de salida:</label>
             <input type="time"
               class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
               formControlName="horaFin" required>
+            </div>
+
+            <div class="mb-4">
+
+              <div *ngIf="form.get('title')?.invalid && (form.get('title')?.dirty || form.get('title')?.touched)"
+              class="text-red-500 mt-1">Título es requerido.</div>
+            <!-- Mensaje de error para la validación de fecha de inicio -->
+            <div
+            *ngIf="form.get('fechaInicio')?.invalid && (form.get('fechaInicio')?.dirty || form.get('fechaInicio')?.touched)"
+            class="text-red-500 mt-1">Fecha de inicio es requerida.</div>
+
             <!-- Mensaje de error para la validación de fecha de fin -->
             <div *ngIf="form.get('fechaFin')?.invalid && (form.get('fechaFin')?.dirty || form.get('fechaFin')?.touched)"
               class="text-red-500 mt-1">Fecha de fin es requerida.</div>
             <div
               *ngIf="form.hasError('dateRange') && (form.get('fechaInicio')?.touched || form.get('fechaFin')?.touched)"
               class="text-red-500 mb-2">La fecha/hora de inicio debe ser anterior a la fecha/hora de fin.</div>
-          </div>
+           </div>
+
           <div class="flex justify-center">
             <button type="submit"
               class="bg-green-500 hover:bg-green-700 font-bold text-white py-2 px-4 rounded">Agregar</button>
@@ -128,7 +143,7 @@
                 <span class="ml-2">Editar</span>
               </button>
               <button class="flex items-center bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg text-lg"
-                (click)="closeModal()">
+              (click)="deleteEvent(selectedEvent.id)">
                 <i class='bx bx-trash'></i>
                 <span class="ml-2">Eliminar</span>
               </button>

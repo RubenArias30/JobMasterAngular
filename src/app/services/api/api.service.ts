@@ -114,11 +114,9 @@ export class ApiService {
   }
 
 
-
-
-  // deleteEvent(eventId: number): Observable<any> {
-  //   return this.http.delete<any>(`${this.apiUrl}/events/${eventId}`);
-  // }
+  deleteEvent(eventId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/events/${eventId}`);
+  }
 
   //edit event (schedule)
   getEvent(id: number): Observable<any> {
@@ -128,6 +126,9 @@ export class ApiService {
   //Schedule Employees
   getEmployeeSchedule(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/employees/events`);
+  }
+  getEmployeeStatus(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/employee-status`);
   }
 
 
@@ -164,10 +165,9 @@ export class ApiService {
   getStartTime() {
     return this.http.get(`${this.apiUrl}/attendance/start-time`);
   }
-  checkActiveEntry(userId: string) {
-    return this.http.get<boolean>(`${this.apiUrl}/attendances/check-active-entry/${userId}`);
+  getAttendanceStatus(userId: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/attendances/status/${userId}`);
   }
-
 
 
   //Ausencias

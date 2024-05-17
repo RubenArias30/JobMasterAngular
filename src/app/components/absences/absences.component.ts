@@ -19,9 +19,11 @@ export class AbsencesComponent implements OnInit, OnDestroy {
   employees: any[] = []; // Add this line
   dropdownStates: { [key: string]: boolean } = {};
   currentOpenDropdown: number | null = null;
+  showDetailsModal: boolean = false; // Agrega esta propiedad
+  showDeleteConfirmationModal = false;
+
   @ViewChild('deleteConfirmation') deleteConfirmation!: DeleteConfirmationModalComponent;
   // showDeleteConfirmationModal = false;
-  showDeleteConfirmationModal = false;
   absenceIdToDelete: string | null = null;
   deleteSuccess: boolean = false;
   isLoading = true;
@@ -39,7 +41,7 @@ filterOptions = ['Mostrar Todo', 'Vacaciones', 'Enfermedad', 'Maternidad/Paterni
       private router: Router,
       private elementRef: ElementRef) {
   }
-  
+
 
   ngOnInit(): void {
     // Fetch absences
@@ -89,11 +91,16 @@ filterOptions = ['Mostrar Todo', 'Vacaciones', 'Enfermedad', 'Maternidad/Paterni
 
 
   deleteAbsence(absenceId: string): void {
-    // Set the flag to show the delete confirmation modal
-    this.showDeleteConfirmationModal = true; // Change here
 
-    // Pass the absence ID to a variable to be used for deletion upon confirmation
-    this.absenceIdToDelete = absenceId;
+
+   // Ocultar los detalles de la ausencia
+   this.showDetailsModal = false;
+
+   // Mostrar la confirmación de eliminación
+   this.showDeleteConfirmationModal = true;
+
+ // Guardar el ID de la ausencia a eliminar
+ this.absenceIdToDelete = absenceId;
 
   }
 
@@ -182,10 +189,13 @@ filterOptions = ['Mostrar Todo', 'Vacaciones', 'Enfermedad', 'Maternidad/Paterni
 
 closeAbsenceModal() {
   this.selectedAbsence = null;
+
+
 }
 
 openAbsenceModal(absence: any) {
   this.selectedAbsence = absence;
+
 }
 
 }

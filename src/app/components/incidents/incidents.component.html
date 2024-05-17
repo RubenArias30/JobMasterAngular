@@ -1,4 +1,3 @@
-
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6 px-4 md:px-8 lg:px-12">
   <div
     class="bg-gradient-to-br from-indigo-500 to-sky-400 rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
@@ -132,10 +131,13 @@
                         [ngClass]="{'translate-x-full bg-green-500': incident.status === 'completed', 'bg-red-500': incident.status === 'pending'}"
                         class="absolute left-0 top-0 mt-1 ml-1 w-6 h-6 rounded-full shadow-md transition"></span>
                     </span>
-                    <span class="ml-3 text-gray-700">{{ incident.status === 'completed' ? 'Completada' : 'Pendiente'
-                      }}</span>
+                    <span class="ml-3 text-gray-700"
+                      [ngClass]="{'text-custom-500': incident.status === 'completed', 'text-custom-600': incident.status === 'pending'}">{{
+                      incident.status === 'completed' ? 'Completada' : 'Pendiente' }}</span>
                   </label>
                 </td>
+
+
                 <td class="px-6 py-4 whitespace-nowrap">
                   <button (click)="confirmDelete(incident.id)">
                     <i class='bx bx-trash text-xl text-red-600'></i>
@@ -155,8 +157,7 @@
           previousClass="bg-gray-300 px-4 py-2 rounded-l" nextClass="bg-gray-300 px-4 py-2 rounded-r"
           directionLinkClass="bg-gray-300 px-4 py-2 rounded" ellipses="..." ellipsesClass="bg-gray-300 px-4 py-2"
           pageLinkClass="text-blue-400 px-4 py-2 rounded" [responsive]="true"></pagination-controls>
+
       </div>
     </div>
   </div>
-</div>
-

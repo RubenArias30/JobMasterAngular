@@ -239,6 +239,22 @@ export class AddScheduleComponent implements OnInit {
     );
   }
 
+  deleteEvent(eventId: number) {
+  this.apiService.deleteEvent(eventId).subscribe(
+    () => {
+      // Eliminación exitosa, recarga la pgina
+      window.location.reload(); // Recargar la página después de borrar el evento
+
+      // Cerrar el modal después de eliminar el evento
+      this.showModal = false;
+    },
+    (error) => {
+      // Manejo de errores
+      console.error('Error al eliminar el evento:', error);
+    }
+  );
+}
+
   getFormattedTime(date: Date): string {
     // Formatear la hora en formato HH:MM
     return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
@@ -273,7 +289,7 @@ export class AddScheduleComponent implements OnInit {
         newEndDateTime.setHours(endDateTime.getHours(), endDateTime.getMinutes(), 0, 0);
       } else {
         // Si no es el último día, usar la medianoche como hora de fin
-        newEndDateTime.setHours(0, 0, 0, 0);
+        newEndDateTime.setHours(23, 59, 59, 999);
       }
 
       const nuevoEvento: EventInput = {
@@ -293,7 +309,7 @@ export class AddScheduleComponent implements OnInit {
       currentDate.setDate(currentDate.getDate() + 1);
     }
 
-    // Enviar el horario al servidor (opcional, dependiendo de tu implementación)
+    // Enviar el horario al servidor
     this.onSubmit(formData);
 
     // Limpiar el formulario después de agregar el horario
@@ -301,17 +317,26 @@ export class AddScheduleComponent implements OnInit {
 }
 
 
-
   // Enviar el horario al servidor
   onSubmit(scheduleData: any) {
-    this.apiService.addSchedule(this.employeeId, scheduleData).subscribe(
+    const data = {
+        title: scheduleData.title,
+        start_datetime: `${scheduleData.fechaInicio}T${scheduleData.horaInicio}`,
+        end_datetime: `${scheduleData.fechaFin}T${scheduleData.horaFin}`
+    };
+
+    this.apiService.addSchedule(this.employeeId, data).subscribe(
       response => {
+        window.location.reload();
+
       },
       error => {
         console.error('Error al agregar el horario:', error);
+        this.showError = true;
       }
     );
-  }
+}
+
 
   editarHorario() {
     // Verificar si hay un evento seleccionado
