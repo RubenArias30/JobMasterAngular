@@ -44,14 +44,8 @@ export class ApiService {
   getEmployeeById(employeeId: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/employees/${employeeId}`);// Método para obtener los datos de un empleado por su ID
   }
-  updateEmployee(id: string, employeeData: any): Observable<any> {
-    const url = `${this.apiUrl}/employees/${id}`;
-    console.log('Hola editar' + employeeData.photo)
-    return this.http.put(url, employeeData).pipe(
-      catchError(error => {
-        return throwError(error);
-      })
-    );
+  updateEmployee(id: number, employeeData: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/employees/${id}`, employeeData);
   }
   getEmployeeDetails(employeeId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/employees/${employeeId}`);

@@ -87,7 +87,6 @@ export class EditEmployeeComponent implements OnInit {
           if (userData) {
             this.employeeForm.patchValue({
               nif: userData.nif || '',
-
             });
           }
 
@@ -99,9 +98,14 @@ export class EditEmployeeComponent implements OnInit {
             gender: this.employeeData.gender || '',
             email: this.employeeData.email || '',
             telephone: this.employeeData.telephone || '',
-
-
           });
+
+          // Verificar si hay una foto en los datos del empleado y establecer el valor del campo de imagen como null
+          if (this.employeeData.photo) {
+            this.employeeForm.patchValue({
+              photo: null
+            });
+          }
         } else {
           console.error('Datos del empleado no encontrados');
         }
