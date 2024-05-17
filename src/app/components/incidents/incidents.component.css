@@ -1,0 +1,5 @@
+
+.custom-pagination ::ng-deep .ngx-pagination .current {
+  background-color:  #68d391; /* Change the background color to bg-green-400 */
+}
+

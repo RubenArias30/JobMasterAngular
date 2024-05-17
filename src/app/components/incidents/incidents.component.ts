@@ -8,36 +8,61 @@ import { ApiService } from 'src/app/services/api/api.service';
 })
 export class IncidentsComponent implements OnInit {
   incidences: any[] = [];
+  p: number = 1;
   originalIncidences: any[] = [];
   selectedStatus: string = '';
   pending: number = 0;
   completed: number = 0;
   showDropdown: boolean = false;
+   isLoading = true;
+   isError = false; // Flag to track if there's an error fetching data
 
   statusTranslations: any = {
     '': 'Todos',
     'pending': 'Pendientes',
     'completed': 'Completadas'
   };
+
+
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.getIncidents();
   }
 
+  // getIncidents(): void {
+  //   this.apiService.getAllIncidents()
+  //   .subscribe((data: any[]) => {
+  //       this.incidences = data;
+  //       this.originalIncidences = data.slice();
+  //       this.countIncidentStatus();
+  //     });
+  // }
   getIncidents(): void {
     this.apiService.getAllIncidents()
-      .subscribe((data: any[]) => {
-        this.incidences = data;
-        this.originalIncidences = data.slice();
-        this.countIncidentStatus();
-      });
+      .subscribe(
+        (data: any[]) => {
+          this.incidences = data;
+          this.originalIncidences = data.slice();
+          this.countIncidentStatus();
+          this.isLoading = false;
+        },
+        (error) => {
+          console.error('Error fetching incidents:', error);
+          this.isError = true; // Set error flag to true
+          this.isLoading = false;
+        }
+      );
   }
+
   translateStatus(status: string): string {
     return this.statusTranslations[status] || 'Todos';
   }
   toggleDropdown(): void {
     this.showDropdown = !this.showDropdown;
+  }
+  resetPagination() {
+    this.p = 1; // Reset the current page to 1
   }
   // Función para filtrar incidencias por estado
   filterByStatus(selectedStatus: string): void {
@@ -61,12 +86,13 @@ export class IncidentsComponent implements OnInit {
   }
 
   toggleCompletion(incident: any): void {
-    // Cambiar el estado de la incidencia entre completada y pendiente
+    // Cambiar el estado   de la incidencia entre completada y pendiente
     if (incident.status === 'completed') {
       incident.status = 'pending';
     } else {
       incident.status = 'completed';
     }
+
 
     // Llamar al servicio API para actualizar el estado de la incidencia
     this.apiService.updateIncidentStatus(incident.id, incident.status)
@@ -79,6 +105,7 @@ export class IncidentsComponent implements OnInit {
         }
       );
   }
+
 
    // Función para confirmar y eliminar una incidencia
    confirmDelete(incidentId: number): void {

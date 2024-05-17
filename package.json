@@ -28,6 +28,7 @@
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.2",
     "ngx-extended-pdf-viewer": "^20.0.1",
+    "ngx-pagination": "^6.0.3",
     "pdfjs-dist": "^4.2.67",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

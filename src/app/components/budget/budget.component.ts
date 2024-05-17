@@ -17,7 +17,7 @@ export class BudgetComponent implements OnInit {
   showDropdown: boolean = false;
   sortBy: string = 'default'; // Default sorting option
   filterButtonText: string = 'Filtros'; // Initialize filter button text
-
+  p: number = 1;
 
 
 
@@ -37,6 +37,8 @@ export class BudgetComponent implements OnInit {
         console.error('Error al obtener la lista de inovoices:', error);
       }
     );
+
+
 
 
   } confirmDeleteInvoice(invoiceId: string): void {
@@ -66,6 +68,9 @@ export class BudgetComponent implements OnInit {
     this.showDropdown = !this.showDropdown;
   }
 
+  resetPagination() {
+    this.p = 1; // Reset the current page to 1
+  }
   sortInvoices(option: string): void {
     if (option === 'asc') {
       this.invoices.sort((a, b) => a.total - b.total); // Sort ascending

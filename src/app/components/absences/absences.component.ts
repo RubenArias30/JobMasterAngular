@@ -21,14 +21,16 @@ export class AbsencesComponent implements OnInit, OnDestroy {
   currentOpenDropdown: number | null = null;
   showDetailsModal: boolean = false; // Agrega esta propiedad
   showDeleteConfirmationModal = false;
+  p: number = 1;
 
   @ViewChild('deleteConfirmation') deleteConfirmation!: DeleteConfirmationModalComponent;
   // showDeleteConfirmationModal = false;
   absenceIdToDelete: string | null = null;
   deleteSuccess: boolean = false;
   isLoading = true;
+  isError = false;
 // Add an additional option to filter all absences
-filterOptions = ['Mostrar Todo', 'Vacaciones', 'Enfermedad', 'Maternidad/Paternidad', 'Compensatorias', 'Baja', 'Otros'];
+ filterOptions = ['Mostrar Todo', 'Vacaciones', 'Enfermedad', 'Maternidad/Paternidad', 'Compensatorias', 'Baja', 'Otros'];
   selectedFilter: string | null = null;
   showFilterDropdown = false;
 
@@ -51,7 +53,7 @@ filterOptions = ['Mostrar Todo', 'Vacaciones', 'Enfermedad', 'Maternidad/Paterni
         this.isLoading = false; // Set isLoading to false when data is fetched
       },
       (error) => {
-        console.error(error);
+        this.isError = true;
         this.isLoading = false; // Set isLoading to false even if there's an error
       }
     );
@@ -81,6 +83,9 @@ filterOptions = ['Mostrar Todo', 'Vacaciones', 'Enfermedad', 'Maternidad/Paterni
     } else {
       this.currentOpenDropdown = id; // Open the clicked dropdown
     }
+  }
+  resetPagination() {
+    this.p = 1; // Reset the current page to 1
   }
 
   // Method to check if a dropdown is open
@@ -160,10 +165,12 @@ filterOptions = ['Mostrar Todo', 'Vacaciones', 'Enfermedad', 'Maternidad/Paterni
         (absences) => {
           this.absences = absences;
           this.isLoading = false;
+          this.isError = false;
         },
         (error) => {
           console.error(error);
           this.isLoading = false;
+          this.isError = true;
         }
       );
     } else {

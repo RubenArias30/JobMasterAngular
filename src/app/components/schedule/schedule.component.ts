@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 })
 export class ScheduleComponent {
   employees: any[] = [];
-
+  isLoading = true;
+  isError = false;
   constructor(private apiService: ApiService, private router: Router) { }
 
   ngOnInit(): void {
@@ -19,9 +20,12 @@ export class ScheduleComponent {
   this.apiService.getEmployees().subscribe(
     (response: any[]) => {
       this.employees = response;
+      this.isLoading = false;
     },
     (error) => {
       console.error('Error al obtener la lista de empleados:', error);
+      this.isError = true; // Set error flag to true
+      this.isLoading = false;
     }
   );
 }
