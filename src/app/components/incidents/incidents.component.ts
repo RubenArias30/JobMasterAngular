@@ -21,9 +21,6 @@ export class IncidentsComponent implements OnInit {
     'completed': 'Completadas'
   };
 
-  resetPagination() {
-    this.p = 1; // Reset the current page to 1
-  }
 
   constructor(private apiService: ApiService) { }
 
@@ -33,7 +30,7 @@ export class IncidentsComponent implements OnInit {
 
   getIncidents(): void {
     this.apiService.getAllIncidents()
-      .subscribe((data: any[]) => {
+    .subscribe((data: any[]) => {
         this.incidences = data;
         this.originalIncidences = data.slice();
         this.countIncidentStatus();
@@ -44,6 +41,9 @@ export class IncidentsComponent implements OnInit {
   }
   toggleDropdown(): void {
     this.showDropdown = !this.showDropdown;
+  }
+  resetPagination() {
+    this.p = 1; // Reset the current page to 1
   }
   // Función para filtrar incidencias por estado
   filterByStatus(selectedStatus: string): void {
