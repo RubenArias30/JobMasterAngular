@@ -14,6 +14,8 @@ export class IncidentsComponent implements OnInit {
   pending: number = 0;
   completed: number = 0;
   showDropdown: boolean = false;
+   isLoading = true;
+   isError = false; // Flag to track if there's an error fetching data
 
   statusTranslations: any = {
     '': 'Todos',
@@ -28,14 +30,31 @@ export class IncidentsComponent implements OnInit {
     this.getIncidents();
   }
 
+  // getIncidents(): void {
+  //   this.apiService.getAllIncidents()
+  //   .subscribe((data: any[]) => {
+  //       this.incidences = data;
+  //       this.originalIncidences = data.slice();
+  //       this.countIncidentStatus();
+  //     });
+  // }
   getIncidents(): void {
     this.apiService.getAllIncidents()
-    .subscribe((data: any[]) => {
-        this.incidences = data;
-        this.originalIncidences = data.slice();
-        this.countIncidentStatus();
-      });
+      .subscribe(
+        (data: any[]) => {
+          this.incidences = data;
+          this.originalIncidences = data.slice();
+          this.countIncidentStatus();
+          this.isLoading = false;
+        },
+        (error) => {
+          console.error('Error fetching incidents:', error);
+          this.isError = true; // Set error flag to true
+          this.isLoading = false;
+        }
+      );
   }
+
   translateStatus(status: string): string {
     return this.statusTranslations[status] || 'Todos';
   }

@@ -42,6 +42,7 @@ import { ViewScheduleComponent } from './components/schedule/view-schedule/view-
 import { EditScheduleComponent } from './components/schedule/edit-schedule/edit-schedule.component';
 import { DasboardEmployeeComponent } from './components/dashboard/dasboard-employee/dasboard-employee.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { LoadingSpinnerComponent } from './components/alert-messages/loading-spinner/loading-spinner.component';
 
 
 
@@ -93,6 +94,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ResponseResetComponent,
     ViewScheduleComponent,
     EditScheduleComponent,
+    LoadingSpinnerComponent,
 
 
 

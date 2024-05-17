@@ -69,7 +69,14 @@
 <div class="px-4 py-2 w-full">
   <div class="bg-white border border-green-400 rounded-xl p-4 mb-8">
     <h2 class="text-xl font-bold mb-4">Incidencias</h2>
-    <div class="overflow-x-auto">
+    <!-- Display error message if there's an error fetching data -->
+    <div *ngIf="isError" class="text-red-600 font-bold mb-4">
+      Error al cargar las incidencias. Por favor, inténtelo de nuevo más tarde.
+    </div>
+    <div *ngIf="!isError" class="overflow-x-auto">
+
+      <!-- Your incident list and other content here -->
+
       <div class="pagination-container">
         <table class="w-full divide-y divide-gray-200">
           <thead class="bg-gray-100">
@@ -161,3 +168,5 @@
       </div>
     </div>
   </div>
+
+  <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>

@@ -28,6 +28,7 @@ export class AbsencesComponent implements OnInit, OnDestroy {
   absenceIdToDelete: string | null = null;
   deleteSuccess: boolean = false;
   isLoading = true;
+  isError = false;
 // Add an additional option to filter all absences
  filterOptions = ['Mostrar Todo', 'Vacaciones', 'Enfermedad', 'Maternidad/Paternidad', 'Compensatorias', 'Baja', 'Otros'];
   selectedFilter: string | null = null;
@@ -52,7 +53,7 @@ export class AbsencesComponent implements OnInit, OnDestroy {
         this.isLoading = false; // Set isLoading to false when data is fetched
       },
       (error) => {
-        console.error(error);
+        this.isError = true;
         this.isLoading = false; // Set isLoading to false even if there's an error
       }
     );
@@ -164,10 +165,12 @@ export class AbsencesComponent implements OnInit, OnDestroy {
         (absences) => {
           this.absences = absences;
           this.isLoading = false;
+          this.isError = false;
         },
         (error) => {
           console.error(error);
           this.isLoading = false;
+          this.isError = true;
         }
       );
     } else {
