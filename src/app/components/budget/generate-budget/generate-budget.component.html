@@ -20,7 +20,7 @@
             <div>
               <label for="company_name" class="block mb-1">Nombre:</label>
               <input formControlName="company_name" name="company_name" id="company_name" type="text"
-                placeholder="Nombre" maxlength="20" class="border p-2 rounded-md w-full">
+                placeholder="Nombre" maxlength="100" class="border p-2 rounded-md w-full">
 
               <div
                 *ngIf="budgetForm.get('company_name')?.errors?.['required'] && (budgetForm.get('company_name')?.dirty || budgetForm.get('company_name')?.touched)"
@@ -32,7 +32,7 @@
             <div>
               <label for="company_telephone" class="block mb-1">Teléfono:</label>
               <input formControlName="company_telephone" name="company_telephone" id="company_telephone" type="text"
-                placeholder="+34 623457862" maxlength="29" class="border p-2 rounded-md w-full" maxlength="9">
+                placeholder="+34 623457862" maxlength="9" class="border p-2 rounded-md w-full" maxlength="9">
               <div
                 *ngIf="budgetForm.get('company_telephone')?.errors?.['required'] && (budgetForm.get('company_telephone')?.dirty || budgetForm.get('company_telephone')?.touched)"
                 class="text-red-500 mt-2">Teléfono es obligatorio.</div>
@@ -54,7 +54,7 @@
             <div>
               <label for="company_email" class="block mb-1">Email:</label>
               <input formControlName="company_email" name="company_email" id="company_email" type="text"
-                placeholder="john@gmail.com" maxlength="35" class="border p-2 rounded-md w-full">
+                placeholder="john@gmail.com" maxlength="100" class="border p-2 rounded-md w-full">
               <div
                 *ngIf="budgetForm.get('company_email')?.errors?.['required'] && (budgetForm.get('company_email')?.dirty || budgetForm.get('company_email')?.touched)"
                 class="text-red-500 mt-2">Email es obligatorio.</div>
@@ -73,7 +73,7 @@
             <div>
               <label for="company_city" class="block mb-1">Ciudad:</label>
               <input formControlName="company_city" name="company_city" id="company_city" type="text" placeholder="Barcelona"
-                class="border p-2 rounded-md w-full" maxlength="20">
+                class="border p-2 rounded-md w-full" maxlength="100">
               <div
                 *ngIf="budgetForm.get('company_city')?.errors?.['required'] && (budgetForm.get('company_city')?.dirty || budgetForm.get('company_city')?.touched)"
                 class="text-red-500 mt-2">Ciudad es obligatoria.</div>
@@ -110,7 +110,7 @@
             <div>
               <label for="client_name" class="block mb-1">Nombre:</label>
               <input formControlName="client_name" id="client_name" name="client_name" type="text" placeholder="Nombre"
-                class="border p-2 rounded-md w-full" maxlength="20">
+                class="border p-2 rounded-md w-full" maxlength="100">
               <div
                 *ngIf="budgetForm.get('client_name')?.errors?.['required'] && (budgetForm.get('client_name')?.dirty || budgetForm.get('client_name')?.touched)"
                 class="text-red-500 mt-2">Nombre es obligatorio.</div>
@@ -143,7 +143,7 @@
             <div>
               <label for="client_email" class="block mb-1">Email:</label>
               <input formControlName="client_email" id="client_email" name="client_email" type="text"
-                placeholder="john@gmail.com" class="border p-2 rounded-md w-full" maxlength="35">
+                placeholder="john@gmail.com" class="border p-2 rounded-md w-full" maxlength="100">
               <div
                 *ngIf="budgetForm.get('client_email')?.errors?.['required'] && (budgetForm.get('client_email')?.dirty || budgetForm.get('client_email')?.touched)"
                 class="text-red-500 mt-2">Email es obligatorio.</div>
@@ -154,7 +154,7 @@
             <div>
               <label for="client_street" class="block mb-1">Dirección:</label>
               <input formControlName="client_street" id="client_street" name="client_street" type="text" placeholder="calle maig 56"
-                class="border p-2 rounded-md w-full" maxlength="100">
+                class="border p-2 rounded-md w-full" maxlength="150">
               <div
                 *ngIf="budgetForm.get('client_street')?.errors?.['required'] && (budgetForm.get('client_street')?.dirty || budgetForm.get('client_street')?.touched)"
                 class="text-red-500 mt-2">Dirección es obligatoria.</div>
@@ -162,7 +162,7 @@
             <div>
               <label for="client_city" class="block mb-1">Ciudad:</label>
               <input formControlName="client_city" id="client_city" name="client_city" type="text" placeholder="Barcelona"
-                class="border p-2 rounded-md w-full" maxlength="20">
+                class="border p-2 rounded-md w-full" maxlength="100">
               <div
                 *ngIf="budgetForm.get('client_city')?.errors?.['required'] && (budgetForm.get('client_city')?.dirty || budgetForm.get('client_city')?.touched)"
                 class="text-red-500 mt-2">Ciudad es obligatoria.</div>

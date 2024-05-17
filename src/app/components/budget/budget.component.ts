@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from 'src/app/services/api/api.service';
 import { GenerateBudgetComponent } from './generate-budget/generate-budget.component'; // Import the sibling component
 
-import { jsPDF } from "jspdf";
+import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
 @Component({
@@ -19,8 +19,6 @@ export class BudgetComponent implements OnInit {
   filterButtonText: string = 'Filtros'; // Initialize filter button text
   p: number = 1;
 
-
-
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
@@ -34,14 +32,12 @@ export class BudgetComponent implements OnInit {
         this.sortInvoices(this.sortBy);
       },
       (error) => {
-        console.error('Error al obtener la lista de inovoices:', error);
+        console.error('Error al obtener la lista de facturas:', error);
       }
     );
+  }
 
-
-
-
-  } confirmDeleteInvoice(invoiceId: string): void {
+  confirmDeleteInvoice(invoiceId: string): void {
     const confirmDelete = confirm('¿Estás seguro de que deseas eliminar esta factura?');
     if (confirmDelete) {
       this.deleteInvoice(invoiceId);
@@ -60,10 +56,6 @@ export class BudgetComponent implements OnInit {
       });
   }
 
-
-
-
-
   toggleDropdown(): void {
     this.showDropdown = !this.showDropdown;
   }
@@ -71,6 +63,7 @@ export class BudgetComponent implements OnInit {
   resetPagination() {
     this.p = 1; // Reset the current page to 1
   }
+
   sortInvoices(option: string): void {
     if (option === 'asc') {
       this.invoices.sort((a, b) => a.total - b.total); // Sort ascending
@@ -86,171 +79,147 @@ export class BudgetComponent implements OnInit {
           this.filterButtonText = 'Filtros'; // Update filter button text
         },
         (error) => {
-          console.error('Error al obtener la lista de inovoices:', error);
+          console.error('Error al obtener la lista de facturas:', error);
         }
       );
     }
     this.showDropdown = false; // Close the dropdown after selecting an option
   }
 
-
-
   generatePDF(invoice: any): void {
-    const doc = new jsPDF();
+    const doc = new jsPDF('p', 'mm', 'a4'); // Use 'p' for portrait mode, 'mm' for millimeters, and 'a4' for the page size
 
+    // Logo and title
+    const logoUrl = 'assets/img/logopreview.png'; // Replace with your actual logo base64 string
+    doc.addImage(logoUrl, 'PNG', 10, 10, 50, 20); // Add logo
+    doc.setFontSize(22);
+    doc.setFont('helvetica', 'bold');
+    doc.text('PRESUPUESTO', 70, 20);
 
-    autoTable(doc, {
-      body: [
-        [
-            {
-                content: 'JOBMASTER PRESUPUESTO',
-                colSpan: 2,
-                styles: {
-                    halign: 'center',
-                    fontSize: 20,
-                    textColor: '#000000', // Adjust text color for better visibility
-                },
-            },
-        ],
-
-    ],
-    theme: 'plain',
-    styles: {
-        fillColor: '#ffffff', // Set the background color of the heading
-        lineColor: '#000000', // Set the border color
-        lineWidth: 0.1, // Set border width
-        font: 'helvetica', // Set font family
-    },
-    });
-
+    // Client and company information
     autoTable(doc, {
       body: [
         [
           {
-            content: `Datos del cliente:\nNombre: ${invoice.clients.client_name}\nTeléfono:${invoice.clients.client_telephone}\nEmail:${invoice.clients.client_email}\nDirección:${invoice.clients.client_street}\nCiudad:${invoice.clients.client_city}\nCódigo Postal:${invoice.clients.client_postal_code}`,
+            content: `Datos del cliente:\nNombre: ${invoice.clients.client_name}\nTeléfono: ${invoice.clients.client_telephone}\nEmail: ${invoice.clients.client_email}\nDirección: ${invoice.clients.client_street}\nCiudad: ${invoice.clients.client_city}\nCódigo Postal: ${invoice.clients.client_postal_code}`,
             styles: {
-              // fillColor: '#F2F2F2', // Light gray background
-              textColor: '#333333', // Dark gray text color
-              fontStyle: 'bold', // Bold font for header
-              fontSize: 10, // Font size
-              cellPadding: 6, // Padding
-              // lineWidth: 0.5, // Grid line width
+              textColor: '#333333',
+              fontSize: 10,
+              cellPadding: 6,
             }
           },
           {
-            content: `Datos de la empresa:\nNombre:${invoice.companies.company_name}\nTeléfono${invoice.companies.company_telephone}\nEmail:${invoice.companies.company_email}\nDirección:${invoice.companies.company_street}\nCiudad:${invoice.companies.company_city}\nCódigo Postal:${invoice.companies.company_postal_code}`,
+            content: `Datos de la empresa:\nNombre: ${invoice.companies.company_name}\nTeléfono: ${invoice.companies.company_telephone}\nEmail: ${invoice.companies.company_email}\nDirección: ${invoice.companies.company_street}\nCiudad: ${invoice.companies.company_city}\nCódigo Postal: ${invoice.companies.company_postal_code}`,
             styles: {
-              // fillColor: '#E8E8E8', // Lighter gray background
-              textColor: '#333333', // Dark gray text color
-              fontStyle: 'bold', // Bold font for header
-              fontSize: 10, // Font size
-              cellPadding: 6, // Padding
-              // lineWidth: 0.5, // Grid line width
+              textColor: '#333333',
+              fontSize: 10,
+              cellPadding: 6,
             }
           }
         ]
       ],
-      theme: 'grid', // Apply grid theme
+      theme: 'plain',
+      margin: { top: 40 },
     });
 
-
-    // autoTable(doc, {
-    //   body: [
-    //     [
-    //       {
-    //         content: `Subtotal: ${invoice.subtotal}€`
-    //       },
-    //       {
-    //         content: `Total: ${invoice.total}€`
-    //       }
-    //     ]
-    //   ],
-    //   theme: 'plain'
-    // });
-
-
-     autoTable(doc, {
+    // Concept header
+    autoTable(doc, {
       body: [
         [
           {
             content: 'Conceptos y información',
             styles: {
-              halign:'left',
+              halign: 'left',
               fontSize: 14,
-              fontStyle: 'bold', // Bold font for header
-
-
+              fontStyle: 'bold',
             }
           }
         ]
       ],
-      theme: 'plain'
+      theme: 'plain',
+      margin: { top: 10 },
     });
 
+    // Concepts table
     autoTable(doc, {
       head: [['Concepto', 'Precio', 'Cantidad', 'Descuento', 'IVA', 'IRPF']],
-      body: [
-        [invoice.concepts.concepts, invoice.price,invoice.quantity,invoice.invoice_discount,invoice.invoice_iva,invoice.invoice_irpf, /* Add more data here if needed */]
-
-      ],
+      body: invoice.concepts.map((concept: any) => [
+        concept.concept,
+        `${concept.price}€`,
+        concept.quantity,
+        `${concept.concept_discount}%`,
+        `${concept.concept_iva}%`,
+        `${concept.concept_irpf}%`
+      ]),
       theme: 'striped',
-      headStyles:{
-        fillColor: '#343a40'
-      }
+      headStyles: {
+        fillColor: '#92E3A9',
+        textColor: '#ffffff'
+      },
+      margin: { top: 10 },
     });
+
+    // Subtotal, total, and date
     autoTable(doc, {
       body: [
+        [
+          {
+            content: 'Subtotal:',
+            styles: {
+              halign: 'right',
+              fontSize: 12,
+              fontStyle: 'bold',
+            }
+          },
+          {
+            content: `${invoice.subtotal}€`,
+            styles: {
+              halign: 'right',
+              fontSize: 12,
+            }
+          }
+        ],
         [
           {
             content: 'Total:',
             styles: {
-              halign:'right',
-              fontSize: 14,
-              fontStyle: 'bold', // Bold font for header
-
+              halign: 'right',
+              fontSize: 12,
+              fontStyle: 'bold',
+            }
+          },
+          {
+            content: `${invoice.total}€`,
+            styles: {
+              halign: 'right',
+              fontStyle: 'bold',
+              fontSize: 12,
+              textColor: '#92E3A9'
             }
           }
         ],
         [
           {
-            content: ` ${invoice.total}€`, // Assuming invoice.amount_due contains the amount due fetched from the database
+            content: `Fecha: ${new Date().toLocaleDateString()}`,
             styles: {
-            halign: 'right',
-            fontSize: 20,
-            textColor: '#3366ff'
+              halign: 'right',
+              fontSize: 12,
             }
-          }
-        ],
-        [
+          },
           {
-            content: ` Fecha: ${new Date().toLocaleDateString()}`, // Assuming invoice.amount_due contains the amount due fetched from the database
+            content: '',
             styles: {
-              halign:'right'
+              halign: 'right',
+              fontSize: 12,
             }
           }
         ],
-
-
       ],
-      theme: 'plain'
+      theme: 'plain',
+      margin: { top: 10 },
     });
 
-    // Generate Base64 representation of the PDF
-    const pdfDataUri = doc.output('datauristring');
-
-    // Set iframe source to the Base64 representation of the PDF
-    const iframe = document.createElement('iframe');
-    iframe.setAttribute('src', pdfDataUri);
-    iframe.setAttribute('style', 'width: 100%; height: 600px;'); // Adjust dimensions as needed
-
-    // Open the PDF preview in a new window
-    const previewWindow = window.open();
-    if (previewWindow) {
-      previewWindow.document.write(iframe.outerHTML);
-    } else {
-      alert('Please allow pop-ups for this site');
-    }
+    // Save the PDF
+    doc.save('presupuesto.pdf');
   }
-
 }
-
