@@ -157,6 +157,7 @@ export class EditEmployeeComponent implements OnInit {
     // Continuar con la actualización del empleado
     this.apiService.updateEmployee(this.employeeId, this.employeeForm.value).subscribe(
       (response) => {
+        console.log(response)
         this.updateError = false;
         this.errorMessage = '';
         this.router.navigate(['/employees']);

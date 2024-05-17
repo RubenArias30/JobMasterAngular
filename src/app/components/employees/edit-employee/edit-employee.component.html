@@ -17,7 +17,7 @@
           <div class="mt-2">
             <label for="name" class="block">Nombre completo</label>
             <input type="text" id="name" formControlName="name" name="name"
-              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Nombre" maxlength="20">
+              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Nombre" maxlength="60">
             <div
               *ngIf="employeeForm.get('name')?.errors?.['required'] && (employeeForm.get('name')?.dirty || employeeForm.get('name')?.touched)"
               class="text-red-500 mt-2">Nombre es obligatorio.</div>
@@ -29,7 +29,7 @@
           <div class="mt-2">
             <label for="surname" class="block">Apellido</label>
             <input type="text" id="surname" formControlName="surname" name="surname"
-              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Apellidos" maxlength="20">
+              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Apellidos" maxlength="60">
             <div
               *ngIf="employeeForm.get('surname')?.errors?.['required'] && (employeeForm.get('surname')?.dirty || employeeForm.get('surname')?.touched)"
               class="text-red-500 mt-2">Apellido es obligatorio.</div>
@@ -133,7 +133,7 @@
             <label for="street" class="block">Dirección</label>
             <input type="text" id="street" formControlName="street" name="street"
               class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2" placeholder="Dirección"
-              maxlength="100">
+              maxlength="150">
             <div
               *ngIf="employeeForm.get('street')?.errors?.['required'] && (employeeForm.get('street')?.dirty || employeeForm.get('street')?.touched)"
               class="text-red-500 mt-2">Dirección es obligatoria.</div>
@@ -142,7 +142,7 @@
             <label for="city" class="block">Ciudad</label>
             <input type="text" id="city" formControlName="city" name="city"
               class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2" placeholder="Ciudad"
-              maxlength="20">
+              maxlength="100">
             <div
               *ngIf="employeeForm.get('city')?.errors?.['required'] && (employeeForm.get('city')?.dirty || employeeForm.get('city')?.touched)"
               class="text-red-500 mt-2">Ciudad es obligatoria.</div>
@@ -182,25 +182,7 @@
 
 
           </div>
-          <!-- <div class="relative mt-5">
-            <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password"
-              name="password" class="border border-gray-300 rounded-md p-2 pr-10 w-full shadow-inner"
-              placeholder="Contraseña" maxlength="35">
-            <button type="button" class="absolute inset-y-0 right-0 flex items-center px-3"
-              (click)="togglePasswordVisibility()">
-              <i *ngIf="!showPassword" class='bx bx-show-alt'></i>
-              <i *ngIf="showPassword" class='bx bxs-hide'></i>
-            </button>
-          </div> -->
-          <!-- <div
-            *ngIf="employeeForm.get('password')?.errors?.['required'] && (employeeForm.get('password')?.dirty || employeeForm.get('password')?.touched)"
-            class="text-red-500 mt-2">Contraseña es obligatoria.</div>
-          <div
-            *ngIf="employeeForm.get('password')?.errors?.['invalidPassword'] && (employeeForm.get('password')?.dirty || employeeForm.get('password')?.touched)"
-            class="text-red-500 mt-2">
-            La contraseña debe tener al menos 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula
-            ,un número.
-          </div> -->
+
         </div>
       </div>
     </div>
@@ -213,7 +195,7 @@
       Error al actualizar el empleado. Por favor, inténtalo de nuevo más tarde.
     </div> -->
     <div *ngIf="showErrorInvalid" class="text-red-500 mt-2 text-center">
-      Error al agregar empleado. Por favor, inténtelo de nuevo más tarde.
+      Error al editar empleado. Por favor, inténtelo de nuevo más tarde.
     </div>
 
     <!-- Botón "Añadir Usuario" y "Cancelar"-->
