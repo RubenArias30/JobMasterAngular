@@ -21,6 +21,7 @@ export class AbsencesComponent implements OnInit, OnDestroy {
   currentOpenDropdown: number | null = null;
   showDetailsModal: boolean = false; // Agrega esta propiedad
   showDeleteConfirmationModal = false;
+  p: number = 1;
 
   @ViewChild('deleteConfirmation') deleteConfirmation!: DeleteConfirmationModalComponent;
   // showDeleteConfirmationModal = false;
@@ -28,7 +29,7 @@ export class AbsencesComponent implements OnInit, OnDestroy {
   deleteSuccess: boolean = false;
   isLoading = true;
 // Add an additional option to filter all absences
-filterOptions = ['Mostrar Todo', 'Vacaciones', 'Enfermedad', 'Maternidad/Paternidad', 'Compensatorias', 'Baja', 'Otros'];
+ filterOptions = ['Mostrar Todo', 'Vacaciones', 'Enfermedad', 'Maternidad/Paternidad', 'Compensatorias', 'Baja', 'Otros'];
   selectedFilter: string | null = null;
   showFilterDropdown = false;
 
@@ -81,6 +82,9 @@ filterOptions = ['Mostrar Todo', 'Vacaciones', 'Enfermedad', 'Maternidad/Paterni
     } else {
       this.currentOpenDropdown = id; // Open the clicked dropdown
     }
+  }
+  resetPagination() {
+    this.p = 1; // Reset the current page to 1
   }
 
   // Method to check if a dropdown is open

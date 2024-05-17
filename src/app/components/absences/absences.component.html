@@ -15,7 +15,7 @@
       <!-- Filter dropdown -->
       <div *ngIf="showFilterDropdown" class="absolute right-0 mt-1 bg-white border border-gray-300 rounded-lg py-1 px-2 w-32 sm:w-48 z-10">
         <ul class="py-1">
-          <li *ngFor="let option of filterOptions" (click)="selectFilter(option)" class="px-4 py-2 cursor-pointer hover:bg-gray-100">{{ option }}</li>
+          <li *ngFor="let option of filterOptions" (click)="selectFilter(option) ;resetPagination()" class="px-4 py-2 cursor-pointer hover:bg-gray-100">{{ option }}</li>
         </ul>
 
       </div>
@@ -29,8 +29,6 @@
 
 <div class="px-4 py-2">
   <div class="w-full bg-white border border-green-400 rounded-xl p-4 mb-8">
-
-
     <div class="overflow-x-auto">
       <table class="w-full divide-y divide-gray-200">
         <!-- Add a div with a fixed position to center the spinner -->
@@ -71,7 +69,7 @@
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
           <ng-container *ngIf="absences.length > 0; else noAbsences">
-            <tr class="transition-all hover:bg-gray-100 hover:shadow-lg" *ngFor="let absence of absences">
+            <tr class="transition-all hover:bg-gray-100 hover:shadow-lg" *ngFor="let absence of absences |paginate:{ itemsPerPage: 7, currentPage: p }">
 
               <!-- <td class="px-6 py-4 whitespace-nowrap">{{ absence.id }}</td> -->
               <td class="px-6 py-4 whitespace-nowrap">
@@ -91,7 +89,7 @@
                   </button>
                 </div>
               </td>
-              
+
             </tr>
           </ng-container>
           <ng-template #noAbsences>
@@ -103,6 +101,11 @@
           </ng-template>
         </tbody>
       </table>
+      <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"
+          class="custom-pagination flex justify-end my-4" [maxSize]="10" [directionLinks]="true" [autoHide]="false"
+          previousClass="bg-gray-300 px-4 py-2 rounded-l" nextClass="bg-gray-300 px-4 py-2 rounded-r"
+          directionLinkClass="bg-gray-300 px-4 py-2 rounded" ellipses="..." ellipsesClass="bg-gray-300 px-4 py-2"
+          pageLinkClass="text-blue-400 px-4 py-2 rounded" [responsive]="true"></pagination-controls>
 
     </div>
   </div>

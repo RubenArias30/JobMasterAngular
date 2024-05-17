@@ -22,13 +22,13 @@
 
           <button
             class="block px-2 py-1 text-xs sm:text-sm md:text-base lg:text-lg text-gray-800 hover:bg-gray-200 w-full"
-            (click)="sortInvoices('default')">Mostrar todos</button>
+            (click)="sortInvoices('default'); resetPagination()">Mostrar todos</button>
           <button
             class="block px-2 py-1 text-xs sm:text-sm md:text-base lg:text-lg text-gray-800 hover:bg-gray-200 w-full"
-            (click)="sortInvoices('asc')">Ascendente</button>
+            (click)="sortInvoices('asc') ; resetPagination()">Ascendente</button>
           <button
             class="block px-2 py-1 text-xs sm:text-sm md:text-base lg:text-lg text-gray-800 hover:bg-gray-200 w-full"
-            (click)="sortInvoices('desc')">Descendente</button>
+            (click)="sortInvoices('desc') ; resetPagination()">Descendente</button>
         </div>
       </div>
     </div>
@@ -59,7 +59,9 @@
       </thead>
       <!-- Datos de los presupuestos -->
       <tbody class="divide-y divide-gray-200">
-        <tr *ngFor="let invoice of invoices" class="border-b border-gray-200">
+        <ng-container *ngIf="invoices.length > 0; else noInvoices">
+
+        <tr *ngFor="let invoice of invoices |paginate:{ itemsPerPage: 7, currentPage: p }" class="border-b border-gray-200">
           <td class="text-center px-4 py-2">{{ invoice.clients.client_name }}</td>
           <td class="text-center px-4 py-2">{{ invoice.companies.company_name }}</td>
           <td class="text-center px-4 py-2">{{ invoice.subtotal }}€</td>
@@ -73,7 +75,19 @@
             </button>
           </td>
         </tr>
+      </ng-container>
+        <ng-template #noInvoices>
+          <tr>
+            <td colspan="6" class="py-4 text-center">No hay presupuestos disponibles.</td>
+          </tr>
+        </ng-template>
       </tbody>
+
     </table>
+    <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"
+    class="custom-pagination flex justify-end my-4" [maxSize]="10" [directionLinks]="true" [autoHide]="false"
+    previousClass="bg-gray-300 px-4 py-2 rounded-l" nextClass="bg-gray-300 px-4 py-2 rounded-r"
+    directionLinkClass="bg-gray-300 px-4 py-2 rounded" ellipses="..." ellipsesClass="bg-gray-300 px-4 py-2"
+    pageLinkClass="text-blue-400 px-4 py-2 rounded" [responsive]="true"></pagination-controls>
   </div>
 </div>
