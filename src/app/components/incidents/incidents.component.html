@@ -1,5 +1,7 @@
+
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6 px-4 md:px-8 lg:px-12">
-  <div class="bg-gradient-to-br from-indigo-500 to-sky-400 rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
+  <div
+    class="bg-gradient-to-br from-indigo-500 to-sky-400 rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
     <div class="flex justify-between mb-6 flex-col">
       <!-- Text -->
       <div class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2">TOTAL TICKETS</div>
@@ -12,7 +14,8 @@
     </div>
   </div>
 
-  <div class="bg-gradient-to-br from-emerald-600 to-emerald-400 rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
+  <div
+    class="bg-gradient-to-br from-emerald-600 to-emerald-400 rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
     <div class="flex justify-between mb-4">
       <div class="flex justify-between mb-6 flex-col">
         <!-- Text -->
@@ -43,85 +46,117 @@
   </div>
 </div>
 
+<div class="flex items-center mb-4 justify-end mr-6"> <!-- Adjust mr for preferred spacing -->
+  <!-- Filter button -->
+  <div class="relative" (clickOutside)="showDropdown = false">
+    <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-2 py-1 rounded-lg"
+      (click)="toggleDropdown()">
+      <span> <i class='bx bx-filter text-xl'></i> Filtros</span> <!-- Changed default text to "Filtros" -->
+    </button>
+    <div *ngIf="showDropdown"
+      class="absolute right-0 mt-1 bg-white border border-gray-300 rounded-lg py-1 px-2 w-24 sm:w-32 z-10">
+      <!-- Reduced width of dropdown -->
+      <button class="block px-2 py-1 text-sm text-gray-800 hover:bg-gray-200 w-full"
+        (click)="filterByStatus(''); resetPagination();toggleDropdown()">Todos</button>
+      <button class="block px-2 py-1 text-sm text-gray-800 hover:bg-gray-200 w-full"
+        (click)="filterByStatus('pending');resetPagination(); toggleDropdown()">Pendientes</button>
+      <button class="block px-2 py-1 text-sm text-gray-800 hover:bg-gray-200 w-full"
+        (click)="filterByStatus('completed'); resetPagination();toggleDropdown()">Completadas</button>
+    </div>
+  </div>
+</div>
 
 <!-- Sección de Incidencias -->
 <div class="px-4 py-2 w-full">
   <div class="bg-white border border-green-400 rounded-xl p-4 mb-8">
     <h2 class="text-xl font-bold mb-4">Incidencias</h2>
     <div class="overflow-x-auto">
-      <table class="w-full divide-y divide-gray-200">
-        <thead class="bg-gray-100">
-          <tr>
-            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
-              NOMBRE
-            </th>
-            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
-              TIPO
-            </th>
-            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
-              DESCRIPCIÓN
-            </th>
-            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
-              FECHA
-            </th>
-            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
-              ESTADO
-            </th>
-            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
-              ACCIÓN
-            </th>
-
-          </tr>
-        </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
-          <ng-container *ngIf="incidences.length > 0; else noIncidences">
-            <tr *ngFor="let incident of incidences" class="transition-all hover:bg-gray-100 hover:shadow-lg">
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900 font-bold">{{ incident.employee?.name }} {{ incident.employee?.surname
-                  }}</div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">{{ incident.incident_type }}</div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">{{ incident.description }}</div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">{{ incident.date }}</div>
-              </td>
-
-
-              <td class="px-6 py-4 whitespace-nowrap">
-                <!-- Switch para marcar la incidencia como completada o pendiente -->
-                <label class="flex items-center cursor-pointer">
-                  <input type="checkbox" [checked]="incident.status === 'completed'"
-                    (change)="toggleCompletion(incident)" class="hidden">
-                  <span class="relative">
-                    <span
-                      [ngClass]="{'bg-red-300': incident.status === 'pending', 'bg-green-300': incident.status === 'completed'}"
-                      class="block w-14 h-8 rounded-full shadow-inner"></span>
-                    <span
-                      [ngClass]="{'translate-x-full bg-green-500': incident.status === 'completed', 'bg-red-500': incident.status === 'pending'}"
-                      class="absolute left-0 top-0 mt-1 ml-1 w-6 h-6 rounded-full shadow-md transition"></span>
-                  </span>
-                  <span class="ml-3 text-gray-700">{{ incident.status === 'completed' ? 'Completada' : 'Pendiente'
-                    }}</span>
-                </label>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <button (click)="confirmDelete(incident.id)">
-                  <i class='bx bx-trash text-xl text-red-600'></i>
-                </button>
-              </td>
-            </tr>
-          </ng-container>
-          <ng-template #noIncidences>
+      <div class="pagination-container">
+        <table class="w-full divide-y divide-gray-200">
+          <thead class="bg-gray-100">
             <tr>
-              <td colspan="6" class="py-4 text-center">No hay incidencias disponibles.</td>
+              <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+                NOMBRE
+              </th>
+              <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+                TIPO
+              </th>
+              <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+                DESCRIPCIÓN
+              </th>
+              <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+                FECHA
+              </th>
+              <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+                ESTADO
+              </th>
+              <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+                ACCIÓN
+              </th>
+
             </tr>
-          </ng-template>
-        </tbody>
-      </table>
+
+          </thead>
+
+          <tbody class="bg-white divide-y divide-gray-200">
+            <ng-container *ngIf="incidences.length > 0; else noIncidences">
+              <!-- <tr *ngFor="let incident of incidences" class="transition-all hover:bg-gray-100 hover:shadow-lg"> -->
+              <tr *ngFor="let incident of incidences |paginate:{ itemsPerPage: 7, currentPage: p }"
+                class="transition-all hover:bg-gray-100 hover:shadow-lg">
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-900 font-bold">{{ incident.employee?.name }} {{
+                    incident.employee?.surname
+                    }}</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-900">{{ incident.incident_type }}</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-900">{{ incident.description }}</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-900">{{ incident.date }}</div>
+                </td>
+
+
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <!-- Switch para marcar la incidencia como completada o pendiente -->
+                  <label class="flex items-center cursor-pointer">
+                    <input type="checkbox" [checked]="incident.status === 'completed'"
+                      (change)="toggleCompletion(incident)" class="hidden">
+                    <span class="relative">
+                      <span
+                        [ngClass]="{'bg-red-300': incident.status === 'pending', 'bg-green-300': incident.status === 'completed'}"
+                        class="block w-14 h-8 rounded-full shadow-inner"></span>
+                      <span
+                        [ngClass]="{'translate-x-full bg-green-500': incident.status === 'completed', 'bg-red-500': incident.status === 'pending'}"
+                        class="absolute left-0 top-0 mt-1 ml-1 w-6 h-6 rounded-full shadow-md transition"></span>
+                    </span>
+                    <span class="ml-3 text-gray-700">{{ incident.status === 'completed' ? 'Completada' : 'Pendiente'
+                      }}</span>
+                  </label>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <button (click)="confirmDelete(incident.id)">
+                    <i class='bx bx-trash text-xl text-red-600'></i>
+                  </button>
+                </td>
+              </tr>
+            </ng-container>
+            <ng-template #noIncidences>
+              <tr>
+                <td colspan="6" class="py-4 text-center">No hay incidencias disponibles.</td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"
+          class="custom-pagination flex justify-end my-4" [maxSize]="10" [directionLinks]="true" [autoHide]="false"
+          previousClass="bg-gray-300 px-4 py-2 rounded-l" nextClass="bg-gray-300 px-4 py-2 rounded-r"
+          directionLinkClass="bg-gray-300 px-4 py-2 rounded" ellipses="..." ellipsesClass="bg-gray-300 px-4 py-2"
+          pageLinkClass="text-blue-400 px-4 py-2 rounded" [responsive]="true"></pagination-controls>
+      </div>
     </div>
   </div>
 </div>
+

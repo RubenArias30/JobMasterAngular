@@ -8,6 +8,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 })
 export class IncidentsComponent implements OnInit {
   incidences: any[] = [];
+  p: number = 1;
   originalIncidences: any[] = [];
   selectedStatus: string = '';
   pending: number = 0;
@@ -19,6 +20,11 @@ export class IncidentsComponent implements OnInit {
     'pending': 'Pendientes',
     'completed': 'Completadas'
   };
+
+  resetPagination() {
+    this.p = 1; // Reset the current page to 1
+  }
+
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
@@ -61,12 +67,13 @@ export class IncidentsComponent implements OnInit {
   }
 
   toggleCompletion(incident: any): void {
-    // Cambiar el estado de la incidencia entre completada y pendiente
+    // Cambiar el estado   de la incidencia entre completada y pendiente
     if (incident.status === 'completed') {
       incident.status = 'pending';
     } else {
       incident.status = 'completed';
     }
+
 
     // Llamar al servicio API para actualizar el estado de la incidencia
     this.apiService.updateIncidentStatus(incident.id, incident.status)
@@ -79,6 +86,7 @@ export class IncidentsComponent implements OnInit {
         }
       );
   }
+
 
    // Función para confirmar y eliminar una incidencia
    confirmDelete(incidentId: number): void {

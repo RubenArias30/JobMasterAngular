@@ -41,6 +41,7 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { ViewScheduleComponent } from './components/schedule/view-schedule/view-schedule.component';
 import { EditScheduleComponent } from './components/schedule/edit-schedule/edit-schedule.component';
 import { DasboardEmployeeComponent } from './components/dashboard/dasboard-employee/dasboard-employee.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -105,7 +106,8 @@ import { DasboardEmployeeComponent } from './components/dashboard/dasboard-emplo
     FormsModule,
     FullCalendarModule,
     AppRoutingModule,
-    NgxExtendedPdfViewerModule
+    NgxExtendedPdfViewerModule,
+      NgxPaginationModule
 
 
 
