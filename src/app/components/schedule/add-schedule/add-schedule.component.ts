@@ -474,7 +474,20 @@ checkTimeRange(editMode: boolean = false) {
   // Actualizar la bandera de formulario válido
   this.isFormValid = !this.showDateRangeError && !this.showTimeRangeError && !this.showEqualTimeError;
 }
+// Función para verificar el rango de fechas en el formulario de edición
+checkDateRangeEdit() {
+  const startDate = this.formEdit.get('fechaInicio')?.value;
+  const endDate = this.formEdit.get('fechaFin')?.value;
+  this.showDateRangeErrorEdit = startDate && endDate && new Date(startDate) > new Date(endDate);
+}
 
+// Función para verificar el rango de tiempo en el formulario de edición
+checkTimeRangeEdit() {
+  const startTime = this.formEdit.get('horaInicio')?.value;
+  const endTime = this.formEdit.get('horaFin')?.value;
+  this.showTimeRangeErrorEdit = startTime && endTime && startTime >= endTime;
+  this.showEqualTimeErrorEdit = startTime && endTime && startTime === endTime;
+}
 
   // Validador  para verificar que la fecha de entrda sea anterior a la fecha de salida
   dateRangeValidator(formGroup: FormGroup) {
