@@ -119,4 +119,21 @@ export class DetailsComponent implements OnInit {
   translateDocumentType(documentType: string): string {
     return this.documentTypeTranslations[documentType] || documentType;
   }
+
+  downloadDocument(documentId: number, documentName: string): void {
+    this.apiService.downloadDocument(documentId).subscribe(
+      (response) => {
+        const url = window.URL.createObjectURL(response);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = documentName; // Use documentName as the file name
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      (error) => {
+        console.error('Error downloading the document:', error);
+      }
+    );
+  }
+
 }

@@ -91,6 +91,14 @@ export class ApiService {
   getMyDocuments(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/my-documents`);
   }
+  // Método para subir un documento al servidor
+uploadDocument(employeeId: number, formData: FormData): Observable<any> {
+  return this.http.post(`${this.apiUrl}/employees/${employeeId}/documents`, formData);
+}
+downloadDocument(documentId: number): Observable<Blob> {
+  const url = `${this.apiUrl}/documents/download/${documentId}`;
+  return this.http.get(url, { responseType: 'blob' });
+}
 
   //Schedule
   addSchedule(employeeId: number, scheduleData: any) {

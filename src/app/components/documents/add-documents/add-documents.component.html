@@ -47,11 +47,12 @@
         </div>
         <div class="mt-2">
           <label for="route" class="block">Archivo</label>
-          <input type="file" id="route" formControlName="route" accept=".pdf, .doc, .docx" class="border border-gray-300 rounded-md p-2 w-full shadow-inner">
+          <input type="file" id="route" (change)="onFileChange($event)" accept=".pdf, .doc, .docx" class="border border-gray-300 rounded-md p-2 w-full shadow-inner">
           <div *ngIf="documentForm.get('route')?.errors?.['required'] && (documentForm.get('route')?.dirty || documentForm.get('route')?.touched)" class="text-red-500 mt-2">Archivo es obligatorio.</div>
           <div *ngIf="documentForm.get('route')?.errors?.['invalidFileExtension'] && (documentForm.get('route')?.dirty || documentForm.get('route')?.touched)" class="text-red-500 mt-2">El fichero debe tener una extensión de archivo válida (pdf, doc, docx).</div>
           <div *ngIf="documentForm.get('route')?.value && !documentForm.get('route')?.errors" class="text-green-500 mt-2">Archivo válido.</div>
         </div>
+
       </div>
     </div>
 <!-- Otros elementos del formulario -->
