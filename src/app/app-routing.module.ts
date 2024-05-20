@@ -77,7 +77,7 @@ const routes: Routes = [
   children: [
     { path: '', component: BudgetComponent },
     { path: 'generate_budget', component: GenerateBudgetComponent },
-    { path: 'edit_budget', component: EditBudgetComponent }
+    { path: 'edit_budget/:id', component: EditBudgetComponent }
 
   ]
 },
