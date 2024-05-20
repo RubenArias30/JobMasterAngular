@@ -1,4 +1,3 @@
-
 <div class="container mx-auto mt-8">
   <!-- Encabezado -->
   <div class="flex items-center justify-between mb-4 ml-5">
@@ -15,8 +14,8 @@
       </button>
     </div>
   </div>
-  <div  *ngIf="isError" class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto border border-green-400 " >
-    <div  class="text-red-600 font-bold mb-4">
+  <div *ngIf="isError" class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto border border-green-400 ">
+    <div class="text-red-600 font-bold mb-4">
       Error al cargar las incidencias . Por favor, inténtelo de nuevo más tarde.
     </div>
   </div>
@@ -113,8 +112,8 @@
         </div>
         <div class="col-span-1">
           <p class="text-sm"><strong>Género</strong></p>
-          <p class="text-gray-900">{{ selectedEmployee.gender }}</p>
-        </div>
+          <p class="text-gray-900">{{ selectedEmployee.gender === 'male' ? 'Masculino' : 'Femenino' }}</p>
+      </div>
         <div class="col-span-1">
           <p class="text-sm"><strong>Nacionalidad</strong></p>
           <p class="text-gray-900">{{ selectedEmployee.country }}</p>
@@ -158,7 +157,8 @@
         </div>
         <div class="col-span-1">
           <p class="text-sm"><strong>Codigo Postal</strong></p>
-          <p class="text-gray-900">{{ selectedEmployee.addresses?.postal_code }}</p>
+          <p class="text-gray-900">{{ selectedEmployee.addresses?.postal_code.toString().length === 4 ? '0' +
+            selectedEmployee.addresses?.postal_code : selectedEmployee.addresses?.postal_code }}</p>
         </div>
         <div class="col-span-1">
           <p class="text-sm"><strong>País</strong></p>
