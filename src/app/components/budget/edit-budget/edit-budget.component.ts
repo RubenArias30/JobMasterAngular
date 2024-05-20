@@ -126,9 +126,9 @@ formatPostalCode(postalCode: string): string {
           price: [concept.price || '', Validators.required],
           quantity: [
             concept.quantity || '', Validators.required],
-          concept_discount: [concept.concept_discount || ''],
-          concept_iva: [concept.concept_iva || ''],
-          concept_irpf: [concept.concept_irpf || '']
+          concept_discount: [concept.concept_discount || 0],
+          concept_iva: [concept.concept_iva || 0],
+          concept_irpf: [concept.concept_irpf || 0]
         })
       );
     });
