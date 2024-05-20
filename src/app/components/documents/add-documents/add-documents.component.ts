@@ -13,6 +13,7 @@ export class AddDocumentsComponent implements OnInit {
   documentForm: FormGroup;
   employeeId: number | null = null; // Inicializa la propiedad con un valor seguro
   showMissingFieldsError: boolean = false;
+  selectedFile: File | null = null; // Variable to hold the selected file
 
   constructor(
     private apiService: ApiService,
@@ -35,15 +36,28 @@ export class AddDocumentsComponent implements OnInit {
       this.employeeId = params['employeeId'] ? +params['employeeId'] : null;
     });
   }
-
+  onFileChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      this.documentForm.patchValue({ route: file.name });
+    }
+  }
   submitForm(): void {
-    if (this.documentForm.invalid) {
-      this.showMissingFieldsError = true; // Mostrar mensaje de error
+    if (this.documentForm.invalid || !this.selectedFile) {
+      this.showMissingFieldsError = true;
       return;
     }
     this.showMissingFieldsError = false;
 
-    this.apiService.addDocumentToEmployee(this.employeeId!, this.documentForm.value).subscribe(
+    const formData = new FormData();
+    formData.append('type_documents', this.documentForm.value.type_documents);
+    formData.append('name', this.documentForm.value.name);
+    formData.append('description', this.documentForm.value.description);
+    formData.append('date', this.documentForm.value.date);
+    formData.append('file', this.selectedFile!);
+
+    this.apiService.uploadDocument(this.employeeId!, formData).subscribe(
       (response) => {
         this.router.navigate(['/documents/details', this.employeeId]);
       },
