@@ -18,7 +18,8 @@ export class BudgetComponent implements OnInit {
   sortBy: string = 'default'; // Default sorting option
   filterButtonText: string = 'Filtros'; // Initialize filter button text
   p: number = 1;
-
+  isLoading = true;
+  isError = false;
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
@@ -30,9 +31,12 @@ export class BudgetComponent implements OnInit {
       (response: any[]) => {
         this.invoices = response;
         this.sortInvoices(this.sortBy);
+        this.isLoading = false;
       },
       (error) => {
         console.error('Error al obtener la lista de facturas:', error);
+        this.isError = true; // Set error flag to true
+        this.isLoading = false;
       }
     );
   }
