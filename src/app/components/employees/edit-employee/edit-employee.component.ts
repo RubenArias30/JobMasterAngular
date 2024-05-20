@@ -79,7 +79,7 @@ export class EditEmployeeComponent implements OnInit {
             this.employeeForm.patchValue({
               street: addressData.street || '',
               city: addressData.city || '',
-              postal_code: addressData.postal_code || ''
+              postal_code: addressData.postal_code && addressData.postal_code.toString().length === 4 ? '0' + addressData.postal_code : addressData.postal_code || ''
             });
           }
 

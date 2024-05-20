@@ -76,9 +76,15 @@
             <a (click)="generatePDF(invoice)">
               <i class='bx bxs-file-pdf text-xl mr-2'></i>
             </a>
+
             <button (click)="confirmDeleteInvoice(invoice.id)">
               <i class='bx bx-trash text-xl text-red-600'></i>
             </button>
+
+            <a [routerLink]="['/budget/edit_budget', invoice.id]">
+              <i class='bx bx-edit text-xl text-black mr-2'></i>
+            </a>
+
           </td>
         </tr>
       </ng-container>
