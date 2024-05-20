@@ -1,163 +1,171 @@
 <div class="container mx-auto px-4 lg:px-8">
   <div class="flex flex-col items-center mt-8 mb-5">
-   <!-- Datos del dashboard -->
-<div class="flex flex-col sm:flex-row justify-center w-full mb-4 space-y-4 sm:space-y-0 sm:space-x-4">
-  <!--  datos -->
-  <div class="flex flex-col items-center bg-white border border-green-400 rounded-xl p-4 w-full sm:w-1/3">
-    <div class="flex justify-between items-start w-full">
-      <div class="flex flex-col">
-        <p class="text-4xl sm:text-6xl font-bold">{{ totalTrabajadores }}</p>
-        <br>
-        <p class="text-lg font-medium mt-auto">Total de Trabajadores</p>
+    <!-- Datos del dashboard -->
+    <div class="flex flex-col sm:flex-row justify-center w-full mb-4 space-y-4 sm:space-y-0 sm:space-x-4">
+      <!--  datos -->
+      <div class="flex flex-col items-center bg-white border border-green-400 rounded-xl p-4 w-full sm:w-1/3">
+        <div class="flex justify-between items-start w-full">
+          <div class="flex flex-col">
+            <p class="text-4xl sm:text-6xl font-bold">{{ totalTrabajadores }}</p>
+            <br>
+            <p class="text-lg font-medium mt-auto">Total de Trabajadores</p>
+          </div>
+          <div>
+            <i class='bx bxs-group text-5xl sm:text-7xl  text-green-400'></i>
+          </div>
+        </div>
       </div>
-      <div>
-        <i class='bx bxs-group text-5xl sm:text-7xl  text-green-400'  ></i>
+      <div class="flex flex-col items-center bg-white border border-green-400 rounded-xl p-4 w-full sm:w-1/3">
+        <div class="flex justify-between items-start w-full">
+          <div class="flex flex-col">
+            <p class="text-4xl sm:text-6xl font-bold">{{ inactiveEmployeeCount }}</p>
+            <br>
+            <p class="text-lg font-medium mt-auto">Trabajadores Inactivos</p>
+          </div>
+          <div>
+            <i class="bx bxs-user-x text-5xl sm:text-7xl  text-green-400"></i>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col items-center bg-white border border-green-400 rounded-xl p-4 w-full sm:w-1/3">
+        <div class="flex justify-between items-start w-full">
+          <div class="flex flex-col">
+            <p class="text-4xl sm:text-6xl font-bold">{{ presentEmployeeCount }}</p>
+            <br>
+            <p class="text-lg font-medium mt-auto">Trabajadores Presentados</p>
+          </div>
+          <div>
+            <i class="bx bxs-user text-5xl sm:text-7xl text-green-400"></i>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="flex flex-col items-center bg-white border border-green-400 rounded-xl p-4 w-full sm:w-1/3">
-    <div class="flex justify-between items-start w-full">
-      <div class="flex flex-col">
-        <p class="text-4xl sm:text-6xl font-bold">{{ inactiveEmployeeCount }}</p>
-        <br>
-        <p class="text-lg font-medium mt-auto">Trabajadores Inactivos</p>
+
+    <!-- Sección de Incidencias -->
+    <div class="px-4 py-2 w-full">
+      <div class="bg-white border border-green-400 rounded-xl p-4 mb-8 relative">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-bold inline-block">Incidencias</h2>
+          <button (click)="navigateToIncidents()"
+            class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">Ir a Incidencias <i
+              class='bx bxs-right-arrow-circle text-lg'></i></button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full divide-y divide-gray-200">
+            <thead class="bg-gray-100">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+                  NOMBRE
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+                  TIPO
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+                  DESCRIPCIÓN
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+                  FECHA
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+                  ESTADO
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <ng-container *ngIf="incidences.length > 0; else noIncidences">
+                <tr *ngFor="let incident of incidences" class="transition-all hover:bg-gray-100 hover:shadow-lg">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900 font-bold">{{ incident.employee?.name }} {{
+                      incident.employee?.surname
+                      }}</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900">{{ incident.incident_type }}</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900">{{ incident.description }}</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900">{{ incident.date }}</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div
+                      [ngClass]="{'text-custom-500': incident.status === 'completed', 'text-custom-600': incident.status !== 'completed'}"
+                      class="text-sm font-semibold">
+                      {{ incident.status === 'completed' ? 'Completada' : 'Pendiente' }}
+                    </div>
+                  </td>
+
+                </tr>
+              </ng-container>
+              <ng-template #noIncidences>
+                <tr>
+                  <td colspan="5" class="py-4 text-center">No hay incidencias disponibles.</td>
+                </tr>
+              </ng-template>
+            </tbody>
+          </table>
+        </div>
+
       </div>
-      <div>
-        <i class="bx bxs-user-x text-5xl sm:text-7xl  text-green-400"></i>
-      </div>
+
     </div>
-  </div>
-  <div class="flex flex-col items-center bg-white border border-green-400 rounded-xl p-4 w-full sm:w-1/3">
-    <div class="flex justify-between items-start w-full">
-      <div class="flex flex-col">
-        <p class="text-4xl sm:text-6xl font-bold">{{ presentEmployeeCount }}</p>
-        <br>
-        <p class="text-lg font-medium mt-auto">Trabajadores Presentados</p>
-      </div>
-      <div>
-        <i class="bx bxs-user text-5xl sm:text-7xl text-green-400"></i>
+
+    <!-- Sección de Ausencias Recientes -->
+    <div class="px-4 py-2 w-full">
+      <div class="bg-white border border-green-400 rounded-xl p-4 mb-8 relative">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-bold inline-block">Ausencias Recientes</h2>
+          <button (click)="navigateToAbsences()"
+            class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">Ir a Ausencias <i
+              class='bx bxs-right-arrow-circle text-lg'></i></button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full divide-y divide-gray-200">
+            <thead class="bg-gray-100">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+                  NOMBRE
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+                  TIPO
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+                  FECHA DE INICIO
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
+                  FECHA FINAL
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <ng-container *ngIf="recentAbsences.length > 0; else noRecentAbsences">
+                <tr *ngFor="let absence of recentAbsences" class="transition-all hover:bg-gray-100 hover:shadow-lg">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900 font-bold">{{ absence.employee?.name }} {{
+                      absence.employee?.surname }}</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900">{{ absence.type_absence }}</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900">{{ absence.start_date }}</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900">{{ absence.end_date }}</div>
+                  </td>
+                </tr>
+              </ng-container>
+              <ng-template #noRecentAbsences>
+                <tr>
+                  <td colspan="4" class="py-4 text-center">No hay ausencias recientes disponibles.</td>
+                </tr>
+              </ng-template>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<!-- Sección de Incidencias -->
-<div class="px-4 py-2 w-full">
-  <div class="bg-white border border-green-400 rounded-xl p-4 mb-8 relative">
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-bold inline-block">Incidencias</h2>
-      <button (click)="navigateToIncidents()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">Ir a Incidencias <i class='bx bxs-right-arrow-circle text-lg'></i></button>
-    </div>
-    <div class="overflow-x-auto">
-      <table class="w-full divide-y divide-gray-200">
-        <thead class="bg-gray-100">
-          <tr>
-            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
-              NOMBRE
-            </th>
-            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
-              TIPO
-            </th>
-            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
-              DESCRIPCIÓN
-            </th>
-            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
-              FECHA
-            </th>
-            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
-              ESTADO
-            </th>
-          </tr>
-        </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
-          <ng-container *ngIf="incidences.length > 0; else noIncidences">
-            <tr *ngFor="let incident of incidences" class="transition-all hover:bg-gray-100 hover:shadow-lg">
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900 font-bold">{{ incident.employee?.name }} {{ incident.employee?.surname
-                  }}</div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">{{ incident.incident_type }}</div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">{{ incident.description }}</div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">{{ incident.date }}</div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div [ngClass]="{'text-custom-500': incident.status === 'completed', 'text-custom-600': incident.status !== 'completed'}" class="text-sm font-semibold">
-                  {{ incident.status === 'completed' ? 'Completada' : 'Pendiente' }}
-                </div>
-              </td>
-              
-            </tr>
-          </ng-container>
-          <ng-template #noIncidences>
-            <tr>
-              <td colspan="5" class="py-4 text-center">No hay incidencias disponibles.</td>
-            </tr>
-          </ng-template>
-        </tbody>
-      </table>
-    </div>
-
-  </div>
-
-</div>
-
-<!-- Sección de Ausencias Recientes -->
-<div class="px-4 py-2 w-full">
-  <div class="bg-white border border-green-400 rounded-xl p-4 mb-8 relative">
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-bold inline-block">Ausencias Recientes</h2>
-      <button (click)="navigateToAbsences()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">Ir a Ausencias <i class='bx bxs-right-arrow-circle text-lg'></i></button>
-    </div>
-    <div class="overflow-x-auto">
-      <table class="w-full divide-y divide-gray-200">
-        <thead class="bg-gray-100">
-          <tr>
-            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
-              NOMBRE
-            </th>
-            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
-              TIPO
-            </th>
-            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
-              FECHA DE INICIO
-            </th>
-            <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
-              FECHA FINAL
-            </th>
-          </tr>
-        </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
-          <ng-container *ngIf="recentAbsences.length > 0; else noRecentAbsences">
-            <tr *ngFor="let absence of recentAbsences" class="transition-all hover:bg-gray-100 hover:shadow-lg">
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900 font-bold">{{ absence.employee?.name }} {{ absence.employee?.surname }}</div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">{{ absence.type_absence }}</div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">{{ absence.start_date }}</div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">{{ absence.end_date }}</div>
-              </td>
-            </tr>
-          </ng-container>
-          <ng-template #noRecentAbsences>
-            <tr>
-              <td colspan="4" class="py-4 text-center">No hay ausencias recientes disponibles.</td>
-            </tr>
-          </ng-template>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-  </div>
-</div>
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>

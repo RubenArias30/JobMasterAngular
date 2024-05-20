@@ -14,6 +14,8 @@ export class DashboardComponent implements OnInit {
   recentAbsences: any[] = [];
   presentEmployeeCount: number = 0;
   inactiveEmployeeCount: number = 0;
+  isLoading = true;
+  
 
   constructor(private apiService: ApiService, private router: Router) { }
 
@@ -53,10 +55,12 @@ export class DashboardComponent implements OnInit {
       (data: any) => {
         this.presentEmployeeCount = data.present_employee_count;
         this.inactiveEmployeeCount = data.inactive_employee_count;
+        this.isLoading = false;
       },
       error => {
         console.error('Error al obtener el estado de los empleados:', error);
-      }
+        this.isLoading = false;
+     }
     );
   }
 

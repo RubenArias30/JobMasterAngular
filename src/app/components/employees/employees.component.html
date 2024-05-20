@@ -15,8 +15,14 @@
       </button>
     </div>
   </div>
+  <div  *ngIf="isError" class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto border border-green-400 " >
+    <div  class="text-red-600 font-bold mb-4">
+      Error al cargar las incidencias . Por favor, inténtelo de nuevo más tarde.
+    </div>
+  </div>
 
-  <div class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto border border-green-400 ">
+
+  <div *ngIf="!isError" class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto border border-green-400 ">
     <table class="w-full divide-y divide-gray-200">
       <!-- Cabecera de la tabla -->
       <thead class="bg-gray-100">
@@ -165,3 +171,4 @@
     </div>
   </div>
 </div>
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
