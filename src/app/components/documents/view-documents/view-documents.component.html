@@ -23,8 +23,10 @@
         <td class="px-6 py-4 whitespace-nowrap">{{ document.type_documents }}</td>
         <td class="px-6 py-4 whitespace-nowrap">{{ document.name }}</td>
         <td class="px-6 py-4 whitespace-nowrap">{{ document.description }}</td>
-        <td class="px-6 py-4 whitespace-nowrap"><a href="{{ document.route }}" class="text-indigo-600 hover:text-indigo-900">Descargar</a></td>
-      </tr>
+        <td class="px-6 py-4 whitespace-nowrap">
+          <button (click)="downloadDocument(document.id, document.name)" class="text-indigo-600 hover:text-indigo-900">Descargar</button>
+        </td>
+              </tr>
     </tbody>
   </table>
   <p *ngIf="documents.length === 0" class="text-gray-700 text-lg mt-4">No hay documentos disponibles.</p>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api/api.service';
 import { Document } from '../../../models/documents/documents.model';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-view-documents',
@@ -38,5 +39,17 @@ export class ViewDocumentsComponent implements OnInit {
     // Actualizar el tipo seleccionado y volver a cargar los documentos
     this.selectedType = type;
     this.loadDocuments();
+  }
+
+  downloadDocument(documentId: number, documentName: string): void {
+    this.apiService.downloadDocument(documentId).subscribe(
+      (response: Blob) => {
+        // Save the downloaded file using file-saver
+        saveAs(response, documentName);
+      },
+      (error) => {
+        console.error('Error downloading document:', error);
+      }
+    );
   }
 }
