@@ -114,11 +114,30 @@ export class AddEmployeeComponent {
 
 
 
-  cancelEdit(): void {
-    if (confirm('¿Estás seguro de cancelar la edición?')) {
-      // Si el usuario confirma la cancelación, redirige a la página de administración de empleados
-      this.router.navigate(['/employees']);
+  // cancelEdit(): void {
+  //   if (confirm('¿Estás seguro de cancelar la edición?')) {
+  //     // Si el usuario confirma la cancelación, redirige a la página de administración de empleados
+  //     this.router.navigate(['/employees']);
+  //   }
+  // }
+
+  openModal(): void {
+    const modal = document.getElementById('popup-modal');
+    if (modal) {
+      modal.classList.remove('hidden');
     }
+  }
+
+  closeModal(): void {
+    const modal = document.getElementById('popup-modal');
+    if (modal) {
+      modal.classList.add('hidden');
+    }
+  }
+
+  confirmCancelEdit(): void {
+    this.closeModal();
+    this.router.navigate(['/employees']);
   }
 
   // Función de validación personalizada para la extensión de imagen

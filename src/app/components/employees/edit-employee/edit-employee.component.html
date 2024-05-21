@@ -7,7 +7,7 @@
   <!-- Línea divisora -->
   <hr class="my-4 border border-gray-400 w-full">
   <form [formGroup]="employeeForm" (ngSubmit)="updateEmployee()" enctype="multipart/form-data">
-    <div class="container mx-auto mt-8 px-8 lg:flex lg:flex-row flex-col">
+    <div class="container mx-auto mt-8 px-8 flex flex-col lg:flex-row gap-4">
       <!-- Información personal -->
       <div class="flex-1 lg:mr-4 mb-4 lg:mb-0">
         <div class="border border-black p-4 rounded-lg bg-white">
@@ -24,7 +24,6 @@
             <div
               *ngIf="employeeForm.get('name')?.errors?.['pattern'] && (employeeForm.get('name')?.dirty || employeeForm.get('name')?.touched)"
               class="text-red-500 mt-2">Por favor, introduce solo letras para el nombre.</div>
-
           </div>
           <div class="mt-2">
             <label for="surname" class="block">Apellido</label>
@@ -36,7 +35,6 @@
             <div
               *ngIf="employeeForm.get('surname')?.errors?.['pattern'] && (employeeForm.get('surname')?.dirty || employeeForm.get('surname')?.touched)"
               class="text-red-500 mt-2">Por favor, introduce solo letras para el apellido.</div>
-
           </div>
           <div class="mt-2">
             <label for="date_of_birth" class="block">Fecha de nacimiento</label>
@@ -51,7 +49,6 @@
             <div
               *ngIf="employeeForm.get('date_of_birth')?.errors?.['invalidDateInThePast'] && (employeeForm.get('date_of_birth')?.dirty || employeeForm.get('date_of_birth')?.touched)"
               class="text-red-500 mt-2">La fecha no puede ser tan antigua.</div>
-
           </div>
           <div class="mt-2">
             <label for="country" class="block">Pais</label>
@@ -64,7 +61,6 @@
               <div
               *ngIf="employeeForm.get('country')?.errors?.['pattern'] && (employeeForm.get('country')?.dirty || employeeForm.get('country')?.touched)"
               class="text-red-500 mt-2">Por favor, introduce un país correcto</div>
-
           </div>
           <div class="mt-2">
             <label for="gender" class="block">Género</label>
@@ -93,22 +89,19 @@
             <label for="telephone" class="block">Teléfono</label>
             <input type="text" id="telephone" formControlName="telephone" name="telephone"
               class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Teléfono" maxlength="9">
-
             <div
               *ngIf="employeeForm.get('telephone')?.errors?.['required'] && (employeeForm.get('telephone')?.dirty || employeeForm.get('telephone')?.touched)"
               class="text-red-500 mt-2">Teléfono es obligatorio.</div>
             <div
               *ngIf="employeeForm.get('telephone')?.errors?.['pattern'] && (employeeForm.get('telephone')?.dirty || employeeForm.get('telephone')?.touched)"
               class="text-red-500 mt-2">Por favor, introduce solo números para el telefono.</div>
-
           </div>
 
           <div class="mt-2">
             <label for="photo" class="block">Foto</label>
-            <input type="file" name="photo" id="photo" formControlName="photo" accept="image/*" class="mt-1"   >
+            <input type="file" name="photo" id="photo" formControlName="photo" accept="image/*" class="mt-1">
             <div *ngIf="employeeData && employeeData.photo">
-              <img [src]="employeeData.photo" alt="Foto de {{ employeeData.name }}" class="mt-2"
-                style="max-width: 200px;">
+              <img [src]="employeeData.photo" alt="Foto de {{ employeeData.name }}" class="mt-2" style="max-width: 200px;">
             </div>
             <div
               *ngIf="employeeForm.get('photo')?.errors?.['required'] && (employeeForm.get('photo')?.dirty || employeeForm.get('photo')?.touched)"
@@ -116,19 +109,18 @@
             <div
               *ngIf="employeeForm.get('photo')?.errors?.['invalidImageExtension'] && (employeeForm.get('photo')?.dirty || employeeForm.get('photo')?.touched)"
               class="text-red-500 mt-2">La foto debe tener una extensión de archivo válida (jpg, jpeg, png, gif).</div>
-            <div *ngIf="employeeForm.get('photo')?.value && !employeeForm.get('photo')?.errors"
-              class="text-green-500 mt-2">
+            <div *ngIf="employeeForm.get('photo')?.value && !employeeForm.get('photo')?.errors" class="text-green-500 mt-2">
               Foto válida.
             </div>
           </div>
         </div>
       </div>
 
-      <!--  Direccion  y Credenciales -->
+      <!-- Direccion y Credenciales -->
       <div class="flex-1 lg:ml-4">
         <div class="bg-white border border-black p-4 rounded-lg">
           <h2 class="text-lg font-bold">Direccion</h2>
-          <hr class="my- border-gray-400">
+          <hr class="my-2 border-gray-400">
           <div class="mt-2">
             <label for="street" class="block">Dirección</label>
             <input type="text" id="street" formControlName="street" name="street"
@@ -170,7 +162,6 @@
         <div class="bg-white border border-black p-4 rounded-lg">
           <h2 class="text-lg font-bold">Credenciales</h2>
           <hr class="my-2 border-gray-400">
-
           <div class="mt-4">
             <label for="nif" class="block">NIF</label>
             <input type="text" id="nif" formControlName="nif" appNifValidator name="nif"
@@ -179,10 +170,7 @@
               *ngIf="employeeForm?.get('nif')?.invalid && (employeeForm?.get('nif')?.dirty || employeeForm?.get('nif')?.touched)"
               class="text-red-500 mt-2">Por favor, introduce un NIF válido.</div>
               <div *ngIf="errorMessageNif" class="text-red-500 mt-2">{{ errorMessageNif }}</div>
-
-
           </div>
-
         </div>
       </div>
     </div>
@@ -190,20 +178,18 @@
     <div *ngIf="errorMessage" class="text-red-500 mt-2 text-center">
       {{ errorMessage }}
     </div>
-
-    <!-- <div *ngIf="updateError" class="text-red-500 mt-2 text-center">
-      Error al actualizar el empleado. Por favor, inténtalo de nuevo más tarde.
-    </div> -->
     <div *ngIf="showErrorInvalid" class="text-red-500 mt-2 text-center">
       Error al editar empleado. Por favor, inténtelo de nuevo más tarde.
     </div>
-
-    <!-- Botón "Añadir Usuario" y "Cancelar"-->
+    <!-- Botón "Guardar" y "Cancelar" -->
     <div class="mt-8 mb-3 flex justify-center">
       <button type="submit" [disabled]="!formModified"
         class="bg-green-500 hover:bg-green-700 text-white font-bold px-6 py-3 rounded-lg mr-4">Guardar</button>
-      <button type="button" class="bg-gray-500 hover:bg-red-500 text-white font-bold px-6 py-3 rounded-lg" (click)="cancelEdit()">Cancelar</button>
-    </div>
-
+        <button type="button" class="bg-gray-500 hover:bg-red-500 text-white font-bold px-6 py-3 rounded-lg" (click)="openModal()">
+          Cancelar
+        </button>
+          </div>
   </form>
 </div>
+
+<app-cancelmodal (confirm)="confirmCancelEdit()" (cancel)="closeModal()"></app-cancelmodal>

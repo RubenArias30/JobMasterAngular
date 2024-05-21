@@ -185,6 +185,24 @@ export class EditEmployeeComponent implements OnInit {
       this.router.navigate(['/employees']);
     }
   }
+  openModal(): void {
+    const modal = document.getElementById('popup-modal');
+    if (modal) {
+      modal.classList.remove('hidden');
+    }
+  }
+
+  closeModal(): void {
+    const modal = document.getElementById('popup-modal');
+    if (modal) {
+      modal.classList.add('hidden');
+    }
+  }
+
+  confirmCancelEdit(): void {
+    this.closeModal();
+    this.router.navigate(['/employees']);
+  }
 
   imageExtensionValidator(control: any) {
     if (control.value) {
