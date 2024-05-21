@@ -50,6 +50,9 @@ export class ApiService {
   getEmployeeDetails(employeeId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/employees/${employeeId}`);
   }
+  updateEmployeePhoto(employeeId: number, formData: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/employees/${employeeId}/photo`, formData);
+  }
   //Verificar si ya existe el nif
   checkNifExists(nif: string): Observable<boolean> {
     return this.http.get<boolean>(`${this.apiUrl}/employees/checkNifExists/${nif}`);

@@ -17,8 +17,10 @@ export class EditEmployeeComponent implements OnInit {
   formModified: boolean = false;
   updateError: boolean = false;
   errorMessage: string = '';
-  file!: any;
-  errorMessageNif: string='';
+  file!: File | null;
+  selectedFileName: string | null = null;
+  selectedImageUrl: string | null = null;
+  errorMessageNif: string = '';
 
   // showPassword: boolean = false;
 
@@ -100,11 +102,8 @@ export class EditEmployeeComponent implements OnInit {
             telephone: this.employeeData.telephone || '',
           });
 
-          // Verificar si hay una foto en los datos del empleado y establecer el valor del campo de imagen como null
           if (this.employeeData.photo) {
-            this.employeeForm.patchValue({
-              photo: null
-            });
+            this.selectedImageUrl = this.employeeData.photo;
           }
         } else {
           console.error('Datos del empleado no encontrados');
@@ -116,10 +115,27 @@ export class EditEmployeeComponent implements OnInit {
     );
   }
 
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.file = file;
+      this.selectedFileName = file.name;
+      this.previewImage(file);
+    }
+  }
+
+  previewImage(file: File): void {
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.selectedImageUrl = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
 
 
 
   updateEmployee(): void {
+
     if (this.employeeId === null) {
       console.error('No se ha proporcionado un ID de empleado válido.');
       return;
@@ -178,6 +194,32 @@ export class EditEmployeeComponent implements OnInit {
     );
   }
 
+  updatePhoto(): void {
+    if (!this.file || !this.employeeId) {
+      console.error('No se ha proporcionado un archivo o ID de empleado válido.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('photo', this.file);
+
+    this.apiService.updateEmployeePhoto(this.employeeId, formData)
+      .subscribe(
+        response => {
+          console.log('Foto del empleado actualizada:', response);
+          // Actualizar la URL de la imagen en la vista si es necesario
+          this.selectedImageUrl = response.photo;
+          // Reiniciar el estado de la selección de archivos
+          this.file = null;
+          this.selectedFileName = null;
+        },
+        error => {
+          console.error('Error al actualizar la foto del empleado:', error);
+          // Manejar errores
+        }
+      );
+  }
+
 
 
   cancelEdit(): void {
@@ -206,7 +248,7 @@ export class EditEmployeeComponent implements OnInit {
 
   imageExtensionValidator(control: any) {
     if (control.value) {
-      const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+      const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
       if (!allowedExtensions.test(control.value)) {
         return { invalidImageExtension: true };
       }

@@ -98,17 +98,16 @@
           </div>
 
           <div class="mt-2">
-            <label for="photo" class="block">Foto</label>
-            <input type="file" name="photo" id="photo" formControlName="photo" accept="image/*" class="mt-1">
-            <div *ngIf="employeeData && employeeData.photo">
-              <img [src]="employeeData.photo" alt="Foto de {{ employeeData.name }}" class="mt-2" style="max-width: 200px;">
-            </div>
+
+            <label for="photo">Foto</label>
+            <input type="file" id="photo" formControlName="photo" (change)="onFileSelected($event)">
+            <img *ngIf="selectedImageUrl" [src]="selectedImageUrl" alt="Selected Image" style="max-width: 200px;">
             <div
               *ngIf="employeeForm.get('photo')?.errors?.['required'] && (employeeForm.get('photo')?.dirty || employeeForm.get('photo')?.touched)"
               class="text-red-500 mt-2">Foto es obligatoria.</div>
             <div
               *ngIf="employeeForm.get('photo')?.errors?.['invalidImageExtension'] && (employeeForm.get('photo')?.dirty || employeeForm.get('photo')?.touched)"
-              class="text-red-500 mt-2">La foto debe tener una extensión de archivo válida (jpg, jpeg, png, gif).</div>
+              class="text-red-500 mt-2">La foto debe tener una extensión de archivo válida (jpg, jpeg, png).</div>
             <div *ngIf="employeeForm.get('photo')?.value && !employeeForm.get('photo')?.errors" class="text-green-500 mt-2">
               Foto válida.
             </div>
@@ -183,7 +182,7 @@
     </div>
     <!-- Botón "Guardar" y "Cancelar" -->
     <div class="mt-8 mb-3 flex justify-center">
-      <button type="submit" [disabled]="!formModified"
+      <button type="submit" [disabled]="!formModified" (click)="updatePhoto()"
         class="bg-green-500 hover:bg-green-700 text-white font-bold px-6 py-3 rounded-lg mr-4">Guardar</button>
         <button type="button" class="bg-gray-500 hover:bg-red-500 text-white font-bold px-6 py-3 rounded-lg" (click)="openModal()">
           Cancelar
