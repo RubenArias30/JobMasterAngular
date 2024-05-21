@@ -13,13 +13,14 @@ export class AttendancesComponent implements OnInit, OnDestroy {
   timerInterval: any;
   currentUser!: string;
   entryActive: boolean = false;
-  lastEntryDate: string | null = null;
-  lastExitDate: string | null = null;
+  lastEntryDate: Date | null = null;
+  lastExitDate: Date | null = null;
 
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.getCurrentUserId();
+    this.fetchLastExitDate(); // Recuperar la última fecha de salida al inicializar el componente
   }
 
   ngOnDestroy(): void {
@@ -42,10 +43,26 @@ export class AttendancesComponent implements OnInit, OnDestroy {
     const storedStartTime = localStorage.getItem(`startTime_${this.currentUser}`);
     if (storedStartTime) {
       this.startTime = parseInt(storedStartTime, 10);
+      this.lastEntryDate = new Date(parseInt(storedStartTime, 10));
       this.entryActive = true;
       this.showTimer = true;
       this.updateTimer();
     }
+  }
+
+  fetchLastExitDate(): void {
+    this.apiService.getLastExitDate().subscribe(
+      (response: any) => {
+        if (response.lastExitDate) {
+          this.lastExitDate = new Date(response.lastExitDate);
+        } else {
+          this.lastExitDate = null;
+        }
+      },
+      error => {
+        console.error('Error al obtener la última fecha de salida:', error);
+      }
+    );
   }
 
   updateTimer(): void {
@@ -81,7 +98,7 @@ export class AttendancesComponent implements OnInit, OnDestroy {
     this.startTime = Date.now();
     localStorage.setItem(`startTime_${this.currentUser}`, this.startTime.toString());
     this.entryActive = true;
-    this.lastEntryDate = new Date().toLocaleString();
+    this.lastEntryDate = new Date(); // Formatear la fecha actual
     this.updateTimer();
     this.apiService.registerEntry().subscribe(
       response => {
@@ -93,27 +110,36 @@ export class AttendancesComponent implements OnInit, OnDestroy {
     );
   }
 
-
   registerExit(): void {
     this.showTimer = false;
     clearInterval(this.timerInterval);
-    const exitDate = new Date().toLocaleString();
-    this.lastExitDate = exitDate;
-    localStorage.removeItem(`startTime_${this.currentUser}`); // Eliminar el tiempo de inicio del usuario actual del almacenamiento local
-    this.entryActive = false;
+
+    // Llamar al servicio para registrar la salida en la base de datos
     this.apiService.registerExit().subscribe(
-      response => {
+      (response: any) => {
         console.log('Salida registrada correctamente');
+        if (response && response.exitDate) {
+          // Si la respuesta contiene la fecha de salida, actualiza lastExitDate
+          this.lastExitDate = new Date(response.exitDate);
+        } else {
+          // Si la respuesta no contiene la fecha de salida, establece lastExitDate como la fecha actual
+          this.lastExitDate = new Date();
+        }
+
+        // Actualizar el temporizador con el tiempo total recibido del servidor
+        this.timer = response.total_time; // Suponiendo que el servidor devuelve el tiempo total
+        this.entryActive = false; // Cambiar el estado de entrada a falso después de finalizar la jornada
+        localStorage.removeItem(`startTime_${this.currentUser}`);
       },
       error => {
         console.error('Error al registrar la salida:', error);
       }
     );
   }
-  formatDateTime(dateTime: string | null): string {
-    if (!dateTime) return '';
-    return new Date(dateTime).toLocaleString();
+
+  formatDateTime(dateTime: Date): string {
+    // Formatear la fecha y hora en el formato deseado
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    return dateTime.toLocaleString(undefined, options);
   }
-
-
 }

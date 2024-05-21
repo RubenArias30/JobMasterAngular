@@ -167,11 +167,11 @@ downloadDocument(documentId: number): Observable<Blob> {
   registerExit(): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/attendances/exit`, {});
   }
-  getStartTime() {
-    return this.http.get(`${this.apiUrl}/attendance/start-time`);
-  }
   getAttendanceStatus(userId: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/attendances/status/${userId}`);
+  }
+  getLastExitDate() {
+    return this.http.get<any>(`${this.apiUrl}/lastExitDate`);
   }
 
 
