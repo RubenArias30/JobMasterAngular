@@ -9,6 +9,11 @@ import { ApiService } from 'src/app/services/api/api.service';
 export class ProfileComponent implements OnInit{
   profileData: any = {}; // Objeto para almacenar los datos del perfil del empleado
 
+  genderTranslations: { [key: string]: string } = {
+    'male': 'Masculino',
+    'female': 'Femenino'
+  };
+
   constructor(private apiService: ApiService) { } // Inyecta el servicio ApiService
 
   ngOnInit(): void {

@@ -45,7 +45,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let doc of documents" class="border-t">
-          <td class="text-center px-4 py-2">{{ doc.type_documents }}</td>
+          <td class="text-center px-4 py-2">{{ translateDocumentType(doc.type_documents) }}</td>
           <td class="text-center px-4 py-2">{{ doc.description }}</td>
           <td class="text-center px-4 py-2">
             <!-- <button (click)="navigateToDocuments(employee)">

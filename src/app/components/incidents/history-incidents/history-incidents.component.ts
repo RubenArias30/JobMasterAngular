@@ -8,6 +8,14 @@ import { ApiService } from 'src/app/services/api/api.service';
 })
 export class HistoryIncidentsComponent implements OnInit {
   userIncidents: any[] = []; // Arreglo para almacenar las incidencias del usuario
+  typeTranslations: any = {
+    'Delay': 'Retraso',
+    'Absence': 'Ausencia',
+    'password_change': 'Cambio de contraseña',
+    'Request': 'Solicitud',
+    'Complaint': 'Reclamación',
+    'Others': 'Otros'
+  };
 
   constructor(private apiService: ApiService) {}
 
@@ -27,4 +35,20 @@ export class HistoryIncidentsComponent implements OnInit {
       }
     );
   }
+
+    // Función para traducir el estado
+    translateStatus(status: string): string {
+      switch (status) {
+        case 'completed':
+          return 'Completada';
+        case 'pending':
+          return 'Pendiente';
+        default:
+          return status;
+      }
+    }
+
+    translateType(type: string): string {
+      return this.typeTranslations[type] || type;
+    }
 }

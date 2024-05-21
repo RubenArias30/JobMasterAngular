@@ -199,7 +199,9 @@ downloadDocument(documentId: number): Observable<Blob> {
     return this.http.get<any[]>(url);
   }
 
-
+  getAbsencesByEmployee(employeeId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/absences/employee/${employeeId}`);
+  }
 
 
 

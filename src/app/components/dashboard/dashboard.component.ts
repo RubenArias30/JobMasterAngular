@@ -15,7 +15,25 @@ export class DashboardComponent implements OnInit {
   presentEmployeeCount: number = 0;
   inactiveEmployeeCount: number = 0;
   isLoading = true;
-  
+
+  typeTranslations: any = {
+    'Delay': 'Retraso',
+    'Absence': 'Ausencia',
+    'password_change': 'Cambio de contraseña',
+    'Request': 'Solicitud',
+    'Complaint': 'Reclamación',
+    'Others': 'Otros'
+  };
+
+   // Define un objeto que mapee los tipos de ausencias en inglés a sus equivalentes en español
+   tipoAusenciaTraducido: { [key: string]: string } = {
+    'vacation': 'Vacaciones',
+    'sick_leave': 'Enfermedad',
+    'maternity/paternity': 'Maternidad/Paternidad',
+    'compensatory': 'Compensatorias',
+    'leave': 'Baja',
+    'others': 'Otros'
+  };
 
   constructor(private apiService: ApiService, private router: Router) { }
 
@@ -73,6 +91,7 @@ export class DashboardComponent implements OnInit {
         this.incidences = data.slice(0, 5);
       });
   }
+
   loadRecentAbsences(): void {
     // Llamar al servicio para obtener todas las ausencias y luego tomar solo las últimas 5
     this.apiService.getAusencias().subscribe(
@@ -88,6 +107,14 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  translateType(type: string): string {
+    return this.typeTranslations[type] || type;
+  }
+
+  // Método para obtener el tipo de ausencia traducido
+  getTipoAusenciaTraducido(tipo: string): string {
+    return this.tipoAusenciaTraducido[tipo] || tipo; // Retorna la traducción si está definida, de lo contrario, retorna el tipo original
+  }
 
 // Método para navegar a la ruta de Ausencias
 navigateToAbsences() {

@@ -53,12 +53,12 @@
               required>
               <option value="">Seleccione el tipo</option>
               <!-- Populate options dynamically from database -->
-              <option value="Vacaciones">Vacaciones</option>
-              <option value="Enfermedad">Enfermedad</option>
-              <option value="Maternidad/Paternidad">Maternidad/Paternidad</option>
-              <option value="Compensatorias">Compensatorias</option>
-              <option value="Baja">Baja</option>
-              <option value="Otros">Otros</option>
+              <option value="vacation">Vacaciones</option>
+              <option value="sick leave">Enfermedad</option>
+              <option value="maternity/paternity">Maternidad/Paternidad</option>
+              <option value="compensatory">Compensatorias</option>
+              <option value="leave">Baja</option>
+              <option value="others">Otros</option>
               <!-- Add more options as needed -->
             </select>
             <div *ngIf="ausenciaForm.controls['type_absence'].invalid && ausenciaForm.controls['type_absence'].touched"

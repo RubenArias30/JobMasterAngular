@@ -11,8 +11,16 @@ import { saveAs } from 'file-saver';
 export class ViewDocumentsComponent implements OnInit {
 
   documents: Document[] = [];
-  documentTypes: string[] = ['contracts', 'nif', 'curriculum', 'laboral_life', 'payroll', 'proof'];
-  selectedType: string = '';
+  documentTypes: any = {
+    'contracts': 'Contratos',
+    'nif': 'NIF',
+    'curriculum': 'Currículum',
+    'laboral_life': 'Vida Laboral',
+    'payroll': 'Nómina',
+    'proof': 'Justificante',
+    'others': 'Otros'
+
+  };  selectedType: string = '';
 
   constructor(private apiService: ApiService) { }
 
@@ -52,4 +60,8 @@ export class ViewDocumentsComponent implements OnInit {
       }
     );
   }
+    // Método para traducir el tipo de documento
+    translateDocumentType(documentType: string): string {
+      return this.documentTypes[documentType] || documentType;
+    }
 }

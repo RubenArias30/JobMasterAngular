@@ -25,6 +25,8 @@
             <option value="laboral_life">Vida laboral</option>
             <option value="payroll">Nómina</option>
             <option value="proof">Justificante</option>
+            <option value="others">Otros</option>
+
           </select>
           <div *ngIf="documentForm.get('type_documents')?.errors?.['required'] && (documentForm.get('type_documents')?.dirty || documentForm.get('type_documents')?.touched)" class="text-red-500 mt-2">Tipo de documento es obligatorio.</div>
         </div>
