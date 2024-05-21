@@ -8,7 +8,7 @@
     <div class="flex ml-auto mr-8">
       <button routerLink="/budget/generate_budget"
         class="flex items-center bg-gray-200 hover:bg-green-400 px-2 py-1 rounded-lg mr-2">
-        <i class='bx bxs-user-plus text-xl'></i>
+        <i class='bx bx-plus text-xl'></i>
         <span class="ml-1">Añadir</span>
       </button>
       <div class="relative">
@@ -77,13 +77,13 @@
               <i class='bx bxs-file-pdf text-xl mr-2'></i>
             </a>
 
-            <button (click)="confirmDeleteInvoice(invoice.id)">
-              <i class='bx bx-trash text-xl text-red-600'></i>
-            </button>
-
             <a [routerLink]="['/budget/edit_budget', invoice.id]">
               <i class='bx bx-edit text-xl text-black mr-2'></i>
             </a>
+
+            <button (click)="confirmDeleteInvoice(invoice.id)">
+              <i class='bx bx-trash text-xl text-red-600 mr-2'></i>
+            </button>
 
           </td>
         </tr>
