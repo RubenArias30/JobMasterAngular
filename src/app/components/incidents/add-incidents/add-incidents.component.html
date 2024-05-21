@@ -9,7 +9,15 @@
           <label class="block text-gray-700 text-sm font-bold mb-2" for="type">
             Tipo de Incidencia
           </label>
-          <input formControlName="incident_type" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="type" type="text" placeholder="Tipo de incidencia">
+          <select formControlName="incident_type" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="type">
+            <option value="">Selecciona el tipo de incidencia</option>
+            <option value="Delay">Retraso</option>
+            <option value="Absence">Ausencia</option>
+            <option value="password_change">Cambio de contraseña</option>
+            <option value="Request">Solicitud</option>
+            <option value="Complaint">Reclamacion</option>
+            <option value="Others">Otros</option>
+          </select>
           <div *ngIf="incidentForm.get('incident_type')?.invalid && (incidentForm.get('incident_type')?.touched || incidentForm.get('incident_type')?.value)" class="text-red-500 text-sm mt-1">Tipo de incidencia es requerido</div>
         </div>
         <div class="mb-4">
@@ -17,9 +25,6 @@
             Fecha de Incidencia
           </label>
           <input formControlName="date" readonly class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="date" type="date" [value]="currentDateFormatted">
-          <!-- <div *ngIf="incidentForm.get('date')?.invalid && (incidentForm.get('date')?.touched || incidentForm.get('date')?.value)" class="text-red-500 text-sm mt-1">Fecha de incidencia es requerida</div>
-          <div *ngIf="incidentForm.get('date')?.errors?.['invalidPastDate'] && (incidentForm.get('date')?.dirty || incidentForm.get('date')?.touched)" class="text-red-500 mt-2">La fecha no puede ser tan antigua.</div>
-          <div *ngIf="incidentForm.get('date')?.errors?.['invalidFutureDate'] && (incidentForm.get('date')?.dirty || incidentForm.get('date')?.touched)" class="text-red-500 mt-2">La fecha no puede ser del futuro.</div> -->
         </div>
       </div>
       <div class="mb-4">

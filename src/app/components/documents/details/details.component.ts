@@ -12,7 +12,7 @@ export class DetailsComponent implements OnInit {
   employeeName: string = '';
   employeeId: number | undefined; // Inicializa como indefinido
   showDropdown: boolean = false;
-  documentTypes: string[] = ['contracts', 'nif', 'curriculum', 'laboral_life', 'payroll', 'proof'];
+  documentTypes: string[] = ['contracts', 'nif', 'curriculum', 'laboral_life', 'payroll', 'proof','others'];
   selectedType: string = '';
   documentTypeTranslations: any = {
     'contracts': 'Contratos',
@@ -20,7 +20,8 @@ export class DetailsComponent implements OnInit {
     'curriculum': 'Currículum',
     'laboral_life': 'Vida Laboral',
     'payroll': 'Nómina',
-    'proof': 'Comprobante'
+    'proof': 'Justificante',
+    'others': 'Otros'
   };
 
   constructor(private router: Router, private apiService: ApiService, private route: ActivatedRoute) { }

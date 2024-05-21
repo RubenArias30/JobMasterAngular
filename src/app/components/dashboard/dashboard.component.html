@@ -80,7 +80,7 @@
                       }}</div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">{{ incident.incident_type }}</div>
+                    <div class="text-sm text-gray-900">{{ translateType(incident.incident_type) }}</div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-sm text-gray-900">{{ incident.description }}</div>
@@ -146,7 +146,7 @@
                       absence.employee?.surname }}</div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">{{ absence.type_absence }}</div>
+                    <div class="text-sm text-gray-900">{{ getTipoAusenciaTraducido(absence.type_absence) }}</div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-sm text-gray-900">{{ absence.start_date }}</div>

@@ -34,6 +34,18 @@ export class AbsencesComponent implements OnInit, OnDestroy {
   selectedFilter: string | null = null;
   showFilterDropdown = false;
 
+  selectedEmployeeId!: number;
+  showEmployeeDropdown = false;
+
+  // Define un objeto que mapee los tipos de ausencias en inglés a sus equivalentes en español
+  tipoAusenciaTraducido: { [key: string]: string } = {
+    'vacation': 'Vacaciones',
+    'sick_leave': 'Enfermedad',
+    'maternity/paternity': 'Maternidad/Paternidad',
+    'compensatory': 'Compensatorias',
+    'leave': 'Baja',
+    'others': 'Otros'
+  };
 
 
   constructor
@@ -205,4 +217,36 @@ openAbsenceModal(absence: any) {
 
 }
 
+// Método para obtener el tipo de ausencia traducido
+getTipoAusenciaTraducido(tipo: string): string {
+  return this.tipoAusenciaTraducido[tipo] || tipo; // Retorna la traducción si está definida, de lo contrario, retorna el tipo original
 }
+
+loadEmployees() {
+  this.apiService.getEmployees().subscribe(employees => {
+    this.employees = employees;
+  });
+}
+
+onSelectEmployee(employeeId: number) {
+  if (employeeId) {
+    this.selectedEmployeeId = employeeId;
+    this.loadAbsencesByEmployee(employeeId);
+  }
+}
+
+
+loadAbsencesByEmployee(employeeId: number) {
+  this.apiService.getAbsencesByEmployee(employeeId).subscribe(absences => {
+    this.absences = absences;
+  });
+}
+
+ // Método para alternar la visibilidad del dropdown de empleado
+ toggleEmployeeDropdown() {
+  this.showEmployeeDropdown = !this.showEmployeeDropdown;
+}
+
+
+}
+

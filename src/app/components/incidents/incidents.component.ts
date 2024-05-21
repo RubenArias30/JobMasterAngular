@@ -23,6 +23,14 @@ export class IncidentsComponent implements OnInit {
     'completed': 'Completadas'
   };
 
+  typeTranslations: any = {
+    'Delay': 'Retraso',
+    'Absence': 'Ausencia',
+    'password_change': 'Cambio de contraseña',
+    'Request': 'Solicitud',
+    'Complaint': 'Reclamación',
+    'Others': 'Otros'
+  };
 
   constructor(private apiService: ApiService) { }
 
@@ -58,6 +66,11 @@ export class IncidentsComponent implements OnInit {
   translateStatus(status: string): string {
     return this.statusTranslations[status] || 'Todos';
   }
+
+  translateType(type: string): string {
+    return this.typeTranslations[type] || type;
+  }
+
   toggleDropdown(): void {
     this.showDropdown = !this.showDropdown;
   }

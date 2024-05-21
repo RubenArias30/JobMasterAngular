@@ -4,7 +4,9 @@
       <i class='bx bx-plus'></i>
       <span class="ml-1">Añadir ausencia</span>
     </button>
-    <div class="relative">
+
+    <!-- Filtros -->
+    <div class="relative mr-4">
       <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-2 py-1 rounded-lg" (click)="toggleFilterDropdown()">
         <i class='bx bx-filter text-xl'></i>
         <span class="ml-1">Filtros</span>
@@ -12,12 +14,25 @@
       <!-- Filter dropdown -->
       <div *ngIf="showFilterDropdown" class="absolute right-0 mt-1 bg-white border border-gray-300 rounded-lg py-1 px-2 w-32 sm:w-48 z-10">
         <ul class="py-1">
-          <li *ngFor="let option of filterOptions" (click)="selectFilter(option) ;resetPagination()" class="px-4 py-2 cursor-pointer hover:bg-gray-100">{{ option }}</li>
+          <li *ngFor="let option of filterOptions" (click)="selectFilter(option); resetPagination()" class="px-4 py-2 cursor-pointer hover:bg-gray-100">{{ option }}</li>
         </ul>
+      </div>
+    </div>
 
+    <!-- Empleados -->
+    <div class="relative">
+      <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-2 py-1 rounded-lg" (click)="toggleEmployeeDropdown()">
+        <i class='bx bx-user text-xl'></i> <!-- Icono de persona -->
+      </button>
+      <!-- Dropdown de empleado -->
+      <div *ngIf="showEmployeeDropdown" class="absolute right-0 mt-1 bg-white border border-gray-300 rounded-lg py-1 px-2 w-32 sm:w-48 z-10">
+        <ul class="py-1">
+          <li *ngFor="let employee of employees" (click)="onSelectEmployee(employee.id); resetPagination()" class="px-4 py-2 cursor-pointer hover:bg-gray-100">{{ employee.name }}</li>
+        </ul>
       </div>
     </div>
   </div>
+
 </div>
 
 
@@ -80,7 +95,7 @@
                 <img src="{{ absence.employee.photo }}" alt="Employee Photo" class="w-10 h-10 rounded-full">
               </td>
               <td class="px-6 py-4 whitespace-nowrap">{{ absence.employee.name }} {{ absence.employee.surname }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{{ absence.type_absence }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ getTipoAusenciaTraducido(absence.type_absence) }}</td>
               <td class="px-6 py-4 whitespace-nowrap">{{ absence.start_date }}</td>
               <td class="px-6 py-4 whitespace-nowrap">{{ absence.end_date }}</td>
               <td class="px-6 py-4 whitespace-nowrap">

@@ -2,9 +2,10 @@
 
 <div class="mb-6">
   <label for="documentType" class="block text-sm font-medium text-gray-700">Filtrar por Tipo de Documento:</label>
-  <select id="documentType" name="documentType" [(ngModel)]="selectedType" (ngModelChange)="filterDocumentsByType($event)" class="mt-1 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-auto">
+  <select id="documentType" name="documentType" [(ngModel)]="selectedType" (ngModelChange)="filterDocumentsByType($event)"
+    class="mt-1 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-auto">
     <option value="">Todos</option>
-    <option *ngFor="let type of documentTypes" [value]="type">{{ type }}</option>
+    <option *ngFor="let type of documentTypes | keyvalue" [value]="type.key">{{ type.value }}</option>
   </select>
 </div>
 
@@ -20,7 +21,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let document of documents" class="hover:bg-gray-100">
-        <td class="px-6 py-4 whitespace-nowrap">{{ document.type_documents }}</td>
+        <td class="px-6 py-4 whitespace-nowrap">{{ translateDocumentType(document.type_documents) }}</td>
         <td class="px-6 py-4 whitespace-nowrap">{{ document.name }}</td>
         <td class="px-6 py-4 whitespace-nowrap">{{ document.description }}</td>
         <td class="px-6 py-4 whitespace-nowrap">
