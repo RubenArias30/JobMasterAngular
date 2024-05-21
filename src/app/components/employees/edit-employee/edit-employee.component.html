@@ -54,7 +54,7 @@
             <label for="country" class="block">Pais</label>
             <input type="text" id="nacionalidad" formControlName="country" name="country"
               class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Nacionalidad"
-              maxlength="20">
+              maxlength="120">
             <div
               *ngIf="employeeForm.get('country')?.errors?.['required'] && (employeeForm.get('country')?.dirty || employeeForm.get('country')?.touched)"
               class="text-red-500 mt-2">Pais es obligatorio.</div>
@@ -77,7 +77,7 @@
           <div class="mt-2">
             <label for="email" class="block">Email</label>
             <input type="email" id="email" formControlName="email"
-              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Email" maxlength="35">
+              class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Email" maxlength="40">
             <div
               *ngIf="employeeForm.get('email')?.errors?.['required'] && (employeeForm.get('email')?.dirty || employeeForm.get('email')?.touched)"
               class="text-red-500 mt-2">Email es obligatorio.</div>
