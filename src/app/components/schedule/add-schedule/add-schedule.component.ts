@@ -327,7 +327,8 @@ export class AddScheduleComponent implements OnInit {
 
     this.apiService.addSchedule(this.employeeId, data).subscribe(
       response => {
-        this.loadEvents(this.employeeId);
+        window.location.reload();
+        //this.loadEvents(this.employeeId);
       },
       error => {
         console.error('Error al agregar el horario:', error);
