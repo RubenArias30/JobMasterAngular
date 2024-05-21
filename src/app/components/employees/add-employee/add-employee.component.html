@@ -61,7 +61,7 @@
             <label for="nacionalidad" class="block">Pais</label>
             <input type="text" id="nacionalidad" formControlName="country" name="country"
               class="border border-gray-300 rounded-md p-2 w-full shadow-inner" placeholder="Nacionalidad"
-              maxlength="50">
+              maxlength="120">
             <div
               *ngIf="employeeForm.get('country')?.errors?.['required'] && (employeeForm.get('country')?.dirty || employeeForm.get('country')?.touched)"
               class="text-red-500 mt-2">Pais es obligatorio.</div>
@@ -144,7 +144,7 @@
             <label for="city" class="block">Ciudad</label>
             <input type="text" id="city" formControlName="city" name="city"
               class="border border-gray-300 rounded-md p-2 w-full shadow-inner mb-2" placeholder="Ciudad"
-              maxlength="60">
+              maxlength="120">
             <div
               *ngIf="employeeForm.get('city')?.errors?.['required'] && (employeeForm.get('city')?.dirty || employeeForm.get('city')?.touched)"
               class="text-red-500 mt-2">Ciudad es obligatoria.</div>
