@@ -2,7 +2,6 @@
   <div class="flex items-center justify-between">
     <h1 class="text-3xl font-bold mt-8 mb-4">Documentos de {{ employeeName }}</h1>
 
-
     <div class="flex ml-auto mr-8">
       <button routerLink="/documents/"
         class="flex items-center bg-gray-200 hover:bg-green-400 px-2 py-1 rounded-lg mr-2">
@@ -33,42 +32,39 @@
   </div>
   <hr class="border border-black mb-4">
 
-  <div *ngIf="documents.length > 0; else noDocuments"
-    class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto">
-    <table class="w-full">
-      <thead>
-        <tr class="bg-gray-200">
+  <div class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto border border-green-400">
+    <table class="w-full divide-y divide-gray-200">
+      <thead class="bg-gray-100">
+        <tr>
           <th class="text-center px-4 py-2">Tipo</th>
           <th class="text-center px-4 py-2">Descripción</th>
           <th class="text-center px-4 py-2">Acción</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let doc of documents" class="border-t">
-          <td class="text-center px-4 py-2">{{ translateDocumentType(doc.type_documents) }}</td>
-          <td class="text-center px-4 py-2">{{ doc.description }}</td>
-          <td class="text-center px-4 py-2">
-            <!-- <button (click)="navigateToDocuments(employee)">
-              </button> -->
-              <button (click)="downloadDocument(doc.id, doc.name)">
+        <!-- Verificamos si hay documentos, si no, mostramos el mensaje -->
+        <ng-container *ngIf="documents.length > 0; else noDocuments">
+          <tr *ngFor="let document of documents" class="border-t">
+            <td class="text-center px-4 py-2">{{ translateDocumentType(document.type_documents) }}</td>
+            <td class="text-center px-4 py-2">{{ document.description }}</td>
+            <td class="text-center px-4 py-2">
+              <button (click)="downloadDocument(document.id, document.name)">
                 <i class='bx bxs-file-pdf text-xl'></i>
               </button>
-            <button (click)="deleteDocument(doc.id)">
-              <i class='bx bx-trash text-xl text-red-600'></i>
-            </button>
-            <!-- <button (click)="downloadAsPdf(doc.id)">
-                <i class='bx bx-download text-xl text-blue-600'></i>
-              </button> -->
-          </td>
-        </tr>
+              <button (click)="deleteDocument(document.id)">
+                <i class='bx bx-trash text-xl text-red-600'></i>
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+        <!-- Mostramos el mensaje dentro de una fila especial cuando no hay documentos -->
+        <ng-template #noDocuments>
+          <tr>
+            <td colspan="3" class="text-center py-4 text-lg text-gray-600">No hay documentos disponibles para este empleado.</td>
+          </tr>
+        </ng-template>
       </tbody>
     </table>
   </div>
-
-
-  <ng-template #noDocuments>
-    <p class="text-lg">No hay documentos disponibles para este empleado.</p>
-  </ng-template>
-
 
 </div>

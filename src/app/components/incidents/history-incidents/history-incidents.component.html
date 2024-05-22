@@ -9,15 +9,19 @@
           <div *ngFor="let incident of userIncidents" class="bg-gray-100 px-4 py-3 rounded-lg">
             <div class="flex items-center justify-between mb-2">
               <h3 class="text-lg font-semibold text-gray-900">{{ translateType(incident.incident_type) }}</h3>
-              <span class="text-gray-600">{{ incident.date }}</span>
+              <span class="text-gray-600 font-bold">{{ incident.date }}</span>
             </div>
           
             <div class="flex items-start mb-2">
               <p class="text-gray-600 truncate ml-0">{{ incident.description }}</p>
             </div>
             <div class="flex justify-between">
-              <p class="text-gray-600">Estado: {{ translateStatus(incident.status) }}</p>
-              <!-- Agrega aquí cualquier otro icono o elemento que desees -->
+              <p>
+                <span class="font-bold">Estado:</span>
+                <span class="font-semibold"  [ngClass]="{ 'text-custom-500': incident.status === 'completed', 'text-custom-600': incident.status === 'pending' }">
+                  {{ translateStatus(incident.status) }}
+                </span>
+              </p>
             </div>
           </div>
         </div>

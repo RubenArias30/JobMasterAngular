@@ -232,4 +232,8 @@ export class IncidentsComponent implements OnInit {
     }, 3000); // Hide the alert after 3 seconds
   }
 
+  splitDescription(description: string, maxLength: number): string[] {
+    const regex = new RegExp(`.{1,${maxLength}}`, 'g');
+    return description.match(regex) || [];
+  }
 }
