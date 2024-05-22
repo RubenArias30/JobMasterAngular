@@ -208,11 +208,9 @@ downloadDocument(documentId: number): Observable<Blob> {
     return this.http.get<any[]>(`${this.apiUrl}/absences/employee/${employeeId}`);
   }
 
-
-
   //MiPerfil (EMPLOYEE)
-  getProfile(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/profile`);
+  getProfile(): Observable<Employee> {
+    return this.http.get<Employee>(`${this.apiUrl}/profile`);
   }
 
 
