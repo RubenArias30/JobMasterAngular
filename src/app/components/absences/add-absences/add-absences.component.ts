@@ -16,7 +16,7 @@ ausenciaForm: FormGroup = this.formBuilder.group({});
 absences: any[] = [];
  employees: any[] = [];
  submitted = false;
- 
+
 
  constructor(private apiService: ApiService, private formBuilder: FormBuilder,private router : Router)  {
 
@@ -24,12 +24,22 @@ absences: any[] = [];
     // name: ['', Validators.required],
     employee_id: ['', Validators.required], // Updated form control name
     type_absence: ['', Validators.required],
-    start_date: ['', [Validators.required, this.validateStartDate]],
-    end_date: ['', [Validators.required, this.validateEndDate]],
+    start_date: ['', [Validators.required, this.validateStartDate.bind(this)]],
+    end_date: ['', [Validators.required, this.validateEndDate.bind(this)]],
     motive: ['', Validators.required]
 
     // Add other form controls here
   });
+
+    // Re-validate end date when start date changes
+    this.ausenciaForm.get('start_date')?.valueChanges.subscribe(() => {
+      this.ausenciaForm.get('end_date')?.updateValueAndValidity();
+    });
+
+    // Re-validate start date when end date changes
+    this.ausenciaForm.get('end_date')?.valueChanges.subscribe(() => {
+      this.ausenciaForm.get('start_date')?.updateValueAndValidity();
+    });
 
 }
 
@@ -49,28 +59,31 @@ ngOnInit(): void {
 validateStartDate(control: FormControl): { [key: string]: any } | null {
   const selectedDate = new Date(control.value);
   const currentDate = new Date();
-  currentDate.setHours(0, 0, 0, 0); // Establecer la fecha actual a la medianoche
+  currentDate.setHours(0, 0, 0, 0); // Set current date to midnight
   const minStartDate = new Date(currentDate);
-  minStartDate.setFullYear(currentDate.getFullYear() - 2); // Establecer la fecha mínima a dos años antes de la fecha actual
+  minStartDate.setFullYear(currentDate.getFullYear() - 1); // Set minimum start date to 1 year before today
 
   if (selectedDate < minStartDate || selectedDate > currentDate) {
     return { invalidStartDate: true };
   }
   return null;
 }
-
-
-  validateEndDate(control: FormControl): { [key: string]: any } | null {
-    const selectedDate = new Date(control.value);
-    const currentDate = new Date();
-    const maxFutureDate = new Date();
-    maxFutureDate.setDate(currentDate.getDate() + 365); // Set max future date to 1 year from now
-    currentDate.setHours(0, 0, 0, 0); // Set current date to midnight
-    if (selectedDate < currentDate || selectedDate > maxFutureDate) {
-      return { invalidEndDate: true };
-    }
+validateEndDate(control: FormControl): { [key: string]: any } | null {
+  const selectedDate = new Date(control.value);
+  const startDateControl = this.ausenciaForm.get('start_date');
+  if (!startDateControl) {
     return null;
   }
+  const startDate = new Date(startDateControl.value);
+  startDate.setHours(0, 0, 0, 0); // Ensure start date is at midnight
+  const maxFutureDate = new Date(startDate);
+  maxFutureDate.setFullYear(startDate.getFullYear() + 1); // Set max end date to 1 year after the start date
+
+  if (selectedDate < startDate || selectedDate > maxFutureDate) {
+    return { invalidEndDate: true };
+  }
+  return null;
+}
 
   openModal() {
     this.showModal = true;

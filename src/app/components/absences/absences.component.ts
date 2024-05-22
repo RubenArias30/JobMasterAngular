@@ -22,7 +22,8 @@ export class AbsencesComponent implements OnInit, OnDestroy {
   showDetailsModal: boolean = false; // Agrega esta propiedad
   showDeleteConfirmationModal = false;
   p: number = 1;
-
+  searchQuery: string = '';
+  originalAbsences: any[] = [];
   @ViewChild('deleteConfirmation') deleteConfirmation!: DeleteConfirmationModalComponent;
   // showDeleteConfirmationModal = false;
   absenceIdToDelete: string | null = null;
@@ -48,6 +49,7 @@ export class AbsencesComponent implements OnInit, OnDestroy {
   };
 
 
+
   constructor
     (
       private apiService: ApiService,
@@ -62,6 +64,7 @@ export class AbsencesComponent implements OnInit, OnDestroy {
     this.apiService.getAusencias().subscribe(
       (absences) => {
         this.absences = absences;
+        this.originalAbsences = absences;
         this.isLoading = false; // Set isLoading to false when data is fetched
       },
       (error) => {
@@ -172,10 +175,11 @@ export class AbsencesComponent implements OnInit, OnDestroy {
 
   fetchAbsences(type?: string): void {
     this.isLoading = true;
-    if (!type) {
+    if (!type || type === 'Mostrar Todo') {
       this.apiService.getAusencias().subscribe(
         (absences) => {
           this.absences = absences;
+          this.originalAbsences = absences;
           this.isLoading = false;
           this.isError = false;
         },
@@ -186,23 +190,22 @@ export class AbsencesComponent implements OnInit, OnDestroy {
         }
       );
     } else {
-      this.apiService.getAbsencesByType(type).subscribe(
+      const translatedType = Object.keys(this.tipoAusenciaTraducido).find(key => this.tipoAusenciaTraducido[key] === type);
+      this.apiService.getAbsencesByType(translatedType).subscribe(
         (absences) => {
-          if (type === 'Mostrar Todo') {
-            this.absences = absences; // Assign all absences directly
-          } else {
-            // Filter absences based on the selected type
-            this.absences = absences.filter(absence => absence.type_absence === this.selectedFilter);
-          }
+          this.absences = absences;
+          this.originalAbsences = absences;
           this.isLoading = false;
         },
         (error) => {
           console.error(error);
           this.isLoading = false;
+          this.isError = true;
         }
       );
     }
   }
+
 
   selectedAbsence: any;
 
@@ -228,24 +231,28 @@ loadEmployees() {
   });
 }
 
-onSelectEmployee(employeeId: number) {
-  if (employeeId) {
-    this.selectedEmployeeId = employeeId;
-    this.loadAbsencesByEmployee(employeeId);
-  }
-}
-
-
-loadAbsencesByEmployee(employeeId: number) {
-  this.apiService.getAbsencesByEmployee(employeeId).subscribe(absences => {
-    this.absences = absences;
-  });
-}
 
  // Método para alternar la visibilidad del dropdown de empleado
  toggleEmployeeDropdown() {
   this.showEmployeeDropdown = !this.showEmployeeDropdown;
 }
+
+searchAbsences(event: Event): void {
+  event.preventDefault();
+  const query = this.searchQuery.toLowerCase().trim();
+
+  if (query === '') {
+    this.absences = this.originalAbsences;
+  } else {
+    this.absences = this.originalAbsences.filter(absence => {
+      const firstName = absence.employee?.name?.toLowerCase() || '';
+      const lastName = absence.employee?.surname?.toLowerCase() || '';
+      const fullName = `${firstName} ${lastName}`;
+      return firstName.startsWith(query) || lastName.startsWith(query) || fullName.startsWith(query);
+    });
+  }
+}
+
 
 
 }

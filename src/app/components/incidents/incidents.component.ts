@@ -81,7 +81,8 @@ export class IncidentsComponent implements OnInit {
       this.incidences = this.originalIncidences.filter(incident => {
         const firstName = incident.employee?.name?.toLowerCase() || '';
         const lastName = incident.employee?.surname?.toLowerCase() || '';
-        return firstName === query || lastName === query || (firstName + ' ' + lastName) === query;
+        const fullName = `${firstName} ${lastName}`;
+        return firstName.startsWith(query) || lastName.startsWith(query) || fullName.startsWith(query);
       });
     }
   }

@@ -1,13 +1,26 @@
-<div class="flex items-center justify-between mb-4 ml-5">
-  <div class="flex ml-auto mr-8">
-    <button class="flex items-center bg-gray-200 hover:bg-green-400 text-black px-2 py-1 rounded-lg mr-2" (click)="openAddAbsenceModal()">
+<div class="flex flex-wrap items-center justify-between mb-4 px-5 lg:px-10">
+  <div class="flex items-center space-x-4">
+    <h2 class="text-lg md:text-xl font-bold">Ausencias</h2>
+    <form class="relative" (submit)="searchAbsences($event)">
+      <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar</label>
+      <div class="relative">
+        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+          <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+          </svg>
+        </div>
+        <input [(ngModel)]="searchQuery" name="searchQuery" type="search" id="default-search" class="block w-full pl-10 pr-24 py-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar por nombre" required />
+        <button type="submit" class="absolute right-0 top-0 h-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-r-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+      </div>
+    </form>
+  </div>
+  <div class="flex items-center space-x-4">
+    <button class="flex items-center bg-gray-200 hover:bg-green-400 text-black px-4 py-2 rounded-lg" (click)="openAddAbsenceModal()">
       <i class='bx bx-plus'></i>
       <span class="ml-1">Añadir ausencia</span>
     </button>
-
-    <!-- Filtros -->
-    <div class="relative mr-4">
-      <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-2 py-1 rounded-lg" (click)="toggleFilterDropdown()">
+    <div class="relative">
+      <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-4 py-2 rounded-lg" (click)="toggleFilterDropdown()">
         <i class='bx bx-filter text-xl'></i>
         <span class="ml-1">Filtros</span>
       </button>
@@ -18,49 +31,20 @@
         </ul>
       </div>
     </div>
-
-    <!-- Empleados -->
-    <div class="relative">
-      <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-2 py-1 rounded-lg" (click)="toggleEmployeeDropdown()">
-        <i class='bx bx-user text-xl'></i> <!-- Icono de persona -->
-      </button>
-      <!-- Dropdown de empleado -->
-      <div *ngIf="showEmployeeDropdown" class="absolute right-0 mt-1 bg-white border border-gray-300 rounded-lg py-1 px-2 w-32 sm:w-48 z-10">
-        <ul class="py-1">
-          <li *ngFor="let employee of employees" (click)="onSelectEmployee(employee.id); resetPagination()" class="px-4 py-2 cursor-pointer hover:bg-gray-100">{{ employee.name }}</li>
-        </ul>
-      </div>
-    </div>
   </div>
-
 </div>
-
-
 
 <!-- TABLE -->
 
-<div class="px-4 py-2">
-  <h2 class="text-xl font-bold mb-4">Ausencias</h2>
-  <div  *ngIf="isError" class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto border border-green-400 " >
-    <div  class="text-red-600 font-bold mb-4">
-      Error al cargar las ausencias.Por favor, inténtelo de nuevo más tarde.
+<div class="flex flex-wrap items-center justify-between mb-4 px-5 lg:px-10 w-full space-y-4 lg:space-y-0">
+  <div *ngIf="isError" class="w-full bg-white border border-green-400 rounded-xl p-4 mb-8">
+    <div class="text-red-600 font-bold mb-4">
+      Error al cargar las ausencias. Por favor, inténtelo de nuevo más tarde.
     </div>
   </div>
   <div *ngIf="!isError" class="w-full bg-white border border-green-400 rounded-xl p-4 mb-8">
-
-    <div class="overflow-x-auto" >
+    <div class="overflow-x-auto">
       <table class="w-full divide-y divide-gray-200">
-        <!-- Add a div with a fixed position to center the spinner -->
-        <!-- <div class="fixed top-0 left-0 w-full h-full flex justify-center items-center" *ngIf="isLoading">
-          <div role="status" class="flex flex-col items-center">
-            Replace the spinner with the logo image
-            <img src="../../../assets/img/logo.webp" alt="Logo" class="inline w-27 md:w-29 h-29 md:h-26 animate-spin" />
-            <span class="font-bold mt-2">cargando...</span>
-          </div>
-        </div> -->
-
-
-
         <!-- Table content -->
         <thead class="bg-gray-100">
           <tr>
