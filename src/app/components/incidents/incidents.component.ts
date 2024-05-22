@@ -16,6 +16,13 @@ export class IncidentsComponent implements OnInit {
   showDropdown: boolean = false;
    isLoading = true;
    isError = false; // Flag to track if there's an error fetching data
+   //filter
+   filterStatus: any = {
+    pending: false,
+    completed: false
+  };
+  filterTypes: any = {};
+  incidentTypes: string[] = ['Delay', 'Absence', 'password_change', 'Request', 'Complaint', 'Others'];
 
   statusTranslations: any = {
     '': 'Todos',
@@ -78,16 +85,45 @@ export class IncidentsComponent implements OnInit {
     this.p = 1; // Reset the current page to 1
   }
   // Función para filtrar incidencias por estado
-  filterByStatus(selectedStatus: string): void {
-    this.selectedStatus = selectedStatus; // Actualizar el estado seleccionado
+  // filterByStatus(selectedStatus: string): void {
+  //   this.selectedStatus = selectedStatus; // Actualizar el estado seleccionado
 
-    // Filtrar las incidencias basadas en el estado seleccionado
-    if (this.selectedStatus) {
-      this.incidences = this.originalIncidences.filter(incident => incident.status === this.selectedStatus);
-    } else {
-      this.incidences = this.originalIncidences.slice(); // Restaurar la lista original
-    }
+  //   // Filtrar las incidencias basadas en el estado seleccionado
+  //   if (this.selectedStatus) {
+  //     this.incidences = this.originalIncidences.filter(incident => incident.status === this.selectedStatus);
+  //   } else {
+  //     this.incidences = this.originalIncidences.slice(); // Restaurar la lista original
+  //   }
+  // }
+
+  applyFilters(): void {
+
+    this.showDropdown = false;
+    const filteredByStatus = this.filterByStatus(this.originalIncidences);
+    const filteredByType = this.filterByType(filteredByStatus);
+    this.incidences = filteredByType;
   }
+
+  filterByStatus(incidences: any[]): any[] {
+    const statuses = Object.keys(this.filterStatus).filter(key => this.filterStatus[key]);
+    if (statuses.length === 0) return incidences;
+
+    return incidences.filter(incident => statuses.includes(incident.status));
+  }
+
+  filterByType(incidences: any[]): any[] {
+    const types = Object.keys(this.filterTypes).filter(key => this.filterTypes[key]);
+    if (types.length === 0) return incidences;
+
+    return incidences.filter(incident => types.includes(incident.incident_type));
+  }
+  clearFilters(): void {
+    this.filterStatus = { pending: false, completed: false };
+    this.filterTypes = {};
+    this.applyFilters();
+  }
+
+
 
   getDocumentStatusClass(status: string): string {
     return status === 'completed' ? 'bg-green-200' : 'bg-red-200';

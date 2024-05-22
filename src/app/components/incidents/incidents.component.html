@@ -1,125 +1,118 @@
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6 px-4 md:px-8 lg:px-12">
-  <div
-    class="bg-gradient-to-br from-indigo-500 to-sky-400 rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
-    <div class="flex justify-between mb-6 flex-col">
-      <!-- Text -->
-      <div class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2">TOTAL TICKETS</div>
-      <div class="flex items-center">
-        <!-- Icon -->
-        <i class='bx bxs-coupon mr-2 text-3xl md:text-5xl' style='color:#fffbfb'></i>
-        <!-- Text -->
-        <div class="text-lg md:text-3xl font-medium text-white">{{incidences.length}}</div>
+<div class="container mx-auto px-2 md:px-4 lg:px-6">
+  <!-- Grid for Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+    <div class="bg-gradient-to-br from-indigo-500 to-sky-400 rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
+      <div class="flex flex-col justify-between mb-6">
+        <div class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2">TOTAL TICKETS</div>
+        <div class="flex items-center">
+          <i class='bx bxs-coupon mr-2 text-3xl md:text-5xl' style='color:#fffbfb'></i>
+          <div class="text-lg md:text-3xl font-medium text-white">{{incidences.length}}</div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div
-    class="bg-gradient-to-br from-emerald-600 to-emerald-400 rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
-    <div class="flex justify-between mb-4">
-      <div class="flex justify-between mb-6 flex-col">
-        <!-- Text -->
+    <div class="bg-gradient-to-br from-emerald-600 to-emerald-400 rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
+      <div class="flex flex-col justify-between mb-6">
         <div class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2">SOLUCIONADAS</div>
         <div class="flex items-center">
-          <!-- Icon -->
           <i class='bx bx-list-check mr-2 text-3xl md:text-5xl' style='color:#fffbfb'></i>
-          <!-- Text -->
           <div class="text-lg md:text-3xl font-medium text-white">{{completed}}</div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="bg-gradient-to-br from-rose-500 to-rose-400 p-6 shadow-md rounded-md shadow-black/5">
-    <div class="flex justify-between mb-6">
-      <div class="flex justify-between mb-6 flex-col">
-        <!-- Text -->
+    <div class="bg-gradient-to-br from-rose-500 to-rose-400 p-6 shadow-md rounded-md shadow-black/5">
+      <div class="flex flex-col justify-between mb-6">
         <div class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2">PENDIENTES</div>
         <div class="flex items-center">
-          <!-- Icon -->
           <i class='bx bxs-file mr-2 text-3xl md:text-5xl' style='color:#fffbfb'></i>
-          <!-- Text -->
           <div class="text-lg md:text-3xl font-medium text-white">{{pending}}</div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="flex items-center mb-4 justify-end mr-6"> <!-- Adjust mr for preferred spacing -->
-  <!-- Filter button -->
-  <div class="relative" (clickOutside)="showDropdown = false">
-    <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-2 py-1 rounded-lg"
-      (click)="toggleDropdown()">
-      <span> <i class='bx bx-filter text-xl'></i> Filtros</span> <!-- Changed default text to "Filtros" -->
-    </button>
-    <div *ngIf="showDropdown"
-      class="absolute right-0 mt-1 bg-white border border-gray-300 rounded-lg py-1 px-2 w-24 sm:w-32 z-10">
-      <!-- Reduced width of dropdown -->
-      <button class="block px-2 py-1 text-sm text-gray-800 hover:bg-gray-200 w-full"
-        (click)="filterByStatus(''); resetPagination();toggleDropdown()">Todos</button>
-      <button class="block px-2 py-1 text-sm text-gray-800 hover:bg-gray-200 w-full"
-        (click)="filterByStatus('pending');resetPagination(); toggleDropdown()">Pendientes</button>
-      <button class="block px-2 py-1 text-sm text-gray-800 hover:bg-gray-200 w-full"
-        (click)="filterByStatus('completed'); resetPagination();toggleDropdown()">Completadas</button>
+  <!-- Filter Button and Incidencias Heading -->
+  <!-- <div class="flex flex-col md:flex-row md:justify-between items-center mb-4 px-2">
+    <h2 class="text-xl font-bold mb-4 md:mb-0">Incidencias</h2>
+    <div class="relative" (clickOutside)="showDropdown = false">
+      <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-4 py-2 rounded-lg" (click)="toggleDropdown()">
+        <span><i class='bx bx-filter text-xl'></i> Filtros</span>
+      </button>
+      <div *ngIf="showDropdown" class="absolute right-0 mt-1 bg-white border border-gray-300 rounded-lg py-1 px-2 w-24 sm:w-32 z-10">
+        <button class="block px-2 py-1 text-sm text-gray-800 hover:bg-gray-200 w-full" (click)="filterByStatus(''); resetPagination();toggleDropdown()">Todos</button>
+        <button class="block px-2 py-1 text-sm text-gray-800 hover:bg-gray-200 w-full" (click)="filterByStatus('pending');resetPagination(); toggleDropdown()">Pendientes</button>
+        <button class="block px-2 py-1 text-sm text-gray-800 hover:bg-gray-200 w-full" (click)="filterByStatus('completed'); resetPagination();toggleDropdown()">Completadas</button>
+      </div>
+    </div>
+  </div> -->
+  <div class="flex items-center lg:flex-row lg:justify-between items-center mb-4 px-2 w-full">
+    <h2 class="text-xl font-bold mb-4 lg:mb-0">Incidencias</h2>
+    <div class="relative ml-auto">
+      <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-4 py-2 rounded-lg" (click)="toggleDropdown()">
+        <span><i class='bx bx-filter text-xl'></i> Filtros</span>
+      </button>
+      <div *ngIf="showDropdown" class="absolute right-0 mt-1 bg-white border border-gray-300 rounded-lg py-2 px-4 w-64 z-10">
+        <div class="mb-2">
+          <label class="block text-gray-700 font-bold mb-1">Estado</label>
+          <div class="flex flex-wrap">
+            <div class="flex items-center mb-1 mr-4">
+              <input type="checkbox" [(ngModel)]="filterStatus.pending" class="mr-2">
+              <span>Pendientes</span>
+            </div>
+            <div class="flex items-center mb-1">
+              <input type="checkbox" [(ngModel)]="filterStatus.completed" class="mr-2">
+              <span>Completadas</span>
+            </div>
+          </div>
+        </div>
+        <div class="mb-2">
+          <label class="block text-gray-700 font-bold mb-1">Tipo</label>
+          <div class="flex flex-wrap">
+            <div class="flex items-center mb-1 mr-4" *ngFor="let type of incidentTypes">
+              <input type="checkbox" [(ngModel)]="filterTypes[type]" class="mr-2">
+              <span>{{ translateType(type) }}</span>
+            </div>
+          </div>
+        </div>
+        <button class="w-full bg-green-400 hover:bg-green-500 text-white font-bold py-2 rounded mb-2"  (click)="applyFilters()" >Aplicar Filtros</button>
+        <button class="w-full bg-red-500 hover:bg-red-700 text-white font-bold py-2 rounded" (click)="clearFilters()">deshabilitar filtro</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Sección de Incidencias -->
-<div class="px-4 py-2 w-full">
-  <h2 class="text-xl font-bold mb-4">Incidencias</h2>
-  <!-- Display error message if there's an error fetching data -->
-   <div  *ngIf="isError" class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto border border-green-400 " >
-    <div  class="text-red-600 font-bold mb-4">
-      Error al cargar las incidencias . Por favor, inténtelo de nuevo más tarde.
+
+
+  <!-- Sección de Incidencias -->
+  <div class="w-full px-2 py-2">
+    <div *ngIf="isError" class="bg-white rounded-xl shadow-lg p-4 mb-5 overflow-x-auto border border-green-400">
+      <div class="text-red-600 font-bold mb-4">
+        Error al cargar las incidencias. Por favor, inténtelo de nuevo más tarde.
+      </div>
     </div>
-  </div>
 
-  <div  *ngIf="!isError" class="bg-white border border-green-400 rounded-xl p-4 mb-8">
-    <div  class="overflow-x-auto">
-
-      <!-- Your incident list and other content here -->
-
-      <div class="pagination-container">
+    <div *ngIf="!isError" class="bg-white border border-green-400 rounded-xl p-4 mb-8">
+      <div class="overflow-x-auto">
         <table class="w-full divide-y divide-gray-200">
           <thead class="bg-gray-100">
             <tr>
-              <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
-                NOMBRE
-              </th>
-              <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
-                TIPO
-              </th>
-              <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
-                DESCRIPCIÓN
-              </th>
-              <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
-                FECHA
-              </th>
-              <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
-                ESTADO
-              </th>
-              <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">
-                ACCIÓN
-              </th>
-
+              <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">NOMBRE</th>
+              <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">TIPO</th>
+              <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">DESCRIPCIÓN</th>
+              <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">FECHA</th>
+              <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">ESTADO</th>
+              <th scope="col" class="px-6 py-3 text-xs font-bold tracking-wider text-left text-gray-500 uppercase">ACCIÓN</th>
             </tr>
-
           </thead>
 
           <tbody class="bg-white divide-y divide-gray-200">
             <ng-container *ngIf="incidences.length > 0; else noIncidences">
-              <!-- <tr *ngFor="let incident of incidences" class="transition-all hover:bg-gray-100 hover:shadow-lg"> -->
-              <tr *ngFor="let incident of incidences |paginate:{ itemsPerPage: 7, currentPage: p }"
-                class="transition-all hover:bg-gray-100 hover:shadow-lg">
+              <tr *ngFor="let incident of incidences | paginate: { itemsPerPage: 7, currentPage: p }" class="transition-all hover:bg-gray-100 hover:shadow-lg">
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm text-gray-900 font-bold">{{ incident.employee?.name }} {{
-                    incident.employee?.surname
-                    }}</div>
+                  <div class="text-sm text-gray-900 font-bold">{{ incident.employee?.name }} {{ incident.employee?.surname }}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <h3><div class="text-sm text-gray-900">{{ translateType(incident.incident_type) }}</div></h3>
-
+                  <div class="text-sm text-gray-900">{{ translateType(incident.incident_type) }}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="text-sm text-gray-900">{{ incident.description }}</div>
@@ -127,28 +120,16 @@
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="text-sm text-gray-900">{{ incident.date }}</div>
                 </td>
-
-
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <!-- Switch para marcar la incidencia como completada o pendiente -->
                   <label class="flex items-center cursor-pointer">
-                    <input type="checkbox" [checked]="incident.status === 'completed'"
-                      (change)="toggleCompletion(incident)" class="hidden">
+                    <input type="checkbox" [checked]="incident.status === 'completed'" (change)="toggleCompletion(incident)" class="hidden">
                     <span class="relative">
-                      <span
-                        [ngClass]="{'bg-red-300': incident.status === 'pending', 'bg-green-300': incident.status === 'completed'}"
-                        class="block w-14 h-8 rounded-full shadow-inner"></span>
-                      <span
-                        [ngClass]="{'translate-x-full bg-green-500': incident.status === 'completed', 'bg-red-500': incident.status === 'pending'}"
-                        class="absolute left-0 top-0 mt-1 ml-1 w-6 h-6 rounded-full shadow-md transition"></span>
+                      <span [ngClass]="{ 'bg-red-300': incident.status === 'pending', 'bg-green-300': incident.status === 'completed' }" class="block w-14 h-8 rounded-full shadow-inner"></span>
+                      <span [ngClass]="{ 'translate-x-full bg-green-500': incident.status === 'completed', 'bg-red-500': incident.status === 'pending' }" class="absolute left-0 top-0 mt-1 ml-1 w-6 h-6 rounded-full shadow-md transition"></span>
                     </span>
-                    <span class="ml-3 text-gray-700"
-                      [ngClass]="{'text-custom-500': incident.status === 'completed', 'text-custom-600': incident.status === 'pending'}">{{
-                      incident.status === 'completed' ? 'Completada' : 'Pendiente' }}</span>
+                    <span class="ml-3 text-gray-700" [ngClass]="{ 'text-custom-500': incident.status === 'completed', 'text-custom-600': incident.status === 'pending' }">{{ incident.status === 'completed' ? 'Completada' : 'Pendiente' }}</span>
                   </label>
                 </td>
-
-
                 <td class="px-6 py-4 whitespace-nowrap">
                   <button (click)="confirmDelete(incident.id)">
                     <i class='bx bx-trash text-xl text-red-600'></i>
@@ -163,14 +144,10 @@
             </ng-template>
           </tbody>
         </table>
-        <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"
-          class="custom-pagination flex justify-end my-4" [maxSize]="10" [directionLinks]="true" [autoHide]="false"
-          previousClass="bg-gray-300 px-4 py-2 rounded-l" nextClass="bg-gray-300 px-4 py-2 rounded-r"
-          directionLinkClass="bg-gray-300 px-4 py-2 rounded" ellipses="..." ellipsesClass="bg-gray-300 px-4 py-2"
-          pageLinkClass="text-blue-400 px-4 py-2 rounded" [responsive]="true"></pagination-controls>
-
+        <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente" class="custom-pagination flex justify-end my-4" [maxSize]="10" [directionLinks]="true" [autoHide]="false" previousClass="bg-gray-300 px-4 py-2 rounded-l" nextClass="bg-gray-300 px-4 py-2 rounded-r" directionLinkClass="bg-gray-300 px-4 py-2 rounded" ellipses="..." ellipsesClass="bg-gray-300 px-4 py-2" pageLinkClass="text-blue-400 px-4 py-2 rounded" [responsive]="true"></pagination-controls>
       </div>
     </div>
   </div>
 
   <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+</div>
