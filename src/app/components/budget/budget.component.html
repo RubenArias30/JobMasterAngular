@@ -68,8 +68,8 @@
         <ng-container *ngIf="invoices.length > 0; else noInvoices">
 
         <tr *ngFor="let invoice of invoices |paginate:{ itemsPerPage: 7, currentPage: p }" class="border-b border-gray-200">
-          <td class="text-center px-4 py-2">{{ invoice.clients.client_name }}</td>
-          <td class="text-center px-4 py-2">{{ invoice.companies.company_name }}</td>
+          <td class="text-center px-4 py-2">{{ invoice.clients?.client_name }}</td>
+          <td class="text-center px-4 py-2">{{ invoice.companies?.company_name }}</td>
           <td class="text-center px-4 py-2">{{ invoice.subtotal }}€</td>
           <td class="text-center px-4 py-2">{{ invoice.total }}€</td>
           <td class="text-center px-4 py-2">
@@ -81,7 +81,7 @@
               <i class='bx bx-edit text-xl text-black mr-2'></i>
             </a>
 
-            <button (click)="confirmDeleteInvoice(invoice.id)">
+            <button (click)="confirmDeleteInvoice(invoice.id.toString())">
               <i class='bx bx-trash text-xl text-red-600 mr-2'></i>
             </button>
 

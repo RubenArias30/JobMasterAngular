@@ -4,6 +4,7 @@ import { GenerateBudgetComponent } from './generate-budget/generate-budget.compo
 
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { Invoice } from 'src/app/models/invoices.model';
 
 @Component({
   selector: 'app-budget',
@@ -13,7 +14,7 @@ import autoTable from 'jspdf-autotable';
 export class BudgetComponent implements OnInit {
   @ViewChild(GenerateBudgetComponent, { static: true }) // Initialize ViewChild in the constructor
   private generateBudgetComponent!: GenerateBudgetComponent; // Ensure it's initialized
-  invoices: any[] = [];
+  invoices: Invoice[] = [];
   showDropdown: boolean = false;
   sortBy: string = 'default'; // Default sorting option
   filterButtonText: string = 'Filtros'; // Initialize filter button text
@@ -28,8 +29,9 @@ export class BudgetComponent implements OnInit {
 
   getInvoices(): void {
     this.apiService.getInvoices().subscribe(
-      (response: any[]) => {
+      (response: Invoice[]) => {
         this.invoices = response;
+        console.log(response)
         this.sortInvoices(this.sortBy);
         this.isLoading = false;
       },
@@ -49,10 +51,10 @@ export class BudgetComponent implements OnInit {
   }
 
   deleteInvoice(invoiceId: string): void {
-    this.apiService.deleteInvoice(invoiceId).subscribe(
+    this.apiService.deleteInvoice(invoiceId.toString()).subscribe(
       () => {
         // Eliminar la factura de la lista localmente después de eliminarla del servidor
-        this.invoices = this.invoices.filter(invoice => invoice.id !== invoiceId);
+        this.invoices = this.invoices.filter(invoice => invoice.id.toString() !== invoiceId);
       },
       (error) => {
         console.error('Error al eliminar la factura:', error);
