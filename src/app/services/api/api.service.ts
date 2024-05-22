@@ -6,6 +6,7 @@ import { AuthService } from '../auth/auth.service';
 import { Event } from '../../models/event.model';
 import { Employee } from 'src/app/models/employee.model';
 import { Absence } from 'src/app/models/absence.model';
+import { Invoice } from 'src/app/models/invoices.model';
 
 @Injectable({
   providedIn: 'root'
@@ -61,8 +62,8 @@ export class ApiService {
   }
 
   //Invoices
-  getInvoices(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/budget`);
+  getInvoices(): Observable<Invoice[]> {
+    return this.http.get<Invoice[]>(`${this.apiUrl}/budget`);
   }
   getInvoiceById(invoiceId: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/budget/${invoiceId}`);
