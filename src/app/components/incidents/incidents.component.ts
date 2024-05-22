@@ -9,10 +9,13 @@ import { ApiService } from 'src/app/services/api/api.service';
 export class IncidentsComponent implements OnInit {
   incidences: any[] = [];
   p: number = 1;
+  showSuccessAlert: boolean = false;
+  successMessage: string = '';
   originalIncidences: any[] = [];
   selectedStatus: string = '';
   pending: number = 0;
   completed: number = 0;
+  searchQuery: string = '';
   showDropdown: boolean = false;
    isLoading = true;
    isError = false; // Flag to track if there's an error fetching data
@@ -23,6 +26,10 @@ export class IncidentsComponent implements OnInit {
   };
   filterTypes: any = {};
   incidentTypes: string[] = ['Delay', 'Absence', 'password_change', 'Request', 'Complaint', 'Others'];
+
+  // For delete confirmation modal
+  showConfirmationModal: boolean = false;
+  incidentIdToDelete: number | null = null;
 
   statusTranslations: any = {
     '': 'Todos',
@@ -69,6 +76,23 @@ export class IncidentsComponent implements OnInit {
         }
       );
   }
+
+  searchIncidences(event: Event): void {
+    event.preventDefault();
+    const query = this.searchQuery.toLowerCase().trim();
+
+    if (query === '') {
+      // If the search query is empty, show all incidents.
+      this.incidences = this.originalIncidences;
+    } else {
+      this.incidences = this.originalIncidences.filter(incident => {
+        const firstName = incident.employee?.name?.toLowerCase() || '';
+        const lastName = incident.employee?.surname?.toLowerCase() || '';
+        return firstName === query || lastName === query || (firstName + ' ' + lastName) === query;
+      });
+    }
+  }
+
 
   translateStatus(status: string): string {
     return this.statusTranslations[status] || 'Todos';
@@ -157,17 +181,62 @@ export class IncidentsComponent implements OnInit {
 
 
    // Función para confirmar y eliminar una incidencia
-   confirmDelete(incidentId: number): void {
-    if (confirm('¿Estás seguro de que quieres eliminar esta incidencia?')) {
-      this.apiService.deleteIncident(incidentId)
+  //  confirmDelete(incidentId: number): void {
+  //   if (confirm('¿Estás seguro de que quieres eliminar esta incidencia?')) {
+  //     this.apiService.deleteIncident(incidentId)
+  //       .subscribe(
+  //         () => {
+  //           this.getIncidents(); // Recargar los datos después de eliminar la incidencia
+  //         },
+  //         (error) => {
+  //           console.error('Error al eliminar la incidencia:', error);
+  //         }
+  //       );
+  //   }
+  // }
+
+  openDeleteModal(incidentId: number): void {
+    this.incidentIdToDelete = incidentId;
+    this.showConfirmationModal = true;
+  }
+
+  closeDeleteModal(): void {
+    this.showConfirmationModal = false;
+    this.incidentIdToDelete = null;
+  }
+
+  // confirmDeletion(): void {
+  //   if (this.incidentIdToDelete !== null) {
+  //     this.apiService.deleteIncident(this.incidentIdToDelete)
+  //       .subscribe(
+  //         () => {
+  //           this.getIncidents(); // Reload the data after deletion
+  //           this.closeDeleteModal();
+  //         },
+  //         (error) => console.error('Error deleting incident:', error)
+  //       );
+  //   }
+  // }
+  confirmDeletion(): void {
+    if (this.incidentIdToDelete !== null) {
+      this.apiService.deleteIncident(this.incidentIdToDelete)
         .subscribe(
           () => {
-            this.getIncidents(); // Recargar los datos después de eliminar la incidencia
+            this.getIncidents(); // Reload the data after deletion
+            this.showSuccessMessage('Incidencia eliminado correctamente.');
+            this.closeDeleteModal();
           },
-          (error) => {
-            console.error('Error al eliminar la incidencia:', error);
-          }
+          (error) => console.error('Error deleting incident:', error)
         );
     }
   }
+
+  showSuccessMessage(message: string): void {
+    this.successMessage = message;
+    this.showSuccessAlert = true;
+    setTimeout(() => {
+      this.showSuccessAlert = false;
+    }, 3000); // Hide the alert after 3 seconds
+  }
+
 }
