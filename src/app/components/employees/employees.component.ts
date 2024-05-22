@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api/api.service';
-
+import { Employee } from 'src/app/models/employee.model';
 
 @Component({
   selector: 'app-employees',
@@ -9,8 +9,8 @@ import { ApiService } from 'src/app/services/api/api.service';
   styleUrls: ['./employees.component.css']
 })
 export class EmployeesComponent {
-  employees: any[] = [];
-  selectedEmployee: any = null;
+  employees: Employee[] = []; // Utiliza el tipo Employee[]
+  selectedEmployee: Employee[] = []; // Utiliza el tipo Employee
   modalVisible: boolean = false;
   isLoading = true;
   isError = false;
@@ -19,58 +19,53 @@ export class EmployeesComponent {
 
   ngOnInit(): void {
     this.getEmployees();
-
   }
+
   getEmployees(): void {
     this.apiService.getEmployees().subscribe(
-      (response: any[]) => {
+      (response: Employee[]) => { // Utiliza el tipo Employee[]
         this.employees = response;
+        console.log(this.employees)
         this.isLoading = false;
       },
       (error) => {
         console.error('Error al obtener la lista de empleados:', error);
-        this.isError = true; // Set error flag to true
+        this.isError = true;
         this.isLoading = false;
       }
     );
   }
 
-  openEmployeeModal(employee: any): void {
-    this.selectedEmployee = employee;
-  this.modalVisible = true;
+  openEmployeeModal(employee: Employee): void { // Utiliza el tipo Employee
+    this.selectedEmployee = [employee];
+    this.modalVisible = true;
   }
-
 
   closeEmployeeModal(): void {
-    this.selectedEmployee = null;
-    this.modalVisible = false; // Asegurarse de que modalVisible se establezca en falso al cerrar el modal
+    this.selectedEmployee = [];
+    this.modalVisible = false;
   }
 
-  confirmDeleteEmployee(employeeId: string): void {
-    // Mostrar un cuadro de diálogo de confirmación
+  confirmDeleteEmployee(employeeId: number): void { // Utiliza el tipo number para el id
     const confirmDelete = confirm('¿Estás seguro de que deseas eliminar este empleado?');
-
-    // Procesar la eliminación si el usuario confirma la acción
     if (confirmDelete) {
-      this.modalVisible = false; // Ocultar el modal al confirmar la eliminación
+      this.modalVisible = false;
       this.deleteEmployee(employeeId);
     }
   }
 
-  deleteEmployee(employeeId: string): void {
-    this.apiService.deleteEmployee(employeeId).subscribe(
+  deleteEmployee(employeeId: number): void { // Utiliza el tipo number para el id
+    this.apiService.deleteEmployee(employeeId.toString()).subscribe( // Ajusta el tipo del id y convierte a string
       () => {
-        // Eliminar el empleado de la lista localmente después de eliminarlo del servidor
         this.employees = this.employees.filter(employee => employee.id !== employeeId);
       },
-
       (error) => {
         console.error('Error al eliminar el empleado:', error);
       }
     );
   }
-  navigateToDocuments(employee: any): void {
-    this.router.navigate(['/documents', { employeeName: `${employee.name} ${employee.surname}` }]);
 
- }
+  navigateToDocuments(employee: Employee): void { // Utiliza el tipo Employee
+    this.router.navigate(['/documents', { employeeName: `${employee.name} ${employee.surname}` }]);
+  }
 }

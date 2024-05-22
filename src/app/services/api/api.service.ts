@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
-import { Event } from '../../models/events/event.model';
+import { Event } from '../../models/event.model';
+import { Employee } from 'src/app/models/employee.model';
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +32,8 @@ export class ApiService {
   }
 
   //Employees
-  getEmployees(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/employees`);
+  getEmployees(): Observable<Employee[]> {
+    return this.http.get<Employee[]>(`${this.apiUrl}/employees`);
   }
   addEmployees(employeeDatos: any): Observable<any[]> {
     return this.http.post<any[]>(`${this.apiUrl}/employees`, employeeDatos);

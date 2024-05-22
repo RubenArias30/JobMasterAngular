@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api/api.service';
-import { Document } from '../../../models/documents/documents.model';
+import { Document } from '../../../models/documents.model';
 import { saveAs } from 'file-saver';
 
 @Component({

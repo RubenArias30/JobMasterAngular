@@ -36,44 +36,44 @@
         </thead>
         <!-- Datos de los empleados -->
         <tbody class="bg-white divide-y divide-gray-200">
-          <ng-container *ngFor="let employee of employees; let i = index">
-            <tr class="transition-all hover:bg-gray-100 hover:shadow-lg">
-              <td class="text-center px-4 py-2 whitespace-nowrap">
-                <div class="rounded-full overflow-hidden border border-gray-300 h-8 w-8 mx-auto">
-                  <img [src]="employee.photo" alt="Foto de {{ employee.name }}" class="h-full w-full object-cover" width="25" height="25">
-                </div>
-              </td>
-              <td class="text-center px-4 py-2 whitespace-nowrap">{{ employee.name }} {{ employee.surname }}</td>
-              <td class="text-center px-4 py-2 whitespace-nowrap">{{ employee.email }}</td>
-              <td class="text-center px-4 py-2 whitespace-nowrap">{{ employee.telephone }}</td>
-              <td class="text-center px-4 py-2 whitespace-nowrap">{{ employee.country }}</td>
-              <td class="text-center px-4 py-2 whitespace-nowrap">
-                <button (click)="openEmployeeModal(employee)">
-                  <i class='bx bxs-show text-xl mr-2'></i>
-                </button>
-                <a [routerLink]="['/employees/edit_employee', employee.id]">
-                  <i class='bx bx-edit text-xl text-black mr-2'></i>
-                </a>
-                <button (click)="confirmDeleteEmployee(employee.id)">
-                  <i class='bx bx-trash text-xl text-red-600'></i>
-                </button>
-              </td>
-            </tr>
-          </ng-container>
+          <tr *ngFor="let employee of employees; let i = index" class="transition-all hover:bg-gray-100 hover:shadow-lg">
+            <td class="text-center px-4 py-2 whitespace-nowrap">
+              <div class="rounded-full overflow-hidden border border-gray-300 h-8 w-8 mx-auto">
+                <img [src]="employee.photo" alt="Foto de {{ employee.name }}" class="h-full w-full object-cover" width="25" height="25">
+              </div>
+            </td>
+            <td class="text-center px-4 py-2 whitespace-nowrap">{{ employee.name }} {{ employee.surname }}</td>
+            <td class="text-center px-4 py-2 whitespace-nowrap">{{ employee.email }}</td>
+            <td class="text-center px-4 py-2 whitespace-nowrap">{{ employee.telephone }}</td>
+            <td class="text-center px-4 py-2 whitespace-nowrap">{{ employee.country }}</td>
+            <td class="text-center px-4 py-2 whitespace-nowrap">
+              <button (click)="openEmployeeModal(employee)">
+                <i class='bx bxs-show text-xl mr-2'></i>
+              </button>
+              <a [routerLink]="['/employees/edit_employee', employee.id]">
+                <i class='bx bx-edit text-xl text-black mr-2'></i>
+              </a>
+              <button (click)="confirmDeleteEmployee(employee.id)">
+                <i class='bx bx-trash text-xl text-red-600'></i>
+              </button>
+            </td>
+          </tr>
         </tbody>
       </table>
+    </div>
   </div>
+
 <!-- Modal de Detalles del Empleado -->
-<div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4 sm:p-6" *ngIf="selectedEmployee">
-  <div class="bg-white rounded-xl shadow-lg p-4 sm:p-6 w-full max-w-md md:max-w-lg lg:max-w-2xl">
+<div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4 sm:p-6" *ngIf="selectedEmployee.length>0">
+  <div *ngFor="let employee of selectedEmployee; let i = index" class="bg-white rounded-xl shadow-lg p-4 sm:p-6 w-full max-w-md md:max-w-lg lg:max-w-2xl">
     <!-- Encabezado del modal-->
     <div class="flex items-center justify-center mb-4">
       <div class="flex-shrink-0 mr-4">
         <div class="rounded-full overflow-hidden bg-gray-200 p-1">
-          <img [src]="selectedEmployee.photo" alt="Foto de {{ selectedEmployee.name }}" class="h-16 w-16 object-cover rounded-full">
+          <img [src]="employee.photo" alt="Foto de {{ employee.name}}" class="h-16 w-16 object-cover rounded-full">
         </div>
       </div>
-      <h2 class="text-xl sm:text-2xl font-bold text-black">{{ selectedEmployee.name }} {{ selectedEmployee.surname }}</h2>
+      <h2 class="text-xl sm:text-2xl font-bold text-black">{{ employee.name }} {{ employee.surname }}</h2>
     </div>
 
     <!-- Línea divisora-->
@@ -87,19 +87,19 @@
     <div class="mb-4 text-gray-700 grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div class="col-span-1">
         <p class="text-sm"><strong>NIF</strong></p>
-        <p class="text-gray-900">{{ selectedEmployee.users.nif }}</p>
+        <p class="text-gray-900">{{ employee.users?.nif }}</p>
       </div>
       <div class="col-span-1">
         <p class="text-sm"><strong>Fecha de Nacimiento</strong></p>
-        <p class="text-gray-900">{{ selectedEmployee.date_of_birth }}</p>
+        <p class="text-gray-900">{{ employee.date_of_birth }}</p>
       </div>
       <div class="col-span-1">
         <p class="text-sm"><strong>Género</strong></p>
-        <p class="text-gray-900">{{ selectedEmployee.gender === 'male' ? 'Masculino' : 'Femenino' }}</p>
+        <p class="text-gray-900">{{ employee.gender === 'male' ? 'Masculino' : 'Femenino' }}</p>
       </div>
       <div class="col-span-1">
         <p class="text-sm"><strong>Nacionalidad</strong></p>
-        <p class="text-gray-900">{{ selectedEmployee.country }}</p>
+        <p class="text-gray-900">{{ employee.country }}</p>
       </div>
     </div>
 
@@ -114,11 +114,11 @@
     <div class="mb-4 text-gray-700 grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div class="col-span-1">
         <p class="text-sm"><strong>Email</strong></p>
-        <p class="text-gray-900">{{ selectedEmployee.email }}</p>
+        <p class="text-gray-900">{{ employee.email }}</p>
       </div>
       <div class="col-span-1">
         <p class="text-sm"><strong>Teléfono</strong></p>
-        <p class="text-gray-900">{{ selectedEmployee.telephone }}</p>
+        <p class="text-gray-900">{{ employee.telephone }}</p>
       </div>
     </div>
 
@@ -133,22 +133,21 @@
     <div class="mb-4 text-gray-700 grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div class="col-span-1">
         <p class="text-sm"><strong>Dirección</strong></p>
-        <p class="text-gray-900">{{ selectedEmployee.addresses.street }}</p>
+        <p class="text-gray-900">{{ employee.addresses?.street }}</p>
       </div>
       <div class="col-span-1">
         <p class="text-sm"><strong>Ciudad</strong></p>
-        <p class="text-gray-900">{{ selectedEmployee.addresses?.city }}</p>
+        <p class="text-gray-900">{{ employee.addresses?.city }}</p>
       </div>
       <div class="col-span-1">
         <p class="text-sm"><strong>Código Postal</strong></p>
-        <p class="text-gray-900">{{ selectedEmployee.addresses?.postal_code.toString().length === 4 ? '0' + selectedEmployee.addresses?.postal_code : selectedEmployee.addresses?.postal_code }}</p>
+        <p class="text-gray-900">{{ employee.addresses?.postal_code?.toString()?.length === 4 ? '0' + employee.addresses?.postal_code : employee.addresses?.postal_code }}</p>
       </div>
       <div class="col-span-1">
         <p class="text-sm"><strong>País</strong></p>
-        <p class="text-gray-900">{{ selectedEmployee.country }}</p>
+        <p class="text-gray-900">{{ employee.country }}</p>
       </div>
     </div>
-
     <!-- Botón de Cerrar -->
     <button class="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-full w-full" (click)="closeEmployeeModal()">Cerrar</button>
   </div>
