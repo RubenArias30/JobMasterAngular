@@ -93,7 +93,7 @@ export class ApiService {
   getDocumentsByEmployeeId(employeeId: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/documents/${employeeId}`);
   }
-  getMyDocuments(): Observable<any[]> {
+  getMyDocuments(): Observable<Document[]> {
     return this.http.get<any[]>(`${this.apiUrl}/my-documents`);
   }
   // Método para subir un documento al servidor
