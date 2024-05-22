@@ -7,25 +7,46 @@ import { ApiService } from 'src/app/services/api/api.service';
   styleUrls: ['./attendances.component.css']
 })
 export class AttendancesComponent implements OnInit, OnDestroy {
+  // Properties to control the visibility of the timer and store its value
   showTimer: boolean = false;
   timer: string = '00:00:00';
+
+  // Properties related to start time and timer
   startTime: number | null = null;
   timerInterval: any;
+
+  // Current user name and entry status
   currentUser!: string;
   entryActive: boolean = false;
+
+  // Dates of the last recorded entry and exit
   lastEntryDate: Date | null = null;
   lastExitDate: Date | null = null;
 
   constructor(private apiService: ApiService) { }
+
+  /**
+   * Method executed when the component is initialized.
+   * Retrieves the current user's ID and last exit date.
+   */
 
   ngOnInit(): void {
     this.getCurrentUserId();
     this.fetchLastExitDate(); // Recuperar la última fecha de salida al inicializar el componente
   }
 
+  /**
+   * Method executed when the component is destroyed.
+   * Stops the timer interval.
+   */
   ngOnDestroy(): void {
     clearInterval(this.timerInterval);
   }
+
+  /**
+   * Method to get the ID of the current user.
+   * Retrieves the user name and start time, if any.
+   */
 
   getCurrentUserId(): void {
     this.apiService.getLoggedInUserName().subscribe(
@@ -39,6 +60,11 @@ export class AttendancesComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Method to retrieve the start time of the current day, if it exists.
+   * Update timer related properties.
+   */
+
   fetchStartTime(): void {
     const storedStartTime = localStorage.getItem(`startTime_${this.currentUser}`);
     if (storedStartTime) {
@@ -50,6 +76,10 @@ export class AttendancesComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Method to retrieve the last recorded departure date.
+   * Updates the lastExitDate property.
+   */
   fetchLastExitDate(): void {
     this.apiService.getLastExitDate().subscribe(
       (response: any) => {
@@ -65,6 +95,10 @@ export class AttendancesComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Method to update the timer of the active day.
+   * Updates the timer property every second.
+   */
   updateTimer(): void {
     this.timerInterval = setInterval(() => {
       if (this.startTime !== null) {
@@ -75,6 +109,11 @@ export class AttendancesComponent implements OnInit, OnDestroy {
     }, 1000);
   }
 
+  /**
+   * Method to format a given time in HH:MM:SS format.
+   * @param milliseconds Time in milliseconds to format.
+   * @returns Time formatted in HH:MM:SS format.
+   */
   formatTime(milliseconds: number): string {
     const totalSeconds = Math.floor(milliseconds / 1000);
     const hours = Math.floor(totalSeconds / 3600);
@@ -83,10 +122,19 @@ export class AttendancesComponent implements OnInit, OnDestroy {
     return `${this.padZero(hours)}:${this.padZero(minutes)}:${this.padZero(seconds)}`;
   }
 
+  /**
+   * Method to add a zero in front of a number if it is less than 10.
+   * @param num Number to format.
+   * @returns String formatted with leading zero if necessary.
+   */
   padZero(num: number): string {
     return num < 10 ? `0${num}` : `${num}`;
   }
 
+  /**
+   * Method to record an employee entry.
+   * Save the start time to localStorage and call the API service to log the input.
+   */
   registerEntry(): void {
     const storedStartTime = localStorage.getItem(`startTime_${this.currentUser}`);
     if (storedStartTime) {
@@ -110,25 +158,28 @@ export class AttendancesComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Method to record an employee departure.
+   * Stop timer, log output to API service
+   * and updates the last recorded departure date.
+   */
   registerExit(): void {
     this.showTimer = false;
     clearInterval(this.timerInterval);
-
-    // Llamar al servicio para registrar la salida en la base de datos
     this.apiService.registerExit().subscribe(
       (response: any) => {
         console.log('Salida registrada correctamente');
         if (response && response.exitDate) {
-          // Si la respuesta contiene la fecha de salida, actualiza lastExitDate
+         // If the response contains the exit date, update lastExitDate
           this.lastExitDate = new Date(response.exitDate);
         } else {
-          // Si la respuesta no contiene la fecha de salida, establece lastExitDate como la fecha actual
+          // If the response does not contain the exit date, set lastExitDate to the current date
           this.lastExitDate = new Date();
         }
 
-        // Actualizar el temporizador con el tiempo total recibido del servidor
-        this.timer = response.total_time; // Suponiendo que el servidor devuelve el tiempo total
-        this.entryActive = false; // Cambiar el estado de entrada a falso después de finalizar la jornada
+        // Update the timer with the total time received from the server
+        this.timer = response.total_time;
+        this.entryActive = false; // Change the input status to false after the end of the day
         localStorage.removeItem(`startTime_${this.currentUser}`);
       },
       error => {
@@ -137,6 +188,11 @@ export class AttendancesComponent implements OnInit, OnDestroy {
     );
   }
 
+    /**
+   * Método para formatear una fecha y hora en un formato deseado.
+   * @param dateTime Fecha y hora a formatear.
+   * @returns Fecha y hora formateadas en el formato deseado.
+   */
   formatDateTime(dateTime: Date): string {
     // Formatear la fecha y hora en el formato deseado
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
