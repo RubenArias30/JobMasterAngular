@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
 import { ApiService } from '../../../services/api/api.service';
 import { Router } from '@angular/router';
 
@@ -12,6 +12,7 @@ export class GenerateBudgetComponent implements OnInit {
   budgetForm: FormGroup;
   canRemoveConcept = false;
   showError: boolean = false;
+  showErrorInvalid: boolean = false;
 
   // Controles para calcular los valores en tiempo real
   subtotal = new FormControl(0);
@@ -36,10 +37,7 @@ export class GenerateBudgetComponent implements OnInit {
       company_street: ['', [Validators.required]],
       company_city: ['', [Validators.required, Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\' ]+$')]],
       company_postal_code: ['', [Validators.required, Validators.minLength(5), Validators.pattern('^[0-9]+$')]],
-      // street: ['', [Validators.required]],
-      // city: ['', [Validators.required, Validators.pattern('^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ ]+$')]],
-      // postal_code: ['', [Validators.required, Validators.minLength(5), Validators.pattern('^[0-9]+$')]],
-      concepts: this.fb.array([])
+      concepts: this.fb.array([], [Validators.required])
     });
   }
 
@@ -68,7 +66,7 @@ export class GenerateBudgetComponent implements OnInit {
       price: ['', Validators.required],
       quantity: ['', Validators.required],
       concept_discount: [''],
-      concept_iva: [''],
+      concept_iva: [21],
       concept_irpf: ['']
     });
     this.concepts.push(newConcept);
@@ -155,6 +153,11 @@ export class GenerateBudgetComponent implements OnInit {
 
   // Método para enviar el presupuesto al servidor
   addBudget(): void {
+
+    if (this.budgetForm.invalid) {
+      this.showErrorInvalid = true;
+      return;
+    }
     const formData = {
       ...this.budgetForm.value,
       subtotal: this.subtotal.value,
@@ -202,5 +205,4 @@ export class GenerateBudgetComponent implements OnInit {
       return null;
     };
   }
-
 }

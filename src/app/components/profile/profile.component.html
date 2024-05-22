@@ -1,13 +1,13 @@
 <div class="bg-white p-8 rounded-xl shadow-lg mx-auto my-8 flex items-start border border-green-400 max-w-4xl">
   <!-- Foto -->
   <div class="border-2 border-black rounded-full overflow-hidden mr-6">
-    <img [src]="profileData.photo" alt="Foto del empleado" class="w-32 h-32 rounded-full">
+    <img [src]="profileData?.photo" alt="Foto del empleado" class="w-32 h-32 rounded-full">
   </div>
 
   <!-- Detalles del perfil -->
   <div>
     <!-- Título -->
-    <h1 class="text-2xl font-bold mb-4">{{ profileData.name }} {{ profileData.surname }}</h1>
+    <h1 class="text-2xl font-bold mb-4">{{ profileData?.name }} {{ profileData?.surname }}</h1>
 
     <!-- Div redondeado con icono de usuario -->
     <div class="flex items-center mb-4">
@@ -20,23 +20,23 @@
       <div class="grid grid-cols-3 gap-4 mt-2">
         <div>
           <p class="font-bold text-sm text-gray-700">NOMBRE</p>
-          <p>{{ profileData.name }}</p>
+          <p>{{ profileData?.name }}</p>
         </div>
         <div>
           <p class="font-bold text-sm text-gray-700">APELLIDO</p>
-          <p>{{ profileData.surname }}</p>
+          <p>{{ profileData?.surname }}</p>
         </div>
         <div>
           <p class="font-bold text-sm text-gray-700">NIF</p>
-          <p>{{ profileData.users?.nif }}</p>
+          <p>{{ profileData?.users?.nif }}</p>
         </div>
         <div>
           <p class="font-bold text-sm text-gray-700">NACIONALIDAD</p>
-          <p>{{ profileData.country }}</p>
+          <p>{{ profileData?.country }}</p>
         </div>
         <div>
           <p class="font-bold text-sm text-gray-700">GÉNERO</p>
-          <p>{{ genderTranslations[profileData.gender] }}</p>
+          <p>{{ getGenderTranslation(profileData?.gender) }}</p>
         </div>
         <div></div> <!-- Placeholder para mantener la estructura de 3x3 -->
       </div>
@@ -50,16 +50,12 @@
       <div class="grid grid-cols-3 gap-4 mt-2">
         <div>
           <p class="font-bold text-sm text-gray-700">EMAIL</p>
-          <p>{{ profileData.email }}</p>
+          <p>{{ profileData?.email }}</p>
         </div>
         <div class="ml-6">
           <p class="font-bold text-sm text-gray-700">TELÉFONO</p>
-          <p>{{ profileData.telephone }}</p>
+          <p>{{ profileData?.telephone }}</p>
         </div>
-
-        <div></div> <!-- Placeholder para mantener la estructura de 3x3 -->
-        <div></div> <!-- Placeholder para mantener la estructura de 3x3 -->
-        <div></div> <!-- Placeholder para mantener la estructura de 3x3 -->
       </div>
     </div>
 
@@ -72,15 +68,15 @@
       <div class="grid grid-cols-3 gap-4 mt-2">
         <div>
           <p class="font-bold text-sm text-gray-700">CÓDIGO POSTAL</p>
-          <p>{{ profileData.addresses?.postal_code }}</p>
+          <p>{{ profileData?.addresses?.postal_code?.toString()?.length === 4 ? '0' + profileData?.addresses?.postal_code: profileData?.addresses?.postal_code }}</p>
         </div>
         <div>
           <p class="font-bold text-sm text-gray-700">CIUIDAD</p>
-          <p>{{ profileData.addresses?.city }}</p>
+          <p>{{ profileData?.addresses?.city }}</p>
         </div>
         <div>
           <p class="font-bold text-sm text-gray-700">CALLE</p>
-          <p>{{ profileData.addresses?.street }}</p>
+          <p>{{ profileData?.addresses?.street }}</p>
         </div>
       </div>
     </div>

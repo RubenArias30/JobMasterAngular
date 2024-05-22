@@ -41,8 +41,8 @@
                 class="text-red-500 mt-2">Por favor, introduce solo números para el telefono.</div>
             </div>
             <div
-            *ngIf="budgetForm.get('company_telephone')?.errors?.['invalidPhoneNumber'] && (budgetForm.get('company_telephone')?.dirty || budgetForm.get('company_telephone')?.touched)"
-            class="text-red-500 mt-2">Por favor, introduce un número de teléfono válido.</div>
+              *ngIf="budgetForm.get('company_telephone')?.errors?.['invalidPhoneNumber'] && (budgetForm.get('company_telephone')?.dirty || budgetForm.get('company_telephone')?.touched)"
+              class="text-red-500 mt-2">Por favor, introduce un número de teléfono válido.</div>
             <div>
               <label for="company_nif" class="block mb-1">NIF:</label>
               <input formControlName="company_nif" name="company_nif" id="company_nif" type="text" appNifValidator
@@ -64,16 +64,16 @@
             </div>
             <div>
               <label for="company_street" class="block mb-1">Dirección:</label>
-              <input formControlName="company_street" name="company_street" id="company_street" type="text" placeholder="calle maig 56"
-                class="border p-2 rounded-md w-full" maxlength="100">
+              <input formControlName="company_street" name="company_street" id="company_street" type="text"
+                placeholder="calle maig 56" class="border p-2 rounded-md w-full" maxlength="100">
               <div
                 *ngIf="budgetForm.get('company_street')?.errors?.['required'] && (budgetForm.get('company_street')?.dirty || budgetForm.get('company_street')?.touched)"
                 class="text-red-500 mt-2">Dirección es obligatoria.</div>
             </div>
             <div>
               <label for="company_city" class="block mb-1">Ciudad:</label>
-              <input formControlName="company_city" name="company_city" id="company_city" type="text" placeholder="Barcelona"
-                class="border p-2 rounded-md w-full" maxlength="100">
+              <input formControlName="company_city" name="company_city" id="company_city" type="text"
+                placeholder="Barcelona" class="border p-2 rounded-md w-full" maxlength="100">
               <div
                 *ngIf="budgetForm.get('company_city')?.errors?.['required'] && (budgetForm.get('company_city')?.dirty || budgetForm.get('company_city')?.touched)"
                 class="text-red-500 mt-2">Ciudad es obligatoria.</div>
@@ -83,12 +83,13 @@
             </div>
             <div>
               <label for="company_postal_code" class="block mb-1">Código Postal:</label>
-              <input formControlName="company_postal_code" name="company_postal_code" id="company_postal_code" type="text" placeholder="90876"
-                class="border p-2 rounded-md w-full" maxlength="5">
+              <input formControlName="company_postal_code" name="company_postal_code" id="company_postal_code"
+                type="text" placeholder="90876" class="border p-2 rounded-md w-full" maxlength="5">
               <div
                 *ngIf="budgetForm.get('company_postal_code')?.errors?.['required'] && (budgetForm.get('company_postal_code')?.dirty || budgetForm.get('company_postal_code')?.touched)"
                 class="text-red-500 mt-2">Código Postal es obligatorio.</div>
-                <div *ngIf="budgetForm.get('company_postal_code')?.errors?.['minlength'] && (budgetForm.get('company_postal_code')?.dirty || budgetForm.get('company_postal_code')?.touched)"
+              <div
+                *ngIf="budgetForm.get('company_postal_code')?.errors?.['minlength'] && (budgetForm.get('company_postal_code')?.dirty || budgetForm.get('company_postal_code')?.touched)"
                 class="text-red-500 mt-2">El código postal debe tener exactamente 5 caracteres.</div>
 
               <div
@@ -128,14 +129,14 @@
               <div
                 *ngIf="budgetForm.get('client_telephone')?.errors?.['pattern'] && (budgetForm.get('client_telephone')?.dirty || budgetForm.get('client_telephone')?.touched)"
                 class="text-red-500 mt-2">Por favor, introduce solo números para el telefono.</div>
-                <div
+              <div
                 *ngIf="budgetForm.get('client_telephone')?.errors?.['invalidPhoneNumber'] && (budgetForm.get('client_telephone')?.dirty || budgetForm.get('client_telephone')?.touched)"
                 class="text-red-500 mt-2">Por favor, introduce un número de teléfono válido.</div>
             </div>
             <div>
               <label for="client_nif" class="block mb-1">NIF:</label>
-              <input formControlName="client_nif" id="client_nif" name="client_nif" type="text" placeholder="32245678G" appNifValidator
-                class="border p-2 rounded-md w-full" maxlength="9">
+              <input formControlName="client_nif" id="client_nif" name="client_nif" type="text" placeholder="32245678G"
+                appNifValidator class="border p-2 rounded-md w-full" maxlength="9">
               <div
                 *ngIf="budgetForm?.get('client_nif')?.invalid && (budgetForm?.get('client_nif')?.dirty || budgetForm?.get('client_nif')?.touched)"
                 class="text-red-500 mt-2">Por favor, introduce un NIF válido.</div>
@@ -153,16 +154,16 @@
             </div>
             <div>
               <label for="client_street" class="block mb-1">Dirección:</label>
-              <input formControlName="client_street" id="client_street" name="client_street" type="text" placeholder="calle maig 56"
-                class="border p-2 rounded-md w-full" maxlength="150">
+              <input formControlName="client_street" id="client_street" name="client_street" type="text"
+                placeholder="calle maig 56" class="border p-2 rounded-md w-full" maxlength="150">
               <div
                 *ngIf="budgetForm.get('client_street')?.errors?.['required'] && (budgetForm.get('client_street')?.dirty || budgetForm.get('client_street')?.touched)"
                 class="text-red-500 mt-2">Dirección es obligatoria.</div>
             </div>
             <div>
               <label for="client_city" class="block mb-1">Ciudad:</label>
-              <input formControlName="client_city" id="client_city" name="client_city" type="text" placeholder="Barcelona"
-                class="border p-2 rounded-md w-full" maxlength="100">
+              <input formControlName="client_city" id="client_city" name="client_city" type="text"
+                placeholder="Barcelona" class="border p-2 rounded-md w-full" maxlength="100">
               <div
                 *ngIf="budgetForm.get('client_city')?.errors?.['required'] && (budgetForm.get('client_city')?.dirty || budgetForm.get('client_city')?.touched)"
                 class="text-red-500 mt-2">Ciudad es obligatoria.</div>
@@ -172,12 +173,13 @@
             </div>
             <div>
               <label for="client_postal_code" class="block mb-1">Codigo Postal:</label>
-              <input formControlName="client_postal_code" id="client_postal_code" name="client_postal_code" type="text" placeholder="90876"
-                class="border p-2 rounded-md w-full" maxlength="5">
+              <input formControlName="client_postal_code" id="client_postal_code" name="client_postal_code" type="text"
+                placeholder="90876" class="border p-2 rounded-md w-full" maxlength="5">
               <div
                 *ngIf="budgetForm.get('client_postal_code')?.errors?.['required'] && (budgetForm.get('client_postal_code')?.dirty || budgetForm.get('client_postal_code')?.touched)"
                 class="text-red-500 mt-2">Código Postal es obligatorio.</div>
-                <div *ngIf="budgetForm.get('client_postal_code')?.errors?.['minlength'] && (budgetForm.get('client_postal_code')?.dirty || budgetForm.get('client_postal_code')?.touched)"
+              <div
+                *ngIf="budgetForm.get('client_postal_code')?.errors?.['minlength'] && (budgetForm.get('client_postal_code')?.dirty || budgetForm.get('client_postal_code')?.touched)"
                 class="text-red-500 mt-2">El código postal debe tener exactamente 5 caracteres.</div>
               <div
                 *ngIf="budgetForm.get('client_postal_code')?.errors?.['pattern'] && (budgetForm.get('client_postal_code')?.dirty || budgetForm.get('client_postal_code')?.touched)"
@@ -208,31 +210,61 @@
                 <label for="concept" class="block mb-1">Concepto</label>
                 <input id="concept" formControlName="concept" name="concept" type="text" placeholder="Concepto"
                   class="border p-2 rounded-md w-full">
+                <div
+                  *ngIf="concept.get('concept')?.errors?.['required'] && (concept.get('concept')?.dirty || concept.get('concept')?.touched)"
+                  class="text-red-500">
+                  El concepto es requerido.
+                </div>
               </div>
               <div class="col-span-1">
                 <label for="price" class="block mb-1">Precio</label>
                 <input id="price" formControlName="price" type="number" placeholder="Precio"
-                  class="border p-2 rounded-md w-full">
+                  class="border p-2 rounded-md w-full" min="0" required>
+                  <div
+                  *ngIf="(concept.get('price')?.errors?.['required'] || concept.get('price')?.errors?.['min']) && (concept.get('price')?.dirty || concept.get('price')?.touched)"
+                  class="text-red-500">
+                  {{ concept.get('price')?.errors?.['required'] ? 'El precio es requerida.' : 'El precio debe ser un número positivo.' }}
+                </div>
               </div>
               <div class="col-span-1">
                 <label for="quantity" class="block mb-1">Cantidad</label>
                 <input id="quantity" formControlName="quantity" type="number" placeholder="Cantidad"
-                  class="border p-2 rounded-md w-full">
+                  class="border p-2 rounded-md w-full" min="0" required>
+                <div
+                *ngIf="(concept.get('quantity')?.errors?.['required'] || concept.get('quantity')?.errors?.['min']) && (concept.get('quantity')?.dirty || concept.get('quantity')?.touched)"
+                class="text-red-500">
+                {{ concept.get('quantity')?.errors?.['required'] ? 'La cantidad es requerida.' : 'La cantidad debe ser un número positivo.' }}
+              </div>
               </div>
               <div class="col-span-1">
                 <label for="concept_discount" class="block mb-1">Dto.%</label>
                 <input id="concept_discount" formControlName="concept_discount" type="number" placeholder="Dto.%"
-                  class="border p-2 rounded-md w-full">
+                  class="border p-2 rounded-md w-full" min="0" required>
+              <div
+               *ngIf="(concept.get('concept_discount')?.errors?.['required'] || concept.get('concept_discount')?.errors?.['min']) && (concept.get('concept_discount')?.dirty || concept.get('concept_discount')?.touched)"
+               class="text-red-500">
+               {{ concept.get('concept_discount')?.errors?.['required'] ? 'El descuento es requerido.' : 'El descuento debe ser un número positivo.' }}
+             </div>
               </div>
               <div class="col-span-1">
                 <label for="concept_iva" class="block mb-1">IVA%</label>
                 <input id="concept_iva" formControlName="concept_iva" type="number" placeholder="IVA%"
-                  class="border p-2 rounded-md w-full">
+                  class="border p-2 rounded-md w-full" min="0" required>
+                  <div
+                  *ngIf="(concept.get('concept_iva')?.errors?.['required'] || concept.get('concept_iva')?.errors?.['min']) && (concept.get('concept_iva')?.dirty || concept.get('concept_iva')?.touched)"
+                  class="text-red-500">
+                  {{ concept.get('concept_iva')?.errors?.['required'] ? 'El IVA es requerido.' : 'El IVA debe ser un número positivo.' }}
+                </div>
               </div>
               <div class="col-span-1">
                 <label for="concept_irpf" class="block mb-1">IRPF%</label>
                 <input id="concept_irpf" formControlName="concept_irpf" type="number" placeholder="IRPF%"
-                  class="border p-2 rounded-md w-full">
+                  class="border p-2 rounded-md w-full" min="0" required>
+                  <div
+                  *ngIf="(concept.get('concept_irpf')?.errors?.['required'] || concept.get('concept_irpf')?.errors?.['min']) && (concept.get('concept_irpf')?.dirty || concept.get('concept_irpf')?.touched)"
+                  class="text-red-500">
+                  {{ concept.get('concept_irpf')?.errors?.['required'] ? 'El IRPF es requerido.' : 'El IRPF debe ser un número positivo.' }}
+                </div>
               </div>
 
 
@@ -249,9 +281,9 @@
   </div>
 
 
-
   <div class="col-span-full p-8">
-    <button (click)="addConcept()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full">
+    <button (click)="addConcept()"
+      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full">
       + Añadir nuevo concepto
     </button>
   </div>
@@ -285,14 +317,19 @@
   </div>
 
   <!-- Mensaje de error -->
-<div *ngIf="showError" class="text-red-500 mt-2 text-center">
-  Por favor, completa todos los campos obligatorios.
-</div>
+  <div *ngIf="showError" class="text-red-500 mt-2 text-center">
+    Por favor, completa todos los campos obligatorios.
+  </div>
+
+  <div *ngIf="showErrorInvalid" class="text-red-500 mt-2 text-center">
+    Error al generar factura, verifica los datos
+  </div>
   <div class="flex justify-center mt-4">
     <button (click)="addBudget()"
       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-8 rounded-lg mr-4">Crear</button>
 
-    <button type="button" class="bg-gray-500 hover:bg-red-500 text-white font-bold px-6 py-3 rounded-lg " (click)="cancelEdit()">Cancelar</button>
+    <button type="button" class="bg-gray-500 hover:bg-red-500 text-white font-bold px-6 py-3 rounded-lg "
+      (click)="cancelEdit()">Cancelar</button>
   </div>
 
 </form>

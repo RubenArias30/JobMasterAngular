@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ApiService } from 'src/app/services/api/api.service';
 import { Router } from '@angular/router';
+import { Employee } from 'src/app/models/employee.model';
 
 @Component({
   selector: 'app-schedule',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./schedule.component.css']
 })
 export class ScheduleComponent {
-  employees: any[] = [];
+  employees: Employee[] = [];
   isLoading = true;
   isError = false;
   constructor(private apiService: ApiService, private router: Router) { }
@@ -18,7 +19,7 @@ export class ScheduleComponent {
   }
   getEmployees(): void {
   this.apiService.getEmployees().subscribe(
-    (response: any[]) => {
+    (response: Employee[]) => {
       this.employees = response;
       this.isLoading = false;
     },
