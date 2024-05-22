@@ -1,34 +1,48 @@
-<h2 class="text-2xl font-bold mb-4">Mis Documentos</h2>
+<div class="container mx-auto mt-8">
+  <div class="flex items-center justify-between mb-4 ml-5">
+    <div class="flex items-center">
+      <h1 class="text-lg font-bold mr-2 sm:text-xl md:text-2xl lg:text-3xl">Mis Documentos</h1>
+      <div class="border-l h-6 mr-2"></div>
+    </div>
+    <div class="relative mr-5"> <!-- Ajuste de margen a la izquierda -->
+      <select class="flex items-center bg-green-400 hover:bg-green-500 text-white px-2 py-1 rounded-lg" id="documentType" name="documentType" [(ngModel)]="selectedType" (ngModelChange)="filterDocumentsByType($event)">
+        <option value="" selected>Filtros</option>
+        <ng-container *ngFor="let type of documentTypes | keyvalue">
+          <option [value]="type.key">{{ type.value }}</option>
+        </ng-container>
+      </select>
+    </div>
+  </div>
 
-<div class="mb-6">
-  <label for="documentType" class="block text-sm font-medium text-gray-700">Filtrar por Tipo de Documento:</label>
-  <select id="documentType" name="documentType" [(ngModel)]="selectedType" (ngModelChange)="filterDocumentsByType($event)"
-    class="mt-1 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-auto">
-    <option value="">Todos</option>
-    <option *ngFor="let type of documentTypes | keyvalue" [value]="type.key">{{ type.value }}</option>
-  </select>
-</div>
-
-<div class="overflow-x-auto">
-  <table *ngIf="documents.length > 0" class="min-w-full bg-white shadow-md rounded-lg">
-    <thead class="bg-gray-200">
-      <tr>
-        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Tipo</th>
-        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Nombre</th>
-        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Descripción</th>
-        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Acción</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let document of documents" class="hover:bg-gray-100">
-        <td class="px-6 py-4 whitespace-nowrap">{{ translateDocumentType(document.type_documents) }}</td>
-        <td class="px-6 py-4 whitespace-nowrap">{{ document.name }}</td>
-        <td class="px-6 py-4 whitespace-nowrap">{{ document.description }}</td>
-        <td class="px-6 py-4 whitespace-nowrap">
-          <button (click)="downloadDocument(document.id, document.name)" class="text-indigo-600 hover:text-indigo-900">Descargar</button>
-        </td>
-              </tr>
-    </tbody>
-  </table>
-  <p *ngIf="documents.length === 0" class="text-gray-700 text-lg mt-4">No hay documentos disponibles.</p>
+  <div class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto border border-green-400">
+    <table class="w-full divide-y divide-gray-200">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">Tipo</th>
+          <th class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">Nombre</th>
+          <th class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">Descripción</th>
+          <th class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">Acción</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        <ng-container *ngIf="documents.length > 0; else noDocuments">
+          <tr *ngFor="let document of documents">
+            <td class="text-center px-4 py-2 ">{{ translateDocumentType(document.type_documents) }}</td>
+            <td class="text-center px-4 py-2">{{ document.name }}</td>
+            <td class="text-center px-4 py-2">{{ document.description }}</td>
+            <td class="text-center px-4 py-2">
+              <button (click)="downloadDocument(document.id, document.name)" class="text-black">
+                <i class='bx bxs-file-pdf text-xl'></i>
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+        <ng-template #noDocuments>
+          <tr>
+            <td colspan="4" class="text-center py-4 text-gray-800">No hay documentos disponibles para este empleado.</td>
+          </tr>
+        </ng-template>
+      </tbody>
+    </table>
+  </div>
 </div>

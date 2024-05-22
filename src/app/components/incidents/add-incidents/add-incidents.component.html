@@ -31,7 +31,7 @@
         <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
           Descripción
         </label>
-        <textarea formControlName="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" placeholder="Descripción de la incidencia"></textarea>
+        <textarea formControlName="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" placeholder="Descripción de la incidencia" maxlength="300"></textarea>
         <div *ngIf="incidentForm.get('description')?.invalid && (incidentForm.get('description')?.touched || incidentForm.get('description')?.value)" class="text-red-500 text-sm mt-1">Descripción es requerida</div>
       </div>
       <div class="flex justify-start">

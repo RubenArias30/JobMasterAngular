@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Employee } from 'src/app/models/employee.model';
 import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { ApiService } from 'src/app/services/api/api.service';
   styleUrls: ['./documents.component.css']
 })
 export class DocumentsComponent implements OnInit {
-  employees: any[] = [];
+  employees: Employee[] = [];
   isLoading = true;
   isError = false;
 
@@ -20,7 +21,7 @@ export class DocumentsComponent implements OnInit {
 
   getEmployees(): void {
     this.apiService.getEmployees().subscribe(
-      (response: any[]) => {
+      (response: Employee[]) => {
         this.employees = response;
         this.isLoading = false;
       },

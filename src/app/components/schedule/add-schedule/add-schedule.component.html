@@ -76,7 +76,11 @@
             <button type="submit" [disabled]="!isFormValid"
               class="bg-green-500 hover:bg-green-700 font-bold text-white py-2 px-4 rounded"
               [ngClass]="{'opacity-50 cursor-not-allowed': !isFormValid}">Agregar</button>
+            <div class="mx-2"></div><!-- División de separación -->
+            <button class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" (click)="goBack()">Volver</button>
           </div>
+
+
           <div *ngIf="showErrorField" class="text-red-500 mt-2 text-center">
             Por favor, completa todos los campos obligatorios.
           </div>
@@ -177,9 +181,5 @@
 </div>
 
 
-  <!-- Botón de volver atrás -->
-  <div class="flex justify-center mt-4">
-    <button class="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded" (click)="goBack()">Volver
-      atrás</button>
-  </div>
+
 </div>
