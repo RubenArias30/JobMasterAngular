@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Address } from 'src/app/models/adress.model';
+import { Employee } from 'src/app/models/employee.model';
+import { User } from 'src/app/models/user.model';
 import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
@@ -59,21 +62,50 @@ export class AddEmployeeComponent {
     formData.append('photo', this.file);
 
     const employeeData = this.employeeForm.value;
-    formData.append('name', employeeData.name);
-    formData.append('surname', employeeData.surname);
-    formData.append('date_of_birth', employeeData.date_of_birth);
-    formData.append('country', employeeData.country);
-    formData.append('gender', employeeData.gender);
-    formData.append('email', employeeData.email);
-    formData.append('telephone', employeeData.telephone);
-    formData.append('street', employeeData.street);
-    formData.append('city', employeeData.city);
-    formData.append('postal_code', employeeData.postal_code);
-    formData.append('nif', employeeData.nif);
-    formData.append('password', employeeData.password);
+
+  // Crear el objeto Employee
+  const employee = new Employee(
+    0,
+    employeeData.name,
+    employeeData.surname,
+    employeeData.email,
+    employeeData.telephone,
+    employeeData.country,
+    employeeData.gender,
+    employeeData.date_of_birth,
+    '',
+    new User (
+      0,
+      employeeData.nif,
+      employeeData.password,
+      'empleado'
+
+    ),
+   new Address(
+    0,
+    employeeData.street,
+    employeeData.city,
+    employeeData.postal_code
+   )
+  );
+
+    formData.append('name', employee.name);
+    formData.append('surname', employee.surname);
+    formData.append('date_of_birth', employee.date_of_birth);
+    formData.append('country', employee.country);
+    formData.append('gender', employee.gender);
+    formData.append('email', employee.email);
+    formData.append('telephone', employee.telephone);
+    formData.append('street', employee.addresses?.street || '');
+    formData.append('city', employee.addresses?.city || '');
+    formData.append('postal_code', (employee.addresses && employee.addresses.postal_code)?.toString() || '');
+    formData.append('nif', employee.users?.nif || '');
+    formData.append('password', employee.users?.password || '');
 
     // Verificar si el NIF ya existe
-    this.apiService.checkNifExists(employeeData.nif).subscribe(
+    if (employee.users && employee.users.nif) {
+      this.apiService.checkNifExists(employee.users.nif).subscribe(
+
       (exists) => {
         if (exists) {
           this.errorMessageNif = 'El NIF ya existe. Por favor, ingresa un NIF diferente.';
@@ -109,6 +141,7 @@ export class AddEmployeeComponent {
       this.errorMessageNif = '';
     });
   }
+}
 
 
 
