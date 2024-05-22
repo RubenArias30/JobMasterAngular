@@ -1,21 +1,28 @@
 <div class="container mx-auto mt-8">
   <div class="bg-white p-8 rounded-lg shadow-md max-w-md mx-auto">
     <h2 class="text-3xl font-semibold mb-4 text-center">Registro de Fichaje</h2>
-    <hr class="my-4">
-    <div class="flex justify-center mb-6">
-      <button *ngIf="!entryActive" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mr-2 transition duration-300 ease-in-out transform hover:scale-105" (click)="registerEntry()">Registrar Entrada</button>
-      <button *ngIf="entryActive" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-105" (click)="registerExit()">Finalizar Jornada</button>
+    <hr class="my-4 border-black">
+    
+    <div class="flex items-center mb-8">
+      <div class="bg-custom-800 rounded-lg p-6 flex-grow">
+        <h3 class="text-xl font-semibold mb-4 text-center">Registro de Tiempo</h3>
+        <hr class="my-4 border-black">
+        <div *ngIf="showTimer" class="text-center mb-6">
+          <p class="text-lg font-semibold mb-2">Estado:</p>
+          <p class="text-xl font-semibold mb-2">{{ entryActive ? 'Jornada en curso' : 'Jornada no iniciada' }}</p>
+          <p class="text-lg font-semibold mb-2">Tiempo registrado:</p>
+          <p class="text-3xl font-bold">{{ timer }}</p>
+          <p class="text-sm">{{ entryActive ? 'Hora de inicio: ' + (lastEntryDate ? formatDateTime(lastEntryDate) : 'N/A') : 'Inicio de jornada: ' + (lastEntryDate ? formatDateTime(lastEntryDate) : 'N/A') }}</p>
+        </div>
+        <div *ngIf="!entryActive && lastExitDate" class="text-center">
+          <p class="text-lg font-semibold mb-2">Jornada finalizada:</p>
+          <p class="text-sm">{{ 'Hora de finalización: ' + (lastExitDate ? formatDateTime(lastExitDate) : 'N/A') }}</p>
+        </div>
+      </div>
     </div>
-    <div *ngIf="showTimer" class="text-center mb-6">
-      <p class="text-lg font-semibold mb-2">Estado:</p>
-      <p class="text-xl font-semibold mb-2">{{ entryActive ? 'Jornada en curso' : 'Jornada no iniciada' }}</p>
-      <p class="text-lg font-semibold mb-2">Tiempo registrado:</p>
-      <p class="text-3xl font-bold">{{ timer }}</p>
-      <p class="text-sm">{{ entryActive ? 'Hora de inicio: ' + (lastEntryDate ? formatDateTime(lastEntryDate) : 'N/A') : 'Inicio de jornada: ' + (lastEntryDate ? formatDateTime(lastEntryDate) : 'N/A') }}</p>
-    </div>
-    <div *ngIf="!entryActive && lastExitDate" class="text-center">
-      <p class="text-lg font-semibold mb-2">Jornada finalizada:</p>
-      <p class="text-sm">{{ 'Hora de finalización: ' + (lastExitDate ? formatDateTime(lastExitDate) : 'N/A') }}</p>
+    <div class="text-center">
+      <button *ngIf="!entryActive" class="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded mt-4 transition duration-300 ease-in-out transform hover:scale-105" (click)="registerEntry()">Registrar Entrada</button>
+      <button *ngIf="entryActive" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded mt-4 transition duration-300 ease-in-out transform hover:scale-105" (click)="registerExit()">Finalizar Jornada</button>
     </div>
   </div>
 </div>
