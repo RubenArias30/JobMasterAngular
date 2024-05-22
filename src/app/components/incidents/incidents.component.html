@@ -46,12 +46,28 @@
       </div>
     </div>
   </div> -->
-  <div class="flex items-center lg:flex-row lg:justify-between mb-4 px-2 w-full">
-    <h2 class="text-xl font-bold mb-4 lg:mb-0">Incidencias</h2>
-    <div class="relative ml-auto">
-      <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-4 py-2 rounded-lg" (click)="toggleDropdown()">
-        <span><i class='bx bx-filter text-xl'></i> Filtros</span>
-      </button>
+
+ <!-- Filter Button and Incidencias Heading -->
+<div class="flex flex-wrap items-center justify-between mb-4 px-2 w-full space-y-4 lg:space-y-0">
+  <h2 class="text-lg md:text-xl font-bold">Incidencias</h2>
+
+  <form class="relative flex-grow md:flex-grow-0 md:w-auto md:ml-4 w-full" (submit)="searchIncidences($event)">
+    <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar</label>
+    <div class="relative">
+      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+        <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+        </svg>
+      </div>
+      <input [(ngModel)]="searchQuery" name="searchQuery" type="search" id="default-search" class="block w-full pl-10 pr-24 py-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar por nombre" required />
+      <button type="submit" class="absolute right-0 top-0 h-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-r-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+    </div>
+  </form>
+
+  <div class="relative ml-auto w-full md:w-auto">
+    <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-4 py-2 rounded-lg w-full md:w-auto" (click)="toggleDropdown()">
+      <span><i class='bx bx-filter text-xl'></i> Filtros</span>
+    </button>
       <div *ngIf="showDropdown" class="absolute right-0 mt-1 bg-white border border-gray-300 rounded-lg py-2 px-4 w-64 z-10">
         <div class="mb-2">
           <label class="block text-gray-700 font-bold mb-1">Estado</label>
@@ -131,9 +147,9 @@
                   </label>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <button (click)="confirmDelete(incident.id)">
-                    <i class='bx bx-trash text-xl text-red-600'></i>
-                  </button>
+                  <button (click)="openDeleteModal(incident.id)" class="inline-flex items-center text-sm font-medium text-red-500 hover:text-red-700 p-1.5 text-center rounded-lg focus:outline-none">
+            <i class='bx bx-trash text-xl text-red-600'></i>
+          </button>
                 </td>
               </tr>
             </ng-container>
@@ -151,3 +167,13 @@
 
   <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 </div>
+<!-- Delete Confirmation Modal -->
+<app-delete-confirmation-modal
+  [showConfirmationModal]="showConfirmationModal"
+  (closeModalEvent)="closeDeleteModal()"
+  (confirmDelete)="confirmDeletion()"
+></app-delete-confirmation-modal>
+
+
+<!-- Add this inside your main component template -->
+<app-success-alert *ngIf="showSuccessAlert" [message]="successMessage"></app-success-alert>
