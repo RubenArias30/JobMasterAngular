@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Incident } from 'src/app/models/incident.model';
 import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { ApiService } from 'src/app/services/api/api.service';
   styleUrls: ['./incidents.component.css']
 })
 export class IncidentsComponent implements OnInit {
-  incidences: any[] = [];
+  incidences: Incident[] = [];
   p: number = 1;
   originalIncidences: any[] = [];
   selectedStatus: string = '';
@@ -45,20 +46,12 @@ export class IncidentsComponent implements OnInit {
     this.getIncidents();
   }
 
-  // getIncidents(): void {
-  //   this.apiService.getAllIncidents()
-  //   .subscribe((data: any[]) => {
-  //       this.incidences = data;
-  //       this.originalIncidences = data.slice();
-  //       this.countIncidentStatus();
-  //     });
-  // }
   getIncidents(): void {
     this.apiService.getAllIncidents()
       .subscribe(
-        (data: any[]) => {
-          this.incidences = data;
-          this.originalIncidences = data.slice();
+        (response: Incident[]) => {
+          this.incidences = response;
+          this.originalIncidences = response.slice();
           this.countIncidentStatus();
           this.isLoading = false;
         },
