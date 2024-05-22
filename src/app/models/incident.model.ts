@@ -1,20 +1,20 @@
-export interface Incident {
+import { Employee } from "./employee.model";
+
+export class Incident {
   id: number;
   incident_type: string;
   description: string;
-  date: string;
-  employee: Employee;
+  date: Date;
+  status: 'completed' | 'pending';
+  employee?: Employee;
+
+  constructor(id:number,incident_type:string,description:string,date:Date, status: 'completed' | 'pending' ,employee?: Employee){
+    this.id = id;
+    this.incident_type = incident_type;
+    this.description = description;
+    this.date = date;
+    this.status = status;
+    this.employee = employee;
+  }
 }
 
-// employee.model.ts
-export interface Employee {
-  id: number;
-  name: string;
-  surname: string;
-  email: string;
-  date_of_birth: string;
-  gender: 'male' | 'female';
-  telephone: string;
-  country: string;
-  photo?: string;
-}

@@ -1,3 +1,5 @@
+import { Employee } from "./employee.model";
+
 export class Document {
   id: number;
   type_documents: string;
@@ -5,14 +7,9 @@ export class Document {
   description: string;
   date: Date;
   route: string;
+  employee?: Employee;
 
-  constructor(
-    id: number,
-    type_documents: string,
-    name: string,
-    description: string,
-    date: Date,
-    route: string
+  constructor(id: number,type_documents: string,name: string,description: string,date: Date,route: string,employee?: Employee
   ) {
     this.id = id;
     this.type_documents = type_documents;
@@ -20,5 +17,6 @@ export class Document {
     this.description = description;
     this.date = date;
     this.route = route;
+    this.employee = employee;
   }
 }
