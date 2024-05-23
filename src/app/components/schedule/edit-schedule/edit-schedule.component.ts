@@ -16,12 +16,12 @@ export class EditScheduleComponent implements OnInit {
   @ViewChild('fullcalendar') fullcalendar: any;
   @Input() eventDetails: any;
 
-  showModal: boolean = false; // Variable para controlar la visibilidad del modal
-  selectedEvent: any; // Variable para almacenar el evento seleccionado
-  // Lista de eventos
+  showModal: boolean = false;
+  selectedEvent: any;
+  // List of events
   events: EventInput[] = [];
 
-  // Propiedades para el formulario y la gestión de eventos
+// Properties for the form and event management
   employeeId: number = 0;
   title: string = '';
   fechaInicio: string = '';
@@ -33,7 +33,11 @@ export class EditScheduleComponent implements OnInit {
   showError: boolean = false;
   showErrorField: boolean = false;
 
-
+  /**
+   * Custom event content renderer
+   * @param arg - Event content arguments
+   * @returns Custom HTML content
+   */
   customEventContent = (arg: any) => {
     const startTime = arg.event.start ? this.formatTime(arg.event.start) : '';
     const endTime = arg.event.end ? this.formatTime(arg.event.end) : '';

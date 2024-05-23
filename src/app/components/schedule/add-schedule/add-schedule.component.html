@@ -77,7 +77,8 @@
               class="bg-green-500 hover:bg-green-700 font-bold text-white py-2 px-4 rounded"
               [ngClass]="{'opacity-50 cursor-not-allowed': !isFormValid}">Agregar</button>
             <div class="mx-2"></div><!-- División de separación -->
-            <button class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" (click)="goBack()">Volver</button>
+            <button class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+              (click)="goBack()">Volver</button>
           </div>
 
 
@@ -90,96 +91,107 @@
     </div>
   </div>
 
-<!-- Main modal Editar -->
-<div id="crud-modal" *ngIf="showModal" tabindex="-1" aria-hidden="true" class="fixed inset-0 flex items-center justify-center z-50">
-  <div class="absolute inset-0 bg-black opacity-50"></div>
-  <div class="relative p-4 w-full max-w-2xl">
-    <!-- Modal content-->
-    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-      <!-- Modal header-->
-      <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-          Detalles del Horario
-        </h3>
-      </div>
-      <!-- Modal body Edit-->
-      <form [formGroup]="formEdit">
-        <div class="p-4 md:p-5">
-          <div class="mb-4">
-            <label for="title" class="block text-sm font-bold mb-1">Título:</label>
-            <input type="text"
-              class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
-              formControlName="title" required>
-            <!-- Message error -->
-            <div *ngIf="formEdit.get('title')?.invalid && (formEdit.get('title')?.dirty || formEdit.get('title')?.touched)"
-              class="text-red-500 mt-1">Título es requerido.</div>
-          </div>
-
-          <div class="mb-4">
-            <label for="startDate" class="block text-sm font-bold mb-1">Fecha de entrada:</label>
-            <input type="date"
-              class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
-              formControlName="fechaInicio" required (blur)="checkDateRangeEdit()">
-            <!-- Message error -->
-            <div *ngIf="formEdit.get('fechaInicio')?.invalid && (formEdit.get('fechaInicio')?.dirty || formEdit.get('fechaInicio')?.touched)"
-              class="text-red-500 mt-1">Fecha de entrada es requerida.</div>
-            <div *ngIf="showDateRangeErrorEdit" class="text-red-500 mt-1">La fecha de entrada debe ser anterior a la fecha de salida.</div>
-          </div>
-
-          <div class="mb-4">
-            <label for="endDate" class="block text-sm font-bold mb-1">Fecha de salida:</label>
-            <input type="date"
-              class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
-              formControlName="fechaFin" required (blur)="checkDateRangeEdit()">
-            <!-- Message error -->
-            <div *ngIf="formEdit.get('fechaFin')?.invalid && (formEdit.get('fechaFin')?.dirty || formEdit.get('fechaFin')?.touched)"
-              class="text-red-500 mt-1">Fecha de salida es requerida.</div>
-            <div *ngIf="showDateRangeErrorEdit" class="text-red-500 mt-1">La fecha de salida debe ser posterior a la fecha de entrada.</div>
-          </div>
-
-          <div class="mb-4">
-            <label for="startTime" class="block text-sm font-bold mb-1">Hora de entrada:</label>
-            <input type="time"
-              class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
-              formControlName="horaInicio" required (blur)="checkTimeRangeEdit()">
-            <!-- Message error -->
-            <div *ngIf="showTimeRangeErrorEdit" class="text-red-500 mt-1">La hora de entrada debe ser anterior a la hora de salida.</div>
-            <div *ngIf="formEdit.get('horaInicio')?.invalid && (formEdit.get('horaInicio')?.dirty || formEdit.get('horaInicio')?.touched)"
-              class="text-red-500 mt-1">Hora de entrada es requerida.</div>
-          </div>
-
-          <div class="mb-4">
-            <label for="endTime" class="block text-sm font-bold mb-1">Hora de salida:</label>
-            <input type="time"
-              class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
-              formControlName="horaFin" required (blur)="checkTimeRangeEdit()">
-            <!-- Message error -->
-            <div *ngIf="formEdit.get('horaFin')?.invalid && (formEdit.get('horaFin')?.dirty || formEdit.get('horaFin')?.touched)"
-              class="text-red-500 mt-1">Hora de salida es requerida.</div>
-            <div *ngIf="showTimeRangeErrorEdit" class="text-red-500 mt-1">La hora de salida debe ser posterior a la hora de entrada.</div>
-            <div *ngIf="showEqualTimeErrorEdit" class="text-red-500 mt-1">La hora de entrada y salida no pueden ser iguales.</div>
-          </div>
-
-          <div class="flex justify-center space-x-4 mt-4">
-            <button (click)="editarHorario()" class="flex items-center bg-green-400 hover:bg-green-500 text-white px-4 py-2 rounded-lg text-lg">
-              <i class='bx bx-edit'></i>
-              <span class="ml-2">Editar</span>
-            </button>
-            <button class="flex items-center bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg text-lg" (click)="deleteEvent(selectedEvent.id)">
-              <i class='bx bx-trash'></i>
-              <span class="ml-2">Eliminar</span>
-            </button>
-            <button class="flex items-center bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg text-lg" (click)="closeModal()">
-              <i class='bx bx-x'></i>
-              <span class="ml-2">Cancelar</span>
-            </button>
-          </div>
+  <!-- Main modal Edit -->
+  <div id="crud-modal" *ngIf="showModal" tabindex="-1" aria-hidden="true"
+    class="fixed inset-0 flex items-center justify-center z-50">
+    <div class="absolute inset-0 bg-black opacity-50"></div>
+    <div class="relative p-4 w-full max-w-2xl">
+      <!-- Modal content-->
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <!-- Modal header-->
+        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+            Detalles del Horario
+          </h3>
         </div>
-      </form>
+        <!-- Modal body Edit-->
+        <form [formGroup]="formEdit">
+          <div class="p-4 md:p-5">
+            <div class="mb-4">
+              <label for="title" class="block text-sm font-bold mb-1">Título:</label>
+              <input type="text"
+                class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
+                formControlName="title" required>
+              <!-- Message error -->
+              <div
+                *ngIf="formEdit.get('title')?.invalid && (formEdit.get('title')?.dirty || formEdit.get('title')?.touched)"
+                class="text-red-500 mt-1">Título es requerido.</div>
+            </div>
+
+            <div class="mb-4">
+              <label for="startDate" class="block text-sm font-bold mb-1">Fecha de entrada:</label>
+              <input type="date"
+                class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
+                formControlName="fechaInicio" required (blur)="checkDateRangeEdit()">
+              <!-- Message error -->
+              <div
+                *ngIf="formEdit.get('fechaInicio')?.invalid && (formEdit.get('fechaInicio')?.dirty || formEdit.get('fechaInicio')?.touched)"
+                class="text-red-500 mt-1">Fecha de entrada es requerida.</div>
+              <div *ngIf="showDateRangeErrorEdit" class="text-red-500 mt-1">La fecha de entrada debe ser anterior a la
+                fecha de salida.</div>
+            </div>
+
+            <div class="mb-4">
+              <label for="endDate" class="block text-sm font-bold mb-1">Fecha de salida:</label>
+              <input type="date"
+                class="form-input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
+                formControlName="fechaFin" required (blur)="checkDateRangeEdit()">
+              <!-- Message error -->
+              <div
+                *ngIf="formEdit.get('fechaFin')?.invalid && (formEdit.get('fechaFin')?.dirty || formEdit.get('fechaFin')?.touched)"
+                class="text-red-500 mt-1">Fecha de salida es requerida.</div>
+              <div *ngIf="showDateRangeErrorEdit" class="text-red-500 mt-1">La fecha de salida debe ser posterior a la
+                fecha de entrada.</div>
+            </div>
+
+            <div class="mb-4">
+              <label for="startTime" class="block text-sm font-bold mb-1">Hora de entrada:</label>
+              <input type="time"
+                class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
+                formControlName="horaInicio" required (blur)="checkTimeRangeEdit()">
+              <!-- Message error -->
+              <div *ngIf="showTimeRangeErrorEdit" class="text-red-500 mt-1">La hora de entrada debe ser anterior a la
+                hora de salida.</div>
+              <div
+                *ngIf="formEdit.get('horaInicio')?.invalid && (formEdit.get('horaInicio')?.dirty || formEdit.get('horaInicio')?.touched)"
+                class="text-red-500 mt-1">Hora de entrada es requerida.</div>
+            </div>
+
+            <div class="mb-4">
+              <label for="endTime" class="block text-sm font-bold mb-1">Hora de salida:</label>
+              <input type="time"
+                class="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
+                formControlName="horaFin" required (blur)="checkTimeRangeEdit()">
+              <!-- Message error -->
+              <div
+                *ngIf="formEdit.get('horaFin')?.invalid && (formEdit.get('horaFin')?.dirty || formEdit.get('horaFin')?.touched)"
+                class="text-red-500 mt-1">Hora de salida es requerida.</div>
+              <div *ngIf="showTimeRangeErrorEdit" class="text-red-500 mt-1">La hora de salida debe ser posterior a la
+                hora de entrada.</div>
+              <div *ngIf="showEqualTimeErrorEdit" class="text-red-500 mt-1">La hora de entrada y salida no pueden ser
+                iguales.</div>
+            </div>
+
+            <div class="flex justify-center space-x-4 mt-4">
+              <button (click)="editarHorario()"
+                class="flex items-center bg-green-400 hover:bg-green-500 text-white px-4 py-2 rounded-lg text-lg">
+                <i class='bx bx-edit'></i>
+                <span class="ml-2">Editar</span>
+              </button>
+              <button class="flex items-center bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg text-lg"
+                (click)="deleteEvent(selectedEvent.id)">
+                <i class='bx bx-trash'></i>
+                <span class="ml-2">Eliminar</span>
+              </button>
+              <button class="flex items-center bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg text-lg"
+                (click)="closeModal()">
+                <i class='bx bx-x'></i>
+                <span class="ml-2">Cancelar</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-</div>
-
-
-
 </div>
