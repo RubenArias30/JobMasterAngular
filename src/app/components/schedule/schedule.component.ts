@@ -17,18 +17,21 @@ export class ScheduleComponent {
   ngOnInit(): void {
     this.getEmployees();
   }
-  getEmployees(): void {
-  this.apiService.getEmployees().subscribe(
-    (response: Employee[]) => {
-      this.employees = response;
-      this.isLoading = false;
-    },
-    (error) => {
-      console.error('Error al obtener la lista de empleados:', error);
-      this.isError = true; // Set error flag to true
-      this.isLoading = false;
-    }
-  );
-}
 
+    /**
+   * Fetches the list of employees.
+   */
+  getEmployees(): void {
+    this.apiService.getEmployees().subscribe(
+      (response: Employee[]) => {
+        this.employees = response;
+        this.isLoading = false;
+      },
+      (error) => {
+        console.error('Error al obtener la lista de empleados:', error);
+        this.isError = true; // Set error flag to true
+        this.isLoading = false;
+      }
+    );
+  }
 }

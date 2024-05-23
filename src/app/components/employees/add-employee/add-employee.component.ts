@@ -20,8 +20,14 @@ export class AddEmployeeComponent {
   file: any;
 
 
+   /**
+   * Constructor of the component.
+   * @param apiService - API service to interact with the backend.
+   * @param router - Routing service for navigation.
+   * @param fb - Form builder to create instances of FormGroup.
+   */
   constructor(private apiService: ApiService, private router: Router, private fb: FormBuilder) {
-    // Inicializa el formulario y define las reglas de validación
+    // Initialize the form and define validation rules
     this.employeeForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
       surname: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
@@ -38,20 +44,24 @@ export class AddEmployeeComponent {
       password: ['', [Validators.required, this.passwordValidator]]
     });
 
-    // Suscribirse a los cambios en el campo de NIF
+    // Subscribe to changes in the NIF field
     this.employeeForm.get('nif')?.valueChanges.subscribe(() => {
-      // Al cambiar el valor del campo de NIF, ocultar el mensaje de error
-      this.errorMessage = '';
+      this.errorMessage = ''; // Hide error message when NIF changes
     });
   }
 
+  /**
+   * Function to handle image upload.
+   * @param event - File upload event.
+   */
   imageUpload(event: any) {
     //console.log(event)
     this.file = event.target.files[0];
   }
 
-
-
+  /**
+   * Function to add a new employee.
+   */
   addEmployee(): void {
     if (this.employeeForm.invalid) {
       this.showError = true;
@@ -63,32 +73,33 @@ export class AddEmployeeComponent {
 
     const employeeData = this.employeeForm.value;
 
-  // Crear el objeto Employee
-  const employee = new Employee(
-    0,
-    employeeData.name,
-    employeeData.surname,
-    employeeData.email,
-    employeeData.telephone,
-    employeeData.country,
-    employeeData.gender,
-    employeeData.date_of_birth,
-    '',
-    new User (
+   // Create Employee object
+    const employee = new Employee(
       0,
-      employeeData.nif,
-      employeeData.password,
-      'empleado'
+      employeeData.name,
+      employeeData.surname,
+      employeeData.email,
+      employeeData.telephone,
+      employeeData.country,
+      employeeData.gender,
+      employeeData.date_of_birth,
+      '',
+      new User(
+        0,
+        employeeData.nif,
+        employeeData.password,
+        'empleado'
 
-    ),
-   new Address(
-    0,
-    employeeData.street,
-    employeeData.city,
-    employeeData.postal_code
-   )
-  );
+      ),
+      new Address(
+        0,
+        employeeData.street,
+        employeeData.city,
+        employeeData.postal_code
+      )
+    );
 
+     // Append employee data to form data
     formData.append('name', employee.name);
     formData.append('surname', employee.surname);
     formData.append('date_of_birth', employee.date_of_birth);
@@ -102,58 +113,48 @@ export class AddEmployeeComponent {
     formData.append('nif', employee.users?.nif || '');
     formData.append('password', employee.users?.password || '');
 
-    // Verificar si el NIF ya existe
+    // Check if NIF already exists
     if (employee.users && employee.users.nif) {
       this.apiService.checkNifExists(employee.users.nif).subscribe(
-
-      (exists) => {
-        if (exists) {
-          this.errorMessageNif = 'El NIF ya existe. Por favor, ingresa un NIF diferente.';
-          this.showError = true;
-        } else {
-          // El NIF no existe, agregar el empleado
-          this.apiService.addEmployees(formData).subscribe(
-            (response) => {
-              this.router.navigate(['/employees']);
-            },
-            (error) => {
-              console.error('Error al agregar el empleado:', error);
-              if (error.status === 500) {
-                this.errorMessage = 'Error 500 - Error interno del servidor';
-              } else {
-                this.errorMessage = 'Se produjo un error al agregar el empleado. Por favor, inténtelo de nuevo más tarde.';
+        (exists) => {
+          if (exists) {
+            this.errorMessageNif = 'El NIF ya existe. Por favor, ingresa un NIF diferente.';
+            this.showError = true;
+          } else {
+           // Add employee if NIF does not exist
+            this.apiService.addEmployees(formData).subscribe(
+              (response) => {
+                this.router.navigate(['/employees']);
+              },
+              (error) => {
+                console.error('Error al agregar el empleado:', error);
+                if (error.status === 500) {
+                  this.errorMessage = 'Error 500 - Error interno del servidor';
+                } else {
+                  this.errorMessage = 'Se produjo un error al agregar el empleado. Por favor, inténtelo de nuevo más tarde.';
+                }
+                this.showError = true;
               }
-              this.showError = true;
-            }
-          );
+            );
+          }
+        },
+        (error) => {
+          console.error('Error al verificar el NIF:', error);
+          this.errorMessage = 'Se produjo un error al verificar el NIF. Por favor, inténtelo de nuevo más tarde.';
+          this.showError = true;
         }
-      },
-      (error) => {
-        console.error('Error al verificar el NIF:', error);
-        this.errorMessage = 'Se produjo un error al verificar el NIF. Por favor, inténtelo de nuevo más tarde.';
-        this.showError = true;
-      }
-    );
+      );
 
-    // Suscribirse a los cambios en el campo de NIF
-    this.employeeForm.get('nif')?.valueChanges.subscribe(() => {
-      // Al cambiar el valor del campo de NIF, ocultar el mensaje de error
-      this.errorMessageNif = '';
-    });
+     // Subscribe to changes in the NIF field
+      this.employeeForm.get('nif')?.valueChanges.subscribe(() => {
+        this.errorMessageNif = ''; // Hide NIF error message when value changes
+      });
+    }
   }
-}
 
-
-
-
-
-  // cancelEdit(): void {
-  //   if (confirm('¿Estás seguro de cancelar la edición?')) {
-  //     // Si el usuario confirma la cancelación, redirige a la página de administración de empleados
-  //     this.router.navigate(['/employees']);
-  //   }
-  // }
-
+  /**
+   * Function to open the modal dialog.
+   */
   openModal(): void {
     const modal = document.getElementById('popup-modal');
     if (modal) {
@@ -161,6 +162,9 @@ export class AddEmployeeComponent {
     }
   }
 
+    /**
+   * Function to close the modal dialog.
+   */
   closeModal(): void {
     const modal = document.getElementById('popup-modal');
     if (modal) {
@@ -168,12 +172,20 @@ export class AddEmployeeComponent {
     }
   }
 
+    /**
+   * Function to confirm cancellation of editing.
+   */
   confirmCancelEdit(): void {
     this.closeModal();
     this.router.navigate(['/employees']);
   }
 
-  // Función de validación personalizada para la extensión de imagen
+
+  /**
+   * Custom validation function for image extension.
+   * @param control - Form control for image upload.
+   * @returns Validation result.
+   */
   imageExtensionValidator(control: any) {
     if (control.value) {
       const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
@@ -184,7 +196,11 @@ export class AddEmployeeComponent {
     return null;
   }
 
-  // Función de validación personalizada para la contraseña
+  /**
+   * Custom validation function for password.
+   * @param control - Form control for password.
+   * @returns Validation result.
+   */
   passwordValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
     if (!passwordRegex.test(control.value)) {
@@ -193,24 +209,28 @@ export class AddEmployeeComponent {
     return null;
   }
 
-  // Función de validación personalizada para verificar la edad mínima y la fecha futura
+    /**
+   * Custom validation function for age and date of birth.
+   * @param control - Form control for date of birth.
+   * @returns Validation result.
+   */
   ageValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const dob = new Date(control.value);
     const today = new Date();
 
-    // Calcula la edad del empleado
+    // Calculate the age of the employee
     let age = today.getFullYear() - dob.getFullYear();
     const monthDiff = today.getMonth() - dob.getMonth();
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
       age--;
     }
 
-    // Verifica si la edad es menor de 18 años o si la fecha es en el futuro
+    // Check if the age is under 18 or if the date is in the future
     if (age < 18 || dob >= today) {
       return { 'invalidAgeOrDate': true };
     }
 
-    // Verifica si la fecha de nacimiento es anterior a 70 años desde hoy
+    // Check if the date of birth is older than 70 years from today
     const maxAllowedDate = new Date(today.getFullYear() - 70, today.getMonth(), today.getDate());
     if (dob < maxAllowedDate) {
       return { 'invalidDateInThePast': true };
@@ -219,7 +239,10 @@ export class AddEmployeeComponent {
     return null;
   }
 
-  // Función de validación del número de teléfono
+   /**
+   * Custom validation function for phone number.
+   * @returns Validation result.
+   */
   phoneNumberValidator(): Validators {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const phoneNumberRegex = /^[679]{1}[0-9]{8}$/; // Expresión regular para validar números de teléfono
@@ -229,6 +252,10 @@ export class AddEmployeeComponent {
       return null;
     };
   }
+
+   /**
+   * Function to toggle password visibility.
+   */
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }

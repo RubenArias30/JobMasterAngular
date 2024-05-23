@@ -1,15 +1,13 @@
 <div class="container mx-auto mt-8">
-  <!-- Icono "Añadir documento" y texto -->
   <div class="flex items-center">
     <i class='bx bx-file text-4xl text-gray-600'></i>
     <h1 class="text-2xl font-bold ml-4">Añadir documento</h1>
   </div>
 
-  <!-- Línea divisora -->
   <hr class="my-4 border-gray-400">
   <form [formGroup]="documentForm" class="flex flex-col items-center" (ngSubmit)="submitForm()" enctype="multipart/form-data">
 
-    <!-- Información del documento -->
+    <!-- Information document -->
     <div class="w-full max-w-4xl">
       <div class="border border-black p-4 rounded-lg bg-white">
         <h2 class="text-lg font-bold">Información del documento</h2>
@@ -57,15 +55,10 @@
 
       </div>
     </div>
-<!-- Otros elementos del formulario -->
-
 <div *ngIf="showMissingFieldsError && documentForm.invalid" class="text-red-500 mt-2">
   Por favor rellena todos los campos.
 </div>
-
-<!-- Otros elementos del formulario -->
-
-    <!-- Botón "Añadir Documento" y CANCELAR-->
+    <!-- Botón "Add Document" and CANCEL-->
     <div class="mt-8 mb-3">
       <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold px-6 py-3 rounded-lg mr-4">Añadir Documento</button>
       <button type="button" class="bg-gray-500 hover:bg-red-500 text-white font-bold px-6 py-3 rounded-lg" (click)="openModal()">Cancelar</button>

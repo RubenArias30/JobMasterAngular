@@ -36,6 +36,9 @@ export class ResponseResetComponent implements OnInit {
     }
   }
 
+  /**
+ * Function to handle form submission.
+ */
   onSubmit(): void {
     if (this.resetForm.valid) {
       this.apiService.changedPassword(this.resetForm.value).subscribe(
@@ -53,8 +56,10 @@ export class ResponseResetComponent implements OnInit {
   }
 
 
-   // Función de validación personalizada para la contraseña
-   passwordValidator(control: AbstractControl): { [key: string]: boolean } | null {
+  /**
+ * Custom validation function for password.
+ */
+  passwordValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
     if (!passwordRegex.test(control.value)) {
       return { 'invalidPassword': true };
@@ -62,7 +67,9 @@ export class ResponseResetComponent implements OnInit {
     return null;
   }
 
-  // Función de validación personalizada para asegurar que la confirmación de la contraseña coincida con la contraseña
+  /**
+   * Custom validation function to ensure password confirmation matches password.
+   */
   passwordConfirmationValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const password = control.root.get('password');
     const confirmPassword = control.value;

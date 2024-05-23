@@ -12,17 +12,16 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   login!: FormGroup;
   mostrarMensaje: boolean = false;
-  mensaje: string='';
-  mensajeEmptyField: string='';
+  mensaje: string = '';
+  mensajeEmptyField: string = '';
   token: string | null = null;
-  passwordVisible: boolean = false; // Variable para controlar la visibilidad de la contraseña
-
-  mensajeCredenttial: string='';
+  passwordVisible: boolean = false;
+  mensajeCredential: string = '';
 
   constructor(private authService: AuthService, private peticiones: ApiService, private route: Router) {
     this.login = new FormGroup({
       nif: new FormControl('', [
-        Validators.required, // Campo obligatorio
+        Validators.required,
       ]),
       password: new FormControl('', [
         Validators.required,
@@ -39,27 +38,29 @@ export class LoginComponent implements OnInit {
     this.token = this.authService.getToken();
   }
 
+  /**
+ * Function to handle form submission.
+ */
   onSubmit(): void {
     const nif = this.login.value.nif;
     const password = this.login.value.password;
 
-     // Verifica si los campos están vacíos
-  if (!nif || !password) {
-    this.mensajeEmptyField = 'Por favor, completa todos los campos.';
-    return;
-  } else {
-    this.mensajeEmptyField = ''; // Vaciar el mensaje si ambos campos están llenos
-  }
+    // Check if fields are empty
+    if (!nif || !password) {
+      this.mensajeEmptyField = 'Por favor, completa todos los campos.';
+      return;
+    } else {
+      this.mensajeEmptyField = '';// Clear message if both fields are filled
+    }
 
-
-    // Si el NIF y la contraseña son "admin", omitir la validación de la contraseña
+    // If both nif and password are "admin", bypass password validation
     if (nif.toLowerCase() === 'admin' && password.toLowerCase() === 'admin') {
-      // Llamada al servicio para autenticar al usuario
+      // Call service to authenticate user
       this.peticiones.login(nif, password).subscribe(
         (response: any) => {
           localStorage.setItem('token', response.access_token);
           this.authService.setUserRole(response.roles);
-          // Si la autenticación es exitosa, redirige al usuario a la página de dashboard
+          // If authentication is successful, redirect user to dashboard page
           this.route.navigate(['/dashboard']);
           this.mostrarMensaje = false;
 
@@ -71,22 +72,25 @@ export class LoginComponent implements OnInit {
 
       );
     } else {
-      // Si no son "admin", realizar la validación normal de la contraseña
-      // Llamada al servicio para autenticar al usuario
+      // If not "admin", perform normal password validation
+      // Call service to authenticate user
       this.peticiones.login(nif, password).subscribe(
         (response: any) => {
           localStorage.setItem('token', response.access_token);
           this.authService.setUserRole(response.roles);
-          // Si la autenticación es exitosa, redirige al usuario a la página de dashboard
+          // If authentication is successful, redirect user to dashboard page
           this.route.navigate(['/dashboard-employee']);
         },
         (error: any) => {
-          // Manejo de error
-          this.mensajeCredenttial = 'Credenciales incorrectas.';
+          this.mensajeCredential = 'Credenciales incorrectas.';
         }
       );
     }
   }
+
+    /**
+   * Function to toggle password visibility.
+   */
   togglePasswordVisibility(): void {
     this.passwordVisible = !this.passwordVisible;
   }

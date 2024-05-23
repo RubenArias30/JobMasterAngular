@@ -22,14 +22,13 @@ export class EditEmployeeComponent implements OnInit {
   selectedImageUrl: string | null = null;
   errorMessageNif: string = '';
 
-  // showPassword: boolean = false;
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
     private apiService: ApiService
   ) {
+     // Initialize the form and define validation rules
     this.employeeForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
       surname: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
@@ -46,14 +45,14 @@ export class EditEmployeeComponent implements OnInit {
 
     });
 
-    // Suscribirse a los cambios en el campo de NIF
+    // Subscribe to changes in the NIF field
     this.employeeForm.get('nif')?.valueChanges.subscribe(() => {
-      // Al cambiar el valor del campo de NIF, ocultar el mensaje de error
-      this.errorMessage = '';
+      this.errorMessage = '';  // Hide error message when NIF field value changes
     });
   }
 
   ngOnInit(): void {
+    // Subscribe to route parameters to get employee ID
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id !== null) {
@@ -66,6 +65,9 @@ export class EditEmployeeComponent implements OnInit {
     });
   }
 
+   /**
+   * Load employee data from the API.
+   */
   loadEmployeeData(): void {
     if (this.employeeId === null) {
       console.error('No se ha proporcionado un ID de empleado válido');
@@ -115,6 +117,10 @@ export class EditEmployeeComponent implements OnInit {
     );
   }
 
+    /**
+   * Handler for file selection.
+   * @param event - File selection event.
+   */
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
@@ -124,6 +130,10 @@ export class EditEmployeeComponent implements OnInit {
     }
   }
 
+    /**
+   * Preview selected image.
+   * @param file - Selected image file.
+   */
   previewImage(file: File): void {
     const reader = new FileReader();
     reader.onload = (e: any) => {
@@ -132,33 +142,34 @@ export class EditEmployeeComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
-
-
+  /**
+   * Update employee data.
+   */
   updateEmployee(): void {
-
+      // Check if a valid employee ID is provided
     if (this.employeeId === null) {
       console.error('No se ha proporcionado un ID de empleado válido.');
       return;
     }
 
+    // Check if form is valid
     if (this.employeeForm.invalid) {
       this.showErrorInvalid = true;
-
       return;
     }
 
-    // Verificar si el NIF ha cambiado
+     // Check if the NIF has changed
     const originalNif = this.employeeData ? this.employeeData.users.nif : '';
     const newNif = this.employeeForm.value.nif;
 
     if (newNif !== originalNif) {
-      // El NIF ha cambiado, verificar si ya existe en la base de datos
+     // The NIF has changed, check if it already exists in the database
       this.apiService.checkNifExists(newNif).subscribe(
         (exists) => {
           if (exists) {
             this.errorMessageNif = 'Ya existe un empleado con este NIF. Por favor, intente con otro NIF.';
           } else {
-            // El NIF no existe, continuar con la actualización del empleado
+            // The NIF does not exist, proceed with employee update
             this.updateEmployeeData();
           }
         },
@@ -168,13 +179,16 @@ export class EditEmployeeComponent implements OnInit {
         }
       );
     } else {
-      // El NIF no ha cambiado, continuar con la actualización del empleado sin verificar el NIF
+      // The NIF has not changed, proceed with employee update without checking the NIF
       this.updateEmployeeData();
     }
   }
 
+    /**
+   * Update employee data after validation.
+   */
   updateEmployeeData(): void {
-    // Continuar con la actualización del empleado
+    // Proceed with updating employee data
     this.apiService.updateEmployee(this.employeeId, this.employeeForm.value).subscribe(
       (response) => {
         console.log(response)
@@ -194,6 +208,9 @@ export class EditEmployeeComponent implements OnInit {
     );
   }
 
+   /**
+   * Update employee photo.
+   */
   updatePhoto(): void {
     if (!this.file || !this.employeeId) {
       console.error('No se ha proporcionado un archivo o ID de empleado válido.');
@@ -207,26 +224,30 @@ export class EditEmployeeComponent implements OnInit {
       .subscribe(
         response => {
           console.log('Foto del empleado actualizada:', response);
-          // Actualizar la URL de la imagen en la vista si es necesario
+          // Update image URL in view if necessary
           this.selectedImageUrl = response.photo;
-          // Reiniciar el estado de la selección de archivos
+           // Reset file selection state
           this.file = null;
           this.selectedFileName = null;
         },
         error => {
           console.error('Error al actualizar la foto del empleado:', error);
-          // Manejar errores
         }
       );
   }
 
-
-
+  /**
+   * Cancel edit operation.
+   */
   cancelEdit(): void {
     if (confirm('¿Estás seguro de cancelar la edición?')) {
       this.router.navigate(['/employees']);
     }
   }
+
+    /**
+   * Open modal dialog.
+   */
   openModal(): void {
     const modal = document.getElementById('popup-modal');
     if (modal) {
@@ -234,6 +255,9 @@ export class EditEmployeeComponent implements OnInit {
     }
   }
 
+    /**
+   * Close modal dialog.
+   */
   closeModal(): void {
     const modal = document.getElementById('popup-modal');
     if (modal) {
@@ -241,11 +265,18 @@ export class EditEmployeeComponent implements OnInit {
     }
   }
 
+
+  /**
+   * Confirm cancel edit operation and close modal dialog.
+   */
   confirmCancelEdit(): void {
     this.closeModal();
     this.router.navigate(['/employees']);
   }
 
+    /**
+   * Custom validator function for image extension.
+   */
   imageExtensionValidator(control: any) {
     if (control.value) {
       const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
@@ -256,7 +287,9 @@ export class EditEmployeeComponent implements OnInit {
     return null;
   }
 
-
+ /**
+   * Custom validator function to validate fields.
+   */
   validateField(control: AbstractControl) {
     const fieldPattern = /^[a-zA-Z\s]*$/;
     if (fieldPattern.test(control.value)) {
@@ -266,6 +299,9 @@ export class EditEmployeeComponent implements OnInit {
     }
   }
 
+    /**
+   * Custom validator function for phone number.
+   */
   phoneNumberValidator(): Validators {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const phoneNumberRegex = /^[679]{1}[0-9]{8}$/;
@@ -276,6 +312,9 @@ export class EditEmployeeComponent implements OnInit {
     };
   }
 
+   /**
+   * Custom validator function for age.
+   */
   ageValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const dob = new Date(control.value);
     const today = new Date();

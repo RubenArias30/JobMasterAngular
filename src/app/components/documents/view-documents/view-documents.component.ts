@@ -10,6 +10,7 @@ import { saveAs } from 'file-saver';
 })
 export class ViewDocumentsComponent implements OnInit {
 
+  //Documents Object
   documents: Document[] = [];
   documentTypes: any = {
     'contracts': 'Contratos',
@@ -26,8 +27,13 @@ export class ViewDocumentsComponent implements OnInit {
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.loadDocuments();
+    this.loadDocuments(); // Load documents on component initialization
   }
+
+
+  /**
+   * Loads documents.
+   */
   loadDocuments() {
     this.apiService.getMyDocuments().subscribe(
       (response: any[]) => {
@@ -42,11 +48,20 @@ export class ViewDocumentsComponent implements OnInit {
     );
   }
 
+    /**
+   * Filters documents by type.
+   * @param type - The type of document to filter by.
+   */
   filterDocumentsByType(type: string) {
     this.selectedType = type;
     this.loadDocuments();
   }
 
+    /**
+   * Downloads a document.
+   * @param documentId - The ID of the document to download.
+   * @param documentName - The name of the document.
+   */
   downloadDocument(documentId: number, documentName: string): void {
     this.apiService.downloadDocument(documentId).subscribe(
       (response: Blob) => {
@@ -58,10 +73,18 @@ export class ViewDocumentsComponent implements OnInit {
     );
   }
 
+ /**
+   * Toggles the document type dropdown.
+   */
   toggleDropdown(): void {
     this.showDropdown = !this.showDropdown;
   }
 
+    /**
+   * Translates the document type.
+   * @param documentType - The document type to translate.
+   * @returns The translated document type.
+   */
   translateDocumentType(documentType: string): string {
     return this.documentTypes[documentType] || documentType;
   }

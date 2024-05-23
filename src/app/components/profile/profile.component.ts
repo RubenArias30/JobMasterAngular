@@ -15,21 +15,24 @@ export class ProfileComponent implements OnInit{
     'female': 'Femenino'
   };
 
-  constructor(private apiService: ApiService) { } // Inyecta el servicio ApiService
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    // Llama al método en el servicio para obtener los datos del perfil del empleado
+     // Call the method in the service to fetch employee profile data
     this.apiService.getProfile().subscribe(
       (response: Employee) => {
-
-        this.profileData = response; // Asigna los datos del perfil obtenidos del servidor al objeto profileData
+        this.profileData = response;
         console.log(this.profileData);
       },
       (error: any) => {
-        console.error('Error al cargar el perfil del empleado:', error); // Maneja cualquier error
+        console.error('Error al cargar el perfil del empleado:', error);
       }
     );
   }
+
+    /**
+   * Function to translate gender.
+   */
    getGenderTranslation(gender: string | undefined): string {
     return gender ? this.genderTranslations[gender] : '';
   }

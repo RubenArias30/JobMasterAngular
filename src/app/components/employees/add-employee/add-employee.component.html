@@ -1,17 +1,12 @@
-<!-- Dentro de tu plantilla HTML (add-employee.component.html) -->
-
 <div class="container mx-auto mt-8 px-4">
-  <!-- Icono "Añadir empleado" y texto -->
   <div class="flex items-center mb-4">
     <i class='bx bxs-user-circle text-4xl text-gray-600 mr-4'></i>
     <h1 class="text-2xl font-bold ml-4">Añadir empleado</h1>
   </div>
-
-  <!-- Línea divisora -->
   <hr class="my-4 border-gray-400 w-full">
   <form [formGroup]="employeeForm" (submit)="addEmployee()" enctype="multipart/form-data">
     <div class="container mx-auto mt-8 px-8 flex flex-col lg:flex-row gap-4">
-      <!-- Información personal -->
+      <!-- personal  information-->
       <div class="flex-1 lg:mr-4 mb-4 lg:mb-0">
         <div class="border border-black p-4 rounded-lg bg-white">
           <h2 class="text-lg font-bold">Información personal</h2>
@@ -126,7 +121,7 @@
         </div>
       </div>
 
-      <!--  Direccion  y Credenciales -->
+      <!--  Adresss and credentioals -->
       <div class="flex-1 lg:ml-4">
         <div class="bg-white border border-black p-4 rounded-lg">
           <h2 class="text-lg font-bold">Direccion</h2>
@@ -208,7 +203,7 @@
       </div>
     </div>
 
-    <!-- Mensaje de error -->
+    <!-- Message error -->
     <div *ngIf="showError && !employeeForm.valid" class="text-red-500 mt-2 text-center">
       Por favor, completa todos los campos obligatorios.
     </div>
@@ -216,7 +211,7 @@
       {{ errorMessage }}
     </div>
 
-    <!-- Botón "Añadir Usuario" y CANCELAR-->
+    <!-- Button "add user" and CANCEL-->
     <div class="mt-8 mb-3 flex justify-center">
       <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold px-6 py-3 rounded-lg mr-4">Añadir Usuario</button>
       <button type="button" class="bg-gray-500 hover:bg-red-500 text-white font-bold px-6 py-3 rounded-lg" (click)="openModal()">Cancelar</button>

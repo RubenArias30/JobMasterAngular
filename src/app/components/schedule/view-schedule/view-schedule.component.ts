@@ -13,9 +13,14 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 })
 export class ViewScheduleComponent implements OnInit {
 
-  // Lista de eventos
+   // List of events
   events: EventInput[] = [];
 
+    /**
+   * Custom event content renderer.
+   * @param arg - Event content arguments
+   * @returns Custom HTML content
+   */
   customEventContent = (arg: any) => {
     const startTime = arg.event.start ? this.formatTime(arg.event.start) : '';
     const endTime = arg.event.end ? this.formatTime(arg.event.end) : '';
@@ -32,17 +37,26 @@ export class ViewScheduleComponent implements OnInit {
     return { html };
   };
 
+   /**
+   * Formats a Date object to a string with the format HH:mm.
+   * @param date - The Date object to format.
+   * @returns The formatted time string.
+   */
   formatTime(date: Date): string {
     const hour = date.getHours();
     const minute = date.getMinutes();
-
-    // Formatear hora y minuto con ceros a la izquierda si es necesario
+     // Format hour and minute with leading zeros if necessary
     const formattedHour = hour < 10 ? `0${hour}` : `${hour}`;
     const formattedMinute = minute < 10 ? `0${minute}` : `${minute}`;
 
     return `${formattedHour}:${formattedMinute}`;
   }
 
+    /**
+   * Formats a date to a string with the format YYYY-MM-DD.
+   * @param date - The Date object or string to format.
+   * @returns The formatted date string.
+   */
   formatDate(date: string | Date): string {
     let formattedDate = '';
     if (typeof date === 'string') {
@@ -54,6 +68,7 @@ export class ViewScheduleComponent implements OnInit {
     return formattedDate;
   }
 
+  // Calendar options
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
@@ -71,7 +86,7 @@ export class ViewScheduleComponent implements OnInit {
     },
     eventColor: '#92E3A9',
     eventContent: this.customEventContent,
-    events: [] // Aquí es donde se asignarán los eventos del calendario
+    events: []
   };
 
   constructor(private apiService: ApiService,  private authService: AuthService) {}
@@ -80,34 +95,36 @@ export class ViewScheduleComponent implements OnInit {
     this.viewScheduleEmployees();
   }
 
+    /**
+   * Retrieves and displays the schedule for employees.
+   */
   viewScheduleEmployees(): void {
-   // const empleadoId = 6; // Reemplaza con la ID del empleado actual
     this.apiService.getScheduleForEmployee()
       .subscribe(
         (events: any[]) => {
-          this.events = []; // Limpiar la lista de eventos
+          this.events = [];
           events.forEach(event => {
             const startDate = new Date(event.start_datetime);
             const endDate = new Date(event.end_datetime);
 
-            let currentDate = new Date(startDate); // Iniciar en la fecha de inicio
+            let currentDate = new Date(startDate); // Start at the start date
 
             while (currentDate <= endDate) {
               const formattedDate = currentDate.toISOString().split('T')[0];
               const newEvent: EventInput = {
-                id: event.id, // Asegúrate de incluir la propiedad id
+                id: event.id,
                 title: event.title,
                 start: `${formattedDate}T${this.getFormattedTime(currentDate)}:00`,
                 end: `${formattedDate}T${this.getFormattedTime(endDate)}:00`
               };
-              this.events.push(newEvent); // Agregar evento a la lista
+              this.events.push(newEvent);
 
-              // Avanzar al siguiente día
+               // Move to the next day
               currentDate.setDate(currentDate.getDate() + 1);
 
-              // Verificar si hay un cambio de mes
+              // Check if there is a month change
               if (currentDate.getMonth() !== startDate.getMonth() && currentDate <= endDate) {
-                // Generar eventos para el resto del mes
+                // Generate events for the rest of the month
                 while (currentDate.getMonth() === endDate.getMonth() && currentDate <= endDate) {
                   const formattedDateNextMonth = currentDate.toISOString().split('T')[0];
                   const newEventNextMonth: EventInput = {
@@ -115,14 +132,14 @@ export class ViewScheduleComponent implements OnInit {
                     start: `${formattedDateNextMonth}T${this.getFormattedTime(currentDate)}:00`,
                     end: `${formattedDateNextMonth}T${this.getFormattedTime(endDate)}:00`
                   };
-                  this.events.push(newEventNextMonth); // Agregar evento a la lista
-                  currentDate.setDate(currentDate.getDate() + 1); // Avanzar al siguiente día
+                  this.events.push(newEventNextMonth); // Add event to the list
+                  currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
                 }
               }
             }
           });
 
-          this.calendarOptions.events = this.events; // Actualizar los eventos en el calendario
+          this.calendarOptions.events = this.events; // Update the events in the calendar
         },
         error => {
           console.error('Error al obtener los horarios:', error);
@@ -130,8 +147,13 @@ export class ViewScheduleComponent implements OnInit {
       );
   }
 
+    /**
+   * Formats a Date object to a string with the format HH:mm.
+   * @param date - The Date object to format.
+   * @returns The formatted time string.
+   */
   getFormattedTime(date: Date): string {
-    // Formatear la hora en formato HH:MM
+   // Format the time as HH:MM
     return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
   }
 }

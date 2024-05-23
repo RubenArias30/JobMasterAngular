@@ -1,9 +1,8 @@
 <div class="container mx-auto mt-8">
-  <div class="flex items-center justify-between mb-4 ml-5"> <!-- Added ml-4 for left space -->
+  <div class="flex items-center justify-between mb-4 ml-5">
     <div class="flex items-center">
       <h1 class="text-lg font-bold mr-2 sm:text-xl md:text-2xl lg:text-3xl">Documentos</h1>
       <div class="border-l h-6 mr-2"></div>
-      <!-- <div class="text-sm text-gray-500">{{ employees.length }} Empleados</div> //CONTADOR -->
     </div>
 
   </div>
@@ -16,7 +15,6 @@
 
   <div  *ngIf="!isError" class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto border border-green-400 "> <!-- Added overflow-x-auto for horizontal scrolling -->
     <table class="w-full divide-y divide-gray-200">
-      <!-- Cabecera de la tabla -->
       <thead class="bg-gray-100">
         <tr>
           <th class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">Nombre</th>
@@ -25,7 +23,7 @@
           <th class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">Acción</th>
         </tr>
       </thead>
-      <!-- Datos de los empleados -->
+      <!-- Data employees -->
       <tbody class="divide-y divide-gray-200">
         <ng-container *ngFor="let employee of employees; let i = index">
           <tr>

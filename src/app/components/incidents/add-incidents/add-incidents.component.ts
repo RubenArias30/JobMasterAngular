@@ -10,23 +10,23 @@ import { Router } from '@angular/router';
 })
 export class AddIncidentsComponent implements OnInit {
   incidentForm!: FormGroup;
-  currentDateFormatted!: string; // Inicialización de la propiedad
+  currentDateFormatted!: string;
 
   constructor(private formBuilder: FormBuilder, private apiService: ApiService,private router: Router) {}
 
   ngOnInit(): void {
     this.currentDateFormatted = this.getCurrentDateFormatted(); // Get current date formatted
-
     this.incidentForm = this.formBuilder.group({
       incident_type: ['', Validators.required],
       description: ['', Validators.required],
       date: [this.currentDateFormatted]
     });
-
-
-
   }
-  // Function to format the current date as "YYYY-MM-DD"
+
+    /**
+   * Function to format the current date as "YYYY-MM-DD".
+   * @returns The formatted current date.
+   */
   getCurrentDateFormatted(): string {
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');
@@ -35,7 +35,10 @@ export class AddIncidentsComponent implements OnInit {
     return yyyy + '-' + mm + '-' + dd;
   }
 
-  // Function to validate the date
+    /**
+   * Function to validate the date.
+   * @returns A validator function for date validation.
+   */
   dateValidator(): any {
     return (control: { value: string; }): { [key: string]: boolean } | null => {
       const selectedDate = new Date(control.value);
@@ -45,22 +48,17 @@ export class AddIncidentsComponent implements OnInit {
       if (selectedDate < currentDate) {
         return { 'invalidFutureDate': true };
       }
-
-      // Validation for future dates (if needed)
-      // if (selectedDate > currentDate) {
-      //   return { 'invalidPastDate': true };
-      // }
-
       return null;
     };
   }
 
+    /**
+   * Adds a new incident.
+   */
   addIncident() {
     if (this.incidentForm.invalid) {
       return;
     }
-
-
     this.apiService.addIncident(this.incidentForm.value).subscribe(
       response => {
         this.router.navigate(['/history_incidents']);
@@ -72,15 +70,20 @@ export class AddIncidentsComponent implements OnInit {
     );
   }
 
+    /**
+   * Checks if all required fields are filled.
+   * @returns True if all required fields are filled, otherwise false.
+   */
   areAllFieldsFilled(): boolean {
     const incidentType = this.incidentForm.get('incident_type')?.value;
     const description = this.incidentForm.get('description')?.value;
-    // const date = this.incidentForm.get('date')?.value;
-
     // return incidentType && description && date;
     return incidentType && description;
   }
 
+    /**
+   * Cancels the edit and navigates back to the incident history page.
+   */
   cancelEdit(): void {
     if (confirm('¿Estás seguro de cancelar la edición?')) {
       this.router.navigate(['/history_incidents']);
