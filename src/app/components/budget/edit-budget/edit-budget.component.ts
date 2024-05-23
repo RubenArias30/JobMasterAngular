@@ -237,11 +237,32 @@ formatPostalCode(postalCode: string): string {
   }
 
   // Method to cancel the edit process
-  cancelEdit(): void {
-    if (confirm('¿Estás seguro de cancelar la edición?')) {
-      this.router.navigate(['/budget']);
+  // cancelEdit(): void {
+  //   if (confirm('¿Estás seguro de cancelar la edición?')) {
+  //     this.router.navigate(['/budget']);
+  //   }
+  // }
+
+  // Method to cancel the edit
+  openModal(): void {
+    const modal = document.getElementById('popup-modal');
+    if (modal) {
+      modal.classList.remove('hidden');
     }
   }
+
+  closeModal(): void {
+    const modal = document.getElementById('popup-modal');
+    if (modal) {
+      modal.classList.add('hidden');
+    }
+  }
+
+  confirmCancelEdit(): void {
+    this.closeModal();
+    this.router.navigate(['/budget']);
+  }
+
 
    // Phone number validation function
   phoneNumberValidator(): Validators {

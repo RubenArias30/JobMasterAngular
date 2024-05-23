@@ -1,38 +1,44 @@
-<div class="container mx-auto mt-8">
-  <div class="flex items-center justify-between mb-4 ml-5">
-    <div class="flex items-center">
+<div class="container mx-auto mt-8 px-4 sm:px-6 lg:px-8">
+  <div class="flex flex-wrap items-center justify-between mb-4">
+    <div class="flex flex-wrap items-center w-full sm:w-auto mb-4 sm:mb-0">
       <h1 class="text-lg font-bold mr-2 sm:text-xl md:text-2xl lg:text-3xl">Presupuesto</h1>
       <div class="border-l h-6 mr-2"></div>
       <div class="text-sm text-gray-500">{{ invoices.length }} Presupuestos</div>
+
+      <form class="relative ml-4 w-full sm:w-auto" (submit)="searchInvoices($event)">
+        <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar</label>
+        <div class="relative w-full sm:w-auto">
+          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+            </svg>
+          </div>
+          <input [(ngModel)]="searchQuery" name="searchQuery" type="search" id="default-search" class="block w-full pl-10 pr-24 py-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-400 focus:border-green-400 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-400 dark:focus:border-green-400" placeholder="Buscar por nombre" required />
+          <button type="submit" class="absolute right-0 top-0 h-full text-white bg-green-400 hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-400 font-medium rounded-r-lg text-sm px-4 py-2 dark:bg-green-400 dark:hover:bg-green-500 dark:focus:ring-green-400">Buscar</button>
+        </div>
+      </form>
     </div>
-    <div class="flex ml-auto mr-8">
-      <button routerLink="/budget/generate_budget"
-        class="flex items-center bg-gray-200 hover:bg-green-400 px-2 py-1 rounded-lg mr-2">
+
+    <div class="flex flex-wrap items-center w-full sm:w-auto mt-4 sm:mt-0">
+      <button routerLink="/budget/generate_budget" class="flex items-center bg-gray-200 hover:bg-green-400 px-2 py-1 rounded-lg mr-2">
         <i class='bx bx-plus text-xl'></i>
         <span class="ml-1">Añadir</span>
       </button>
       <div class="relative">
-        <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-2 py-1 rounded-lg"
-          (click)="toggleDropdown()">
+        <button class="flex items-center bg-green-400 hover:bg-green-500 text-white px-2 py-1 rounded-lg" (click)="toggleDropdown()">
           <i class='bx bx-filter text-xl'></i>
           <span class="ml-1">{{ filterButtonText }}</span>
         </button>
-        <div *ngIf="showDropdown"
-          class="absolute bg-white border border-gray-300 rounded-lg mt-1 py-1 px-2 w-auto sm:w-40 z-10 mr-2">
-
-          <button
-            class="block px-2 py-1 text-xs sm:text-sm md:text-base lg:text-lg text-gray-800 hover:bg-gray-200 w-full"
-            (click)="sortInvoices('default'); resetPagination()">Mostrar todos</button>
-          <button
-            class="block px-2 py-1 text-xs sm:text-sm md:text-base lg:text-lg text-gray-800 hover:bg-gray-200 w-full"
-            (click)="sortInvoices('asc') ; resetPagination()">Ascendente</button>
-          <button
-            class="block px-2 py-1 text-xs sm:text-sm md:text-base lg:text-lg text-gray-800 hover:bg-gray-200 w-full"
-            (click)="sortInvoices('desc') ; resetPagination()">Descendente</button>
+        <div *ngIf="showDropdown" class="absolute bg-white border border-gray-300 rounded-lg mt-1 py-1 px-2 w-auto sm:w-40 z-10 left-0 transform -translate-x-1/2">
+          <button class="block px-2 py-1 text-xs sm:text-sm md:text-base lg:text-lg text-gray-800 hover:bg-gray-200 w-full" (click)="sortInvoices('default'); resetPagination()">Mostrar todos</button>
+          <button class="block px-2 py-1 text-xs sm:text-sm md:text-base lg:text-lg text-gray-800 hover:bg-gray-200 w-full" (click)="sortInvoices('asc') ; resetPagination()">Ascendente</button>
+          <button class="block px-2 py-1 text-xs sm:text-sm md:text-base lg:text-lg text-gray-800 hover:bg-gray-200 w-full" (click)="sortInvoices('desc') ; resetPagination()">Descendente</button>
         </div>
       </div>
     </div>
   </div>
+
+
 
   <div  *ngIf="isError" class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto border border-green-400 " >
     <div  class="text-red-600 font-bold mb-4">
@@ -51,9 +57,7 @@
           <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">
             Compañia
           </th>
-          <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">
-            Subtotal
-          </th>
+
           <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">
             Total
           </th>
@@ -69,7 +73,7 @@
         <tr *ngFor="let invoice of invoices |paginate:{ itemsPerPage: 7, currentPage: p }" class="border-b border-gray-200">
           <td class="text-center px-4 py-2">{{ invoice.clients?.client_name }}</td>
           <td class="text-center px-4 py-2">{{ invoice.companies?.company_name }}</td>
-          <td class="text-center px-4 py-2">{{ invoice.subtotal }}€</td>
+
           <td class="text-center px-4 py-2">{{ invoice.total }}€</td>
           <td class="text-center px-4 py-2">
             <a (click)="generatePDF(invoice)">
@@ -101,5 +105,18 @@
     directionLinkClass="bg-gray-300 px-4 py-2 rounded" ellipses="..." ellipsesClass="bg-gray-300 px-4 py-2"
     pageLinkClass="text-blue-400 px-4 py-2 rounded" [responsive]="true"></pagination-controls>
   </div>
+
+  <app-success-alert
+  *ngIf="showSuccessAlert"
+  [message]="successMessage">
+  </app-success-alert>
 </div>
 <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+
+<app-delete-confirmation-modal
+  [showConfirmationModal]="showConfirmationModal"
+  (closeModalEvent)="onCloseModal()"
+  (confirmDelete)="onConfirmDelete()">
+</app-delete-confirmation-modal>
+
+

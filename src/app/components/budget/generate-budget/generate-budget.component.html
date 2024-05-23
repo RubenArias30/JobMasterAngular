@@ -189,7 +189,7 @@
     </div>
   </div>
 
-  <div class="container mx-auto mt-8">
+  <div class="container mx-auto mt-8 px-4 md:px-8 lg:px-16">
     <div class="flex items-center">
       <i class='bx bxs-edit-alt text-4xl text-gray-600'></i>
       <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold ml-4">Información</h1>
@@ -197,8 +197,8 @@
     <hr class="my-4 border-gray-400">
   </div>
   <!-- Conceptos -->
-  <div class="container mx-auto mt-8">
-    <div class="flex flex-col sm:flex-row justify-between mb-4">
+  <div class="container mx-auto mt-8 px-4 md:px-8 lg:px-16">
+      <div class="flex flex-col sm:flex-row justify-between mb-4">
       <div class="w-full">
         <div formArrayName="concepts">
           <div *ngFor="let concept of concepts.controls; let i=index" [formGroupName]="i">
@@ -283,7 +283,7 @@
     </button>
   </div>
   <!-- Additional elements -->
-  <div class="bg-gray-200 rounded-lg border border-black mt-4">
+  <div class="bg-gray-200 rounded-lg border border-black mt-4 mx-4 md:mx-8 lg:mx-16 p-4">
     <div class="p-4">
       <div class="flex flex-col">
         <div class="flex justify-between">
@@ -319,12 +319,16 @@
   <div *ngIf="showErrorInvalid" class="text-red-500 mt-2 text-center">
     Error al generar factura, verifica los datos
   </div>
-  <div class="flex justify-center mt-4">
+  <div class="flex justify-center mt-4 mb-8">
     <button (click)="addBudget()"
       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-8 rounded-lg mr-4">Crear</button>
 
-    <button type="button" class="bg-gray-500 hover:bg-red-500 text-white font-bold px-6 py-3 rounded-lg "
-      (click)="cancelEdit()">Cancelar</button>
+    <button type="button" class="bg-gray-500 hover:bg-red-500 text-white font-bold px-6 py-3 rounded-lg"
+      (click)="openModal()">Cancelar</button>
   </div>
 
 </form>
+
+
+<app-cancelmodal (confirm)="confirmCancelEdit()" (cancel)="closeModal()"></app-cancelmodal>
+
