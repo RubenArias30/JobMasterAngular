@@ -24,6 +24,14 @@ export class DetailsComponent implements OnInit {
     'others': 'Otros'
   };
 
+  showConfirmationModal: boolean = false;
+  documentToDelete: number | null = null;
+
+   // success messages
+   showSuccessAlert: boolean = false;  // Add this line
+   successMessage: string = '';
+
+
   constructor(private router: Router, private apiService: ApiService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -145,6 +153,14 @@ export class DetailsComponent implements OnInit {
         console.error('Error downloading the document:', error);
       }
     );
+  }
+  // message is shown after the delete is done
+  showSuccessAlertMessage(message: string): void {
+    this.successMessage = message;
+    this.showSuccessAlert = true;
+    setTimeout(() => {
+      this.showSuccessAlert = false;
+    }, 3000);  // Hide the alert after 3 seconds
   }
 
 }
