@@ -16,6 +16,7 @@ export class DashboardComponent implements OnInit {
   inactiveEmployeeCount: number = 0;
   isLoading = true;
 
+  // Translations for incident types
   typeTranslations: any = {
     'Delay': 'Retraso',
     'Absence': 'Ausencia',
@@ -25,7 +26,7 @@ export class DashboardComponent implements OnInit {
     'Others': 'Otros'
   };
 
-   // Define un objeto que mapee los tipos de ausencias en inglés a sus equivalentes en español
+   // Define an object mapping English absence types to their Spanish equivalents
    tipoAusenciaTraducido: { [key: string]: string } = {
     'vacation': 'Vacaciones',
     'sick_leave': 'Enfermedad',
@@ -46,17 +47,19 @@ export class DashboardComponent implements OnInit {
 
     setInterval(() => {
       this.actualizarFechaHora();
-    }, 1000); // Actualizar cada segundo
+    }, 1000); // Update every second
   }
 
+  // Method to update the current date and time
   private actualizarFechaHora(): void {
     const fechaHora = new Date();
     const hora = fechaHora.toLocaleString('es-ES', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'Europe/Madrid' });
     const fecha = fechaHora.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-    // Formatear la fecha y hora
+    // Format the date and time
     this.fechaHoraActual = `Hora: ${hora} | Fecha: ${fecha}`;
   }
+  // Method to fetch the total number of employees
   private getTotalEmployees(): void {
     this.apiService.getEmployees().subscribe(
       (empleados: any[]) => {
@@ -68,6 +71,7 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  // Method to fetch the status of employees
   getEmployeeStatus(): void {
     this.apiService.getEmployeeStatus().subscribe(
       (data: any) => {
@@ -82,23 +86,25 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  // Method to fetch recent incidents
   getRecentIncidents(): void {
     this.apiService.getAllIncidents()
       .subscribe((data: any[]) => {
-        // Ordenar las incidencias por fecha en orden descendente
+        // Sort incidents by date in descending order
         data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-        // Tomar las primeras cinco incidencias
+        // Take the first five incidents
         this.incidences = data.slice(0, 5);
       });
   }
 
+  // Method to load recent absences
   loadRecentAbsences(): void {
-    // Llamar al servicio para obtener todas las ausencias y luego tomar solo las últimas 5
+    // Call the service to fetch all absences and then take only the last 5
     this.apiService.getAusencias().subscribe(
       (absences) => {
-        // Ordenar las ausencias por fecha de inicio de forma descendente
+        // Sort absences by start date in descending order
         absences.sort((a, b) => new Date(b.start_date).getTime() - new Date(a.start_date).getTime());
-        // Tomar solo las primeras 5 ausencias
+         // Take only the first 5 absences
         this.recentAbsences = absences.slice(0, 5);
       },
       (error) => {
@@ -107,6 +113,7 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  // Method to translate incident type
   translateType(type: string): string {
     return this.typeTranslations[type] || type;
   }
@@ -116,14 +123,13 @@ export class DashboardComponent implements OnInit {
     return this.tipoAusenciaTraducido[tipo] || tipo; // Retorna la traducción si está definida, de lo contrario, retorna el tipo original
   }
 
-// Método para navegar a la ruta de Ausencias
+// Method to navigate to Absences route
 navigateToAbsences() {
   this.router.navigate(['/absences']);
 }
 
-// Método para navegar a la ruta de Incidencias
+  // Method to navigate to Incidents route
 navigateToIncidents() {
   this.router.navigate(['/incidents']);
 }
-
 }
