@@ -1,10 +1,8 @@
 <div class="container mx-auto mt-8">
-  <!-- Icono "Editar empleado" y texto -->
   <div class="flex items-center">
     <i class='bx bxs-edit-alt text-4xl text-gray-600'></i>
     <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold ml-4">Añadir Presupuesto</h1>
   </div>
-  <!-- Línea divisora -->
   <hr class="my-4 border-gray-400">
 </div>
 
@@ -192,7 +190,6 @@
   </div>
 
   <div class="container mx-auto mt-8">
-    <!-- Icono "Editar empleado" y texto -->
     <div class="flex items-center">
       <i class='bx bxs-edit-alt text-4xl text-gray-600'></i>
       <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold ml-4">Información</h1>
@@ -266,8 +263,6 @@
                   {{ concept.get('concept_irpf')?.errors?.['required'] ? 'El IRPF es requerido.' : 'El IRPF debe ser un número positivo.' }}
                 </div>
               </div>
-
-
               <div class="col-span-1 p-8">
                 <button *ngIf="canRemoveConcept" href="#" (click)="removeConcept(i)">
                   <i class='bx bx-trash text-xl text-black mr-2'></i>
@@ -316,7 +311,7 @@
     </div>
   </div>
 
-  <!-- Mensaje de error -->
+  <!-- Message  error -->
   <div *ngIf="showError" class="text-red-500 mt-2 text-center">
     Por favor, completa todos los campos obligatorios.
   </div>

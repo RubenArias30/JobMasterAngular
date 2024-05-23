@@ -16,8 +16,8 @@ export class BudgetComponent implements OnInit {
   private generateBudgetComponent!: GenerateBudgetComponent; // Ensure it's initialized
   invoices: Invoice[] = [];
   showDropdown: boolean = false;
-  sortBy: string = 'default'; // Default sorting option
-  filterButtonText: string = 'Filtros'; // Initialize filter button text
+  sortBy: string = 'default';
+  filterButtonText: string = 'Filtros';
   p: number = 1;
   isLoading = true;
   isError = false;
@@ -27,6 +27,10 @@ export class BudgetComponent implements OnInit {
     this.getInvoices();
   }
 
+
+  /**
+   * Fetches the list of invoices from the API and updates the component state.
+   */
   getInvoices(): void {
     this.apiService.getInvoices().subscribe(
       (response: Invoice[]) => {
@@ -43,6 +47,11 @@ export class BudgetComponent implements OnInit {
     );
   }
 
+
+  /**
+   * Confirms deletion of an invoice by showing a confirmation dialog.
+   * @param invoiceId - The ID of the invoice to delete.
+   */
   confirmDeleteInvoice(invoiceId: string): void {
     const confirmDelete = confirm('¿Estás seguro de que deseas eliminar esta factura?');
     if (confirmDelete) {
@@ -50,10 +59,14 @@ export class BudgetComponent implements OnInit {
     }
   }
 
+    /**
+   * Deletes an invoice by its ID and updates the local list of invoices.
+   * @param invoiceId - The ID of the invoice to delete.
+   */
   deleteInvoice(invoiceId: string): void {
     this.apiService.deleteInvoice(invoiceId.toString()).subscribe(
       () => {
-        // Eliminar la factura de la lista localmente después de eliminarla del servidor
+         // Remove the invoice from the local list after deleting it from the server
         this.invoices = this.invoices.filter(invoice => invoice.id.toString() !== invoiceId);
       },
       (error) => {
@@ -62,14 +75,24 @@ export class BudgetComponent implements OnInit {
       });
   }
 
+   /**
+   * Toggles the visibility of the sorting dropdown.
+   */
   toggleDropdown(): void {
     this.showDropdown = !this.showDropdown;
   }
 
+   /**
+   * Resets the pagination to the first page.
+   */
   resetPagination() {
     this.p = 1; // Reset the current page to 1
   }
 
+    /**
+   * Sorts the list of invoices based on the selected option.
+   * @param option - The sorting option ('asc', 'desc', or 'default').
+   */
   sortInvoices(option: string): void {
     if (option === 'asc') {
       this.invoices.sort((a, b) => a.total - b.total); // Sort ascending

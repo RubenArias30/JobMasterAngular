@@ -14,7 +14,7 @@ export class GenerateBudgetComponent implements OnInit {
   showError: boolean = false;
   showErrorInvalid: boolean = false;
 
-  // Controles para calcular los valores en tiempo real
+  // Controls for real-time value calculations
   subtotal = new FormControl(0);
   invoice_discount = new FormControl(0);
   invoice_iva = new FormControl(0);
@@ -23,6 +23,7 @@ export class GenerateBudgetComponent implements OnInit {
 
   constructor(private apiService: ApiService, private router: Router, private fb: FormBuilder) {
     this.budgetForm = this.fb.group({
+       // Define the validation of the form
       client_name: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+$')]],
       client_telephone: ['', [Validators.required,  this.phoneNumberValidator()]],
       client_email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')]],
@@ -42,24 +43,24 @@ export class GenerateBudgetComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Agrega un concepto por defecto al iniciar el componente
+     // Add a default concept when initializing the component
     this.addConcept();
 
-    // Suscribirse a los cambios en el FormArray de conceptos
+     // Subscribe to changes in the FormArray of concepts
     this.concepts.valueChanges.subscribe(() => {
       this.calculateValues();
     });
 
-    // Calcular los valores iniciales
+    // Calculate initial values
     this.calculateValues();
   }
 
-  // Método para obtener el control de concepts como FormArray
+  // Method to get the control of concepts as FormArray
   get concepts() {
     return this.budgetForm.get('concepts') as FormArray;
   }
 
-  // Método para agregar un nuevo concepto al FormArray
+  // Method to add a new concept to the FormArray
   addConcept(): void {
     const newConcept = this.fb.group({
       concept: ['', Validators.required],
@@ -71,24 +72,23 @@ export class GenerateBudgetComponent implements OnInit {
     });
     this.concepts.push(newConcept);
 
-    // Verifica si hay más de una línea de concepto para habilitar la eliminación de la primera línea
+   // Check if there is more than one line of concept to enable the deletion of the first line
     if (this.concepts.length > 1) {
       this.canRemoveConcept = true;
     }
   }
 
-
-  // Método para eliminar un concepto del FormArray
+  // Method to remove a concept from the FormArray
   removeConcept(index: number): void {
     this.concepts.removeAt(index);
 
-    // Verifica si solo queda una línea de concepto para deshabilitar la eliminación de la primera línea
+    // Check if only one line of concept remains to disable the deletion of the first line
     if (this.concepts.length === 1) {
       this.canRemoveConcept = false;
     }
   }
 
-  // Método para calcular todos los valores
+  // Method to calculate all values
   calculateValues(): void {
     const subtotal = this.calculateSubtotal();
     const totalDiscount = this.calculateTotalDiscount();
@@ -103,7 +103,7 @@ export class GenerateBudgetComponent implements OnInit {
     this.total.setValue(totalInvoice);
   }
 
-  // Método para calcular el subtotal
+   // Method to calculate the subtotal
   calculateSubtotal(): number {
     let subtotal = 0;
     const concepts = this.concepts.value;
@@ -113,7 +113,7 @@ export class GenerateBudgetComponent implements OnInit {
     return subtotal;
   }
 
-  // Método para calcular el descuento total
+  // Method to calculate the total discount
   calculateTotalDiscount(): number {
     let totalDiscount = 0;
     const concepts = this.concepts.value;
@@ -124,7 +124,7 @@ export class GenerateBudgetComponent implements OnInit {
     return totalDiscount;
   }
 
-  // Método para calcular el IVA total
+  // Method to calculate the total IVA
   calculateTotalIVA(): number {
     let totalIVA = 0;
     const concepts = this.concepts.value;
@@ -135,7 +135,7 @@ export class GenerateBudgetComponent implements OnInit {
     return totalIVA;
   }
 
-  // Método para calcular el IRPF total
+  // Method to calculate the total IRPF
   calculateTotalIRPF(): number {
     let totalIRPF = 0;
     const concepts = this.concepts.value;
@@ -146,12 +146,12 @@ export class GenerateBudgetComponent implements OnInit {
     return totalIRPF;
   }
 
-  // Método para calcular el total
+  // Method to calculate the total
   calculateTotal(subtotal: number, totalDiscount: number, totalIVA: number, totalIRPF: number): number {
     return subtotal - totalDiscount + totalIVA - totalIRPF;
   }
 
-  // Método para enviar el presupuesto al servidor
+  // Method to send the budget to the server
   addBudget(): void {
 
     if (this.budgetForm.invalid) {
@@ -169,19 +169,18 @@ export class GenerateBudgetComponent implements OnInit {
 
 
     if (this.budgetForm.invalid) {
-      this.showError = true; // Mostrar el mensaje de error
-      return; // Detener la ejecución del método si el formulario es inválido
+      this.showError = true; // Show error message
+      return; // Stop method execution if the form is invalid
     }
 
     if (this.budgetForm.valid) {
-       // Llama al método del servicio API para crear el presupuesto con todos los datos
+       // Call the API service method to create the budget with all the data
     this.apiService.createInvoice(formData).subscribe(
       (response) => {
         this.router.navigate(['/budget']);
       },
       (error) => {
         console.error('Error al crear el presupuesto:', error);
-        // Podrías manejar el error aquí
       }
     );
     }else{
@@ -190,12 +189,13 @@ export class GenerateBudgetComponent implements OnInit {
 
   }
 
+    // Method to cancel the edit
   cancelEdit(): void {
     if (confirm('¿Estás seguro de cancelar la edición?')) {
       this.router.navigate(['/budget']);
     }
   }
-   // Función de validación del número de teléfono
+    // Phone number validation function
    phoneNumberValidator(): Validators {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const phoneNumberRegex = /^[679]{1}[0-9]{8}$/; // Expresión regular para validar números de teléfono

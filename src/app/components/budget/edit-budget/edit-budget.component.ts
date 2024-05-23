@@ -15,7 +15,7 @@ export class EditBudgetComponent implements OnInit {
   budgetId: number | null = null;
   budgetData: any;
 
-  // Controles para calcular los valores en tiempo real
+    // Controls for real-time value calculations
   subtotal = new FormControl(0);
   invoice_discount = new FormControl(0);
   invoice_iva = new FormControl(0);
@@ -48,9 +48,10 @@ export class EditBudgetComponent implements OnInit {
   }
 
   ngOnInit(): void {
+     // Subscribe to route params to get the budget ID
     this.route.params.subscribe(params => {
-      const id = +params['id']; // Convertir el parámetro de la URL a number
-      if (!isNaN(id)) { // Verificar si la conversión fue exitosa
+      const id = +params['id']; // Convert the URL parameter to a number
+      if (!isNaN(id)) { // Check if conversion was successful
         this.budgetId = id;
         this.loadBudgetData();
       } else {
@@ -59,7 +60,7 @@ export class EditBudgetComponent implements OnInit {
     });
   }
 
-  // Método para cargar los datos del presupuesto a editar
+  // Method to load the budget data for editing
   loadBudgetData(): void {
     if (!this.budgetId) {
       console.error('No se ha proporcionado un ID de presupuesto válido');
@@ -88,9 +89,9 @@ formatPostalCode(postalCode: string): string {
   return postalCode;
 }
 
-  // Método para asignar los valores del presupuesto a los controles del formulario
+  // Method to assign budget data values to form controls
   patchFormValues(): void {
-    // Asignar valores a los campos del cliente
+    // Assign values to client fields
     const clientData = this.budgetData.clients;
     this.budgetForm.patchValue({
       client_name: clientData.client_name || '',
@@ -102,7 +103,7 @@ formatPostalCode(postalCode: string): string {
       client_postal_code: clientData.client_postal_code && clientData.client_postal_code.toString().length === 4 ? '0' + clientData.client_postal_code : clientData.client_postal_code || ''
     });
 
-    // Asignar valores a los campos de la empresa
+    // Assign values to company fields
     const companyData = this.budgetData.companies;
     this.budgetForm.patchValue({
       company_name: companyData.company_name || '',
@@ -114,9 +115,7 @@ formatPostalCode(postalCode: string): string {
       company_postal_code: companyData.company_postal_code && companyData.company_postal_code.toString().length === 4 ? '0' + companyData.company_postal_code : companyData.company_postal_code || ''
     });
 
-
-
-    // Asignar valores a los conceptos del formulario
+   // Assign values to form concepts
     const conceptsArray = this.budgetForm.get('concepts') as FormArray;
     conceptsArray.clear();
     this.budgetData.concepts.forEach((concept: any) => {
@@ -133,19 +132,17 @@ formatPostalCode(postalCode: string): string {
       );
     });
 
-    // Calcular los valores al cargar los datos del presupuesto
+    // Calculate values when loading budget data
     this.calculateValues();
 
   }
 
-
-
-  // Método para obtener el control de concepts como FormArray
+  // Method to get the control of concepts as FormArray
   get concepts() {
     return this.budgetForm.get('concepts') as FormArray;
   }
 
-  // Método para calcular todos los valores
+  // Method to calculate all values
   calculateValues(): void {
     const subtotal = this.calculateSubtotal();
     const totalDiscount = this.calculateTotalDiscount();
@@ -170,7 +167,7 @@ formatPostalCode(postalCode: string): string {
     return subtotal;
   }
 
-  // Método para calcular el descuento total
+  // Method to calculate the total discount
   calculateTotalDiscount(): number {
     let totalDiscount = 0;
     const concepts = this.concepts.value;
@@ -181,7 +178,7 @@ formatPostalCode(postalCode: string): string {
     return totalDiscount;
   }
 
-  // Método para calcular el IVA total
+ // Method to calculate the total IVA
   calculateTotalIVA(): number {
     let totalIVA = 0;
     const concepts = this.concepts.value;
@@ -192,7 +189,7 @@ formatPostalCode(postalCode: string): string {
     return totalIVA;
   }
 
-  // Método para calcular el IRPF total
+   // Method to calculate the total IRPF
   calculateTotalIRPF(): number {
     let totalIRPF = 0;
     const concepts = this.concepts.value;
@@ -203,12 +200,12 @@ formatPostalCode(postalCode: string): string {
     return totalIRPF;
   }
 
-  // Método para calcular el total
+   // Method to calculate the total
   calculateTotal(subtotal: number, totalDiscount: number, totalIVA: number, totalIRPF: number): number {
     return subtotal - totalDiscount + totalIVA - totalIRPF;
   }
 
-  // Método para enviar el presupuesto editado al servidor
+  // Method to update the edited budget on the server
   updateBudget(): void {
     if (this.budgetId === null) {
       console.error('No se ha proporcionado un ID de presupuesto válido');
@@ -225,8 +222,8 @@ formatPostalCode(postalCode: string): string {
     };
 
     if (this.budgetForm.invalid) {
-      this.showError = true; // Mostrar el mensaje de error
-      return; // Detener la ejecución del método si el formulario es inválido
+      this.showError = true; // Show error message
+      return; // Stop method execution if the form is invalid
     }
 
     this.apiService.updateBudget(this.budgetId, formData).subscribe(
@@ -239,13 +236,14 @@ formatPostalCode(postalCode: string): string {
     );
   }
 
+  // Method to cancel the edit process
   cancelEdit(): void {
     if (confirm('¿Estás seguro de cancelar la edición?')) {
       this.router.navigate(['/budget']);
     }
   }
 
-  // Función de validación del número de teléfono
+   // Phone number validation function
   phoneNumberValidator(): Validators {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const phoneNumberRegex = /^[679]{1}[0-9]{8}$/; // Expresión regular para validar números de teléfono
