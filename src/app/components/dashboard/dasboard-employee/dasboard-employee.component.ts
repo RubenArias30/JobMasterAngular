@@ -8,27 +8,28 @@ import { ApiService } from 'src/app/services/api/api.service';
   styleUrls: ['./dasboard-employee.component.css']
 })
 export class DasboardEmployeeComponent implements OnInit{
-  profileData: any = {}; // Objeto para almacenar los datos del perfil del empleado
+  profileData: any = {}; // Object to store employee profile data
 
-  constructor(private apiService: ApiService,private router: Router) { } // Inyecta el servicio ApiService
-
+  constructor(private apiService: ApiService,private router: Router) {}
   ngOnInit(): void {
-    // Llama al método en el servicio para obtener los datos del perfil del empleado
+   // Calls the method in the service to get employee profile data
     this.apiService.getProfile().subscribe(
       (data: any) => {
 
-        this.profileData = data; // Asigna los datos del perfil obtenidos del servidor al objeto profileData
+        this.profileData = data; // Assigns profile data obtained from the server to profileData object
       },
       (error: any) => {
-        console.error('Error al cargar el perfil del empleado:', error); // Maneja cualquier error
+        console.error('Error al cargar el perfil del empleado:', error);
       }
     );
 }
 
+// Method to redirect to the schedule page
 redirectToSchedule() {
   this.router.navigate(['/view-schedule']);
 }
 
+// Method to redirect to the documents page
 redirectToDocuments() {
   this.router.navigate(['/view-documents']);
 }

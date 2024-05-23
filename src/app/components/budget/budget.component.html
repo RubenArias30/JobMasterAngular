@@ -41,9 +41,8 @@
   </div>
 
   <div  *ngIf="!isError" class="bg-white rounded-xl shadow-lg p-4 ml-5 mr-5 overflow-x-auto border border-green-400 ">
-    <!-- Added overflow-x-auto for horizontal scrolling -->
     <table class="w-full divide-y divide-gray-200">
-      <!-- Cabecera de la tabla -->
+     <!-- Table header -->
       <thead class="bg-gray-100">
         <tr>
           <th scope="col" class="text-center px-4 py-2 text-xs font-bold tracking-wider text-gray-500 uppercase">
@@ -63,7 +62,7 @@
           </th>
         </tr>
       </thead>
-      <!-- Datos de los presupuestos -->
+      <!-- Budget data -->
       <tbody class="divide-y divide-gray-200">
         <ng-container *ngIf="invoices.length > 0; else noInvoices">
 
