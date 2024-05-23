@@ -84,9 +84,25 @@ export class AddIncidentsComponent implements OnInit {
     /**
    * Cancels the edit and navigates back to the incident history page.
    */
-  cancelEdit(): void {
-    if (confirm('¿Estás seguro de cancelar la edición?')) {
-      this.router.navigate(['/history_incidents']);
+ 
+
+  openModal(): void {
+    const modal = document.getElementById('popup-modal');
+    if (modal) {
+      modal.classList.remove('hidden');
     }
   }
+
+  closeModal(): void {
+    const modal = document.getElementById('popup-modal');
+    if (modal) {
+      modal.classList.add('hidden');
+    }
+  }
+
+  confirmCancelEdit(): void {
+    this.closeModal();
+    this.router.navigate(['/history_incidents']);
+  }
+
 }

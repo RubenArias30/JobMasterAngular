@@ -38,7 +38,7 @@
         <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
           Crear Incidencia
         </button>
-        <button type="button" class="bg-gray-500 hover:bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-4" (click)="cancelEdit()">Cancelar</button>
+        <button type="button" class="bg-gray-500 hover:bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-4" (click)="openModal()">Cancelar</button>
       </div>
     </form>
 
@@ -46,3 +46,5 @@
 
   </div>
 </div>
+<app-cancelmodal (confirm)="confirmCancelEdit()" (cancel)="closeModal()"></app-cancelmodal>
+
