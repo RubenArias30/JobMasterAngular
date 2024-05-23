@@ -21,7 +21,7 @@ export class EditScheduleComponent implements OnInit {
   // List of events
   events: EventInput[] = [];
 
-// Properties for the form and event management
+  // Properties for the form and event management
   employeeId: number = 0;
   title: string = '';
   fechaInicio: string = '';
@@ -54,6 +54,11 @@ export class EditScheduleComponent implements OnInit {
     return { html };
   };
 
+  /**
+ * Formats a Date object to a string with the format HH:mm.
+ * @param date - The Date object to format.
+ * @returns The formatted time string.
+ */
   formatTime(date: Date): string {
     const hour = date.getHours();
     const minute = date.getMinutes();
@@ -65,6 +70,11 @@ export class EditScheduleComponent implements OnInit {
     return `${formattedHour}:${formattedMinute}`;
   }
 
+  /**
+ * Formats a date string or Date object to a string with the format YYYY-MM-DD.
+ * @param date - The date string or Date object to format.
+ * @returns The formatted date string.
+ */
   formatDate(date: string | Date): string {
     let formattedDate = '';
     if (typeof date === 'string') {
@@ -76,7 +86,7 @@ export class EditScheduleComponent implements OnInit {
     return formattedDate;
   }
 
-  // Opciones del calendario
+  // Calendar options
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
@@ -92,7 +102,7 @@ export class EditScheduleComponent implements OnInit {
       week: 'Semana',
       day: 'Día'
     },
-    events: this.events, // Usar la lista de eventos
+    events: this.events,
     eventColor: '#92E3A9',
     eventContent: this.customEventContent,
     eventClick: this.handleEventClick.bind(this)
@@ -100,7 +110,7 @@ export class EditScheduleComponent implements OnInit {
   };
 
   constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router, private formBuilder: FormBuilder) {
-    // Inicializar el formulario reactivo
+    // Initialize the reactive form
     this.form = this.formBuilder.group({
       title: ['', Validators.required],
       fechaInicio: ['', Validators.required],
@@ -111,20 +121,24 @@ export class EditScheduleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Obtener el ID del empleado desde la ruta y cargar sus detalles y eventos
+    // Get the employee ID from the route and load their details and events
     this.route.params.subscribe(params => {
       this.employeeId = params['id'];
       this.getEmployeeDetails(this.employeeId);
-      this.loadEvents(this.employeeId); // Cargar eventos del servidor
+      this.loadEvents(this.employeeId); // Load events from the server
     });
   }
 
 
+  /**
+   * Handles the event click action in the calendar.
+   * @param info - Event click information.
+   */
   handleEventClick(info: any) {
     if (info.event) {
       console.log('ID del evento:', info.event.id);
 
-      // Almacena la información del evento seleccionado en una variable
+      // Store the selected event information in a variable
       this.selectedEvent = {
         id: info.event.id,
         title: info.event.title,
@@ -132,40 +146,41 @@ export class EditScheduleComponent implements OnInit {
         end: info.event.end,
       };
 
-      // Abre el modal si es necesario
       this.showModal = true;
     }
   }
 
-
+  /**
+   * Opens the edit form for the selected event.
+   */
   openEditForm() {
-    // Verificar si hay un evento seleccionado
+    // Check if an event is selected
     if (!this.selectedEvent) {
       console.error('No se ha seleccionado ningún evento para editar.');
       return;
     }
 
-    // Obtener el título del evento
+    // Get the event title
     const title = this.selectedEvent.title;
 
-    // Obtener las fechas de inicio y fin del evento seleccionado
+    // Get the start and end dates of the selected event
     const startDate = this.selectedEvent.start;
     const endDate = this.selectedEvent.end;
 
-    // Convertir las fechas de inicio y fin a objetos Date
+    // Calculate the start and end dates and times in ISO string format
     const start = new Date(startDate);
     const end = new Date(endDate);
 
-    // Calcular la duración en milisegundos del evento
+    // Calculate the duration of the event in milliseconds
     const durationMs = end.getTime() - start.getTime();
 
-    // Calcular las fechas y horas de inicio y fin en formato de cadena ISO
+    // Calculate the start and end dates and times in ISO string format
     const formattedStartDate = this.formatDate(start);
     const formattedStartTime = this.formatTime(start);
     const formattedEndDate = this.formatDate(end);
     const formattedEndTime = this.formatTime(end);
 
-    // Inicializar el formulario de edición con el rango completo de fechas y horas del evento seleccionado
+    // Initialize the edit form with the full date and time range of the selected event
     this.form.patchValue({
       title: title,
       fechaInicio: formattedStartDate,
@@ -174,49 +189,53 @@ export class EditScheduleComponent implements OnInit {
       horaFin: formattedEndTime
     });
 
-    // Cerrar el modal
+    // close the modal
     this.closeModal();
   }
 
 
 
-  // Función para mostrar el modal y pasar el evento seleccionado
+  // Function to show the modal and pass the selected event
   openModal(event: any) {
     this.selectedEvent = event;
     this.showModal = true;
   }
 
-  // Función para cerrar el modal
+  // Function to close the modal
   closeModal() {
     this.showModal = false;
   }
 
+  /**
+  * Loads events for a specific employee from the server.
+  * @param employeeId - The ID of the employee.
+  */
   loadEvents(employeeId: number): void {
     this.apiService.getEvents(employeeId).subscribe(
       (events: any[]) => {
-        this.events = []; // Limpiar la lista de eventos
+        this.events = [];  // Clear the list of events
         events.forEach(event => {
           const startDate = new Date(event.start_datetime);
           const endDate = new Date(event.end_datetime);
 
-          let currentDate = new Date(startDate); // Iniciar en la fecha de inicio
+          let currentDate = new Date(startDate); // Start at the start date
 
           while (currentDate <= endDate) {
             const formattedDate = currentDate.toISOString().split('T')[0];
             const newEvent: EventInput = {
-              id: event.id, // Asegúrate de incluir la propiedad id
+              id: event.id, // Make sure to include the id property
               title: event.title,
               start: `${formattedDate}T${this.getFormattedTime(currentDate)}:00`,
               end: `${formattedDate}T${this.getFormattedTime(endDate)}:00`
             };
-            this.events.push(newEvent); // Agregar evento a la lista
+            this.events.push(newEvent); // Add event to the list
 
-            // Avanzar al siguiente día
+            // Move to the next day
             currentDate.setDate(currentDate.getDate() + 1);
 
-            // Verificar si hay un cambio de mes
+            // Check for a month change
             if (currentDate.getMonth() !== startDate.getMonth() && currentDate <= endDate) {
-              // Generar eventos para el resto del mes
+              // Generate events for the rest of the month
               while (currentDate.getMonth() === endDate.getMonth() && currentDate <= endDate) {
                 const formattedDateNextMonth = currentDate.toISOString().split('T')[0];
                 const newEventNextMonth: EventInput = {
@@ -224,14 +243,14 @@ export class EditScheduleComponent implements OnInit {
                   start: `${formattedDateNextMonth}T${this.getFormattedTime(currentDate)}:00`,
                   end: `${formattedDateNextMonth}T${this.getFormattedTime(endDate)}:00`
                 };
-                this.events.push(newEventNextMonth); // Agregar evento a la lista
-                currentDate.setDate(currentDate.getDate() + 1); // Avanzar al siguiente día
+                this.events.push(newEventNextMonth); // Add event to the list
+                currentDate.setDate(currentDate.getDate() + 1); // Add event to the list
               }
             }
           }
         });
 
-        this.calendarOptions.events = this.events; // Actualizar los eventos en el calendario
+        this.calendarOptions.events = this.events; // Update the events in the calendar
         console.log('Eventos en formato EventInput:', this.events);
       },
       (error) => {
@@ -240,37 +259,42 @@ export class EditScheduleComponent implements OnInit {
     );
   }
 
+  /**
+ * Formats a Date object to a string with the format HH:mm.
+ * @param date - The Date object to format.
+ * @returns The formatted time string.
+ */
   getFormattedTime(date: Date): string {
-    // Formatear la hora en formato HH:MM
+    // Format the time in HH:MM format
     return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
   }
 
-  // Editar un nuevo horario
+  /**
+   * Edits a schedule event.
+   */
   editarHorario() {
-
-    // Verificar si hay un evento seleccionado
+    // Check if an event is selected
     if (!this.selectedEvent) {
       console.error('No se ha seleccionado ningún evento para editar.');
       return;
     }
-    // Obtener los datos del formulario
+    // Get form data
     const formData = {
       title: this.form.get('title')?.value,
       start_datetime: `${this.form.get('fechaInicio')?.value} ${this.form.get('horaInicio')?.value}`,
       end_datetime: `${this.form.get('fechaFin')?.value} ${this.form.get('horaFin')?.value}`
     };
 
-    // Obtener el ID del evento seleccionado
+    // Get the ID of the selected event
     const eventId = this.selectedEvent.id;
 
-    // Llamar al método updateSchedule del ApiService para actualizar el evento
+    // Get the ID of the selected event
     this.apiService.updateSchedule(eventId, formData).subscribe(
       (response) => {
-        // Actualización exitosa, puedes mostrar un mensaje de éxito o redirigir a otra página si es necesario
-        // Aquí puedes agregar una lógica adicional, como mostrar un mensaje de éxito o redirigir a otra página
+
+        //goes to the same event
       },
       (error) => {
-        // Manejar errores, puedes mostrar un mensaje de error al usuario o registrar el error en la consola
         console.error('Error al actualizar el evento:', error);
       }
     );
@@ -278,13 +302,19 @@ export class EditScheduleComponent implements OnInit {
 
 
 
-  // Enviar el horario al servidor
+  /**
+   * Submits the schedule to the server.
+   * @param scheduleData - Schedule data to submit.
+   */
   onSubmit(scheduleData: any) {
 
   }
 
 
-  // Obtener los detalles del empleado desde el servidor
+  /**
+   * Gets the details of the employee from the server.
+   * @param employeeId - The ID of the employee.
+   */
   getEmployeeDetails(employeeId: number): void {
     this.apiService.getEmployeeDetails(employeeId).subscribe(
       (response: any) => {
@@ -295,17 +325,25 @@ export class EditScheduleComponent implements OnInit {
       }
     );
   }
-  // Limpiar el formulario
+  /**
+ * Clears the form.
+ */
   clearForm(): void {
     this.form.reset();
   }
 
-  // Regresar a la página de horarios
+  /**
+   * Navigates back to the schedule page.
+   */
   goBack(): void {
     this.router.navigate(['/schedule']);
   }
 
-  // Validador personalizado para verificar que la fecha de inicio sea anterior a la fecha de fin
+  /**
+ * Custom validator to ensure that the start date is before the end date.
+ * @param formGroup - The form group containing the start and end date fields.
+ * @returns An object if the validation fails, null otherwise.
+ */
   dateRangeValidator(formGroup: FormGroup) {
     const fechaInicio = formGroup.get('fechaInicio')?.value;
     const horaInicio = formGroup.get('horaInicio')?.value;
@@ -314,15 +352,15 @@ export class EditScheduleComponent implements OnInit {
 
     if (fechaInicio !== fechaFin) {
       if (fechaInicio > fechaFin) {
-        return { dateRange: true }; // Devuelve un error si la fecha de inicio es posterior a la fecha de fin
+        return { dateRange: true }; // Returns an error if the start date is after the end date
       } else {
-        return null; // Retorna nulo si la validación es exitosa
+        return null; // Returns null if validation succeeds
       }
     } else {
       if (horaInicio >= horaFin) {
-        return { dateRange: true }; // Devuelve un error si la hora de inicio es mayor o igual a la hora de fin en el mismo día
+        return { dateRange: true }; // Returns an error if the start time is greater than or equal to the end time on the same day
       } else {
-        return null; // Retorna nulo si la validación es exitosa
+        return null; // Returns null if validation succeeds
       }
     }
   }
