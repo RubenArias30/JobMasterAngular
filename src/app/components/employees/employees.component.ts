@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api/api.service';
 import { Employee } from 'src/app/models/employee.model';
 
+
+
 @Component({
   selector: 'app-employees',
   templateUrl: './employees.component.html',
@@ -15,7 +17,15 @@ export class EmployeesComponent {
   isLoading = true;
   isError = false;
 
-  constructor(private apiService: ApiService, private router: Router) { }
+  // Delete modal
+  showDeleteModal: boolean = false;
+  employeeToDeleteId: number | null = null;  // Add this line
+
+  // success messages
+  showSuccessAlert: boolean = false;  // Add this line
+  successMessage: string = '';
+
+  constructor(private apiService: ApiService, private router: Router,) { }
 
   ngOnInit(): void {
     this.getEmployees();
@@ -46,11 +56,28 @@ export class EmployeesComponent {
     this.modalVisible = false;
   }
 
-  confirmDeleteEmployee(employeeId: number): void { // Utiliza el tipo number para el id
-    const confirmDelete = confirm('¿Estás seguro de que deseas eliminar este empleado?');
-    if (confirmDelete) {
-      this.modalVisible = false;
-      this.deleteEmployee(employeeId);
+  // confirmDeleteEmployee(employeeId: number): void { // Utiliza el tipo number para el id
+  //   const confirmDelete = confirm('¿Estás seguro de que deseas eliminar este empleado?');
+  //   if (confirmDelete) {
+  //     this.modalVisible = false;
+  //     this.deleteEmployee(employeeId);
+  //   }
+  // }
+
+  openDeleteModal(employeeId: number): void {
+    this.employeeToDeleteId = employeeId;
+    this.showDeleteModal = true;
+  }
+
+  closeDeleteModal(): void {
+    this.showDeleteModal = false;
+    this.employeeToDeleteId = null;
+  }
+
+  confirmDeletion(): void {
+    if (this.employeeToDeleteId !== null) {
+      this.deleteEmployee(this.employeeToDeleteId);
+      this.closeDeleteModal();
     }
   }
 
@@ -58,6 +85,7 @@ export class EmployeesComponent {
     this.apiService.deleteEmployee(employeeId.toString()).subscribe( // Ajusta el tipo del id y convierte a string
       () => {
         this.employees = this.employees.filter(employee => employee.id !== employeeId);
+        this.showSuccessAlertMessage('Empleado eliminado con éxito');
       },
       (error) => {
         console.error('Error al eliminar el empleado:', error);
@@ -67,5 +95,14 @@ export class EmployeesComponent {
 
   navigateToDocuments(employee: Employee): void { // Utiliza el tipo Employee
     this.router.navigate(['/documents', { employeeName: `${employee.name} ${employee.surname}` }]);
+  }
+
+  // message is shown after the delete is done
+  showSuccessAlertMessage(message: string): void {
+    this.successMessage = message;
+    this.showSuccessAlert = true;
+    setTimeout(() => {
+      this.showSuccessAlert = false;
+    }, 3000);  // Hide the alert after 3 seconds
   }
 }
