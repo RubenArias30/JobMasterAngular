@@ -16,9 +16,11 @@ export class DocumentsComponent implements OnInit {
   constructor(private router: Router, private apiService: ApiService) { }
 
   ngOnInit(): void {
+    // Calls the method to fetch employee data on component initialization
     this.getEmployees();
   }
 
+  // Method to fetch employee data
   getEmployees(): void {
     this.apiService.getEmployees().subscribe(
       (response: Employee[]) => {
@@ -27,12 +29,13 @@ export class DocumentsComponent implements OnInit {
       },
       (error) => {
         console.error('Error al obtener la lista de empleados:', error);
-        this.isError = true; // Set error flag to true
+        this.isError = true;
         this.isLoading = false;
       }
     );
   }
 
+  // Method to navigate to employee details page
   navigateToDetails(employeeId: string): void {
     this.router.navigate(['/documents/details', employeeId]);
   }

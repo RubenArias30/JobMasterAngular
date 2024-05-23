@@ -11,9 +11,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AddDocumentsComponent implements OnInit {
   documentForm: FormGroup;
-  employeeId: number | null = null; // Inicializa la propiedad con un valor seguro
+  employeeId: number | null = null;
   showMissingFieldsError: boolean = false;
-  selectedFile: File | null = null; // Variable to hold the selected file
+  selectedFile: File | null = null;
 
   constructor(
     private apiService: ApiService,
@@ -21,6 +21,7 @@ export class AddDocumentsComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
+    // Initializes the document form with form controls and validators
     this.documentForm = this.fb.group({
       type_documents: ['', Validators.required],
       name: ['', Validators.required],
@@ -30,25 +31,29 @@ export class AddDocumentsComponent implements OnInit {
     });
   }
 
-
   ngOnInit(): void {
+     // Retrieves the employee ID from the route parameters
     this.route.params.subscribe(params => {
       this.employeeId = params['employeeId'] ? +params['employeeId'] : null;
     });
   }
+
+  // Method to handle file selection
   onFileChange(event: any): void {
     const file = event.target.files[0];
     if (file) {
-      this.selectedFile = file;
-      this.documentForm.patchValue({ route: file.name });
+      this.selectedFile = file;  // Sets the selected file
+      this.documentForm.patchValue({ route: file.name }); // Updates the document route field with the file name
     }
   }
+
+   // Method to submit the document form
   submitForm(): void {
     if (this.documentForm.invalid || !this.selectedFile) {
-      this.showMissingFieldsError = true;
+      this.showMissingFieldsError = true; // Shows missing fields error if the form is invalid or no file is selected
       return;
     }
-    this.showMissingFieldsError = false;
+    this.showMissingFieldsError = false; // Hides the missing fields error
 
     const formData = new FormData();
     formData.append('type_documents', this.documentForm.value.type_documents);
@@ -57,6 +62,7 @@ export class AddDocumentsComponent implements OnInit {
     formData.append('date', this.documentForm.value.date);
     formData.append('file', this.selectedFile!);
 
+    // Calls the API service to upload the document
     this.apiService.uploadDocument(this.employeeId!, formData).subscribe(
       (response) => {
         this.router.navigate(['/documents/details', this.employeeId]);
@@ -67,9 +73,7 @@ export class AddDocumentsComponent implements OnInit {
     );
   }
 
-
-
-// Función para validar que la fecha no sea del pasado ni del futuro
+ // Custom validator function to validate date range
 dateValidator(): any {
   return (control: AbstractControl): { [key: string]: boolean } | null => {
     const selectedDate = new Date(control.value);
@@ -77,17 +81,17 @@ dateValidator(): any {
     const oneYearAgo = new Date();
     oneYearAgo.setFullYear(currentDate.getFullYear() - 1);
 
-    // Validación de fecha pasada
+    // Validates for future date
     if (selectedDate > currentDate) {
       return { 'invalidFutureDate': true };
     }
 
-    // Validación de fecha futura
+    // Validates for past date (more than one year ago)
     if (selectedDate < oneYearAgo) {
       return { 'invalidPastDate': true };
     }
 
-    return null;
+    return null; // Returns null if date is within valid range
   };
 }
 

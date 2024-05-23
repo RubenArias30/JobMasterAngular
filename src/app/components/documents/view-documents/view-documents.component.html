@@ -4,7 +4,7 @@
       <h1 class="text-lg font-bold mr-2 sm:text-xl md:text-2xl lg:text-3xl">Mis Documentos</h1>
       <div class="border-l h-6 mr-2"></div>
     </div>
-    <div class="relative mr-5"> <!-- Ajuste de margen a la izquierda -->
+    <div class="relative mr-5">
       <select class="flex items-center bg-green-400 hover:bg-green-500 text-white px-2 py-1 rounded-lg" id="documentType" name="documentType" [(ngModel)]="selectedType" (ngModelChange)="filterDocumentsByType($event)">
         <option value="" selected>Filtros</option>
         <ng-container *ngFor="let type of documentTypes | keyvalue">
