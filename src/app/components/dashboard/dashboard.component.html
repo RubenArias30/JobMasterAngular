@@ -45,7 +45,7 @@
     <div class="px-4 py-2 w-full">
       <div class="bg-white border border-green-400 rounded-xl p-4 mb-8 relative">
         <div class="flex justify-between items-center mb-4">
-          <h2 class="text-xl font-bold inline-block">Incidencias</h2>
+          <h2 class="text-xl font-bold inline-block">Incidencias Recientes</h2>
           <button (click)="navigateToIncidents()"
             class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">Ir a Incidencias <i
               class='bx bxs-right-arrow-circle text-lg'></i></button>
@@ -87,7 +87,7 @@
                       {{ incident.description.length > 20 ? incident.description.substring(0, 20) + '...' : incident.description }}
                     </div>
                   </td>
-                  
+
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-sm text-gray-900">{{ incident.date }}</div>
                   </td>
