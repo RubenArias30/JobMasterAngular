@@ -51,7 +51,7 @@
               <button (click)="downloadDocument(document.id, document.name)">
                 <i class='bx bxs-file-pdf text-xl'></i>
               </button>
-              <button (click)="deleteDocument(document.id)">
+              <button (click)="openDeleteModal(document.id)">
                 <i class='bx bx-trash text-xl text-red-600'></i>
               </button>
             </td>
@@ -67,4 +67,17 @@
     </table>
   </div>
 
+  <app-delete-confirmation-modal
+    [showConfirmationModal]="showConfirmationModal"
+    (closeModalEvent)="closeDeleteModal()"
+    (confirmDelete)="confirmDeletion()">
+  </app-delete-confirmation-modal>
+
+  <app-success-alert
+    *ngIf="showSuccessAlert"
+    [message]="successMessage">
+  </app-success-alert>
 </div>
+
+
+

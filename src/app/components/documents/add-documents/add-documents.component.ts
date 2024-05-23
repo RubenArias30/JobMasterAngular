@@ -102,11 +102,33 @@ dateValidator(): any {
     }
     return null;
   }
-  cancelbutton(): void {
-    if (confirm('¿Estás seguro de cancelar la operacion?')) {
-      // Si el usuario confirma la cancelación, redirige a la página de administración de empleados
-      this.router.navigate(['/documents/details', this.employeeId]);
+
+
+  // cancelbutton(): void {
+  //   if (confirm('¿Estás seguro de cancelar la operacion?')) {
+  //     // Si el usuario confirma la cancelación, redirige a la página de administración de empleados
+  //     this.router.navigate(['/documents/details', this.employeeId]);
+  //   }
+  // }
+
+
+  openModal(): void {
+    const modal = document.getElementById('popup-modal');
+    if (modal) {
+      modal.classList.remove('hidden');
     }
+  }
+
+  closeModal(): void {
+    const modal = document.getElementById('popup-modal');
+    if (modal) {
+      modal.classList.add('hidden');
+    }
+  }
+
+  confirmCancelEdit(): void {
+    this.closeModal();
+    this.router.navigate(['/documents/details', this.employeeId]);
   }
 }
 

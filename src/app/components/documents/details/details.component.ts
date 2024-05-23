@@ -24,6 +24,14 @@ export class DetailsComponent implements OnInit {
     'others': 'Otros'
   };
 
+  showConfirmationModal: boolean = false;
+  documentToDelete: number | null = null;
+
+   // success messages
+   showSuccessAlert: boolean = false;  // Add this line
+   successMessage: string = '';
+
+
   constructor(private router: Router, private apiService: ApiService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -103,13 +111,39 @@ export class DetailsComponent implements OnInit {
     this.showDropdown = false;
   }
 
-  deleteDocument(documentId: number): void {
-    if (confirm('¿Estás seguro de que deseas borrar este documento?')) {
-      this.apiService.deleteDocument(documentId).subscribe(
+  // deleteDocument(documentId: number): void {
+  //   if (confirm('¿Estás seguro de que deseas borrar este documento?')) {
+  //     this.apiService.deleteDocument(documentId).subscribe(
+  //       () => {
+  //         // Eliminar el documento de la lista localmente
+  //         this.documents = this.documents.filter(doc => doc.id !== documentId);
+  //         console.log('Documento eliminado exitosamente');
+  //       },
+  //       (error) => {
+  //         console.error('Error al borrar el documento:', error);
+  //       }
+  //     );
+  //   }
+  // }
+
+
+  openDeleteModal(documentId: number): void {
+    this.documentToDelete = documentId;
+    this.showConfirmationModal = true;
+  }
+
+  closeDeleteModal(): void {
+    this.showConfirmationModal = false;
+    this.documentToDelete = null;
+  }
+
+  confirmDeletion(): void {
+    if (this.documentToDelete !== null) {
+      this.apiService.deleteDocument(this.documentToDelete).subscribe(
         () => {
-          // Eliminar el documento de la lista localmente
-          this.documents = this.documents.filter(doc => doc.id !== documentId);
-          console.log('Documento eliminado exitosamente');
+          this.documents = this.documents.filter(doc => doc.id !== this.documentToDelete);
+          this.showSuccessAlertMessage('Documento eliminado con éxito');
+          this.closeDeleteModal();
         },
         (error) => {
           console.error('Error al borrar el documento:', error);
@@ -117,6 +151,8 @@ export class DetailsComponent implements OnInit {
       );
     }
   }
+
+
   translateDocumentType(documentType: string): string {
     return this.documentTypeTranslations[documentType] || documentType;
   }
@@ -135,6 +171,14 @@ export class DetailsComponent implements OnInit {
         console.error('Error downloading the document:', error);
       }
     );
+  }
+  // message is shown after the delete is done
+  showSuccessAlertMessage(message: string): void {
+    this.successMessage = message;
+    this.showSuccessAlert = true;
+    setTimeout(() => {
+      this.showSuccessAlert = false;
+    }, 3000);  // Hide the alert after 3 seconds
   }
 
 }
