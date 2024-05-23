@@ -21,10 +21,24 @@ export class BudgetComponent implements OnInit {
   p: number = 1;
   isLoading = true;
   isError = false;
+
+
+  showConfirmationModal = false;  // To control the visibility of the modal
+  invoiceIdToDelete: string | null = null; // To store the ID of the invoice to be deleted
+
+  // success messages
+  showSuccessAlert: boolean = false;
+  successMessage: string = '';
+
+  //search bar
+  searchQuery: string = '';
+  originalinvoices: any[] = [];
+
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.getInvoices();
+
   }
 
 
@@ -35,6 +49,7 @@ export class BudgetComponent implements OnInit {
     this.apiService.getInvoices().subscribe(
       (response: Invoice[]) => {
         this.invoices = response;
+        this.originalinvoices = this.invoices;
         console.log(response)
         this.sortInvoices(this.sortBy);
         this.isLoading = false;
@@ -53,9 +68,19 @@ export class BudgetComponent implements OnInit {
    * @param invoiceId - The ID of the invoice to delete.
    */
   confirmDeleteInvoice(invoiceId: string): void {
-    const confirmDelete = confirm('¿Estás seguro de que deseas eliminar esta factura?');
-    if (confirmDelete) {
-      this.deleteInvoice(invoiceId);
+    this.invoiceIdToDelete = invoiceId;
+    this.showConfirmationModal = true;
+  }
+
+  onCloseModal(): void {
+    this.showConfirmationModal = false;
+    this.invoiceIdToDelete = null;
+  }
+
+  onConfirmDelete(): void {
+    if (this.invoiceIdToDelete) {
+      this.deleteInvoice(this.invoiceIdToDelete);
+      this.onCloseModal();
     }
   }
 
@@ -68,6 +93,8 @@ export class BudgetComponent implements OnInit {
       () => {
          // Remove the invoice from the local list after deleting it from the server
         this.invoices = this.invoices.filter(invoice => invoice.id.toString() !== invoiceId);
+        this.showSuccessAlertMessage('Presupuesto eliminado con éxito');
+
       },
       (error) => {
         console.error('Error al eliminar la factura:', error);
@@ -251,4 +278,38 @@ export class BudgetComponent implements OnInit {
     // Save the PDF
     doc.save('presupuesto.pdf');
   }
+
+
+  // message is shown after the delete is done
+  showSuccessAlertMessage(message: string): void {
+    this.successMessage = message;
+    this.showSuccessAlert = true;
+    setTimeout(() => {
+      this.showSuccessAlert = false;
+    }, 3000);  // Hide the alert after 3 seconds
+  }
+
+  searchInvoices(event: Event): void {
+    event.preventDefault();
+    const query = this.searchQuery.toLowerCase().trim();
+
+    if (query === '') {
+        this.invoices = this.originalinvoices;
+    } else {
+      this.invoices = this.originalinvoices.filter(invoice => {
+          const clientName = invoice.clients?.client_name?.toLowerCase() || '';
+          const companyName = invoice.companies?.company_name?.toLowerCase() || '';
+
+          if (query.length === 1) {
+              // If the query is a single character, check if the name starts with this character
+              return clientName.startsWith(query) || companyName.startsWith(query);
+          } else {
+              // For longer queries, check if the name contains the query string
+              return clientName.includes(query) || companyName.includes(query);
+          }
+      });
+    }
+}
+
+
 }
