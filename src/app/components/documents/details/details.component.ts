@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api/api.service';
 
+
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
@@ -10,9 +11,9 @@ import { ApiService } from 'src/app/services/api/api.service';
 export class DetailsComponent implements OnInit {
   documents: any[] = [];
   employeeName: string = '';
-  employeeId: number | undefined; // Inicializa como indefinido
+  employeeId: number | undefined;
   showDropdown: boolean = false;
-  documentTypes: string[] = ['contracts', 'nif', 'curriculum', 'laboral_life', 'payroll', 'proof','others'];
+  documentTypes: string[] = ['contracts', 'nif', 'curriculum', 'laboral_life', 'payroll', 'proof', 'others'];
   selectedType: string = '';
   documentTypeTranslations: any = {
     'contracts': 'Contratos',
@@ -24,29 +25,33 @@ export class DetailsComponent implements OnInit {
     'others': 'Otros'
   };
 
+
   showConfirmationModal: boolean = false;
   documentToDelete: number | null = null;
 
-   // success messages
-   showSuccessAlert: boolean = false;  // Add this line
-   successMessage: string = '';
+
+  // success messages
+  showSuccessAlert: boolean = false;
+  successMessage: string = '';
+
+
 
 
   constructor(private router: Router, private apiService: ApiService, private route: ActivatedRoute) { }
+
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.employeeId = +params['employeeId'];
       this.getEmployeeName(this.employeeId);
-
       this.getDocuments(this.employeeId);
     });
     // Set selectedType to 'all' to display all documents by default
     this.selectedType = 'all';
   }
 
-   /**
-   * Fetches documents by employee ID.
+  /**
+   * Retrieves documents for the specified employee ID.
    * @param employeeId - The ID of the employee.
    */
   getDocuments(employeeId: number): void {
@@ -66,8 +71,8 @@ export class DetailsComponent implements OnInit {
     );
   }
 
-    /**
-   * Fetches the name of the employee.
+  /**
+   * Retrieves the name of the employee.
    * @param employeeId - The ID of the employee.
    */
   getEmployeeName(employeeId: number): void {
@@ -82,19 +87,21 @@ export class DetailsComponent implements OnInit {
   }
 
     /**
-   * Toggles the document type dropdown.
+   * Toggles the dropdown visibility.
    */
   toggleDropdown(): void {
     this.showDropdown = !this.showDropdown;
   }
 
     /**
-   * Filters documents by type.
-   * @param documentType - The type of document to filter by.
+   * Filters documents by document type.
+   * @param documentType - The document type to filter by.
    */
   filterDocuments(documentType: string): void {
     // Update the selected type
     this.selectedType = documentType;
+
+
     // Ensure employeeId is defined before fetching documents
     if (this.employeeId !== undefined) {
       // Reload documents
@@ -102,21 +109,40 @@ export class DetailsComponent implements OnInit {
     } else {
       console.error("Employee ID is undefined.");
     }
+
+
     // Close the dropdown after selection
     this.showDropdown = false;
   }
 
-   /**
-   * Deletes a document.
+
+/**
+   * Opens the delete modal for the specified document.
    * @param documentId - The ID of the document to delete.
    */
-  deleteDocument(documentId: number): void {
-    if (confirm('¿Estás seguro de que deseas borrar este documento?')) {
-      this.apiService.deleteDocument(documentId).subscribe(
+  openDeleteModal(documentId: number): void {
+    this.documentToDelete = documentId;
+    this.showConfirmationModal = true;
+  }
+
+  /**
+   * Closes the delete modal.
+   */
+  closeDeleteModal(): void {
+    this.showConfirmationModal = false;
+    this.documentToDelete = null;
+  }
+
+ /**
+   * Confirms the deletion of the document.
+   */
+  confirmDeletion(): void {
+    if (this.documentToDelete !== null) {
+      this.apiService.deleteDocument(this.documentToDelete).subscribe(
         () => {
-         // Remove the document from the local list
-          this.documents = this.documents.filter(doc => doc.id !== documentId);
-          console.log('Documento eliminado exitosamente');
+          this.documents = this.documents.filter(doc => doc.id !== this.documentToDelete);
+          this.showSuccessAlertMessage('Documento eliminado con éxito');
+          this.closeDeleteModal();
         },
         (error) => {
           console.error('Error al borrar el documento:', error);
@@ -126,7 +152,7 @@ export class DetailsComponent implements OnInit {
   }
 
     /**
-   * Translates the document type.
+   * Translates document type into the corresponding translated value.
    * @param documentType - The document type to translate.
    * @returns The translated document type.
    */
@@ -134,10 +160,10 @@ export class DetailsComponent implements OnInit {
     return this.documentTypeTranslations[documentType] || documentType;
   }
 
-    /**
-   * Downloads a document.
+  /**
+   * Downloads the specified document.
    * @param documentId - The ID of the document to download.
-   * @param documentName - The name of the document.
+   * @param documentName - The name of the document to download.
    */
   downloadDocument(documentId: number, documentName: string): void {
     this.apiService.downloadDocument(documentId).subscribe(
@@ -154,7 +180,10 @@ export class DetailsComponent implements OnInit {
       }
     );
   }
-  // message is shown after the delete is done
+    /**
+   * Displays a success alert message for a specified duration.
+   * @param message - The message to display in the success alert.
+   */
   showSuccessAlertMessage(message: string): void {
     this.successMessage = message;
     this.showSuccessAlert = true;
@@ -162,5 +191,6 @@ export class DetailsComponent implements OnInit {
       this.showSuccessAlert = false;
     }, 3000);  // Hide the alert after 3 seconds
   }
+
 
 }
