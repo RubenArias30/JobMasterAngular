@@ -12,7 +12,7 @@ export class RequestResetComponent implements OnInit {
 
   sentMessage = false;
   resetForm: FormGroup;
-  isEmptyFieldsErrorVisible = false; // Nueva variable para controlar la visibilidad del mensaje
+  isEmptyFieldsErrorVisible = false;
 
   constructor(
     private fb: FormBuilder,
@@ -28,12 +28,15 @@ export class RequestResetComponent implements OnInit {
     if (localStorage.getItem('token')) {
       this.router.navigate(['/']);
     }
-    
+
   }
 
+    /**
+   * Function to handle form submission.
+   */
   onSubmit(): void {
     if (this.resetForm.valid) {
-      this.isEmptyFieldsErrorVisible = false; // Reinicia el estado del mensaje si el formulario es válido
+      this.isEmptyFieldsErrorVisible = false; // Reset the message state if the form is valid
       this.apiService.sendPasswordLink(this.resetForm.value).subscribe(
         data => {
           this.sentMessage = true;
@@ -42,11 +45,14 @@ export class RequestResetComponent implements OnInit {
         error => console.error(error)
       );
     } else {
-      this.isEmptyFieldsErrorVisible = true; // Muestra el mensaje si el formulario es inválido
+      this.isEmptyFieldsErrorVisible = true;  // Show the message if the form is invalid
     }
-    
+
   }
 
+   /**
+   * Function to navigate back to the previous page.
+   */
   goBack(): void {
     this.router.navigate(['/']);
   }
