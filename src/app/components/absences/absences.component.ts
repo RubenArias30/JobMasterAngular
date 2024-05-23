@@ -16,12 +16,12 @@ import { AddAbsencesComponent } from 'src/app/components/absences/add-absences/a
 export class AbsencesComponent implements OnInit, OnDestroy {
   @ViewChild(AddAbsencesComponent) addAbsenceModal!: AddAbsencesComponent;
   absences: any[] = [];
-  employees: any[] = []; // Add this line
+  employees: any[] = []; 
   dropdownStates: { [key: string]: boolean } = {};
   currentOpenDropdown: number | null = null;
-  showDetailsModal: boolean = false; // Agrega esta propiedad
+  showDetailsModal: boolean = false; 
   showDeleteConfirmationModal = false;
-  p: number = 1;
+  p: number = 1; //pagination
   searchQuery: string = '';
   originalAbsences: any[] = [];
   @ViewChild('deleteConfirmation') deleteConfirmation!: DeleteConfirmationModalComponent;
@@ -30,15 +30,16 @@ export class AbsencesComponent implements OnInit, OnDestroy {
   deleteSuccess: boolean = false;
   isLoading = true;
   isError = false;
-// Add an additional option to filter all absences
- filterOptions = ['Mostrar Todo', 'Vacaciones', 'Enfermedad', 'Maternidad/Paternidad', 'Compensatorias', 'Baja', 'Otros'];
+
+  //filter for all absences
+  filterOptions = ['Mostrar Todo', 'Vacaciones', 'Enfermedad', 'Maternidad/Paternidad', 'Compensatorias', 'Baja', 'Otros'];
   selectedFilter: string | null = null;
   showFilterDropdown = false;
 
   selectedEmployeeId!: number;
   showEmployeeDropdown = false;
 
-  // Define un objeto que mapee los tipos de ausencias en inglés a sus equivalentes en español
+  // Object to map absence types in English to their equivalents in Spanish
   tipoAusenciaTraducido: { [key: string]: string } = {
     'vacation': 'Vacaciones',
     'sick_leave': 'Enfermedad',
@@ -84,57 +85,68 @@ export class AbsencesComponent implements OnInit, OnDestroy {
     document.removeEventListener('click', this.onDocumentClick);
   }
 
+   /**
+   * Handles document click event to close dropdowns when clicking outside.
+   * @param event The mouse event.
+   */
   onDocumentClick = (event: MouseEvent) => {
-    // Check if the clicked element is outside the dropdown
     if (!this.elementRef.nativeElement.contains(event.target)) {
-      // Close the dropdown if it's open
       this.currentOpenDropdown = null;
     }
   };
 
+  /**
+   * Toggles the visibility of a dropdown.
+   * @param id The ID of the dropdown.
+   */
   toggleDropdown(id: number) {
     if (this.currentOpenDropdown === id) {
-      this.currentOpenDropdown = null; // Close the dropdown if it's already open
+      this.currentOpenDropdown = null; 
     } else {
-      this.currentOpenDropdown = id; // Open the clicked dropdown
+      this.currentOpenDropdown = id;
     }
   }
+
+   /**
+   * Resets the pagination to the first page.
+   */
   resetPagination() {
-    this.p = 1; // Reset the current page to 1
+    this.p = 1; 
   }
 
-  // Method to check if a dropdown is open
-  isDropdownOpen(id: number): boolean {
+  /**
+   * Checks if a dropdown is open.
+   * @param id The ID of the dropdown.
+   * @returns A boolean indicating if the dropdown is open.
+   */
+    isDropdownOpen(id: number): boolean {
     return this.currentOpenDropdown === id;
   }
 
-
+  /**
+   * Opens the delete confirmation modal.
+   * @param absenceId The ID of the absence to delete.
+   */
 
   deleteAbsence(absenceId: string): void {
+    this.showDetailsModal = false;
 
+    this.showDeleteConfirmationModal = true;
 
-   // Ocultar los detalles de la ausencia
-   this.showDetailsModal = false;
-
-   // Mostrar la confirmación de eliminación
-   this.showDeleteConfirmationModal = true;
-
- // Guardar el ID de la ausencia a eliminar
- this.absenceIdToDelete = absenceId;
+    this.absenceIdToDelete = absenceId;
 
   }
 
+    /**
+   * Confirms the deletion of the selected absence.
+   */
   performDelete(): void {
     if (this.absenceIdToDelete) {
       this.apiService.deleteAbsence(this.absenceIdToDelete).subscribe(() => {
-        // Update the absences array after deletion
         this.absences = this.absences.filter((absence) => absence.id !== this.absenceIdToDelete);
 
-        // Reset the absenceIdToDelete and close the confirmation modal
         this.absenceIdToDelete = null;
         this.showDeleteConfirmationModal = false;
-
-        // Set the flag for successful deletion
         this.deleteSuccess = true;
         setTimeout(() => {
           this.deleteSuccess = false;
@@ -144,35 +156,49 @@ export class AbsencesComponent implements OnInit, OnDestroy {
       });
     }
   }
-  // Subscribe to the event emitted by AddAbsencesComponent
+
+  /**
+   * Reloads the current route when a new absence is added.
+   */
   onAbsenceAdded(): void {
-    // Reload the current route
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate([this.router.url]);
   }
 
-  // INTERACTION WIHT ADD COMPONENT
+  /**
+   * Opens the modal to add a new absence.
+   */
   openAddAbsenceModal() {
-    this.addAbsenceModal.openModal(); // Call the openModal method of AddAbsenceComponent
+    this.addAbsenceModal.openModal(); 
   }
 
 
-  // filter logic
+  /**
+   * Toggles the visibility of the filter dropdown.
+   */  
   toggleFilterDropdown() {
     this.showFilterDropdown = !this.showFilterDropdown;
   }
+
+  /**
+   * Selects a filter option and fetches absences accordingly.
+   * @param option The selected filter option.
+   */
   selectFilter(option: string): void {
     if (option === 'Mostrar Todo') {
-      this.fetchAbsences(); // Fetch all absences
+      this.fetchAbsences(); 
     } else {
       this.selectedFilter = option;
-      this.fetchAbsences(option); // Fetch absences based on selected filter
+      this.fetchAbsences(option); 
     }
     this.showFilterDropdown = false;
   }
 
-
+ /**
+   * Fetches absences from the API, optionally filtering by type.
+   * @param type The type of absences to fetch.
+   */
   fetchAbsences(type?: string): void {
     this.isLoading = true;
     if (!type || type === 'Mostrar Todo') {
@@ -209,34 +235,52 @@ export class AbsencesComponent implements OnInit, OnDestroy {
 
   selectedAbsence: any;
 
+   /**
+   * Closes the absence details modal.
+   */
 closeAbsenceModal() {
   this.selectedAbsence = null;
 
 
 }
 
+ /**
+   * Closes the absence details modal.
+   */
 openAbsenceModal(absence: any) {
   this.selectedAbsence = absence;
 
 }
 
-// Método para obtener el tipo de ausencia traducido
-getTipoAusenciaTraducido(tipo: string): string {
-  return this.tipoAusenciaTraducido[tipo] || tipo; // Retorna la traducción si está definida, de lo contrario, retorna el tipo original
+  /**
+   * Gets the translated absence type.
+   * @param tipo The absence type.
+   * @returns The translated absence type.
+   */getTipoAusenciaTraducido(tipo: string): string {
+  return this.tipoAusenciaTraducido[tipo] || tipo; 
 }
 
-loadEmployees() {
+  /**
+   * Fetches the list of employees from the API.
+   */
+  loadEmployees() {
   this.apiService.getEmployees().subscribe(employees => {
     this.employees = employees;
   });
 }
 
 
- // Método para alternar la visibilidad del dropdown de empleado
- toggleEmployeeDropdown() {
+  /**
+   * Toggles the visibility of the employee dropdown.
+   */
+  toggleEmployeeDropdown() {
   this.showEmployeeDropdown = !this.showEmployeeDropdown;
 }
 
+  /**
+   * Filters absences based on the search query.
+   * @param event The event triggered by the search form submission.
+   */
 searchAbsences(event: Event): void {
   event.preventDefault();
   const query = this.searchQuery.toLowerCase().trim();

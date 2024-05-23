@@ -60,7 +60,9 @@ export class EditBudgetComponent implements OnInit {
     });
   }
 
-  // Method to load the budget data for editing
+ /**
+   * Loads the budget data for editing.
+   */
   loadBudgetData(): void {
     if (!this.budgetId) {
       console.error('No se ha proporcionado un ID de presupuesto válido');
@@ -82,14 +84,21 @@ export class EditBudgetComponent implements OnInit {
     );
   }
 
-formatPostalCode(postalCode: string): string {
+    /**
+   * Formats the postal code.
+   * @param postalCode The postal code to format.
+   * @returns The formatted postal code.
+   */
+  formatPostalCode(postalCode: string): string {
   if (postalCode && postalCode.length === 4 && postalCode.startsWith('0')) {
     return '0' + postalCode;
   }
   return postalCode;
 }
 
-  // Method to assign budget data values to form controls
+  /**
+   * Assigns budget data values to form controls.
+   */  
   patchFormValues(): void {
     // Assign values to client fields
     const clientData = this.budgetData.clients;
@@ -137,13 +146,17 @@ formatPostalCode(postalCode: string): string {
 
   }
 
-  // Method to get the control of concepts as FormArray
-  get concepts() {
+  /**
+   * Gets the control of concepts as FormArray.
+   */
+    get concepts() {
     return this.budgetForm.get('concepts') as FormArray;
   }
 
-  // Method to calculate all values
-  calculateValues(): void {
+  /**
+   * Calculates all values.
+   */
+    calculateValues(): void {
     const subtotal = this.calculateSubtotal();
     const totalDiscount = this.calculateTotalDiscount();
     const totalIVA = this.calculateTotalIVA();
@@ -157,8 +170,11 @@ formatPostalCode(postalCode: string): string {
     this.total.setValue(totalInvoice);
   }
 
-  // Método para calcular el subtotal
-  calculateSubtotal(): number {
+ /**
+   * Calculates the subtotal.
+   * @returns The calculated subtotal.
+   */
+    calculateSubtotal(): number {
     let subtotal = 0;
     const concepts = this.concepts.value;
     concepts.forEach((concept: any) => {
@@ -167,8 +183,11 @@ formatPostalCode(postalCode: string): string {
     return subtotal;
   }
 
-  // Method to calculate the total discount
-  calculateTotalDiscount(): number {
+ /**
+   * Calculates the total discount.
+   * @returns The calculated total discount.
+   */
+    calculateTotalDiscount(): number {
     let totalDiscount = 0;
     const concepts = this.concepts.value;
     concepts.forEach((concept: any) => {
@@ -178,8 +197,11 @@ formatPostalCode(postalCode: string): string {
     return totalDiscount;
   }
 
- // Method to calculate the total IVA
-  calculateTotalIVA(): number {
+  /**
+   * Calculates the total IVA.
+   * @returns The calculated total IVA.
+   */
+    calculateTotalIVA(): number {
     let totalIVA = 0;
     const concepts = this.concepts.value;
     concepts.forEach((concept: any) => {
@@ -189,8 +211,11 @@ formatPostalCode(postalCode: string): string {
     return totalIVA;
   }
 
-   // Method to calculate the total IRPF
-  calculateTotalIRPF(): number {
+ /**
+   * Calculates the total IRPF.
+   * @returns The calculated total IRPF.
+   */
+    calculateTotalIRPF(): number {
     let totalIRPF = 0;
     const concepts = this.concepts.value;
     concepts.forEach((concept: any) => {
@@ -200,13 +225,22 @@ formatPostalCode(postalCode: string): string {
     return totalIRPF;
   }
 
-   // Method to calculate the total
-  calculateTotal(subtotal: number, totalDiscount: number, totalIVA: number, totalIRPF: number): number {
+ /**
+   * Calculates the total.
+   * @param subtotal The subtotal value.
+   * @param totalDiscount The total discount value.
+   * @param totalIVA The total IVA value.
+   * @param totalIRPF The total IRPF value.
+   * @returns The calculated total.
+   */
+    calculateTotal(subtotal: number, totalDiscount: number, totalIVA: number, totalIRPF: number): number {
     return subtotal - totalDiscount + totalIVA - totalIRPF;
   }
 
-  // Method to update the edited budget on the server
-  updateBudget(): void {
+   /**
+   * Updates the edited budget on the server.
+   */
+    updateBudget(): void {
     if (this.budgetId === null) {
       console.error('No se ha proporcionado un ID de presupuesto válido');
       return;
@@ -236,14 +270,19 @@ formatPostalCode(postalCode: string): string {
     );
   }
 
-  // Method to cancel the edit process
-  cancelEdit(): void {
+  /**
+   * Cancels the edit process.
+   */
+    cancelEdit(): void {
     if (confirm('¿Estás seguro de cancelar la edición?')) {
       this.router.navigate(['/budget']);
     }
   }
 
-   // Phone number validation function
+  /**
+   * Phone number validation function.
+   * @returns A validator function for phone numbers.
+   */
   phoneNumberValidator(): Validators {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const phoneNumberRegex = /^[679]{1}[0-9]{8}$/; // Expresión regular para validar números de teléfono

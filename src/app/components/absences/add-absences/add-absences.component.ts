@@ -22,13 +22,12 @@ absences: any[] = [];
 
   this.ausenciaForm = this.formBuilder.group({
     // name: ['', Validators.required],
-    employee_id: ['', Validators.required], // Updated form control name
+    employee_id: ['', Validators.required], 
     type_absence: ['', Validators.required],
     start_date: ['', [Validators.required, this.validateStartDate.bind(this)]],
     end_date: ['', [Validators.required, this.validateEndDate.bind(this)]],
     motive: ['', Validators.required]
 
-    // Add other form controls here
   });
 
     // Re-validate end date when start date changes
@@ -56,6 +55,11 @@ ngOnInit(): void {
 
 }
 
+  /**
+   * Validates the start date.
+   * @param control The form control for the start date.
+   * @returns An error object if the start date is invalid, otherwise null.
+   */
 validateStartDate(control: FormControl): { [key: string]: any } | null {
   const selectedDate = new Date(control.value);
   const currentDate = new Date();
@@ -68,6 +72,12 @@ validateStartDate(control: FormControl): { [key: string]: any } | null {
   }
   return null;
 }
+
+  /**
+   * Validates the end date.
+   * @param control The form control for the end date.
+   * @returns An error object if the end date is invalid, otherwise null.
+   */
 validateEndDate(control: FormControl): { [key: string]: any } | null {
   const selectedDate = new Date(control.value);
   const startDateControl = this.ausenciaForm.get('start_date');
@@ -85,30 +95,33 @@ validateEndDate(control: FormControl): { [key: string]: any } | null {
   return null;
 }
 
+  /**
+   * Opens the modal to add a new absence.
+   */
   openModal() {
     this.showModal = true;
     this.ausenciaForm.reset();
   }
 
+    /**
+   * Closes the modal.
+   */
   closeModal() {
     this.showModal = false;
   }
 
+    /**
+   * Handles form submission.
+   */
   onSubmit(): void {
-    // Log the form data before submitting
-
-    // Emit the form data
     this.absenceAdded.emit(this.ausenciaForm.value);
 
-    // Call the addAbsence method of ApiService with form data
     this.apiService.addAbsence(this.ausenciaForm.value).subscribe({
       next: (response) => {
         this.router.navigate(['/absences']);
-        // Optionally handle the response here
       },
       error: (error) => {
         console.error('Error:', error);
-        // Optionally handle the error here
       }
     });
 
