@@ -11,18 +11,18 @@ import { Employee } from 'src/app/models/employee.model';
   styleUrls: ['./employees.component.css']
 })
 export class EmployeesComponent {
-  employees: Employee[] = []; // Utiliza el tipo Employee[]
-  selectedEmployee: Employee[] = []; // Utiliza el tipo Employee
+  employees: Employee[] = [];
+  selectedEmployee: Employee[] = [];
   modalVisible: boolean = false;
   isLoading = true;
   isError = false;
 
   // Delete modal
   showDeleteModal: boolean = false;
-  employeeToDeleteId: number | null = null;  // Add this line
+  employeeToDeleteId: number | null = null;
 
   // success messages
-  showSuccessAlert: boolean = false;  // Add this line
+  showSuccessAlert: boolean = false;
   successMessage: string = '';
 
   constructor(private apiService: ApiService, private router: Router,) { }
@@ -55,14 +55,6 @@ export class EmployeesComponent {
     this.selectedEmployee = [];
     this.modalVisible = false;
   }
-
-  // confirmDeleteEmployee(employeeId: number): void { // Utiliza el tipo number para el id
-  //   const confirmDelete = confirm('¿Estás seguro de que deseas eliminar este empleado?');
-  //   if (confirmDelete) {
-  //     this.modalVisible = false;
-  //     this.deleteEmployee(employeeId);
-  //   }
-  // }
 
   openDeleteModal(employeeId: number): void {
     this.employeeToDeleteId = employeeId;
