@@ -24,7 +24,6 @@
         <i class='bx bx-filter text-xl'></i>
         <span class="ml-1">Filtros</span>
       </button>
-      <!-- Filter dropdown -->
       <div *ngIf="showFilterDropdown" class="absolute right-0 mt-1 bg-white border border-gray-300 rounded-lg py-1 px-2 w-32 sm:w-48 z-10">
         <ul class="py-1">
           <li *ngFor="let option of filterOptions" (click)="selectFilter(option); resetPagination()" class="px-4 py-2 cursor-pointer hover:bg-gray-100">{{ option }}</li>
@@ -34,7 +33,6 @@
   </div>
 </div>
 
-<!-- TABLE -->
 
 <div class="flex flex-wrap items-center justify-between mb-4 px-5 lg:px-10 w-full space-y-4 lg:space-y-0">
   <div *ngIf="isError" class="w-full bg-white border border-green-400 rounded-xl p-4 mb-8">
@@ -45,7 +43,6 @@
   <div *ngIf="!isError" class="w-full bg-white border border-green-400 rounded-xl p-4 mb-8">
     <div class="overflow-x-auto">
       <table class="w-full divide-y divide-gray-200">
-        <!-- Table content -->
         <thead class="bg-gray-100">
           <tr>
             <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
@@ -114,10 +111,8 @@
   </div>
 </div>
 
-<!-- Modal de Detalles de la Ausencia -->
 <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" *ngIf="selectedAbsence">
   <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-lg">
-    <!-- Encabezado del modal-->
     <div class="flex items-center justify-center mb-4">
       <div class="flex-shrink-0 mr-4">
         <div class="rounded-full overflow-hidden bg-gray-200 p-1">
@@ -128,14 +123,12 @@
       <h2 class="text-2xl font-bold text-black-400">{{ selectedAbsence.employee.name }} {{ selectedAbsence.employee.surname }}</h2>
     </div>
 
-    <!-- Línea divisora-->
     <div class="flex items-center justify-center mb-4">
       <div class="border-b border-gray-300 flex-grow mr-4"></div>
       <div class="text-gray-500">Detalles de la Ausencia</div>
       <div class="border-b border-gray-300 flex-grow ml-4"></div>
     </div>
 
-    <!-- Sección de Ausencia Detalles -->
     <div class="mb-4 text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="col-span-1">
         <p class="text-sm"><strong>Fecha de Inicio</strong></p>
@@ -156,7 +149,6 @@
       </div>
     </div>
 
-    <!-- Botón de Cerrar -->
     <button class="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-full w-full"
       (click)="closeAbsenceModal()">Cerrar</button>
   </div>

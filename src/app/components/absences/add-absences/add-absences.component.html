@@ -1,11 +1,8 @@
-<!-- Main modal -->
 <div id="crud-modal" *ngIf="showModal" tabindex="-1" aria-hidden="true"
   class="fixed inset-0 flex items-center justify-center z-50">
   <div class="absolute inset-0 bg-black opacity-50"></div>
   <div class="relative p-4 w-full max-w-2xl">
-    <!-- Modal content -->
     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-      <!-- Modal header -->
       <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
           Ausencias
@@ -21,10 +18,8 @@
         </button>
       </div>
 
-      <!-- Modal body -->
       <form class="p-4 md:p-5" [formGroup]="ausenciaForm" (ngSubmit)="onSubmit()">
         <div class="grid gap-4 mb-4 grid-cols-2">
-          <!-- Form inputs here -->
           <div class="col-span-1">
             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre de empleado/a</label>
             <select id="name" name="name" formControlName="employee_id"
@@ -32,7 +27,6 @@
               [class.border-red-500]="ausenciaForm.controls['employee_id'].invalid && ausenciaForm.controls['employee_id'].touched"
               required>
               <option value="">Seleccione el empleado</option>
-              <!-- Populate options dynamically from database -->
               <option *ngFor="let employee of employees" [value]="employee.id"> {{ employee.name }} {{
                 employee.surname }}</option>
             </select>
@@ -50,14 +44,12 @@
               [class.border-red-500]="ausenciaForm.controls['type_absence'].invalid && ausenciaForm.controls['type_absence'].touched"
               required>
               <option value="">Seleccione el tipo</option>
-              <!-- Populate options dynamically from database -->
               <option value="vacation">Vacaciones</option>
               <option value="sick leave">Enfermedad</option>
               <option value="maternity/paternity">Maternidad/Paternidad</option>
               <option value="compensatory">Compensatorias</option>
               <option value="leave">Baja</option>
               <option value="others">Otros</option>
-              <!-- Add more options as needed -->
             </select>
             <div *ngIf="ausenciaForm.controls['type_absence'].invalid && ausenciaForm.controls['type_absence'].touched"
               class="text-red-500">

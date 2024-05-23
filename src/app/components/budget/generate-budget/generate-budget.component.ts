@@ -55,13 +55,18 @@ export class GenerateBudgetComponent implements OnInit {
     this.calculateValues();
   }
 
-  // Method to get the control of concepts as FormArray
-  get concepts() {
+  /**
+   * Gets the control of concepts as FormArray.
+   * @returns The FormArray control of concepts.
+   */
+    get concepts() {
     return this.budgetForm.get('concepts') as FormArray;
   }
 
-  // Method to add a new concept to the FormArray
-  addConcept(): void {
+ /**
+   * Adds a new concept to the FormArray.
+   */
+    addConcept(): void {
     const newConcept = this.fb.group({
       concept: ['', Validators.required],
       price: ['', Validators.required],
@@ -78,8 +83,11 @@ export class GenerateBudgetComponent implements OnInit {
     }
   }
 
-  // Method to remove a concept from the FormArray
-  removeConcept(index: number): void {
+/**
+   * Removes a concept from the FormArray.
+   * @param index The index of the concept to remove.
+   */
+    removeConcept(index: number): void {
     this.concepts.removeAt(index);
 
     // Check if only one line of concept remains to disable the deletion of the first line
@@ -88,8 +96,10 @@ export class GenerateBudgetComponent implements OnInit {
     }
   }
 
-  // Method to calculate all values
-  calculateValues(): void {
+  /**
+   * Calculates all values.
+   */
+    calculateValues(): void {
     const subtotal = this.calculateSubtotal();
     const totalDiscount = this.calculateTotalDiscount();
     const totalIVA = this.calculateTotalIVA();
@@ -103,8 +113,11 @@ export class GenerateBudgetComponent implements OnInit {
     this.total.setValue(totalInvoice);
   }
 
-   // Method to calculate the subtotal
-  calculateSubtotal(): number {
+  /**
+   * Calculates the subtotal.
+   * @returns The calculated subtotal.
+   */
+    calculateSubtotal(): number {
     let subtotal = 0;
     const concepts = this.concepts.value;
     concepts.forEach((concept: any) => {
@@ -113,8 +126,11 @@ export class GenerateBudgetComponent implements OnInit {
     return subtotal;
   }
 
-  // Method to calculate the total discount
-  calculateTotalDiscount(): number {
+ /**
+   * Calculates the total discount.
+   * @returns The calculated total discount.
+   */
+    calculateTotalDiscount(): number {
     let totalDiscount = 0;
     const concepts = this.concepts.value;
     concepts.forEach((concept: any) => {
@@ -124,8 +140,11 @@ export class GenerateBudgetComponent implements OnInit {
     return totalDiscount;
   }
 
-  // Method to calculate the total IVA
-  calculateTotalIVA(): number {
+  /**
+   * Calculates the total IVA.
+   * @returns The calculated total IVA.
+   */
+    calculateTotalIVA(): number {
     let totalIVA = 0;
     const concepts = this.concepts.value;
     concepts.forEach((concept: any) => {
@@ -135,8 +154,11 @@ export class GenerateBudgetComponent implements OnInit {
     return totalIVA;
   }
 
-  // Method to calculate the total IRPF
-  calculateTotalIRPF(): number {
+  /**
+   * Calculates the total IRPF.
+   * @returns The calculated total IRPF.
+   */
+    calculateTotalIRPF(): number {
     let totalIRPF = 0;
     const concepts = this.concepts.value;
     concepts.forEach((concept: any) => {
@@ -146,13 +168,22 @@ export class GenerateBudgetComponent implements OnInit {
     return totalIRPF;
   }
 
-  // Method to calculate the total
-  calculateTotal(subtotal: number, totalDiscount: number, totalIVA: number, totalIRPF: number): number {
+/**
+   * Calculates the total.
+   * @param subtotal The subtotal value.
+   * @param totalDiscount The total discount value.
+   * @param totalIVA The total IVA value.
+   * @param totalIRPF The total IRPF value.
+   * @returns The calculated total.
+   */
+    calculateTotal(subtotal: number, totalDiscount: number, totalIVA: number, totalIRPF: number): number {
     return subtotal - totalDiscount + totalIVA - totalIRPF;
   }
 
-  // Method to send the budget to the server
-  addBudget(): void {
+ /**
+   * Sends the budget to the server.
+   */
+    addBudget(): void {
 
     if (this.budgetForm.invalid) {
       this.showErrorInvalid = true;
@@ -189,29 +220,19 @@ export class GenerateBudgetComponent implements OnInit {
 
   }
 
-    // Method to cancel the edit
-  openModal(): void {
-    const modal = document.getElementById('popup-modal');
-    if (modal) {
-      modal.classList.remove('hidden');
+    /**
+   * Cancels the edit process.
+   */
+    cancelEdit(): void {
+    if (confirm('¿Estás seguro de cancelar la edición?')) {
+      this.router.navigate(['/budget']);
     }
   }
-
-  closeModal(): void {
-    const modal = document.getElementById('popup-modal');
-    if (modal) {
-      modal.classList.add('hidden');
-    }
-  }
-
-  confirmCancelEdit(): void {
-    this.closeModal();
-    this.router.navigate(['/budget']);
-  }
-
-
-    // Phone number validation function
-   phoneNumberValidator(): Validators {
+  /**
+   * Validates the phone number.
+   * @returns The phone number validator.
+   */
+     phoneNumberValidator(): Validators {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const phoneNumberRegex = /^[679]{1}[0-9]{8}$/; // Expresión regular para validar números de teléfono
       if (control.value && !phoneNumberRegex.test(control.value)) {
