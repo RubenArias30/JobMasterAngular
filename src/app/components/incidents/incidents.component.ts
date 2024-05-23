@@ -53,6 +53,10 @@ export class IncidentsComponent implements OnInit {
     this.getIncidents();
   }
 
+
+  /**
+   * Fetches the list of incidents from the API.
+   */
   getIncidents(): void {
     this.apiService.getAllIncidents()
       .subscribe(
@@ -70,6 +74,10 @@ export class IncidentsComponent implements OnInit {
       );
   }
 
+    /**
+   * Searches for incidents based on the search query.
+   * @param event The event triggered by the search input.
+   */
   searchIncidences(event: Event): void {
     event.preventDefault();
     const query = this.searchQuery.toLowerCase().trim();
@@ -87,41 +95,53 @@ export class IncidentsComponent implements OnInit {
     }
   }
 
-
+  /**
+   * Translates the status of the incident.
+   * @param status The status of the incident.
+   * @returns The translated status.
+   */
   translateStatus(status: string): string {
     return this.statusTranslations[status] || 'Todos';
   }
 
+    /**
+   * Translates the type of the incident.
+   * @param type The type of the incident.
+   * @returns The translated type.
+   */
   translateType(type: string): string {
     return this.typeTranslations[type] || type;
   }
 
+    /**
+   * Toggles the dropdown for filtering options.
+   */
   toggleDropdown(): void {
     this.showDropdown = !this.showDropdown;
   }
+
+    /**
+   * Resets the pagination to page 1.
+   */
   resetPagination() {
     this.p = 1; // Reset the current page to 1
   }
-  // Función para filtrar incidencias por estado
-  // filterByStatus(selectedStatus: string): void {
-  //   this.selectedStatus = selectedStatus; // Actualizar el estado seleccionado
 
-  //   // Filtrar las incidencias basadas en el estado seleccionado
-  //   if (this.selectedStatus) {
-  //     this.incidences = this.originalIncidences.filter(incident => incident.status === this.selectedStatus);
-  //   } else {
-  //     this.incidences = this.originalIncidences.slice(); // Restaurar la lista original
-  //   }
-  // }
-
+  /**
+   * Applies the selected filters to the incidents.
+   */
   applyFilters(): void {
-
     this.showDropdown = false;
     const filteredByStatus = this.filterByStatus(this.originalIncidences);
     const filteredByType = this.filterByType(filteredByStatus);
     this.incidences = filteredByType;
   }
 
+   /**
+   * Filters incidents based on their status.
+   * @param incidences The incidents to filter.
+   * @returns The filtered incidents.
+   */
   filterByStatus(incidences: any[]): any[] {
     const statuses = Object.keys(this.filterStatus).filter(key => this.filterStatus[key]);
     if (statuses.length === 0) return incidences;
@@ -129,43 +149,62 @@ export class IncidentsComponent implements OnInit {
     return incidences.filter(incident => statuses.includes(incident.status));
   }
 
+    /**
+   * Filters incidents based on their type.
+   * @param incidences The incidents to filter.
+   * @returns The filtered incidents.
+   */
   filterByType(incidences: any[]): any[] {
     const types = Object.keys(this.filterTypes).filter(key => this.filterTypes[key]);
     if (types.length === 0) return incidences;
 
     return incidences.filter(incident => types.includes(incident.incident_type));
   }
+
+    /**
+   * Clears all applied filters.
+   */
   clearFilters(): void {
     this.filterStatus = { pending: false, completed: false };
     this.filterTypes = {};
     this.applyFilters();
   }
 
-
-
+  /**
+   * Gets the CSS class for the document status.
+   * @param status The status of the document.
+   * @returns The CSS class.
+   */
   getDocumentStatusClass(status: string): string {
     return status === 'completed' ? 'bg-green-200' : 'bg-red-200';
   }
 
+    /**
+   * Counts the number of pending and completed incidents.
+   */
   countIncidentStatus(): void {
     this.pending = this.incidences.filter(incident => incident.status === 'pending').length;
     this.completed = this.incidences.filter(incident => incident.status === 'completed').length;
   }
 
+    /**
+   * Toggles the completion status of an incident.
+   * @param incident The incident to toggle.
+   */
   toggleCompletion(incident: any): void {
-    // Cambiar el estado   de la incidencia entre completada y pendiente
+    // Toggle the incident status between completed and pending
     if (incident.status === 'completed') {
       incident.status = 'pending';
     } else {
       incident.status = 'completed';
     }
 
-
-    // Llamar al servicio API para actualizar el estado de la incidencia
+    // Call the API service to update the incident status
     this.apiService.updateIncidentStatus(incident.id, incident.status)
       .subscribe(
         (updatedIncident: any) => {
-          this.getIncidents(); // Recargar los datos después de cambiar el estado
+          this.getIncidents();
+
         },
         (error) => {
           console.error('Error al actualizar el estado de la incidencia:', error);
@@ -173,44 +212,26 @@ export class IncidentsComponent implements OnInit {
       );
   }
 
-
-   // Función para confirmar y eliminar una incidencia
-  //  confirmDelete(incidentId: number): void {
-  //   if (confirm('¿Estás seguro de que quieres eliminar esta incidencia?')) {
-  //     this.apiService.deleteIncident(incidentId)
-  //       .subscribe(
-  //         () => {
-  //           this.getIncidents(); // Recargar los datos después de eliminar la incidencia
-  //         },
-  //         (error) => {
-  //           console.error('Error al eliminar la incidencia:', error);
-  //         }
-  //       );
-  //   }
-  // }
-
+  /**
+   * Opens the delete confirmation modal for the selected incident.
+   * @param incidentId The ID of the incident to delete.
+   */
   openDeleteModal(incidentId: number): void {
     this.incidentIdToDelete = incidentId;
     this.showConfirmationModal = true;
   }
 
+   /**
+   * Closes the delete confirmation modal.
+   */
   closeDeleteModal(): void {
     this.showConfirmationModal = false;
     this.incidentIdToDelete = null;
   }
 
-  // confirmDeletion(): void {
-  //   if (this.incidentIdToDelete !== null) {
-  //     this.apiService.deleteIncident(this.incidentIdToDelete)
-  //       .subscribe(
-  //         () => {
-  //           this.getIncidents(); // Reload the data after deletion
-  //           this.closeDeleteModal();
-  //         },
-  //         (error) => console.error('Error deleting incident:', error)
-  //       );
-  //   }
-  // }
+  /**
+   * Confirms the deletion of the selected incident.
+   */
   confirmDeletion(): void {
     if (this.incidentIdToDelete !== null) {
       this.apiService.deleteIncident(this.incidentIdToDelete)
@@ -225,6 +246,10 @@ export class IncidentsComponent implements OnInit {
     }
   }
 
+    /**
+   * Shows a success message for a certain duration.
+   * @param message The success message to display.
+   */
   showSuccessMessage(message: string): void {
     this.successMessage = message;
     this.showSuccessAlert = true;
@@ -233,6 +258,13 @@ export class IncidentsComponent implements OnInit {
     }, 3000); // Hide the alert after 3 seconds
   }
 
+
+  /**
+   * Splits the description of an incident into multiple lines.
+   * @param description The description of the incident.
+   * @param maxLength The maximum length of each line.
+   * @returns An array of strings containing the split description.
+   */
   splitDescription(description: string, maxLength: number): string[] {
     const regex = new RegExp(`.{1,${maxLength}}`, 'g');
     return description.match(regex) || [];

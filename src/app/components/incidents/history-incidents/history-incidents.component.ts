@@ -7,7 +7,7 @@ import { ApiService } from 'src/app/services/api/api.service';
   styleUrls: ['./history-incidents.component.css']
 })
 export class HistoryIncidentsComponent implements OnInit {
-  userIncidents: any[] = []; // Arreglo para almacenar las incidencias del usuario
+  userIncidents: any[] = [];
   typeTranslations: any = {
     'Delay': 'Retraso',
     'Absence': 'Ausencia',
@@ -17,14 +17,16 @@ export class HistoryIncidentsComponent implements OnInit {
     'Others': 'Otros'
   };
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    // Obtener las incidencias del usuario actual al inicializar el componente
+    // Get the user's incidents when the component initializes
     this.getUserIncidents();
   }
 
-  // Método para obtener las incidencias del usuario actual
+  /**
+   * Method to get the user's incidents.
+   */
   getUserIncidents() {
     this.apiService.getIncidents().subscribe(
       (response: any[]) => {
@@ -36,19 +38,29 @@ export class HistoryIncidentsComponent implements OnInit {
     );
   }
 
-    // Función para traducir el estado
-    translateStatus(status: string): string {
-      switch (status) {
-        case 'completed':
-          return 'Completada';
-        case 'pending':
-          return 'Pendiente';
-        default:
-          return status;
-      }
+  /**
+   * Translates the status into the corresponding string.
+   * @param status The status to translate.
+   * @returns The translated status string.
+   */
+  translateStatus(status: string): string {
+    switch (status) {
+      case 'completed':
+        return 'Completada';
+      case 'pending':
+        return 'Pendiente';
+      default:
+        return status;
     }
+  }
 
-    translateType(type: string): string {
-      return this.typeTranslations[type] || type;
-    }
+  /**
+* Translates the incident type into the corresponding string.
+* @param type The incident type to translate.
+* @returns The translated incident type string.
+*/
+
+  translateType(type: string): string {
+    return this.typeTranslations[type] || type;
+  }
 }
