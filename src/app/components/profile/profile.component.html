@@ -1,20 +1,15 @@
 <div class="bg-white p-8 rounded-xl shadow-lg mx-auto my-8 flex items-start border border-green-400 max-w-4xl">
-  <!-- Foto -->
   <div class="border-2 border-black rounded-full overflow-hidden mr-6">
     <img [src]="profileData?.photo" alt="Foto del empleado" class="w-32 h-32 rounded-full">
   </div>
-
-  <!-- Detalles del perfil -->
   <div>
     <!-- Título -->
     <h1 class="text-2xl font-bold mb-4">{{ profileData?.name }} {{ profileData?.surname }}</h1>
-
-    <!-- Div redondeado con icono de usuario -->
     <div class="flex items-center mb-4">
       <hr class="my-0 mr-2 w-full border-t-2 border-gray-400">
     </div>
 
-    <!-- Detalles del perfil -->
+      <!-- Details profile -->
     <div class="mb-6">
       <p class="text-sm font-semibold underline">Datos personales</p>
       <div class="grid grid-cols-3 gap-4 mt-2">
@@ -38,13 +33,13 @@
           <p class="font-bold text-sm text-gray-700">GÉNERO</p>
           <p>{{ getGenderTranslation(profileData?.gender) }}</p>
         </div>
-        <div></div> <!-- Placeholder para mantener la estructura de 3x3 -->
+        <div></div>
       </div>
     </div>
 
     <hr class="my-4 w-full border-t-2 border-gray-400">
 
-    <!-- Detalles de contacto -->
+    <!-- Details contact -->
     <div class="mb-4">
       <p class="text-sm font-semibold underline">Contacto</p>
       <div class="grid grid-cols-3 gap-4 mt-2">
@@ -59,10 +54,9 @@
       </div>
     </div>
 
-    <!-- Línea separadora -->
     <hr class="my-4 w-full border-t-2 border-gray-400">
 
-    <!-- Detalles de dirección -->
+    <!-- Details Address -->
     <div class="mb-6">
       <p class="text-sm font-semibold underline">Dirección</p>
       <div class="grid grid-cols-3 gap-4 mt-2">
