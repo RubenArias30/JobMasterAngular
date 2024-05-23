@@ -31,11 +31,13 @@ export class EmployeesComponent {
     this.getEmployees();
   }
 
+   /**
+   * Fetches the list of employees from the API.
+   */
   getEmployees(): void {
     this.apiService.getEmployees().subscribe(
-      (response: Employee[]) => { // Utiliza el tipo Employee[]
+      (response: Employee[]) => {
         this.employees = response;
-        console.log(this.employees)
         this.isLoading = false;
       },
       (error) => {
@@ -46,26 +48,44 @@ export class EmployeesComponent {
     );
   }
 
-  openEmployeeModal(employee: Employee): void { // Utiliza el tipo Employee
+    /**
+   * Opens the employee modal.
+   * @param employee The selected employee.
+   */
+  openEmployeeModal(employee: Employee): void {
     this.selectedEmployee = [employee];
     this.modalVisible = true;
   }
 
+    /**
+   * Closes the employee modal.
+   */
   closeEmployeeModal(): void {
     this.selectedEmployee = [];
     this.modalVisible = false;
   }
 
+    /**
+   * Opens the delete modal for confirming employee deletion.
+   * @param employeeId The ID of the employee to delete.
+   */
   openDeleteModal(employeeId: number): void {
     this.employeeToDeleteId = employeeId;
     this.showDeleteModal = true;
   }
 
+
+  /**
+   * Closes the delete modal.
+   */
   closeDeleteModal(): void {
     this.showDeleteModal = false;
     this.employeeToDeleteId = null;
   }
 
+   /**
+   * Confirms the deletion of the selected employee.
+   */
   confirmDeletion(): void {
     if (this.employeeToDeleteId !== null) {
       this.deleteEmployee(this.employeeToDeleteId);
@@ -73,8 +93,12 @@ export class EmployeesComponent {
     }
   }
 
-  deleteEmployee(employeeId: number): void { // Utiliza el tipo number para el id
-    this.apiService.deleteEmployee(employeeId.toString()).subscribe( // Ajusta el tipo del id y convierte a string
+    /**
+   * Deletes the selected employee.
+   * @param employeeId The ID of the employee to delete.
+   */
+  deleteEmployee(employeeId: number): void {
+    this.apiService.deleteEmployee(employeeId.toString()).subscribe(
       () => {
         this.employees = this.employees.filter(employee => employee.id !== employeeId);
         this.showSuccessAlertMessage('Empleado eliminado con éxito');
@@ -85,11 +109,18 @@ export class EmployeesComponent {
     );
   }
 
-  navigateToDocuments(employee: Employee): void { // Utiliza el tipo Employee
+    /**
+   * Navigates to the documents page for the selected employee.
+   * @param employee The selected employee.
+   */
+  navigateToDocuments(employee: Employee): void {
     this.router.navigate(['/documents', { employeeName: `${employee.name} ${employee.surname}` }]);
   }
 
-  // message is shown after the delete is done
+   /**
+   * Shows a success alert message.
+   * @param message The success message to display.
+   */
   showSuccessAlertMessage(message: string): void {
     this.successMessage = message;
     this.showSuccessAlert = true;
