@@ -53,7 +53,7 @@
               <a [routerLink]="['/employees/edit_employee', employee.id]">
                 <i class='bx bx-edit text-xl text-black mr-2'></i>
               </a>
-              <button (click)="confirmDeleteEmployee(employee.id)">
+              <button (click)="openDeleteModal(employee.id)">
                 <i class='bx bx-trash text-xl text-red-600'></i>
               </button>
             </td>
@@ -154,3 +154,17 @@
 </div>
 
 <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+<!-- Include the delete confirmation modal component -->
+<app-delete-confirmation-modal
+  [showConfirmationModal]="showDeleteModal"
+  (closeModalEvent)="closeDeleteModal()"
+  (confirmDelete)="confirmDeletion()">
+</app-delete-confirmation-modal>
+
+<!-- Include the success alert component -->
+<app-success-alert
+  *ngIf="showSuccessAlert"
+  [message]="successMessage">
+</app-success-alert>
+
+
