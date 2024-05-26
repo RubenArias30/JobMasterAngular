@@ -13,7 +13,8 @@ import { Invoice } from 'src/app/models/invoices.model';
 export class ApiService {
 
   //route api
-  private apiUrl = 'http://localhost:8000/api';
+  // private apiUrl = 'http://localhost:8000/api';
+  private apiUrl = 'https://jobmaster.es/api';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
